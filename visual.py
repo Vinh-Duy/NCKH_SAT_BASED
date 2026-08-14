@@ -118,4 +118,4 @@ def chay_va_ve(n=7): # Đang đặt mặc định vẽ P_7
 
 if __name__ == "__main__":
     # có thể thay số 7 thành 3, 4, 10 tùy ý để xem các đồ thị khác nhau
-    chay_va_ve(3)
+    chay_va_ve(10)
