@@ -2,35 +2,71 @@ Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...
 Lưu ý: Có thể mất vài lúc vì n lớn.
 
 --- Đồ thị chu trình C_n (n=3..50) ---
-Hoàn thành C_3 (lambda=4)
-Hoàn thành C_4 (lambda=4)
-Hoàn thành C_5 (lambda=4)
-Hoàn thành C_6 (lambda=4)
-Hoàn thành C_7 (lambda=4)
-Hoàn thành C_8 (lambda=4)
-Hoàn thành C_9 (lambda=4)
-Hoàn thành C_10 (lambda=4)
-Hoàn thành C_15 (lambda=4)
-Hoàn thành C_20 (lambda=4)
-Hoàn thành C_25 (lambda=4)
-Hoàn thành C_30 (lambda=4)
-Hoàn thành C_35 (lambda=4)
-Hoàn thành C_40 (lambda=4)
-Hoàn thành C_45 (lambda=4)
-Hoàn thành C_50 (lambda=4)
+Hoàn thành C_3 (lambda=7)
+Hoàn thành C_4 (lambda=8)
+Hoàn thành C_5 (lambda=9)
+Hoàn thành C_6 (lambda=10)
+Hoàn thành C_7 (lambda=11)
+Hoàn thành C_8 (lambda=12)
+Hoàn thành C_9 (lambda=13)
+Hoàn thành C_10 (lambda=14)
+Hoàn thành C_15 (lambda=19)
+Hoàn thành C_20 (lambda=24)
+Hoàn thành C_25 (lambda=29)
+Hoàn thành C_30 (lambda=34)
+Hoàn thành C_35 (lambda=39)
+Hoàn thành C_40 (lambda=44)
+Hoàn thành C_45 (lambda=49)
+Hoàn thành C_50 (lambda=54)
 
 --- Đồ thị đầy đủ K_n (n=3..12) ---
-Hoàn thành K_3 (lambda=4)
-Hoàn thành K_4 (lambda=6)
-Hoàn thành K_5 (lambda=8)
-Hoàn thành K_6 (lambda=10)
-Hoàn thành K_7 (lambda=12)
-Hoàn thành K_8 (lambda=14)
-Hoàn thành K_9 (lambda=16)
-Hoàn thành K_10 (lambda=18)
+Hoàn thành K_3 (lambda=7)
+Hoàn thành K_4 (lambda=13)
+Hoàn thành K_5 (lambda=21)
+Hoàn thành K_6 (lambda=31)
+Hoàn thành K_7 (lambda=43)
+Hoàn thành K_8 (lambda=57)
+Hoàn thành K_9 (lambda=73)
+Hoàn thành K_10 (lambda=91)
 
 --- Đồ thị siêu khối Q_n (n=2..6) ---
-Hoàn thành Q_2 (lambda=4)
-Hoàn thành Q_3 (lambda=6)
-Hoàn thành Q_4 (lambda=7)
-Hoàn thành Q_5 (lambda=8)
+Hoàn thành Q_2 (lambda=8)
+Hoàn thành Q_3 (lambda=17)
+Hoàn thành Q_4 (lambda=32)
+Hoàn thành Q_5 (lambda=57)
+Hoàn thành Q_6 (lambda=100)
+
+=== PHÂN TÍCH PATTERN ===
+
+--- Đồ thị chu trình C_n ---
+
+=== PHÂN TÍCH PATTERN ===
+
+C:
+  n <= 5: [(3, 7), (4, 8), (5, 9)]
+  5 < n <= 11: [(6, 10), (7, 11), (8, 12), (9, 13), (10, 14), (11, 15)]
+  n > 11: [(12, 16), (13, 17), (14, 18), (15, 19), (16, 20), (17, 21), (18, 22), (19, 23), (20, 24), (21, 25), (22, 26), (23, 27), (24, 28), (25, 29), (26, 30), (27, 31), (28, 32), (29, 33), (30, 34), (31, 35), (32, 36), (33, 37), (34, 38), (35, 39), (36, 40), (37, 41), (38, 42), (39, 43), (40, 44), (41, 45), (42, 46), (43, 47), (44, 48), (45, 49), (46, 50), (47, 51), (48, 52), (49, 53), (50, 54)]
+    Chênh lệch lambda: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+--- Đồ thị đầy đủ K_n ---
+
+=== PHÂN TÍCH PATTERN ===
+
+K:
+  n <= 5: [(3, 7), (4, 13), (5, 21)]
+  5 < n <= 11: [(6, 31), (7, 43), (8, 57), (9, 73), (10, 91), (11, 111)]
+  n > 11: [(12, 133)]
+
+--- Đồ thị siêu khối Q_n ---
+
+=== PHÂN TÍCH PATTERN ===
+
+Q:
+  n <= 5: [(4, 8)]
+  5 < n <= 11: [(8, 17)]
+  n > 11: [(16, 32), (32, 57), (64, 100)]
+    Chênh lệch lambda: [25, 43]
+
+XONG! Cycle graphs: ket_qua_C.csv & ket_qua_C.xlsx
+XONG! Complete graphs: ket_qua_K.csv & ket_qua_K.xlsx
+XONG! Hypercube graphs: ket_qua_Q.csv & ket_qua_Q.xlsx

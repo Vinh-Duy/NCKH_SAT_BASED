@@ -101,26 +101,21 @@ def compute_lower_bound(G, h=2, k=1):
 
 
 def estimate_upper_bound(G, h=2, k=1):
+    """Upper bound = |V| + (max_degree)^2 theo gợi ý từ cô."""
     n = G.number_of_nodes()
     if n == 0:
         return 0
 
     max_degree = max(dict(G.degree()).values(), default=0)
-    try:
-        if nx.is_connected(G):
-            diameter = nx.diameter(G)
-        else:
-            diameter = max(
-                (max(lengths.values()) for _, lengths in nx.all_pairs_shortest_path_length(G)),
-                default=0,
-            )
-    except Exception:
-        diameter = n - 1
-
-    return max(2 * n, max_degree + h + k + 1, h * (diameter + 1) + k + 1)
+    return n + (max_degree ** 2)
 
 
-def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None):
+def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
+    """Chạy benchmark từ cao xuống thấp (descending), có timeout.
+    
+    Args:
+        timeout_sec: timeout tính bằng giây (30-50s cho lần đầu, 600-900s cho retry)
+    """
     edges, dist2_pairs = get_graph_data(G)
     lower_bound = compute_lower_bound(G, h=h, k=k)
     if max_span is None:
@@ -130,7 +125,20 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None):
         max_span = lower_bound
 
     start_time = time.time()
-    for s in range(lower_bound, max_span + 1):
+    # Tìm kiếm từ cao xuống thấp (descending)
+    for s in range(max_span, lower_bound - 1, -1):
+        # Kiểm tra timeout
+        if time.time() - start_time > timeout_sec:
+            return {
+                "Graph": graph_name,
+                "n": n,
+                "var": None,
+                "clause": None,
+                "time": round(time.time() - start_time, 6),
+                "lambda": None,
+                "status": "TIMEOUT",
+            }
+
         cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s)
         if cnf is None:
             continue
@@ -312,7 +320,7 @@ def main():
     for n in range(3, 51):
         G = nx.cycle_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span)
+        res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=45)
         c_results.append(res)
         if n % 5 == 0 or n <= 10:
             log(f"Hoàn thành C_{n} (lambda={res['lambda']})")
@@ -322,7 +330,7 @@ def main():
     for n in range(3, 13):
         G = nx.complete_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span)
+        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=120)
         k_results.append(res)
         if n % 5 == 0 or n <= 10:
             log(f"Hoàn thành K_{n} (lambda={res['lambda']})")
@@ -334,7 +342,7 @@ def main():
         num_nodes = 2 ** n
         G = nx.convert_node_labels_to_integers(G)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span)
+        res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=60)
         q_results.append(res)
         log(f"Hoàn thành Q_{n} (lambda={res['lambda']})")
 
