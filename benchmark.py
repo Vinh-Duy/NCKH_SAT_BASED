@@ -101,7 +101,7 @@ def compute_lower_bound(G, h=2, k=1):
 
 
 def estimate_upper_bound(G, h=2, k=1):
-    """Upper bound = |V| + (max_degree)^2 theo gợi ý từ cô."""
+    """Upper bound = |V| + (max_degree)^2 theo gợi ý."""
     n = G.number_of_nodes()
     if n == 0:
         return 0
@@ -112,9 +112,7 @@ def estimate_upper_bound(G, h=2, k=1):
 
 def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
     """Chạy benchmark từ cao xuống thấp (descending), có timeout.
-    
-    Args:
-        timeout_sec: timeout tính bằng giây (30-50s cho lần đầu, 600-900s cho retry)
+       timeout tính bằng giây (30-50s cho lần đầu, 600-900s cho retry)
     """
     edges, dist2_pairs = get_graph_data(G)
     lower_bound = compute_lower_bound(G, h=h, k=k)
@@ -221,7 +219,6 @@ def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qu
 
 
 def export_separate_files(c_results, k_results, q_results):
-    """Export results into separate files for each graph family."""
     keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
     
     def create_file(results, prefix):
