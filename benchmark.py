@@ -313,7 +313,7 @@ def main():
     log("Lưu ý: Có thể mất vài lúc vì n lớn.\n")
 
     # Cycle graphs C_n từ n=3 đến n=50
-    log("--- Đồ thị chu trình C_n (n=3..50) ---")
+    log("Đồ thị chu trình C_n (n=3..50)")
     for n in range(3, 51):
         G = nx.cycle_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
@@ -323,7 +323,7 @@ def main():
             log(f"Hoàn thành C_{n} (lambda={res['lambda']})")
 
     # Complete graphs K_n từ n=3 đến n=12
-    log("\n--- Đồ thị đầy đủ K_n (n=3..12) ---")
+    log("\nĐồ thị đầy đủ K_n (n=3..12)")
     for n in range(3, 13):
         G = nx.complete_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
@@ -333,7 +333,7 @@ def main():
             log(f"Hoàn thành K_{n} (lambda={res['lambda']})")
 
     # Hypercube Q_n từ n=2 đến n=6
-    log("\n--- Đồ thị siêu khối Q_n (n=2..6) ---")
+    log("\nĐồ thị siêu khối Q_n (n=2..6)")
     for n in range(2, 7):
         G = nx.hypercube_graph(n)
         num_nodes = 2 ** n
@@ -343,12 +343,12 @@ def main():
         q_results.append(res)
         log(f"Hoàn thành Q_{n} (lambda={res['lambda']})")
 
-    log("\n=== PHÂN TÍCH PATTERN ===")
-    log("\n--- Đồ thị chu trình C_n ---")
+    log("\n")
+    log("\nĐồ thị chu trình C_n")
     analyze_pattern(c_results)
-    log("\n--- Đồ thị đầy đủ K_n ---")
+    log("\nĐồ thị đầy đủ K_n")
     analyze_pattern(k_results)
-    log("\n--- Đồ thị siêu khối Q_n ---")
+    log("\nĐồ thị siêu khối Q_n")
     analyze_pattern(q_results)
     
     c_csv, c_excel, k_csv, k_excel, q_csv, q_excel = export_separate_files(c_results, k_results, q_results)
