@@ -1,0 +1,36 @@
+Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...
+Lưu ý: Có thể mất vài lúc vì n lớn.
+
+--- Đồ thị chu trình C_n (n=3..50) ---
+Hoàn thành C_3 (lambda=4)
+Hoàn thành C_4 (lambda=4)
+Hoàn thành C_5 (lambda=4)
+Hoàn thành C_6 (lambda=4)
+Hoàn thành C_7 (lambda=4)
+Hoàn thành C_8 (lambda=4)
+Hoàn thành C_9 (lambda=4)
+Hoàn thành C_10 (lambda=4)
+Hoàn thành C_15 (lambda=4)
+Hoàn thành C_20 (lambda=4)
+Hoàn thành C_25 (lambda=4)
+Hoàn thành C_30 (lambda=4)
+Hoàn thành C_35 (lambda=4)
+Hoàn thành C_40 (lambda=4)
+Hoàn thành C_45 (lambda=4)
+Hoàn thành C_50 (lambda=4)
+
+--- Đồ thị đầy đủ K_n (n=3..12) ---
+Hoàn thành K_3 (lambda=4)
+Hoàn thành K_4 (lambda=6)
+Hoàn thành K_5 (lambda=8)
+Hoàn thành K_6 (lambda=10)
+Hoàn thành K_7 (lambda=12)
+Hoàn thành K_8 (lambda=14)
+Hoàn thành K_9 (lambda=16)
+Hoàn thành K_10 (lambda=18)
+
+--- Đồ thị siêu khối Q_n (n=2..6) ---
+Hoàn thành Q_2 (lambda=4)
+Hoàn thành Q_3 (lambda=6)
+Hoàn thành Q_4 (lambda=7)
+Hoàn thành Q_5 (lambda=8)

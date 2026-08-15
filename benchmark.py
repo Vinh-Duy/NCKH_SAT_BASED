@@ -3,6 +3,12 @@ import time
 from pathlib import Path
 
 import networkx as nx
+
+
+def log(message=""):
+    print(message)
+    with open("benchmark_run.log", "a", encoding="utf-8") as f:
+        f.write(str(message) + "\n")
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from pysat.solvers import Glucose3
@@ -206,37 +212,144 @@ def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qu
     return csv_path, Path(excel_filename)
 
 
+def export_separate_files(c_results, k_results, q_results):
+    """Export results into separate files for each graph family."""
+    keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+    
+    def create_file(results, prefix):
+        csv_filename = f"ket_qua_{prefix}.csv"
+        excel_filename = f"ket_qua_{prefix}.xlsx"
+        
+        csv_path = Path(csv_filename)
+        with open(csv_path, mode="w", newline="") as file:
+            writer = csv.DictWriter(file, fieldnames=keys)
+            writer.writeheader()
+            writer.writerows(results)
+        
+        wb = Workbook()
+        ws = wb.active
+        ws.title = f"SAT {prefix}"
+        
+        header_fill = PatternFill("solid", fgColor="4472C4")
+        header_font = Font(color="FFFFFF", bold=True)
+        thin = Side(style="thin", color="D9D9D9")
+        border = Border(left=thin, right=thin, top=thin, bottom=thin)
+        
+        ws.append(keys)
+        for row in results:
+            ws.append([row.get(k) for k in keys])
+        
+        for cell in ws[1]:
+            cell.fill = header_fill
+            cell.font = header_font
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = border
+        
+        for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=len(keys)):
+            for cell in row:
+                cell.border = border
+                cell.alignment = Alignment(horizontal="center", vertical="center")
+        
+        ws.freeze_panes = "A2"
+        ws.auto_filter.ref = ws.dimensions
+        ws.column_dimensions["A"].width = 16
+        ws.column_dimensions["B"].width = 10
+        ws.column_dimensions["C"].width = 12
+        ws.column_dimensions["D"].width = 12
+        ws.column_dimensions["E"].width = 14
+        ws.column_dimensions["F"].width = 12
+        ws.column_dimensions["G"].width = 12
+        
+        wb.save(excel_filename)
+        return csv_path, Path(excel_filename)
+    
+    c_csv, c_excel = create_file(c_results, "C")
+    k_csv, k_excel = create_file(k_results, "K")
+    q_csv, q_excel = create_file(q_results, "Q")
+    
+    return (c_csv, c_excel, k_csv, k_excel, q_csv, q_excel)
+
+
+def analyze_pattern(results):
+    """Phân tích pattern lambda theo n, đặc biệt cho n>5 và n>11."""
+    log("\n=== PHÂN TÍCH PATTERN ===")
+    by_graph_type = {}
+    for r in results:
+        if r["lambda"] is not None:
+            graph_type = r["Graph"].split("_")[0]
+            if graph_type not in by_graph_type:
+                by_graph_type[graph_type] = []
+            by_graph_type[graph_type].append((r["n"], r["lambda"]))
+    
+    for graph_type in sorted(by_graph_type.keys()):
+        pairs = sorted(by_graph_type[graph_type], key=lambda x: x[0])
+        log(f"\n{graph_type}:")
+        small = [p for p in pairs if p[0] <= 5]
+        medium = [p for p in pairs if 5 < p[0] <= 11]
+        large = [p for p in pairs if p[0] > 11]
+        if small:
+            log(f"  n <= 5: {small}")
+        if medium:
+            log(f"  5 < n <= 11: {medium}")
+        if large:
+            log(f"  n > 11: {large}")
+            if len(large) >= 2:
+                diffs = [large[i+1][1] - large[i][1] for i in range(len(large)-1)]
+                log(f"    Chênh lệch lambda: {diffs}")
+
+
 def main():
-    results = []
+    Path("benchmark_run.log").write_text("", encoding="utf-8")
+    c_results = []
+    k_results = []
+    q_results = []
 
-    print("Chạy benchmark SAT cho các đồ thị chuẩn")
+    log("Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...")
+    log("Lưu ý: Có thể mất vài lúc vì n lớn.\n")
 
-    for n in range(3, 11):
+    # Cycle graphs C_n từ n=3 đến n=50
+    log("--- Đồ thị chu trình C_n (n=3..50) ---")
+    for n in range(3, 51):
         G = nx.cycle_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
         res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span)
-        results.append(res)
-        print(f"Hoàn thành C_{n}")
+        c_results.append(res)
+        if n % 5 == 0 or n <= 10:
+            log(f"Hoàn thành C_{n} (lambda={res['lambda']})")
 
-    for n in range(3, 8):
+    # Complete graphs K_n từ n=3 đến n=12
+    log("\n--- Đồ thị đầy đủ K_n (n=3..12) ---")
+    for n in range(3, 13):
         G = nx.complete_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
         res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span)
-        results.append(res)
-        print(f"Hoàn thành K_{n}")
+        k_results.append(res)
+        if n % 5 == 0 or n <= 10:
+            log(f"Hoàn thành K_{n} (lambda={res['lambda']})")
 
-    for n in range(2, 5):
+    # Hypercube Q_n từ n=2 đến n=6
+    log("\n--- Đồ thị siêu khối Q_n (n=2..6) ---")
+    for n in range(2, 7):
         G = nx.hypercube_graph(n)
         num_nodes = 2 ** n
         G = nx.convert_node_labels_to_integers(G)
         max_span = estimate_upper_bound(G, h=2, k=1)
         res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span)
-        results.append(res)
-        print(f"Hoàn thành Q_{n}")
+        q_results.append(res)
+        log(f"Hoàn thành Q_{n} (lambda={res['lambda']})")
 
-    csv_path, excel_path = export_excel(results)
-    print(f"\n CSV: {csv_path}")
-    print(f"Excel: {excel_path}")
+    log("\n=== PHÂN TÍCH PATTERN ===")
+    log("\n--- Đồ thị chu trình C_n ---")
+    analyze_pattern(c_results)
+    log("\n--- Đồ thị đầy đủ K_n ---")
+    analyze_pattern(k_results)
+    log("\n--- Đồ thị siêu khối Q_n ---")
+    analyze_pattern(q_results)
+    
+    c_csv, c_excel, k_csv, k_excel, q_csv, q_excel = export_separate_files(c_results, k_results, q_results)
+    log(f"\nXONG! Cycle graphs: {c_csv} & {c_excel}")
+    log(f"XONG! Complete graphs: {k_csv} & {k_excel}")
+    log(f"XONG! Hypercube graphs: {q_csv} & {q_excel}")
 
 
 if __name__ == "__main__":
