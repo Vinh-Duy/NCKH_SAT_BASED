@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 80, in <module>
+    res = run_benchmark(f'K_{n}', G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout)
+  File "<string>", line 54, in run_benchmark
+    cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s)
+    ^^^^^^^
+ValueError: too many values to unpack (expected 2)
+ Chạy K_n (n=3..50) 
