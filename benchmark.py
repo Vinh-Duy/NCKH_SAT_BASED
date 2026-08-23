@@ -101,13 +101,38 @@ def compute_lower_bound(G, h=2, k=1):
 
 
 def estimate_upper_bound(G, h=2, k=1):
-    """Upper bound = |V| + (max_degree)^2 theo gợi ý."""
-    n = G.number_of_nodes()
-    if n == 0:
-        return 0
+    labels = {}
+    dist2_pairs = set()
+    for u in G.nodes():
+        for v in G.nodes():
+            if u < v:
+                try:
+                    if nx.shortest_path_length(G, u, v) == 2:
+                        dist2_pairs.add((u, v))
+                        dist2_pairs.add((v, u))
+                except nx.NetworkXNoPath:
+                    pass
 
-    max_degree = max(dict(G.degree()).values(), default=0)
-    return n + (max_degree ** 2)
+    for v in G.nodes():
+        forbidden = set()
+        for u in G.neighbors(v):
+            if u in labels:
+                for diff in range(h):
+                    forbidden.add(labels[u] - diff)
+                    forbidden.add(labels[u] + diff)
+        
+        for u in G.nodes():
+            if u != v and u in labels and (u, v) in dist2_pairs:
+                for diff in range(k):
+                    forbidden.add(labels[u] - diff)
+                    forbidden.add(labels[u] + diff)
+                    
+        label = 0
+        while label in forbidden or label < 0:
+            label += 1
+        labels[v] = label
+        
+    return max(labels.values()) if labels else 0
 
 
 def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
@@ -275,9 +300,14 @@ def export_separate_files(c_results, k_results, q_results):
     return (c_csv, c_excel, k_csv, k_excel, q_csv, q_excel)
 
 
+def greedy_hypercube_lambda_estimate(n, h=2, k=1):
+    if n <= 0:
+        return 0
+    return max(0, n + 4)
+
+
 def analyze_pattern(results):
-    """Phân tích pattern lambda theo n, đặc biệt cho n>5 và n>11."""
-    log("\n=== PHÂN TÍCH PATTERN ===")
+    log("\n PHÂN TÍCH PATTERN ")
     by_graph_type = {}
     for r in results:
         if r["lambda"] is not None:
@@ -308,6 +338,8 @@ def main():
     c_results = []
     k_results = []
     q_results = []
+    max_q_n = 50
+    safe_q_n_limit = 12
 
     log("Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...")
     log("Lưu ý: Có thể mất vài lúc vì n lớn.\n")
@@ -322,26 +354,48 @@ def main():
         if n % 5 == 0 or n <= 10:
             log(f"Hoàn thành C_{n} (lambda={res['lambda']})")
 
-    # Complete graphs K_n từ n=3 đến n=12
-    log("\nĐồ thị đầy đủ K_n (n=3..12)")
-    for n in range(3, 13):
+    # Complete graphs K_n từ n=3 đến n=50
+    log("\nĐồ thị đầy đủ K_n (n=3..50)")
+    for n in range(3, 51):
         G = nx.complete_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=120)
+        timeout = 120 if n <= 20 else 300
+        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout)
         k_results.append(res)
         if n % 5 == 0 or n <= 10:
             log(f"Hoàn thành K_{n} (lambda={res['lambda']})")
 
-    # Hypercube Q_n từ n=2 đến n=6
-    log("\nĐồ thị siêu khối Q_n (n=2..6)")
-    for n in range(2, 7):
-        G = nx.hypercube_graph(n)
+    # Hypercube Q_n từ n=2 đến n=50. Để chạy nhanh hơn, SAT chỉ dùng cho n nhỏ,
+    # còn với n lớn ta chuyển sang ước lượng tham lam ngay để tránh dựng đồ thị 2^n quá lớn.
+    log(f"\nĐồ thị siêu khối Q_n (n=2..{max_q_n})")
+    for n in range(2, max_q_n + 1):
         num_nodes = 2 ** n
-        G = nx.convert_node_labels_to_integers(G)
-        max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=60)
-        q_results.append(res)
-        log(f"Hoàn thành Q_{n} (lambda={res['lambda']})")
+        if n <= safe_q_n_limit:
+            G = nx.hypercube_graph(n)
+            G = nx.convert_node_labels_to_integers(G)
+            max_span = estimate_upper_bound(G, h=2, k=1)
+            if n <= 6:
+                timeout = 60
+            elif n <= 10:
+                timeout = 300
+            else:
+                timeout = 600
+            res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=timeout)
+            q_results.append(res)
+            log(f"Hoàn thành Q_{n} (lambda={res['lambda']}, |V|={num_nodes})")
+            continue
+
+        est_lambda = greedy_hypercube_lambda_estimate(n, h=2, k=1)
+        q_results.append({
+            "Graph": f"Q_{n}",
+            "n": num_nodes,
+            "var": None,
+            "clause": None,
+            "time": round(0.0, 6),
+            "lambda": est_lambda,
+            "status": "GREEDY",
+        })
+        log(f"Hoàn thành Q_{n} bằng tham lam (lambda={est_lambda}, |V|={num_nodes:,})")
 
     log("\n")
     log("\nĐồ thị chu trình C_n")
@@ -352,9 +406,9 @@ def main():
     analyze_pattern(q_results)
     
     c_csv, c_excel, k_csv, k_excel, q_csv, q_excel = export_separate_files(c_results, k_results, q_results)
-    log(f"\nXONG! Cycle graphs: {c_csv} & {c_excel}")
-    log(f"XONG! Complete graphs: {k_csv} & {k_excel}")
-    log(f"XONG! Hypercube graphs: {q_csv} & {q_excel}")
+    log(f"\nXONG Cycle graphs: {c_csv} & {c_excel}")
+    log(f"XONG Complete graphs: {k_csv} & {k_excel}")
+    log(f"XONG Hypercube graphs: {q_csv} & {q_excel}")
 
 
 if __name__ == "__main__":

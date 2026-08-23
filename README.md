@@ -70,7 +70,7 @@ python3 visual.py
 
 ## Giải thích ngắn các tham số
 - `h`, `k`: ràng buộc L(h,k). Trong mã ví dụ dùng `h=2, k=1` (bài L(2,1)).
-- `s`: span (số lambda) được thử tăng dần để tìm giá trị nhỏ nhất thỏa ràng buộc.
+- `s`: span (số lambda) được thử từ upper bound giảm dần đến lower bound; lần đầu SAT là giá trị tối ưu.
 
 ## Lỗi thường gặp & khắc phục
 - `KeyError` khi vẽ: do một số đỉnh không có biến True trong model (nhãn = s). Mình đã cập nhật `visual.py` để gán nhãn `s` nếu không tìm thấy biến True.
