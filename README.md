@@ -19,9 +19,8 @@ visualization of label assignments on path graphs.
 | `visual.py` | Solves and displays an $L(2,1)$ labeling for a path graph. |
 | `benchmark.py` | Runs benchmarks for cycle graphs $C_n$, complete graphs $K_n$, and hypercubes $Q_n$. |
 | `benchmark_q_extended.py` | Runs a focused $Q_n$ benchmark with exact SAT results for small dimensions and fast estimates for larger dimensions. |
-| `ket_qua_*.csv` | Benchmark results in CSV format. |
-| `ket_qua_*.xlsx` | Benchmark results formatted as Excel workbooks. |
-| `*.log` | Captured benchmark output and runtime logs. |
+| `results/` | Benchmark results in CSV and Excel formats. |
+| `logs/` | Captured benchmark output and runtime logs. |
 
 ## Requirements
 
@@ -77,10 +76,10 @@ attempt to construct graphs with an impractically large number of vertices.
 
 The benchmark writes:
 
-- `ket_qua_C.csv` and `ket_qua_C.xlsx` for cycle graphs.
-- `ket_qua_K.csv` and `ket_qua_K.xlsx` for complete graphs.
-- `ket_qua_Q.csv` and `ket_qua_Q.xlsx` for hypercubes.
-- `benchmark_run.log` for console output captured during the run.
+- `results/ket_qua_C.csv` and `results/ket_qua_C.xlsx` for cycle graphs.
+- `results/ket_qua_K.csv` and `results/ket_qua_K.xlsx` for complete graphs.
+- `results/ket_qua_Q.csv` and `results/ket_qua_Q.xlsx` for hypercubes.
+- `logs/benchmark_run.log` for console output captured during the run.
 
 The full benchmark can take a substantial amount of time, especially for
 larger complete graphs and hypercubes.
@@ -108,8 +107,8 @@ For example, to solve dimensions 2 through 8 exactly:
 python3 benchmark_q_extended.py --first 2 --last 8 --exact-max-n 8 --timeout 300
 ```
 
-This script writes `ket_qua_Q_extended.csv` and appends runtime information to
-`benchmark_run_q_ext.log`. Rows marked `OPT` are exact SAT results. Rows marked
+This script writes `results/ket_qua_Q_extended.csv` and appends runtime information to
+`logs/benchmark_run_q_ext.log`. Rows marked `OPT` are exact SAT results. Rows marked
 `FEASIBLE_ESTIMATE` are fast estimates and should not be interpreted as proof
 of optimality.
 

@@ -4,10 +4,14 @@ from pathlib import Path
 
 import networkx as nx
 
+RESULTS_DIR = Path("results")
+LOGS_DIR = Path("logs")
+
 
 def log(message=""):
     print(message)
-    with open("benchmark_run.log", "a", encoding="utf-8") as f:
+    LOGS_DIR.mkdir(exist_ok=True)
+    with open(LOGS_DIR / "benchmark_run.log", "a", encoding="utf-8") as f:
         f.write(str(message) + "\n")
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -198,6 +202,9 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
 
 def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qua_SAT.xlsx"):
     keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+    RESULTS_DIR.mkdir(exist_ok=True)
+    csv_filename = RESULTS_DIR / Path(csv_filename).name
+    excel_filename = RESULTS_DIR / Path(excel_filename).name
 
     csv_path = Path(csv_filename)
     with open(csv_path, mode="w", newline="") as file:
@@ -245,10 +252,11 @@ def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qu
 
 def export_separate_files(c_results, k_results, q_results):
     keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+    RESULTS_DIR.mkdir(exist_ok=True)
     
     def create_file(results, prefix):
-        csv_filename = f"ket_qua_{prefix}.csv"
-        excel_filename = f"ket_qua_{prefix}.xlsx"
+        csv_filename = RESULTS_DIR / f"ket_qua_{prefix}.csv"
+        excel_filename = RESULTS_DIR / f"ket_qua_{prefix}.xlsx"
         
         csv_path = Path(csv_filename)
         with open(csv_path, mode="w", newline="") as file:
@@ -334,7 +342,9 @@ def analyze_pattern(results):
 
 
 def main():
-    Path("benchmark_run.log").write_text("", encoding="utf-8")
+    LOGS_DIR.mkdir(exist_ok=True)
+    RESULTS_DIR.mkdir(exist_ok=True)
+    (LOGS_DIR / "benchmark_run.log").write_text("", encoding="utf-8")
     c_results = []
     k_results = []
     q_results = []

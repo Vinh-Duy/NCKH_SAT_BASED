@@ -1,14 +1,20 @@
 import csv
 import argparse
 import time
+from pathlib import Path
+
 import networkx as nx
 from bai_tap_L21 import OrderVars, solve_lhk
 from pysat.solvers import Glucose3
 
+RESULTS_DIR = Path("results")
+LOGS_DIR = Path("logs")
+
 
 def log(message=""):
     print(message)
-    with open("benchmark_run_q_ext.log", "a", encoding="utf-8") as f:
+    LOGS_DIR.mkdir(exist_ok=True)
+    with open(LOGS_DIR / "benchmark_run_q_ext.log", "a", encoding="utf-8") as f:
         f.write(str(message) + "\n")
 
 
@@ -209,6 +215,7 @@ def main():
     parser.add_argument('--timeout', type=int, default=60)
     args = parser.parse_args()
 
+    RESULTS_DIR.mkdir(exist_ok=True)
     log(f"=== Q_n benchmark (n={args.first}..{args.last}) ===")
     log(f"SAT exact through Q_{args.exact_max_n}; larger graphs use fast estimates.\n")
     
@@ -241,7 +248,7 @@ def main():
     log("\n=")
     
     keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'status']
-    csv_path = 'ket_qua_Q_extended.csv'
+    csv_path = RESULTS_DIR / 'ket_qua_Q_extended.csv'
     with open(csv_path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
