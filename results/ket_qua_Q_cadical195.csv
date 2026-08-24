@@ -1,0 +1,3 @@
+Graph,n,var,clause,time,lambda,status
+Q_2,4,20,92,0.006308,5,OPT
+Q_3,8,64,464,0.00129,8,OPT
