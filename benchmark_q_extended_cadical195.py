@@ -1,0 +1,261 @@
+import csv
+import argparse
+import time
+from pathlib import Path
+
+import networkx as nx
+from bai_tap_L21 import OrderVars, solve_lhk
+from pysat.solvers import Cadical195
+
+RESULTS_DIR = Path("results")
+LOGS_DIR = Path("logs")
+
+
+def log(message=""):
+    print(message)
+    LOGS_DIR.mkdir(exist_ok=True)
+    with open(LOGS_DIR / "benchmark_run_q_ext_cadical195.log", "a", encoding="utf-8") as f:
+        f.write(str(message) + "\n")
+
+
+def compute_lower_bound(G, h=2, k=1):
+    max_degree = max(dict(G.degree()).values())
+    return max(0, max_degree + h - 1)
+
+
+def estimate_upper_bound(G, h=2, k=1):
+    n = G.number_of_nodes()
+    max_degree = max(dict(G.degree()).values())
+    return n + (max_degree ** 2)
+
+
+def hypercube_constraints(dimension):
+    vertex_count = 2 ** dimension
+    edges = []
+    dist2_pairs = []
+    for vertex in range(vertex_count):
+        for bit in range(dimension):
+            neighbor = vertex ^ (1 << bit)
+            if vertex < neighbor:
+                edges.append((vertex, neighbor))
+        for first_bit in range(dimension):
+            for second_bit in range(first_bit + 1, dimension):
+                distance_two = vertex ^ (1 << first_bit) ^ (1 << second_bit)
+                if vertex < distance_two:
+                    dist2_pairs.append((vertex, distance_two))
+    return vertex_count, edges, dist2_pairs
+
+
+def estimated_cnf_size(dimension, span, h=2, k=1):
+    """Count the order-encoding variables and clauses without building CNF."""
+    vertex_count = 2 ** dimension
+    edge_count = vertex_count * dimension // 2
+    distance_two_count = vertex_count * dimension * (dimension - 1) // 4
+
+    monotone_clauses = vertex_count * max(span - 1, 0)
+
+    def clauses_per_pair(distance):
+        return sum(
+            min(span, label + distance - 1)
+            - max(0, label - distance + 1)
+            + 1
+            for label in range(span + 1)
+        )
+
+    edge_clauses = edge_count * clauses_per_pair(h)
+    distance_two_clauses = distance_two_count * clauses_per_pair(k)
+    return vertex_count * span, monotone_clauses + edge_clauses + distance_two_clauses
+
+
+def greedy_feasible_labeling(G, h=2, k=1):
+    labels = {}
+    n = G.number_of_nodes()
+    
+    dist2_pairs = set()
+    for u in G.nodes():
+        for v in G.nodes():
+            if u < v:
+                try:
+                    d = nx.shortest_path_length(G, u, v)
+                    if d == 2:
+                        dist2_pairs.add((min(u,v), max(u,v)))
+                except:
+                    pass
+    
+    order = list(nx.bfs_tree(G, 0).nodes())
+    
+    for v in order:
+        forbidden = set()
+        for u in G.neighbors(v):
+            if u in labels:
+                label_u = labels[u]
+                for diff in range(h):
+                    if label_u - diff >= 0:
+                        forbidden.add(label_u - diff)
+                    if label_u + diff >= 0:
+                        forbidden.add(label_u + diff)
+        
+        for u in G.nodes():
+            if u != v and u in labels:
+                if (min(u,v), max(u,v)) in dist2_pairs:
+                    label_u = labels[u]
+                    for diff in range(k):
+                        if label_u - diff >= 0:
+                            forbidden.add(label_u - diff)
+                        if label_u + diff >= 0:
+                            forbidden.add(label_u + diff)
+        
+        label = 0
+        while label in forbidden:
+            label += 1
+        labels[v] = label
+    
+    lambda_val = max(labels.values()) if labels else 0
+    return lambda_val, labels
+
+
+def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
+                  constraints=None):
+    
+    start_time = time.time()
+    
+    if max_span is None:
+        max_span = estimate_upper_bound(G, h, k)
+    
+    lower_bound = compute_lower_bound(G, h, k)
+
+    if constraints is None:
+        edges = list(G.edges())
+        dist2_pairs = []
+        for u in G.nodes():
+            for v in G.nodes():
+                if u < v and nx.shortest_path_length(G, u, v) == 2:
+                    dist2_pairs.append((u, v))
+    else:
+        edges, dist2_pairs = constraints
+    
+    low = lower_bound
+    high = max_span
+    best_result = None
+    while low <= high:
+        s = (low + high) // 2
+        if time.time() - start_time > timeout_sec:
+            log(f"  → SAT timeout after {round(time.time() - start_time, 2)}s, using greedy feasible...")
+            greedy_start = time.time()
+            feasible_lambda, _ = greedy_feasible_labeling(G, h, k)
+            greedy_time = time.time() - greedy_start
+            total_time = round(time.time() - start_time, 6)
+            
+            return best_result or {
+                'Graph': graph_name, 'n': n, 'var': None, 'clause': None,
+                'time': total_time, 'lambda': feasible_lambda, 'status': 'TIMEOUT',
+            }
+        
+        try:
+            solve_result = solve_lhk(n, edges, dist2_pairs, h, k, s)
+            if isinstance(solve_result, tuple):
+                cnf, ov = solve_result
+            else:
+                cnf = solve_result
+                ov = OrderVars(n, s)
+            if cnf is None:
+                continue
+            solver = Cadical195()
+            solver.append_formula(cnf)
+            
+            if solver.solve():
+                model = solver.get_model()
+                labels = {}
+                for v in range(n):
+                    for i in range(s):
+                        if ov.x[v][i] in model:
+                            labels[v] = i
+                            break
+                
+                solver.delete()
+                best_result = {
+                    'Graph': graph_name, 'n': n, 'var': ov.next_var - 1, 'clause': len(cnf),
+                    'time': round(time.time() - start_time, 6), 'lambda': s, 'status': 'OPT',
+                }
+                high = s - 1
+                continue
+            
+            solver.delete()
+            low = s + 1
+        except Exception as e:
+            log(f"Error in {graph_name}: {e}")
+            low = s + 1
+    
+    return best_result or {
+        'Graph': graph_name, 'n': n, 'var': None, 'clause': None,
+        'time': round(time.time() - start_time, 6), 'lambda': None, 'status': 'UNSOLVED',
+    }
+
+
+def estimated_result(dimension):
+    span = max(0, dimension + 4)
+    variables, clauses = estimated_cnf_size(dimension, span)
+    return {
+        'Graph': f'Q_{dimension}',
+        'n': 2 ** dimension,
+        'var': variables,
+        'clause': clauses,
+        'time': 0.0,
+        'lambda': span,
+        'status': 'FEASIBLE_ESTIMATE',
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Benchmark L(2,1) on Q_n with CaDiCaL 1.95')
+    parser.add_argument('--first', type=int, default=11)
+    parser.add_argument('--last', type=int, default=50)
+    parser.add_argument('--exact-max-n', type=int, default=6,
+                        help='Run SAT only through this dimension; larger Q_n use ESTIMATE')
+    parser.add_argument('--timeout', type=int, default=60)
+    args = parser.parse_args()
+
+    RESULTS_DIR.mkdir(exist_ok=True)
+    log(f"=== Q_n benchmark (n={args.first}..{args.last}) ===")
+    log(f"SAT exact through Q_{args.exact_max_n}; larger graphs use fast estimates.\n")
+    
+    q_results = []
+    
+    for n in range(args.first, args.last + 1):
+        num_nodes = 2 ** n
+        log(f"Starting Q_{n} (2^{n} = {num_nodes} vertices)...")
+        if n > args.exact_max_n:
+            res = estimated_result(n)
+        else:
+            num_nodes, edges, dist2_pairs = hypercube_constraints(n)
+            G = nx.Graph()
+            G.add_nodes_from(range(num_nodes))
+            G.add_edges_from(edges)
+            res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1,
+                                max_span=estimate_upper_bound(G),
+                                timeout_sec=args.timeout,
+                                constraints=(edges, dist2_pairs))
+        q_results.append(res)
+        
+        status_msg = f"Q_{n} (|V|={num_nodes}): "
+        if res['status'] == 'OPT':
+            status_msg += f"lambda={res['lambda']}, time={res['time']}s"
+        else:
+            status_msg += f"status={res['status']}, time={res['time']}s"
+        
+        log(status_msg)
+    
+    log("\n=")
+    
+    keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'status']
+    csv_path = RESULTS_DIR / 'ket_qua_Q_extended_cadical195.csv'
+    with open(csv_path, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(q_results)
+    
+    log(f"Exported: {csv_path}")
+
+
+if __name__ == '__main__':
+    main()
