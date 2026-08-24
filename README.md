@@ -19,6 +19,8 @@ visualization of label assignments on path graphs.
 | `visual.py` | Solves and displays an $L(2,1)$ labeling for a path graph. |
 | `benchmark.py` | Runs benchmarks for cycle graphs $C_n$, complete graphs $K_n$, and hypercubes $Q_n$. |
 | `benchmark_q_extended.py` | Runs a focused $Q_n$ benchmark with exact SAT results for small dimensions and fast estimates for larger dimensions. |
+| `benchmark_cadical195.py` | Runs the same SAT model with CaDiCaL 1.95 and writes separate comparison results. |
+| `benchmark_q_extended_cadical195.py` | Runs the extended $Q_n$ benchmark with CaDiCaL 1.95 and separate results. |
 | `results/` | Benchmark results in CSV and Excel formats. |
 | `logs/` | Captured benchmark output and runtime logs. |
 
@@ -111,6 +113,20 @@ This script writes `results/ket_qua_Q_extended.csv` and appends runtime informat
 `logs/benchmark_run_q_ext.log`. Rows marked `OPT` are exact SAT results. Rows marked
 `FEASIBLE_ESTIMATE` are fast estimates and should not be interpreted as proof
 of optimality.
+
+## Run the CaDiCaL 1.95 Benchmark
+
+Run a separate benchmark with CaDiCaL 1.95 so the existing Glucose3 results are
+preserved:
+
+```bash
+python3 benchmark_cadical195.py
+```
+
+The script runs the same `C_n`, `K_n`, and `Q_n` ranges as `benchmark.py`,
+through `n=50`, using CaDiCaL 1.95. Results are written to separate
+`results/ket_qua_<graph>_cadical195.csv` files, with runtime details in
+`logs/benchmark_cadical195.log`.
 
 ## Result Columns
 
