@@ -6,7 +6,8 @@ from pathlib import Path
 import networkx as nx
 from pysat.solvers import Cadical195
 
-from bai_tap_L21 import solve_lhk
+from bai_tap_L21 import OrderVars, solve_lhk
+from validation import labels_from_model, validate_labeling
 
 
 RESULTS_DIR = Path("results")
@@ -68,19 +69,33 @@ def run_benchmark(graph_name, graph, timeout_sec=60):
             return result_row(graph_name, graph.number_of_nodes(), start_time,
                               status="TIMEOUT")
 
-        cnf = solve_lhk(
+        solve_result = solve_lhk(
             graph.number_of_nodes(), edges, dist2_pairs, 2, 1, span
         )
+        if isinstance(solve_result, tuple):
+            cnf, order_vars = solve_result
+        else:
+            cnf = solve_result
+            order_vars = OrderVars(graph.number_of_nodes(), span)
         if cnf is None:
             continue
 
         with Cadical195() as solver:
             solver.append_formula(cnf)
             if solver.solve():
+                labels = labels_from_model(
+                    graph.number_of_nodes(), span, solver.get_model(), order_vars
+                )
+                valid, errors = validate_labeling(
+                    graph.number_of_nodes(), edges, dist2_pairs, span, labels
+                )
+                if not valid:
+                    log(f"Invalid SAT labeling for {graph_name}: {errors}")
+                    continue
                 return {
                     "Graph": graph_name,
                     "n": graph.number_of_nodes(),
-                    "var": graph.number_of_nodes() * span,
+                    "var": order_vars.next_var - 1,
                     "clause": len(cnf),
                     "time": round(time.time() - start_time, 6),
                     "lambda": span,

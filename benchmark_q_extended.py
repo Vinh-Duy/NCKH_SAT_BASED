@@ -6,6 +6,7 @@ from pathlib import Path
 import networkx as nx
 from bai_tap_L21 import OrderVars, solve_lhk
 from pysat.solvers import Glucose3
+from validation import labels_from_model, validate_labeling
 
 RESULTS_DIR = Path("results")
 LOGS_DIR = Path("logs")
@@ -165,13 +166,15 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
             solver.append_formula(cnf)
             
             if solver.solve():
-                model = solver.get_model()
-                labels = {}
-                for v in range(n):
-                    for i in range(s):
-                        if ov.x[v][i] in model:
-                            labels[v] = i
-                            break
+                labels = labels_from_model(n, s, solver.get_model(), ov)
+                valid, errors = validate_labeling(
+                    n, edges, dist2_pairs, s, labels, h=h, k=k
+                )
+                if not valid:
+                    log(f"Invalid SAT labeling for {graph_name}: {errors}")
+                    solver.delete()
+                    low = s + 1
+                    continue
                 
                 solver.delete()
                 best_result = {

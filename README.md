@@ -21,6 +21,7 @@ visualization of label assignments on path graphs.
 | `benchmark_q_extended.py` | Runs a focused $Q_n$ benchmark with exact SAT results for small dimensions and fast estimates for larger dimensions. |
 | `benchmark_cadical195.py` | Runs the same SAT model with CaDiCaL 1.95 and writes separate comparison results. |
 | `benchmark_q_extended_cadical195.py` | Runs the extended $Q_n$ benchmark with CaDiCaL 1.95 and separate results. |
+| `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
 | `results/` | Benchmark results in CSV and Excel formats. |
 | `logs/` | Captured benchmark output and runtime logs. |
 
@@ -141,6 +142,65 @@ Each CSV file contains the following columns:
 | `time` | Solver runtime in seconds. |
 | `lambda` | Computed span or estimated span. |
 | `status` | Usually `OPT`, `TIMEOUT`, `UNSOLVED`, or `FEASIBLE_ESTIMATE`. |
+
+## Validate a Labeling
+
+Use `validate_labeling` to check an instance independently from the SAT solver.
+The span `m` is an upper bound, so labels must be integers in `0..m`.
+
+Run the following command from the project directory to validate one known
+labeling manually:
+
+```bash
+python3 -c "from validation import validate_labeling; print(validate_labeling(3, [(0,1),(1,2),(0,2)], [], 4, {0:0,1:2,2:4}, h=2, k=1))"
+```
+
+Expected output:
+
+```text
+(True, [])
+```
+
+The result is a pair `(valid, errors)`. `True` and an empty error list mean
+that `m` and `L` satisfy all constraints. To test an invalid labeling, change
+`{0:0,1:2,2:4}` to `{0:0,1:1,2:4}`. The validator will return `False` and
+describe the violated edge constraint.
+
+```python
+from validation import validate_labeling
+
+valid, errors = validate_labeling(
+  n_vertices=3,
+  edges=[(0, 1), (1, 2), (0, 2)],
+  dist2_pairs=[],
+  span=4,
+  labels={0: 0, 1: 2, 2: 4},
+  h=2,
+  k=1,
+)
+print(valid)   # True
+print(errors)  # []
+```
+
+The benchmark scripts decode each SAT model into `L` and run this validation
+before recording an `OPT` result. A failed check is logged and is not accepted
+as a valid result.
+
+To run a real SAT result through the validator, use this small C3 benchmark:
+
+```bash
+python3 -c "import networkx as nx; from benchmark_cadical195 import run_benchmark; print(run_benchmark('C_3', nx.cycle_graph(3), timeout_sec=10))"
+```
+
+The output should contain `lambda: 4` and `status: 'OPT'`. For the complete
+benchmark, run:
+
+```bash
+python3 benchmark_cadical195.py
+```
+
+Each SAT model found by the benchmark is decoded into `L`, validated, and only
+then written to the result CSV.
 
 ## Implementation Notes
 

@@ -16,6 +16,7 @@ def log(message=""):
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from pysat.solvers import Glucose3
+from validation import labels_from_model, validate_labeling
 
 
 class OrderVars:
@@ -175,6 +176,13 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
                 solver.add_clause(clause)
 
             if solver.solve():
+                labels = labels_from_model(n, s, solver.get_model(), ov)
+                valid, errors = validate_labeling(
+                    n, edges, dist2_pairs, s, labels, h=h, k=k
+                )
+                if not valid:
+                    log(f"Invalid SAT labeling for {graph_name}: {errors}")
+                    continue
                 end_time = time.time()
                 time_taken = round(end_time - start_time, 6)
                 num_vars = ov.next_var - 1
