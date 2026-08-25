@@ -159,6 +159,7 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
                 cnf = solve_result
                 ov = OrderVars(n, s)
             if cnf is None:
+                low = s + 1
                 continue
             solver = Glucose3()
             solver.append_formula(cnf)
