@@ -63,7 +63,7 @@ def run_benchmark(graph_name, graph, timeout_sec=60):
     max_span = max(estimate_upper_bound(graph), lower_bound)
     start_time = time.time()
 
-    for span in range(max_span, lower_bound - 1, -1):
+    for span in range(lower_bound, max_span + 1):
         elapsed = time.time() - start_time
         if elapsed > timeout_sec:
             return result_row(graph_name, graph.number_of_nodes(), start_time,

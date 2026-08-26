@@ -141,7 +141,7 @@ def estimate_upper_bound(G, h=2, k=1):
 
 
 def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
-    """Chạy benchmark từ cao xuống thấp (descending), có timeout.
+    """Chạy benchmark từ thấp lên cao (ascending), có timeout.
        timeout tính bằng giây (30-50s cho lần đầu, 600-900s cho retry)
     """
     edges, dist2_pairs = get_graph_data(G)
@@ -153,8 +153,8 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
         max_span = lower_bound
 
     start_time = time.time()
-    # Tìm kiếm từ cao xuống thấp (descending)
-    for s in range(max_span, lower_bound - 1, -1):
+    # Tìm span nhỏ nhất bằng cách thử từ cận dưới lên.
+    for s in range(lower_bound, max_span + 1):
         # Kiểm tra timeout
         if time.time() - start_time > timeout_sec:
             return {
