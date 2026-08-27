@@ -16,7 +16,7 @@ def log(message=""):
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from pysat.solvers import Glucose3
-from validation import labels_from_model, validate_labeling
+from validation import format_bound_history, labels_from_model, validate_labeling
 
 
 class OrderVars:
@@ -141,20 +141,19 @@ def estimate_upper_bound(G, h=2, k=1):
 
 
 def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
-    """Chạy benchmark từ thấp lên cao (ascending), có timeout.
+    """Chạy benchmark từ upper bound giảm dần, có timeout.
        timeout tính bằng giây (30-50s cho lần đầu, 600-900s cho retry)
     """
     edges, dist2_pairs = get_graph_data(G)
-    lower_bound = compute_lower_bound(G, h=h, k=k)
     if max_span is None:
         max_span = estimate_upper_bound(G, h=h, k=k)
 
-    if max_span < lower_bound:
-        max_span = lower_bound
-
     start_time = time.time()
-    # Tìm span nhỏ nhất bằng cách thử từ cận dưới lên.
-    for s in range(lower_bound, max_span + 1):
+    best_result = None
+    bound_history = []
+    # Từ một UB khả thi, hạ dần cho đến khi gặp UNSAT.
+    for s in range(max_span, -1, -1):
+        bound_history.append(s)
         # Kiểm tra timeout
         if time.time() - start_time > timeout_sec:
             return {
@@ -163,8 +162,9 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
                 "var": None,
                 "clause": None,
                 "time": round(time.time() - start_time, 6),
-                "lambda": None,
-                "status": "TIMEOUT",
+                "lambda": best_result["lambda"] if best_result else None,
+                "UB": format_bound_history(bound_history),
+                "status": "FEASIBLE" if best_result else "TIMEOUT",
             }
 
         cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s)
@@ -187,15 +187,22 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
                 time_taken = round(end_time - start_time, 6)
                 num_vars = ov.next_var - 1
                 num_clauses = len(cnf)
-                return {
+                best_result = {
                     "Graph": graph_name,
                     "n": n,
                     "var": num_vars,
                     "clause": num_clauses,
                     "time": time_taken,
                     "lambda": s,
-                    "status": "OPT",
+                    "UB": format_bound_history(bound_history),
+                    "status": "FEASIBLE",
                 }
+                continue
+
+            if best_result is not None:
+                best_result["status"] = "OPT"
+                best_result["UB"] = format_bound_history(bound_history)
+                return best_result
 
     return {
         "Graph": graph_name,
@@ -203,13 +210,14 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
         "var": None,
         "clause": None,
         "time": round(time.time() - start_time, 6),
-        "lambda": None,
-        "status": "UNSOLVED",
+        "lambda": best_result["lambda"] if best_result else None,
+        "UB": format_bound_history(bound_history),
+        "status": "OPT" if best_result else "UNSOLVED",
     }
 
 
 def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qua_SAT.xlsx"):
-    keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+    keys = ["Graph", "n", "var", "clause", "time", "lambda", "UB", "status"]
     RESULTS_DIR.mkdir(exist_ok=True)
     csv_filename = RESULTS_DIR / Path(csv_filename).name
     excel_filename = RESULTS_DIR / Path(excel_filename).name
@@ -259,7 +267,7 @@ def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qu
 
 
 def export_separate_files(c_results, k_results, q_results):
-    keys = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+    keys = ["Graph", "n", "var", "clause", "time", "lambda", "UB", "status"]
     RESULTS_DIR.mkdir(exist_ok=True)
     
     def create_file(results, prefix):
@@ -411,6 +419,7 @@ def main():
             "clause": None,
             "time": round(0.0, 6),
             "lambda": est_lambda,
+            "UB": est_lambda,
             "status": "GREEDY",
         })
         log(f"Hoàn thành Q_{n} bằng tham lam (lambda={est_lambda}, |V|={num_nodes:,})")
