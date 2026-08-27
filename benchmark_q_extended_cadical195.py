@@ -6,7 +6,7 @@ from pathlib import Path
 import networkx as nx
 from bai_tap_L21 import OrderVars, solve_lhk
 from pysat.solvers import Cadical195
-from validation import labels_from_model, validate_labeling
+from validation import format_bound_history, labels_from_model, validate_labeling
 
 RESULTS_DIR = Path("results")
 LOGS_DIR = Path("logs")
@@ -135,21 +135,25 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
     else:
         edges, dist2_pairs = constraints
     
-    low = lower_bound
-    high = max_span
     best_result = None
-    while low <= high:
-        s = (low + high) // 2
+    bound_history = []
+    # Start from a feasible UB and decrease sequentially until UNSAT.
+    for s in range(max_span, -1, -1):
+        bound_history.append(s)
         if time.time() - start_time > timeout_sec:
             log(f"  → SAT timeout after {round(time.time() - start_time, 2)}s, using greedy feasible...")
             greedy_start = time.time()
             feasible_lambda, _ = greedy_feasible_labeling(G, h, k)
             greedy_time = time.time() - greedy_start
             total_time = round(time.time() - start_time, 6)
+            if best_result is not None:
+                best_result['UB'] = format_bound_history(bound_history)
             
             return best_result or {
                 'Graph': graph_name, 'n': n, 'var': None, 'clause': None,
-                'time': total_time, 'lambda': feasible_lambda, 'status': 'TIMEOUT',
+                'time': total_time, 'lambda': feasible_lambda,
+                'UB': format_bound_history(bound_history),
+                'status': 'FEASIBLE' if best_result else 'TIMEOUT',
             }
         
         try:
@@ -179,20 +183,23 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
                 solver.delete()
                 best_result = {
                     'Graph': graph_name, 'n': n, 'var': ov.next_var - 1, 'clause': len(cnf),
-                    'time': round(time.time() - start_time, 6), 'lambda': s, 'status': 'OPT',
+                    'time': round(time.time() - start_time, 6),
+                    'lambda': s, 'UB': format_bound_history(bound_history),
                 }
-                high = s - 1
                 continue
             
             solver.delete()
-            low = s + 1
+            if best_result is not None:
+                best_result['status'] = 'OPT'
+                best_result['UB'] = format_bound_history(bound_history)
+                return best_result
         except Exception as e:
             log(f"Error in {graph_name}: {e}")
-            low = s + 1
     
     return best_result or {
         'Graph': graph_name, 'n': n, 'var': None, 'clause': None,
-        'time': round(time.time() - start_time, 6), 'lambda': None, 'status': 'UNSOLVED',
+        'time': round(time.time() - start_time, 6),
+        'lambda': None, 'UB': format_bound_history(bound_history), 'status': 'UNSOLVED',
     }
 
 
@@ -205,7 +212,7 @@ def estimated_result(dimension):
         'var': variables,
         'clause': clauses,
         'time': 0.0,
-        'lambda': span,
+        'lambda': span, 'UB': span,
         'status': 'FEASIBLE_ESTIMATE',
     }
 
@@ -251,7 +258,7 @@ def main():
     
     log("\n=")
     
-    keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'status']
+    keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'UB', 'status']
     csv_path = RESULTS_DIR / 'ket_qua_Q_extended_cadical195.csv'
     with open(csv_path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=keys)
