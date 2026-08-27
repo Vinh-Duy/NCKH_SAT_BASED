@@ -7,12 +7,12 @@ import networkx as nx
 from pysat.solvers import Cadical195
 
 from bai_tap_L21 import OrderVars, solve_lhk
-from validation import labels_from_model, validate_labeling
+from validation import format_bound_history, labels_from_model, validate_labeling
 
 
 RESULTS_DIR = Path("results")
 LOGS_DIR = Path("logs")
-FIELDS = ["Graph", "n", "var", "clause", "time", "lambda", "status"]
+FIELDS = ["Graph", "n", "var", "clause", "time", "lambda", "UB", "status"]
 
 
 def log(message=""):
@@ -59,15 +59,21 @@ def estimate_upper_bound(graph):
 
 def run_benchmark(graph_name, graph, timeout_sec=60):
     edges, dist2_pairs = get_graph_data(graph)
-    lower_bound = compute_lower_bound(graph)
-    max_span = max(estimate_upper_bound(graph), lower_bound)
+    max_span = estimate_upper_bound(graph)
     start_time = time.time()
+    best_result = None
+    bound_history = []
 
-    for span in range(lower_bound, max_span + 1):
+    for span in range(max_span, -1, -1):
+        bound_history.append(span)
         elapsed = time.time() - start_time
         if elapsed > timeout_sec:
-            return result_row(graph_name, graph.number_of_nodes(), start_time,
-                              status="TIMEOUT")
+            if best_result is not None:
+                best_result["UB"] = format_bound_history(bound_history)
+            return best_result or result_row(
+                graph_name, graph.number_of_nodes(), start_time,
+                status="TIMEOUT", upper_bound=max_span
+            )
 
         solve_result = solve_lhk(
             graph.number_of_nodes(), edges, dist2_pairs, 2, 1, span
@@ -92,21 +98,29 @@ def run_benchmark(graph_name, graph, timeout_sec=60):
                 if not valid:
                     log(f"Invalid SAT labeling for {graph_name}: {errors}")
                     continue
-                return {
+                best_result = {
                     "Graph": graph_name,
                     "n": graph.number_of_nodes(),
                     "var": order_vars.next_var - 1,
                     "clause": len(cnf),
                     "time": round(time.time() - start_time, 6),
                     "lambda": span,
-                    "status": "OPT",
+                    "UB": format_bound_history(bound_history),
+                    "status": "FEASIBLE",
                 }
+                continue
 
-    return result_row(graph_name, graph.number_of_nodes(), start_time,
-                      status="UNSOLVED")
+            if best_result is not None:
+                best_result["status"] = "OPT"
+                best_result["UB"] = format_bound_history(bound_history)
+                return best_result
+
+    return best_result or result_row(graph_name, graph.number_of_nodes(), start_time,
+                                     status="UNSOLVED", upper_bound=max_span)
 
 
-def result_row(graph_name, vertex_count, start_time, status, span=None):
+def result_row(graph_name, vertex_count, start_time, status, span=None,
+               upper_bound=None):
     return {
         "Graph": graph_name,
         "n": vertex_count,
@@ -114,6 +128,7 @@ def result_row(graph_name, vertex_count, start_time, status, span=None):
         "clause": None,
         "time": round(time.time() - start_time, 6),
         "lambda": span,
+        "UB": upper_bound,
         "status": status,
     }
 
