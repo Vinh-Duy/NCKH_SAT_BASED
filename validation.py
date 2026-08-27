@@ -1,6 +1,11 @@
 from collections.abc import Mapping
 
 
+def format_bound_history(bounds):
+    """Format tested upper bounds for storage in a CSV result row."""
+    return " -> ".join(str(bound) for bound in bounds)
+
+
 def labels_from_model(n_vertices, span, model, order_vars):
     model_literals = set(model)
     labels = {}
