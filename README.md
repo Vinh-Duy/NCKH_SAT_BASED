@@ -141,6 +141,7 @@ Each CSV file contains the following columns:
 | `clause` | Number of generated CNF clauses. |
 | `time` | Solver runtime in seconds. |
 | `lambda` | Computed span or estimated span. |
+| `UB` | Full tested upper-bound history, for example `8 -> 7 -> 6 -> 5`. For `OPT`, the last SAT bound is `lambda`; for `FEASIBLE`, it is not proven optimal. |
 | `status` | Usually `OPT`, `TIMEOUT`, `UNSOLVED`, or `FEASIBLE_ESTIMATE`. |
 
 ## Validate a Labeling
@@ -209,10 +210,15 @@ $s$, the encoding creates variables that represent threshold statements such
 as $f(v) \leq i$. CNF clauses enforce monotonicity and prevent labels that are
 too close for adjacent or distance-two vertex pairs.
 
-The main benchmark searches span values from an upper bound down to a lower
-bound. The first satisfiable value found in this descending search is recorded
-as the best result for that run. Timeout and estimate statuses are kept in the
-output so that they can be distinguished from exact optimal SAT results.
+The benchmark starts from a feasible upper bound and tests span values in
+descending order. Each SAT result lowers the current upper bound and the next
+smaller span is tested. The first UNSAT after a SAT result proves the previous
+span is optimal. If a timeout occurs after a feasible result, the row is marked
+`FEASIBLE` rather than `OPT`; estimate statuses are also kept separate from
+exact SAT results.
+
+The `UB` column stores every tested bound in order, including the bound that
+returned `UNSAT` or the bound being tested when a timeout occurred.
 
 ## Troubleshooting
 
