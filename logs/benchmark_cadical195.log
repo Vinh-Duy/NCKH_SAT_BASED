@@ -1,3 +1,24 @@
+Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...
+Lưu ý: Có thể mất vài lúc vì n lớn.
+
+Đồ thị chu trình C_n (n=3..50)
+Hoàn thành C_3 (lambda=4)
+Hoàn thành C_4 (lambda=4)
+Hoàn thành C_5 (lambda=4)
+Hoàn thành C_6 (lambda=4)
+Hoàn thành C_7 (lambda=4)
+Hoàn thành C_8 (lambda=4)
+Hoàn thành C_9 (lambda=4)
+Hoàn thành C_10 (lambda=4)
+Hoàn thành C_15 (lambda=4)
+Hoàn thành C_20 (lambda=4)
+Hoàn thành C_25 (lambda=4)
+Hoàn thành C_30 (lambda=4)
+Hoàn thành C_35 (lambda=4)
+Hoàn thành C_40 (lambda=4)
+Hoàn thành C_45 (lambda=4)
+Hoàn thành C_50 (lambda=4)
+Exported: results/ket_qua_C_cadical195.csv
 
 Đồ thị đầy đủ K_n (n=3..50)
 Hoàn thành K_3 (lambda=4)
@@ -8,12 +29,3 @@ Hoàn thành K_7 (lambda=12)
 Hoàn thành K_8 (lambda=14)
 Hoàn thành K_9 (lambda=16)
 Hoàn thành K_10 (lambda=18)
-Hoàn thành K_15 (lambda=28)
-Hoàn thành K_20 (lambda=38)
-Hoàn thành K_25 (lambda=48)
-Hoàn thành K_30 (lambda=58)
-Hoàn thành K_35 (lambda=68)
-Hoàn thành K_40 (lambda=78)
-Hoàn thành K_45 (lambda=88)
-Hoàn thành K_50 (lambda=98)
-Exported: results/ket_qua_K_cadical195.csv
