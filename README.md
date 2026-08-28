@@ -21,6 +21,7 @@ visualization of label assignments on path graphs.
 | `benchmark_q_extended.py` | Runs a focused $Q_n$ benchmark with exact SAT results for small dimensions and fast estimates for larger dimensions. |
 | `benchmark_cadical195.py` | Runs the same SAT model with CaDiCaL 1.95 and writes separate comparison results. |
 | `benchmark_q_extended_cadical195.py` | Runs the extended $Q_n$ benchmark with CaDiCaL 1.95 and separate results. |
+| `benchmark_hybrid.py` | Runs one combined C/K/Q benchmark using binary bound reduction followed by sequential proof search. |
 | `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
 | `results/` | Benchmark results in CSV and Excel formats. |
 | `logs/` | Captured benchmark output and runtime logs. |
@@ -86,6 +87,50 @@ The benchmark writes:
 
 The full benchmark can take a substantial amount of time, especially for
 larger complete graphs and hypercubes.
+
+To switch an exact instance to a greedy feasible estimate when it exceeds a
+time limit, pass `--timeout` in seconds:
+
+```bash
+python3 benchmark.py --timeout 30
+```
+
+Timed-out instances with a valid SAT result are marked `FEASIBLE`; instances
+without a SAT result are marked `FEASIBLE_ESTIMATE`. Their `UB` column records
+the tested bounds followed by the estimate used as fallback.
+
+## Run the Hybrid Benchmark
+
+The hybrid benchmark writes C, K, and Q results to one CSV file. It first uses
+binary search to reduce a feasible upper bound, then checks smaller bounds
+sequentially until `UNSAT` proves the previous `SAT` bound optimal. The `UB`
+column records the complete tested history, including the search phase:
+
+```text
+B8:UNSAT -> B12:SAT -> S11:UNSAT
+```
+
+Run the complete combined benchmark with:
+
+```bash
+python3 benchmark_hybrid.py
+```
+
+Output:
+
+```text
+results/ket_qua_hybrid.csv
+```
+
+For a smaller run, for example:
+
+```bash
+python3 benchmark_hybrid.py --family ALL --first 3 --last 10 --exact-max-q 5
+```
+
+`OPT` means the sequential phase reached `UNSAT`. `FEASIBLE` means a valid
+labeling was found but the next smaller bound timed out. Q dimensions above
+`--exact-max-q` are marked `FEASIBLE_ESTIMATE` and are not exact SAT results.
 
 ## Run the Extended Hypercube Benchmark
 
