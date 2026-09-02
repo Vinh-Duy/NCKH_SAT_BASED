@@ -94,65 +94,54 @@ def solve_and_validate(vertex_count, edges, dist2_pairs, span):
 def run_hybrid(graph_name, graph, timeout_sec=60):
     edges, dist2_pairs = graph_constraints(graph)
     vertex_count = graph.number_of_nodes()
-    initial_ub = greedy_upper_bound(graph)
+    lower_bound = max(0, max(dict(graph.degree()).values(), default=0) + 1)
+    initial_ub = max(greedy_upper_bound(graph), lower_bound)
     start_time = time.time()
     history = []
     best = None
     best_vars = None
     best_clauses = None
 
-    low = 0
-    high = initial_ub
-    sat_upper = None
-    while low <= high:
-        if time.time() - start_time > timeout_sec:
-            break
-        mid = (low + high) // 2
-        outcome, payload, order_vars, clause_count = solve_and_validate(
-            vertex_count, edges, dist2_pairs, mid
-        )
-        history.append(f"B{mid}:{outcome}")
-        if outcome == "SAT":
-            sat_upper = mid
-            best = mid
-            best_vars = order_vars.next_var - 1
-            best_clauses = clause_count
-            high = mid - 1
-        elif outcome == "UNSAT":
-            low = mid + 1
-        else:
-            log(f"Invalid SAT model for {graph_name}: {payload}")
-            break
-
-    if sat_upper is None:
-        history.append(f"B{initial_ub}:GREEDY")
-        return make_result(
-            graph_name, vertex_count, start_time, initial_ub, history,
-            "FEASIBLE", initial_ub, None
-        )
-
-    # Binary narrows the candidate; sequential search provides the final proof.
-    for span in range(sat_upper - 1, -1, -1):
+    for span in range(initial_ub, lower_bound - 1, -1):
         if time.time() - start_time > timeout_sec:
             return make_result(
                 graph_name, vertex_count, start_time, best, history,
                 "FEASIBLE", best_vars, best_clauses
             )
+
         outcome, payload, order_vars, clause_count = solve_and_validate(
             vertex_count, edges, dist2_pairs, span
         )
         history.append(f"S{span}:{outcome}")
+
         if outcome == "SAT":
             best = span
             best_vars = order_vars.next_var - 1
             best_clauses = clause_count
             continue
+
         if outcome == "UNSAT":
+            if best is None:
+                return make_result(
+                    graph_name, vertex_count, start_time, span, history,
+                    "UNSAT", None, None
+                )
             return make_result(
                 graph_name, vertex_count, start_time, best, history,
                 "OPT", best_vars, best_clauses
             )
+
         log(f"Invalid SAT model for {graph_name}: {payload}")
+        return make_result(
+            graph_name, vertex_count, start_time, best, history,
+            "INVALID", best_vars, best_clauses
+        )
+
+    if best is None:
+        return make_result(
+            graph_name, vertex_count, start_time, initial_ub, history,
+            "FEASIBLE", initial_ub, None
+        )
 
     return make_result(
         graph_name, vertex_count, start_time, best, history,
