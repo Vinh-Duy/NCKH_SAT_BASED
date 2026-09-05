@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 from pysat.solvers import Glucose3
+from bai_tap_L21 import symmetry_breaking_clauses
 
 class OrderVars:
     def __init__(self, n_vertices, s):
@@ -43,10 +44,11 @@ def forbid_close_labels(ov, u, v, t):
             clauses.append(not_eq_literals(ov, u, a) + not_eq_literals(ov, v, b))
     return clauses
 
-def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s):
+def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s, symmetry_kind=None):
     ov = OrderVars(n_vertices, s)
     cnf = []
     cnf += monotone_clauses(ov)
+    cnf += symmetry_breaking_clauses(ov, symmetry_kind)
     for (u, v) in edges:
         cnf += forbid_close_labels(ov, u, v, h)
     for (u, v) in dist2_pairs:
@@ -84,7 +86,7 @@ def chay_va_ve(n=7): # Đang đặt mặc định vẽ P_7
     edges, dist2_pairs = tao_do_thi_duong_Pn(n)
     
     for s in range(10):
-        cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s)
+        cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s, "P")
         if cnf is None: continue
             
         with Glucose3() as solver:
