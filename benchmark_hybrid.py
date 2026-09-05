@@ -67,8 +67,13 @@ def make_result(graph_name, vertex_count, start_time, span, ub_history,
     }
 
 
-def solve_and_validate(vertex_count, edges, dist2_pairs, span):
-    solve_result = solve_lhk(vertex_count, edges, dist2_pairs, 2, 1, span)
+def solve_and_validate(
+    vertex_count, edges, dist2_pairs, span, symmetry_kind=None,
+    remaining_time=None
+):
+    solve_result = solve_lhk(
+        vertex_count, edges, dist2_pairs, 2, 1, span, symmetry_kind
+    )
     if isinstance(solve_result, tuple):
         cnf, order_vars = solve_result
     else:
@@ -79,7 +84,17 @@ def solve_and_validate(vertex_count, edges, dist2_pairs, span):
 
     with Cadical195() as solver:
         solver.append_formula(cnf)
-        if not solver.solve():
+        if remaining_time is not None:
+            # CaDiCaL budgets are conflict/propagation budgets, so use a
+            # small budget per remaining second and let solve_limited stop.
+            budget = max(1_000, int(remaining_time * 50_000))
+            solver.conf_budget(budget)
+            solved = solver.solve_limited(expect_interrupt=True)
+        else:
+            solved = solver.solve()
+        if solved is None:
+            return "TIMEOUT", None, order_vars, len(cnf)
+        if not solved:
             return "UNSAT", None, order_vars, len(cnf)
         labels = labels_from_model(vertex_count, span, solver.get_model(), order_vars)
 
@@ -102,33 +117,40 @@ def run_hybrid(graph_name, graph, timeout_sec=60):
     best_vars = None
     best_clauses = None
 
-    for span in range(initial_ub, lower_bound - 1, -1):
-        if time.time() - start_time > timeout_sec:
+    low = lower_bound
+    high = initial_ub
+    symmetry_kind = graph_name.split("_", 1)[0]
+
+    while low < high:
+        if time.time() - start_time >= timeout_sec:
             return make_result(
-                graph_name, vertex_count, start_time, best, history,
-                "FEASIBLE", best_vars, best_clauses
+                graph_name, vertex_count, start_time, best or high, history,
+                "FEASIBLE",
+                best_vars, best_clauses
             )
 
+        span = (low + high) // 2
+        remaining_time = timeout_sec - (time.time() - start_time)
         outcome, payload, order_vars, clause_count = solve_and_validate(
-            vertex_count, edges, dist2_pairs, span
+            vertex_count, edges, dist2_pairs, span, symmetry_kind,
+            remaining_time
         )
-        history.append(f"S{span}:{outcome}")
+        history.append(f"B{span}:{outcome}")
 
         if outcome == "SAT":
+            high = span
             best = span
             best_vars = order_vars.next_var - 1
             best_clauses = clause_count
             continue
-
         if outcome == "UNSAT":
-            if best is None:
-                return make_result(
-                    graph_name, vertex_count, start_time, span, history,
-                    "UNSAT", None, None
-                )
+            low = span + 1
+            continue
+        if outcome == "TIMEOUT":
             return make_result(
-                graph_name, vertex_count, start_time, best, history,
-                "OPT", best_vars, best_clauses
+                graph_name, vertex_count, start_time, best or high, history,
+                "FEASIBLE",
+                best_vars, best_clauses
             )
 
         log(f"Invalid SAT model for {graph_name}: {payload}")
@@ -137,14 +159,45 @@ def run_hybrid(graph_name, graph, timeout_sec=60):
             "INVALID", best_vars, best_clauses
         )
 
-    if best is None:
-        return make_result(
-            graph_name, vertex_count, start_time, initial_ub, history,
-            "FEASIBLE", initial_ub, None
+    if best is None or best != low:
+        remaining_time = timeout_sec - (time.time() - start_time)
+        outcome, payload, order_vars, clause_count = solve_and_validate(
+            vertex_count, edges, dist2_pairs, low, symmetry_kind,
+            remaining_time
         )
+        history.append(f"B{low}:{outcome}")
+        if outcome == "SAT":
+            best = low
+            best_vars = order_vars.next_var - 1
+            best_clauses = clause_count
+        elif outcome != "UNSAT":
+            return make_result(
+                graph_name, vertex_count, start_time, best or low, history,
+                "FEASIBLE" if best is not None else "TIMEOUT",
+                best_vars, best_clauses
+            )
+
+    if low > lower_bound:
+        remaining_time = timeout_sec - (time.time() - start_time)
+        outcome, payload, order_vars, clause_count = solve_and_validate(
+            vertex_count, edges, dist2_pairs, low - 1, symmetry_kind,
+            remaining_time
+        )
+        history.append(f"S{low - 1}:{outcome}")
+        if outcome == "TIMEOUT":
+            return make_result(
+                graph_name, vertex_count, start_time, best or low, history,
+                "FEASIBLE", best_vars, best_clauses
+            )
+        if outcome != "UNSAT":
+            log(f"Invalid binary result for {graph_name}: {payload}")
+            return make_result(
+                graph_name, vertex_count, start_time, best or low, history,
+                "INVALID", best_vars, best_clauses
+            )
 
     return make_result(
-        graph_name, vertex_count, start_time, best, history,
+        graph_name, vertex_count, start_time, best or low, history,
         "OPT", best_vars, best_clauses
     )
 
@@ -186,6 +239,9 @@ def run_family(args):
         else:
             result = run_hybrid(name, graph, args.timeout)
         results.append(result)
+        with open(args.output, "a", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=FIELDS)
+            writer.writerow(result)
         log(f"{name}: lambda={result['lambda']}, status={result['status']}")
     return results
 
@@ -213,6 +269,12 @@ def main():
     parser.add_argument("--output", default="results/ket_qua_hybrid.csv")
     args = parser.parse_args()
 
+    output_path = Path(args.output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=FIELDS)
+        writer.writeheader()
+
     if args.family == "ALL":
         results = run_all_families(args)
     else:
@@ -222,12 +284,7 @@ def main():
         args.last = default_last if args.last is None else args.last
         results = run_family(args)
 
-    RESULTS_DIR.mkdir(exist_ok=True)
     LOGS_DIR.mkdir(exist_ok=True)
-    with open(args.output, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=FIELDS)
-        writer.writeheader()
-        writer.writerows(results)
     log(f"Exported: {args.output}")
 
 
