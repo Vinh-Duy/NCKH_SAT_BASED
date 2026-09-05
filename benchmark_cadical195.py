@@ -1,3 +1,4 @@
+import argparse
 import csv
 import time
 from itertools import count
@@ -76,7 +77,8 @@ def run_benchmark(graph_name, graph, timeout_sec=60):
             )
 
         solve_result = solve_lhk(
-            graph.number_of_nodes(), edges, dist2_pairs, 2, 1, span
+            graph.number_of_nodes(), edges, dist2_pairs, 2, 1, span,
+            graph_name.split("_", 1)[0]
         )
         if isinstance(solve_result, tuple):
             cnf, order_vars = solve_result
@@ -88,7 +90,19 @@ def run_benchmark(graph_name, graph, timeout_sec=60):
 
         with Cadical195() as solver:
             solver.append_formula(cnf)
-            if solver.solve():
+            remaining_time = timeout_sec - (time.time() - start_time)
+            solver.conf_budget(max(1_000, int(remaining_time * 50_000)))
+            solved = solver.solve_limited(expect_interrupt=True)
+            if solved is None:
+                if best_result is not None:
+                    best_result["status"] = "FEASIBLE"
+                    best_result["UB"] = format_bound_history(bound_history)
+                    return best_result
+                return result_row(
+                    graph_name, graph.number_of_nodes(), start_time,
+                    status="TIMEOUT", upper_bound=max_span
+                )
+            if solved:
                 labels = labels_from_model(
                     graph.number_of_nodes(), span, solver.get_model(), order_vars
                 )
@@ -202,32 +216,37 @@ def export_results(results, prefix):
     return output_path
 
 
-def run_cycle_benchmarks():
+def run_cycle_benchmarks(timeout_sec=60):
     log("Đồ thị chu trình C_n (n=3..50)")
     results = []
     for n in range(3, 51):
         graph = nx.cycle_graph(n)
-        result = run_benchmark(f"C_{n}", graph, timeout_sec=45)
+        result = run_benchmark(f"C_{n}", graph, timeout_sec=timeout_sec)
         results.append(result)
         if n % 5 == 0 or n <= 10:
-            log(f"Hoàn thành C_{n} (lambda={result['lambda']})")
+            log(
+                f"Hoàn thành C_{n} (lambda={result['lambda']}, "
+                f"status={result['status']})"
+            )
     return results
 
 
-def run_complete_benchmarks():
+def run_complete_benchmarks(timeout_sec=60):
     log("\nĐồ thị đầy đủ K_n (n=3..50)")
     results = []
     for n in range(3, 51):
         graph = nx.complete_graph(n)
-        timeout = 120 if n <= 20 else 300
-        result = run_benchmark(f"K_{n}", graph, timeout_sec=timeout)
+        result = run_benchmark(f"K_{n}", graph, timeout_sec=timeout_sec)
         results.append(result)
         if n % 5 == 0 or n <= 10:
-            log(f"Hoàn thành K_{n} (lambda={result['lambda']})")
+            log(
+                f"Hoàn thành K_{n} (lambda={result['lambda']}, "
+                f"status={result['status']})"
+            )
     return results
 
 
-def run_hypercube_benchmarks():
+def run_hypercube_benchmarks(timeout_sec=60):
     max_q_n = 50
     safe_q_n_limit = 12
     log(f"\nĐồ thị siêu khối Q_n (n=2..{max_q_n})")
@@ -236,19 +255,16 @@ def run_hypercube_benchmarks():
         vertex_count = 2 ** n
         if n <= safe_q_n_limit:
             graph = build_graph("Q", n)
-            if n <= 6:
-                timeout = 60
-            elif n <= 10:
-                timeout = 300
-            else:
-                timeout = 600
-            result = run_benchmark(f"Q_{n}", graph, timeout_sec=timeout)
+            result = run_benchmark(f"Q_{n}", graph, timeout_sec=timeout_sec)
             results.append(result)
-            log(f"Hoàn thành Q_{n} (lambda={result['lambda']}, |V|={vertex_count})")
+            log(
+                f"Hoàn thành Q_{n} (lambda={result['lambda']}, "
+                f"status={result['status']}, |V|={vertex_count})"
+            )
             continue
 
         estimated_lambda = greedy_hypercube_lambda_estimate(n)
-        results.append({
+        result = {
             "Graph": f"Q_{n}",
             "n": vertex_count,
             "var": None,
@@ -256,26 +272,27 @@ def run_hypercube_benchmarks():
             "time": 0.0,
             "lambda": estimated_lambda,
             "status": "GREEDY",
-        })
+        }
+        results.append(result)
         log(
-            f"Hoàn thành Q_{n} bằng tham lam (lambda={estimated_lambda}, "
-            f"|V|={vertex_count:,})"
+            f"Hoàn thành Q_{n} bằng tham lam (lambda={result['lambda']}, "
+            f"status={result['status']}, |V|={vertex_count:,})"
         )
     return results
 
 
-def main():
+def main(timeout_sec=60):
     RESULTS_DIR.mkdir(exist_ok=True)
     LOGS_DIR.mkdir(exist_ok=True)
     LOGS_DIR.joinpath("benchmark_cadical195.log").write_text("", encoding="utf-8")
 
     log("Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...")
     log("Lưu ý: Có thể mất vài lúc vì n lớn.\n")
-    c_results = run_cycle_benchmarks()
+    c_results = run_cycle_benchmarks(timeout_sec)
     export_results(c_results, "C")
-    k_results = run_complete_benchmarks()
+    k_results = run_complete_benchmarks(timeout_sec)
     export_results(k_results, "K")
-    q_results = run_hypercube_benchmarks()
+    q_results = run_hypercube_benchmarks(timeout_sec)
     export_results(q_results, "Q")
 
     log("\n")
@@ -293,4 +310,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="CaDiCaL SAT benchmark")
+    parser.add_argument(
+        "--timeout", type=int, default=60,
+        help="Per-graph timeout in seconds (use 600 or 900 for final runs)",
+    )
+    main(parser.parse_args().timeout)
