@@ -663,3 +663,13 @@ Error in Q_2: (0, 0)
 Error in Q_2: (0, 0)
 Error in Q_2: (0, 0)
 Error in Q_2: (0, 0)
+=== Q_n benchmark (n=2..3) ===
+SAT exact through Q_2; larger graphs use fast estimates.
+
+Starting Q_2 (2^2 = 4 vertices)...
+Q_2 (|V|=4): lambda=4, time=0.009552s
+Starting Q_3 (2^3 = 8 vertices)...
+Q_3 (|V|=8): status=FEASIBLE_ESTIMATE, time=0.0s
+
+=
+Exported: results/ket_qua_Q_extended.csv
