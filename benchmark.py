@@ -219,10 +219,6 @@ def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qu
     excel_filename = RESULTS_DIR / Path(excel_filename).name
 
     csv_path = Path(csv_filename)
-    with open(csv_path, mode="w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=keys)
-        writer.writeheader()
-        writer.writerows(results)
 
     wb = Workbook()
     ws = wb.active
@@ -271,10 +267,6 @@ def export_separate_files(c_results, k_results, q_results):
         excel_filename = RESULTS_DIR / f"ket_qua_{prefix}.xlsx"
         
         csv_path = Path(csv_filename)
-        with open(csv_path, mode="w", newline="") as file:
-            writer = csv.DictWriter(file, fieldnames=keys)
-            writer.writeheader()
-            writer.writerows(results)
         
         wb = Workbook()
         ws = wb.active
@@ -326,6 +318,20 @@ def greedy_hypercube_lambda_estimate(n, h=2, k=1):
     return max(0, n + 4)
 
 
+def initialize_csv(path):
+    with open(path, "w", newline="", encoding="utf-8") as file:
+        csv.DictWriter(file, fieldnames=[
+            "Graph", "n", "var", "clause", "time", "lambda", "status"
+        ]).writeheader()
+
+
+def append_csv_row(path, result):
+    with open(path, "a", newline="", encoding="utf-8") as file:
+        csv.DictWriter(file, fieldnames=[
+            "Graph", "n", "var", "clause", "time", "lambda", "status"
+        ]).writerow(result)
+
+
 def analyze_pattern(results):
     log("\n PHÂN TÍCH PATTERN ")
     by_graph_type = {}
@@ -360,6 +366,13 @@ def main(timeout_sec=60):
     c_results = []
     k_results = []
     q_results = []
+    csv_paths = {
+        "C": RESULTS_DIR / "ket_qua_C.csv",
+        "K": RESULTS_DIR / "ket_qua_K.csv",
+        "Q": RESULTS_DIR / "ket_qua_Q.csv",
+    }
+    for path in csv_paths.values():
+        initialize_csv(path)
     max_q_n = 50
     safe_q_n_limit = 12
 
@@ -373,6 +386,7 @@ def main(timeout_sec=60):
         max_span = estimate_upper_bound(G, h=2, k=1)
         res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
         c_results.append(res)
+        append_csv_row(csv_paths["C"], res)
         if n % 5 == 0 or n <= 10:
             log(
                 f"Hoàn thành C_{n} (lambda={res['lambda']}, "
@@ -386,6 +400,7 @@ def main(timeout_sec=60):
         max_span = estimate_upper_bound(G, h=2, k=1)
         res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
         k_results.append(res)
+        append_csv_row(csv_paths["K"], res)
         if n % 5 == 0 or n <= 10:
             log(
                 f"Hoàn thành K_{n} (lambda={res['lambda']}, "
@@ -403,6 +418,7 @@ def main(timeout_sec=60):
             max_span = estimate_upper_bound(G, h=2, k=1)
             res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
             q_results.append(res)
+            append_csv_row(csv_paths["Q"], res)
             log(
                 f"Hoàn thành Q_{n} (lambda={res['lambda']}, "
                 f"status={res['status']}, |V|={num_nodes})"
@@ -420,6 +436,7 @@ def main(timeout_sec=60):
             "status": "GREEDY",
         }
         q_results.append(res)
+        append_csv_row(csv_paths["Q"], res)
         log(
             f"Hoàn thành Q_{n} bằng tham lam (lambda={res['lambda']}, "
             f"status={res['status']}, |V|={num_nodes:,})"
