@@ -243,6 +243,10 @@ def main():
     args = parser.parse_args()
 
     RESULTS_DIR.mkdir(exist_ok=True)
+    csv_path = RESULTS_DIR / 'ket_qua_Q_extended.csv'
+    keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'UB', 'status']
+    with open(csv_path, 'w', newline='', encoding='utf-8') as file:
+        csv.DictWriter(file, fieldnames=keys).writeheader()
     log(f"=== Q_n benchmark (n={args.first}..{args.last}) ===")
     log(f"SAT exact through Q_{args.exact_max_n}; larger graphs use fast estimates.\n")
     
@@ -263,6 +267,8 @@ def main():
                                 timeout_sec=args.timeout,
                                 constraints=(edges, dist2_pairs))
         q_results.append(res)
+        with open(csv_path, 'a', newline='', encoding='utf-8') as file:
+            csv.DictWriter(file, fieldnames=keys).writerow(res)
         
         status_msg = f"Q_{n} (|V|={num_nodes}): "
         if res['status'] == 'OPT':
@@ -273,13 +279,6 @@ def main():
         log(status_msg)
     
     log("\n=")
-    
-    keys = ['Graph', 'n', 'var', 'clause', 'time', 'lambda', 'UB', 'status']
-    csv_path = RESULTS_DIR / 'ket_qua_Q_extended.csv'
-    with open(csv_path, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=keys)
-        writer.writeheader()
-        writer.writerows(q_results)
     
     log(f"Exported: {csv_path}")
 
