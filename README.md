@@ -8,6 +8,14 @@ $L(2,1)$-labeling problem:
 - Vertices at graph distance two must receive different labels.
 - The **span** is the smallest value $s$ for which a valid labeling exists.
 
+The shared CNF builder also supports symmetry breaking. Path instances impose
+$f(0) < f(n-1)$, cycle instances fix vertex 0 to label 0 and order its two
+neighbors, and hypercube instances fix vertex 0 to label 0 and order the
+neighbors corresponding to the cube dimensions. These constraints preserve
+SAT/UNSAT status while removing equivalent labelings from the search. Complete
+graphs keep the unrestricted encoding because these family-specific rules do
+not apply to them.
+
 The project includes exact SAT experiments, benchmark generation, and a
 visualization of label assignments on path graphs.
 
@@ -22,6 +30,7 @@ visualization of label assignments on path graphs.
 | `benchmark_cadical195.py` | Runs the same SAT model with CaDiCaL 1.95 and writes separate comparison results. |
 | `benchmark_q_extended_cadical195.py` | Runs the extended $Q_n$ benchmark with CaDiCaL 1.95 and separate results. |
 | `benchmark_hybrid.py` | Runs one combined C/K/Q benchmark using binary bound reduction followed by sequential proof search. |
+| `plot_results.py` | Reads hybrid benchmark results and plots lambda growth for C, K, and Q graphs. |
 | `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
 | `results/` | Benchmark results in CSV and Excel formats. |
 | `logs/` | Captured benchmark output and runtime logs. |
@@ -31,13 +40,14 @@ visualization of label assignments on path graphs.
 - Python 3.8 or newer
 - `python-sat` (PySAT and the Glucose3 solver)
 - `networkx`
+- `pandas`
 - `matplotlib`
 - `openpyxl`
 
 Install the dependencies directly:
 
 ```bash
-python3 -m pip install python-sat networkx matplotlib openpyxl
+python3 -m pip install python-sat networkx pandas matplotlib openpyxl
 ```
 
 Using a virtual environment is recommended:
@@ -45,7 +55,7 @@ Using a virtual environment is recommended:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install python-sat networkx matplotlib openpyxl
+python3 -m pip install python-sat networkx pandas matplotlib openpyxl
 ```
 
 ## Quick Start
@@ -64,6 +74,22 @@ python3 visual.py
 
 The visualization opens a Matplotlib window and prints the selected span and
 the label assigned to each vertex.
+
+## Plot Hybrid Results
+
+After generating `results/ket_qua_hybrid.csv`, create a three-panel plot for
+cycle, complete, and hypercube graphs:
+
+```bash
+python3 plot_results.py
+```
+
+The script filters rows without a numeric `lambda` value and rows with
+`status=INVALID`. The output is saved to:
+
+```text
+results/bieu_do_lambda.png
+```
 
 ## Run the Main Benchmark
 
@@ -88,11 +114,13 @@ The benchmark writes:
 The full benchmark can take a substantial amount of time, especially for
 larger complete graphs and hypercubes.
 
-To switch an exact instance to a greedy feasible estimate when it exceeds a
-time limit, pass `--timeout` in seconds:
+During development, exact instances use a 60-second per-graph timeout by
+default. To run a final report with a larger budget, pass `--timeout` in
+seconds, typically 600 or 900:
 
 ```bash
-python3 benchmark.py --timeout 30
+python3 benchmark.py --timeout 600
+python3 benchmark_cadical195.py --timeout 900
 ```
 
 Timed-out instances with a valid SAT result are marked `FEASIBLE`; instances
@@ -109,6 +137,11 @@ column records the complete tested history, including the search phase:
 ```text
 B8:UNSAT -> B12:SAT -> S11:UNSAT
 ```
+
+The binary phase uses solver budgets for each bound. The final sequential
+check is limited to the candidate immediately below the binary result. `OPT`
+is emitted only after an UNSAT proof or a proven mathematical lower bound; a
+budget interruption produces `FEASIBLE` or `TIMEOUT`, never `OPT`.
 
 Run the complete combined benchmark with:
 
@@ -128,8 +161,8 @@ For a smaller run, for example:
 python3 benchmark_hybrid.py --family ALL --first 3 --last 10 --exact-max-q 5
 ```
 
-`OPT` means the sequential phase reached `UNSAT`. `FEASIBLE` means a valid
-labeling was found but the next smaller bound timed out. Q dimensions above
+`OPT` means the binary result passed the final sequential UNSAT check.
+`FEASIBLE` means a valid labeling was found but proof was interrupted. Q dimensions above
 `--exact-max-q` are marked `FEASIBLE_ESTIMATE` and are not exact SAT results.
 
 ## Run the Extended Hypercube Benchmark
@@ -148,6 +181,10 @@ Available options:
 --exact-max-n N   Run exact SAT through this dimension (default: 6)
 --timeout SEC     SAT timeout per graph (default: 60)
 ```
+
+The timeout is enforced inside each SAT call with the solver conflict budget,
+not only between successive span values. This keeps the 60-second development
+run responsive while allowing 10-15 minute budgets for final measurements.
 
 For example, to solve dimensions 2 through 8 exactly:
 
