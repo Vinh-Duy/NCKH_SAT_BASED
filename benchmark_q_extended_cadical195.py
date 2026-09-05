@@ -157,7 +157,7 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
             }
         
         try:
-            solve_result = solve_lhk(n, edges, dist2_pairs, h, k, s)
+            solve_result = solve_lhk(n, edges, dist2_pairs, h, k, s, "Q")
             if isinstance(solve_result, tuple):
                 cnf, ov = solve_result
             else:
@@ -169,7 +169,20 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60,
             solver = Cadical195()
             solver.append_formula(cnf)
             
-            if solver.solve():
+            remaining_time = timeout_sec - (time.time() - start_time)
+            solver.conf_budget(max(1_000, int(remaining_time * 50_000)))
+            solved = solver.solve_limited(expect_interrupt=True)
+            if solved is None:
+                if best_result is not None:
+                    best_result['UB'] = format_bound_history(bound_history)
+                    best_result['status'] = 'FEASIBLE'
+                    return best_result
+                return {
+                    'Graph': graph_name, 'n': n, 'var': None, 'clause': None,
+                    'time': round(time.time() - start_time, 6), 'lambda': None,
+                    'UB': format_bound_history(bound_history), 'status': 'TIMEOUT',
+                }
+            if solved:
                 labels = labels_from_model(n, s, solver.get_model(), ov)
                 valid, errors = validate_labeling(
                     n, edges, dist2_pairs, s, labels, h=h, k=k
@@ -223,7 +236,10 @@ def main():
     parser.add_argument('--last', type=int, default=50)
     parser.add_argument('--exact-max-n', type=int, default=6,
                         help='Run SAT only through this dimension; larger Q_n use ESTIMATE')
-    parser.add_argument('--timeout', type=int, default=60)
+    parser.add_argument(
+        '--timeout', type=int, default=60,
+        help='Per-graph timeout in seconds (use 600 or 900 for final runs)',
+    )
     args = parser.parse_args()
 
     RESULTS_DIR.mkdir(exist_ok=True)
