@@ -194,35 +194,24 @@ def analyze_pattern(results):
                 log(f"    Chênh lệch lambda: {differences}")
 
 
-def export_separate_files(c_results, k_results, q_results):
-    RESULTS_DIR.mkdir(exist_ok=True)
-    output_files = []
-    for results, prefix in (
-        (c_results, "C"),
-        (k_results, "K"),
-        (q_results, "Q"),
-    ):
-        output_path = export_results(results, prefix)
-        output_files.append(output_path)
-    return output_files
-
-def export_results(results, prefix):
-    output_path = RESULTS_DIR / f"ket_qua_{prefix}_cadical195.csv"
-    with open(output_path, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=FIELDS)
-        writer.writeheader()
-        writer.writerows(results)
-    log(f"Exported: {output_path}")
-    return output_path
+def initialize_csv(path):
+    with open(path, "w", newline="", encoding="utf-8") as file:
+        csv.DictWriter(file, fieldnames=FIELDS).writeheader()
 
 
-def run_cycle_benchmarks(timeout_sec=60):
+def append_csv_row(path, result):
+    with open(path, "a", newline="", encoding="utf-8") as file:
+        csv.DictWriter(file, fieldnames=FIELDS).writerow(result)
+
+
+def run_cycle_benchmarks(timeout_sec=60, output_path=None):
     log("Đồ thị chu trình C_n (n=3..50)")
     results = []
     for n in range(3, 51):
         graph = nx.cycle_graph(n)
         result = run_benchmark(f"C_{n}", graph, timeout_sec=timeout_sec)
         results.append(result)
+        append_csv_row(output_path, result)
         if n % 5 == 0 or n <= 10:
             log(
                 f"Hoàn thành C_{n} (lambda={result['lambda']}, "
@@ -231,13 +220,14 @@ def run_cycle_benchmarks(timeout_sec=60):
     return results
 
 
-def run_complete_benchmarks(timeout_sec=60):
+def run_complete_benchmarks(timeout_sec=60, output_path=None):
     log("\nĐồ thị đầy đủ K_n (n=3..50)")
     results = []
     for n in range(3, 51):
         graph = nx.complete_graph(n)
         result = run_benchmark(f"K_{n}", graph, timeout_sec=timeout_sec)
         results.append(result)
+        append_csv_row(output_path, result)
         if n % 5 == 0 or n <= 10:
             log(
                 f"Hoàn thành K_{n} (lambda={result['lambda']}, "
@@ -246,7 +236,7 @@ def run_complete_benchmarks(timeout_sec=60):
     return results
 
 
-def run_hypercube_benchmarks(timeout_sec=60):
+def run_hypercube_benchmarks(timeout_sec=60, output_path=None):
     max_q_n = 50
     safe_q_n_limit = 12
     log(f"\nĐồ thị siêu khối Q_n (n=2..{max_q_n})")
@@ -257,6 +247,7 @@ def run_hypercube_benchmarks(timeout_sec=60):
             graph = build_graph("Q", n)
             result = run_benchmark(f"Q_{n}", graph, timeout_sec=timeout_sec)
             results.append(result)
+            append_csv_row(output_path, result)
             log(
                 f"Hoàn thành Q_{n} (lambda={result['lambda']}, "
                 f"status={result['status']}, |V|={vertex_count})"
@@ -265,15 +256,12 @@ def run_hypercube_benchmarks(timeout_sec=60):
 
         estimated_lambda = greedy_hypercube_lambda_estimate(n)
         result = {
-            "Graph": f"Q_{n}",
-            "n": vertex_count,
-            "var": None,
-            "clause": None,
-            "time": 0.0,
-            "lambda": estimated_lambda,
+            "Graph": f"Q_{n}", "n": vertex_count, "var": None,
+            "clause": None, "time": 0.0, "lambda": estimated_lambda,
             "status": "GREEDY",
         }
         results.append(result)
+        append_csv_row(output_path, result)
         log(
             f"Hoàn thành Q_{n} bằng tham lam (lambda={result['lambda']}, "
             f"status={result['status']}, |V|={vertex_count:,})"
@@ -285,15 +273,18 @@ def main(timeout_sec=60):
     RESULTS_DIR.mkdir(exist_ok=True)
     LOGS_DIR.mkdir(exist_ok=True)
     LOGS_DIR.joinpath("benchmark_cadical195.log").write_text("", encoding="utf-8")
+    csv_paths = {
+        prefix: RESULTS_DIR / f"ket_qua_{prefix}_cadical195.csv"
+        for prefix in ("C", "K", "Q")
+    }
+    for path in csv_paths.values():
+        initialize_csv(path)
 
     log("Chạy benchmark SAT cho các đồ thị chuẩn (n lên đến 50)...")
     log("Lưu ý: Có thể mất vài lúc vì n lớn.\n")
-    c_results = run_cycle_benchmarks(timeout_sec)
-    export_results(c_results, "C")
-    k_results = run_complete_benchmarks(timeout_sec)
-    export_results(k_results, "K")
-    q_results = run_hypercube_benchmarks(timeout_sec)
-    export_results(q_results, "Q")
+    c_results = run_cycle_benchmarks(timeout_sec, csv_paths["C"])
+    k_results = run_complete_benchmarks(timeout_sec, csv_paths["K"])
+    q_results = run_hypercube_benchmarks(timeout_sec, csv_paths["Q"])
 
     log("\n")
     log("\nĐồ thị chu trình C_n")
@@ -303,10 +294,9 @@ def main(timeout_sec=60):
     log("\nĐồ thị siêu khối Q_n")
     analyze_pattern(q_results)
 
-    c_csv, k_csv, q_csv = export_separate_files(c_results, k_results, q_results)
-    log(f"\nXONG Cycle graphs: {c_csv}")
-    log(f"XONG Complete graphs: {k_csv}")
-    log(f"XONG Hypercube graphs: {q_csv}")
+    log(f"\nXONG Cycle graphs: {csv_paths['C']}")
+    log(f"XONG Complete graphs: {csv_paths['K']}")
+    log(f"XONG Hypercube graphs: {csv_paths['Q']}")
 
 
 if __name__ == "__main__":
