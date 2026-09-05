@@ -48,10 +48,50 @@ def forbid_close_labels(ov, u, v, t):
             clauses.append(not_eq_literals(ov, u, a) + not_eq_literals(ov, v, b))
     return clauses
 
-def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s):
+def strict_less_clauses(ov, smaller, larger):
+    """Encode f(smaller) < f(larger) with order variables."""
+    if ov.s == 0:
+        return [[]]
+
+    clauses = [[ov.x[smaller][ov.s - 1]]]
+    for index in range(1, ov.s):
+        clauses.append([-ov.x[larger][index], ov.x[smaller][index - 1]])
+    clauses.append([-ov.x[larger][0]])
+    return clauses
+
+
+def symmetry_breaking_clauses(ov, symmetry_kind):
+    """Return sound symmetry constraints for the supported graph families."""
+    if ov.n_vertices == 0 or symmetry_kind is None:
+        return []
+
+    clauses = []
+    if symmetry_kind == "P" and ov.n_vertices >= 2:
+        clauses += strict_less_clauses(ov, 0, ov.n_vertices - 1)
+    elif symmetry_kind == "C" and ov.n_vertices >= 3:
+        if ov.s > 0:
+            clauses.append([ov.x[0][0]])
+        clauses += strict_less_clauses(ov, 1, ov.n_vertices - 1)
+    elif symmetry_kind == "K" and ov.n_vertices >= 2:
+        if ov.s > 0:
+            clauses.append([ov.x[0][0]])
+        for index in range(ov.n_vertices - 1):
+            clauses += strict_less_clauses(ov, index, index + 1)
+    elif symmetry_kind == "Q":
+        dimension = ov.n_vertices.bit_length() - 1
+        if dimension >= 1 and 2 ** dimension == ov.n_vertices:
+            if ov.s > 0:
+                clauses.append([ov.x[0][0]])
+            for bit in range(1, dimension):
+                clauses += strict_less_clauses(ov, 1 << (bit - 1), 1 << bit)
+    return clauses
+
+
+def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s, symmetry_kind=None):
     ov = OrderVars(n_vertices, s)
     cnf = []
     cnf += monotone_clauses(ov)
+    cnf += symmetry_breaking_clauses(ov, symmetry_kind)
     for (u, v) in edges:
         cnf += forbid_close_labels(ov, u, v, h)
     for (u, v) in dist2_pairs:
@@ -91,7 +131,7 @@ def thu_nghiem():
         # Bài toán yêu cầu tìm span (s) nhỏ nhất, ta sẽ thử tăng s từ 0 trở đi
         for s in range(10): # Với P_n thì s chắc chắn nhỏ hơn 10
             # Gọi hàm solve_lhk để sinh ra CNF
-            cnf = solve_lhk(n, edges, dist2_pairs, h, k, s)
+            cnf = solve_lhk(n, edges, dist2_pairs, h, k, s, "P")
             
             # Nếu hàm trả về None do mâu thuẫn (như ghi chú ở dòng 65-66)
             if cnf is None:
