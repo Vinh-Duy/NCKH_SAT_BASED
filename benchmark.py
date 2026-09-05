@@ -1,8 +1,10 @@
+import argparse
 import csv
 import time
 from pathlib import Path
 
 import networkx as nx
+from bai_tap_L21 import symmetry_breaking_clauses
 
 RESULTS_DIR = Path("results")
 LOGS_DIR = Path("logs")
@@ -67,10 +69,11 @@ def forbid_close_labels(ov, u, v, t):
     return clauses
 
 
-def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s):
+def solve_lhk(n_vertices, edges, dist2_pairs, h, k, s, symmetry_kind=None):
     ov = OrderVars(n_vertices, s)
     cnf = []
     cnf += monotone_clauses(ov)
+    cnf += symmetry_breaking_clauses(ov, symmetry_kind)
     for u, v in edges:
         cnf += forbid_close_labels(ov, u, v, h)
     for u, v in dist2_pairs:
@@ -152,21 +155,21 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
         max_span = lower_bound
 
     start_time = time.time()
-    # Tìm kiếm từ cao xuống thấp (descending)
+    best_result = None
+    # Tìm kiếm từ cao xuống thấp và chỉ gọi OPT sau khi gặp UNSAT.
     for s in range(max_span, lower_bound - 1, -1):
         # Kiểm tra timeout
         if time.time() - start_time > timeout_sec:
-            return {
-                "Graph": graph_name,
-                "n": n,
-                "var": None,
-                "clause": None,
-                "time": round(time.time() - start_time, 6),
-                "lambda": None,
-                "status": "TIMEOUT",
-            }
+            if best_result is not None:
+                best_result["status"] = "FEASIBLE"
+                best_result["time"] = round(time.time() - start_time, 6)
+                return best_result
+            return result_row(graph_name, n, start_time, "TIMEOUT")
 
-        cnf, ov = solve_lhk(n, edges, dist2_pairs, h, k, s)
+        cnf, ov = solve_lhk(
+            n, edges, dist2_pairs, h, k, s,
+            graph_name.split("_", 1)[0]
+        )
         if cnf is None:
             continue
 
@@ -174,30 +177,39 @@ def run_benchmark(graph_name, G, n, h=2, k=1, max_span=None, timeout_sec=60):
             for clause in cnf:
                 solver.add_clause(clause)
 
-            if solver.solve():
-                end_time = time.time()
-                time_taken = round(end_time - start_time, 6)
-                num_vars = ov.next_var - 1
-                num_clauses = len(cnf)
-                return {
+            remaining_time = timeout_sec - (time.time() - start_time)
+            solver.conf_budget(max(1_000, int(remaining_time * 50_000)))
+            solved = solver.solve_limited(expect_interrupt=True)
+
+            if solved is None:
+                if best_result is not None:
+                    best_result["status"] = "FEASIBLE"
+                    best_result["time"] = round(time.time() - start_time, 6)
+                    return best_result
+                return result_row(graph_name, n, start_time, "TIMEOUT")
+
+            if solved:
+                best_result = {
                     "Graph": graph_name,
                     "n": n,
-                    "var": num_vars,
-                    "clause": num_clauses,
-                    "time": time_taken,
+                    "var": ov.next_var - 1,
+                    "clause": len(cnf),
+                    "time": round(time.time() - start_time, 6),
                     "lambda": s,
-                    "status": "OPT",
+                    "status": "FEASIBLE",
                 }
+                continue
 
-    return {
-        "Graph": graph_name,
-        "n": n,
-        "var": None,
-        "clause": None,
-        "time": round(time.time() - start_time, 6),
-        "lambda": None,
-        "status": "UNSOLVED",
-    }
+            if best_result is not None:
+                best_result["status"] = "OPT"
+                best_result["time"] = round(time.time() - start_time, 6)
+                return best_result
+
+    if best_result is not None:
+        best_result["status"] = "OPT"
+        best_result["time"] = round(time.time() - start_time, 6)
+        return best_result
+    return result_row(graph_name, n, start_time, "UNSOLVED")
 
 
 def export_excel(results, csv_filename="ket_qua_SAT.csv", excel_filename="ket_qua_SAT.xlsx"):
@@ -341,7 +353,7 @@ def analyze_pattern(results):
                 log(f"    Chênh lệch lambda: {diffs}")
 
 
-def main():
+def main(timeout_sec=60):
     LOGS_DIR.mkdir(exist_ok=True)
     RESULTS_DIR.mkdir(exist_ok=True)
     (LOGS_DIR / "benchmark_run.log").write_text("", encoding="utf-8")
@@ -359,21 +371,26 @@ def main():
     for n in range(3, 51):
         G = nx.cycle_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=45)
+        res = run_benchmark(f"C_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
         c_results.append(res)
         if n % 5 == 0 or n <= 10:
-            log(f"Hoàn thành C_{n} (lambda={res['lambda']})")
+            log(
+                f"Hoàn thành C_{n} (lambda={res['lambda']}, "
+                f"status={res['status']})"
+            )
 
     # Complete graphs K_n từ n=3 đến n=50
     log("\nĐồ thị đầy đủ K_n (n=3..50)")
     for n in range(3, 51):
         G = nx.complete_graph(n)
         max_span = estimate_upper_bound(G, h=2, k=1)
-        timeout = 120 if n <= 20 else 300
-        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout)
+        res = run_benchmark(f"K_{n}", G, n, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
         k_results.append(res)
         if n % 5 == 0 or n <= 10:
-            log(f"Hoàn thành K_{n} (lambda={res['lambda']})")
+            log(
+                f"Hoàn thành K_{n} (lambda={res['lambda']}, "
+                f"status={res['status']})"
+            )
 
     # Hypercube Q_n từ n=2 đến n=50. Để chạy nhanh hơn, SAT chỉ dùng cho n nhỏ,
     # còn với n lớn ta chuyển sang ước lượng tham lam ngay để tránh dựng đồ thị 2^n quá lớn.
@@ -384,19 +401,16 @@ def main():
             G = nx.hypercube_graph(n)
             G = nx.convert_node_labels_to_integers(G)
             max_span = estimate_upper_bound(G, h=2, k=1)
-            if n <= 6:
-                timeout = 60
-            elif n <= 10:
-                timeout = 300
-            else:
-                timeout = 600
-            res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=timeout)
+            res = run_benchmark(f"Q_{n}", G, num_nodes, h=2, k=1, max_span=max_span, timeout_sec=timeout_sec)
             q_results.append(res)
-            log(f"Hoàn thành Q_{n} (lambda={res['lambda']}, |V|={num_nodes})")
+            log(
+                f"Hoàn thành Q_{n} (lambda={res['lambda']}, "
+                f"status={res['status']}, |V|={num_nodes})"
+            )
             continue
 
         est_lambda = greedy_hypercube_lambda_estimate(n, h=2, k=1)
-        q_results.append({
+        res = {
             "Graph": f"Q_{n}",
             "n": num_nodes,
             "var": None,
@@ -404,8 +418,12 @@ def main():
             "time": round(0.0, 6),
             "lambda": est_lambda,
             "status": "GREEDY",
-        })
-        log(f"Hoàn thành Q_{n} bằng tham lam (lambda={est_lambda}, |V|={num_nodes:,})")
+        }
+        q_results.append(res)
+        log(
+            f"Hoàn thành Q_{n} bằng tham lam (lambda={res['lambda']}, "
+            f"status={res['status']}, |V|={num_nodes:,})"
+        )
 
     log("\n")
     log("\nĐồ thị chu trình C_n")
@@ -422,4 +440,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Benchmark L(2,1) graphs")
+    parser.add_argument(
+        "--timeout", type=int, default=60,
+        help="Per-graph timeout in seconds (use 600 or 900 for final runs)",
+    )
+    main(parser.parse_args().timeout)
