@@ -32,7 +32,7 @@ visualization of label assignments on path graphs.
 | `benchmark_hybrid.py` | Runs one combined C/K/Q benchmark using binary bound reduction followed by sequential proof search. |
 | `plot_results.py` | Reads hybrid benchmark results and plots lambda growth for C, K, and Q graphs. |
 | `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
-| `results/` | Benchmark results in CSV and Excel formats. |
+| `results/` | Benchmark results in CSV format and generated plots. |
 | `logs/` | Captured benchmark output and runtime logs. |
 
 ## Requirements
@@ -106,10 +106,14 @@ attempt to construct graphs with an impractically large number of vertices.
 
 The benchmark writes:
 
-- `results/ket_qua_C.csv` and `results/ket_qua_C.xlsx` for cycle graphs.
-- `results/ket_qua_K.csv` and `results/ket_qua_K.xlsx` for complete graphs.
-- `results/ket_qua_Q.csv` and `results/ket_qua_Q.xlsx` for hypercubes.
+- `results/ket_qua_C.csv` for cycle graphs.
+- `results/ket_qua_K.csv` for complete graphs.
+- `results/ket_qua_Q.csv` for hypercubes.
 - `logs/benchmark_run.log` for console output captured during the run.
+
+> **Note:** Results use real-time incremental save. Each graph result is
+> written directly to its CSV file immediately after solving, so it is safe to
+> stop the process with `Ctrl+C` without losing completed graph results.
 
 The full benchmark can take a substantial amount of time, especially for
 larger complete graphs and hypercubes.
@@ -124,8 +128,8 @@ python3 benchmark_cadical195.py --timeout 900
 ```
 
 Timed-out instances with a valid SAT result are marked `FEASIBLE`; instances
-without a SAT result are marked `FEASIBLE_ESTIMATE`. Their `UB` column records
-the tested bounds followed by the estimate used as fallback.
+without a completed result are marked `TIMEOUT` or `UNSOLVED`. Their `UB`
+column records the tested bounds followed by the estimate used as fallback.
 
 ## Run the Hybrid Benchmark
 
@@ -154,6 +158,10 @@ Output:
 ```text
 results/ket_qua_hybrid.csv
 ```
+
+> **Note:** Hybrid results use real-time incremental save. Each completed
+> graph is appended to `results/ket_qua_hybrid.csv` immediately, so stopping
+> with `Ctrl+C` preserves all graph results already written.
 
 For a smaller run, for example:
 
@@ -197,6 +205,10 @@ This script writes `results/ket_qua_Q_extended.csv` and appends runtime informat
 `FEASIBLE_ESTIMATE` are fast estimates and should not be interpreted as proof
 of optimality.
 
+> **Note:** The Q extended benchmark uses real-time incremental save. Each
+> completed dimension is appended to the CSV immediately, so an interrupted
+> run retains all dimensions already processed.
+
 ## Run the CaDiCaL 1.95 Benchmark
 
 Run a separate benchmark with CaDiCaL 1.95 so the existing Glucose3 results are
@@ -210,6 +222,10 @@ The script runs the same `C_n`, `K_n`, and `Q_n` ranges as `benchmark.py`,
 through `n=50`, using CaDiCaL 1.95. Results are written to separate
 `results/ket_qua_<graph>_cadical195.csv` files, with runtime details in
 `logs/benchmark_cadical195.log`.
+
+> **Note:** CaDiCaL results use real-time incremental save. Each graph is
+> written to its CSV immediately after solving, so the process can safely be
+> interrupted with `Ctrl+C` without losing completed results.
 
 ## Result Columns
 
