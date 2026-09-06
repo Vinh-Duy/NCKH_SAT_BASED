@@ -450,10 +450,9 @@ def main(timeout_sec=60):
     log("\nĐồ thị siêu khối Q_n")
     analyze_pattern(q_results)
     
-    c_csv, c_excel, k_csv, k_excel, q_csv, q_excel = export_separate_files(c_results, k_results, q_results)
-    log(f"\nXONG Cycle graphs: {c_csv} & {c_excel}")
-    log(f"XONG Complete graphs: {k_csv} & {k_excel}")
-    log(f"XONG Hypercube graphs: {q_csv} & {q_excel}")
+    log(f"\nXONG Cycle graphs: {csv_paths['C']}")
+    log(f"XONG Complete graphs: {csv_paths['K']}")
+    log(f"XONG Hypercube graphs: {csv_paths['Q']}")
 
 
 if __name__ == "__main__":
