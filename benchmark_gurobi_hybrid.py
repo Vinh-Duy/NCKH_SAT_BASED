@@ -1,5 +1,3 @@
-"""Hybrid L(2,1) benchmark using a greedy start and Gurobi MILP."""
-
 import argparse
 import csv
 import time
@@ -17,7 +15,6 @@ FIELDS = ["Graph", "n", "var", "constr", "time", "lambda", "UB", "status"]
 
 
 def log(message=""):
-    """Print and persist a benchmark message."""
     print(message)
     LOGS_DIR.mkdir(exist_ok=True)
     with open(LOGS_DIR / "benchmark_gurobi_hybrid.log", "a", encoding="utf-8") as file:
@@ -25,7 +22,6 @@ def log(message=""):
 
 
 def graph_constraints(graph):
-    """Return edges and vertex pairs at graph distance two."""
     edges = list(graph.edges())
     dist2_pairs = []
     nodes = list(graph.nodes())
@@ -38,7 +34,6 @@ def graph_constraints(graph):
 
 
 def greedy_upper_bound(graph, h=2):
-    """Build a feasible greedy labeling and return its span and labels."""
     labels = {}
     distances = dict(nx.all_pairs_shortest_path_length(graph))
 
@@ -60,7 +55,6 @@ def greedy_upper_bound(graph, h=2):
 
 
 def solve_l21_gurobi(graph, timeout_sec, initial_ub, initial_labels):
-    """Solve one L(2,1) instance with a Big-M Gurobi MILP model."""
     edges, dist2_pairs = graph_constraints(graph)
     model = gp.Model("L21_Gurobi_Hybrid")
     model.setParam("OutputFlag", 0)
@@ -135,7 +129,6 @@ def make_result(graph_name, graph, start_time, span, upper_bound, status,
 
 
 def run_gurobi(graph_name, graph, timeout_sec):
-    """Run greedy initialization followed by one time-limited MILP solve."""
     start_time = time.time()
     initial_ub, initial_labels = greedy_upper_bound(graph)
     span, variable_count, constraint_count, runtime, status = solve_l21_gurobi(
@@ -199,7 +192,6 @@ def run_family(args, output_path):
 
 
 def hypercube_graph(dimension):
-    """Build an integer-labelled hypercube graph."""
     graph = nx.hypercube_graph(dimension)
     return nx.convert_node_labels_to_integers(graph)
 
