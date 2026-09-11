@@ -30,6 +30,8 @@ visualization of label assignments on path graphs.
 | `benchmark_cadical195.py` | Runs the same SAT model with CaDiCaL 1.95 and writes separate comparison results. |
 | `benchmark_q_extended_cadical195.py` | Runs the extended $Q_n$ benchmark with CaDiCaL 1.95 and separate results. |
 | `benchmark_hybrid.py` | Runs one combined C/K/Q benchmark using binary bound reduction followed by sequential proof search. |
+| `benchmark_gurobi_hybrid.py` | Runs the C/K/Q hybrid benchmark with Gurobi MILP, greedy warm starts, and Big-M constraints. |
+| `benchmark_cplex_hybrid.py` | Runs the C/K/Q hybrid benchmark with CPLEX MILP, greedy MIP starts, and Big-M constraints. |
 | `plot_results.py` | Reads hybrid benchmark results and plots lambda growth for C, K, and Q graphs. |
 | `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
 | `results/` | Benchmark results in CSV format and generated plots. |
@@ -43,11 +45,13 @@ visualization of label assignments on path graphs.
 - `pandas`
 - `matplotlib`
 - `openpyxl`
+- `gurobipy` (Gurobi MILP benchmark)
+- `docplex` and the CPLEX Python runtime (CPLEX MILP benchmark)
 
 Install the dependencies directly:
 
 ```bash
-python3 -m pip install python-sat networkx pandas matplotlib openpyxl
+python3 -m pip install python-sat networkx pandas matplotlib openpyxl gurobipy docplex
 ```
 
 Using a virtual environment is recommended:
@@ -55,7 +59,7 @@ Using a virtual environment is recommended:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install python-sat networkx pandas matplotlib openpyxl
+python3 -m pip install python-sat networkx pandas matplotlib openpyxl gurobipy docplex
 ```
 
 ## Quick Start
@@ -173,6 +177,54 @@ python3 benchmark_hybrid.py --family ALL --first 3 --last 10 --exact-max-q 5
 `FEASIBLE` means a valid labeling was found but proof was interrupted. Q dimensions above
 `--exact-max-q` are marked `FEASIBLE_ESTIMATE` and are not exact SAT results.
 
+## Run the Gurobi Hybrid Benchmark
+
+The Gurobi benchmark uses the greedy labeling as a MIP start and solves the
+same $L(2,1)$ model with integer label variables and Big-M constraints:
+
+```bash
+python3 benchmark_gurobi_hybrid.py
+```
+
+Use the same family and timeout options as the SAT hybrid benchmark:
+
+```bash
+python3 benchmark_gurobi_hybrid.py --family K --first 3 --last 20 --timeout 600
+```
+
+Results are appended to `results/ket_qua_gurobi_hybrid.csv` after each graph,
+and logs are written to `logs/benchmark_gurobi_hybrid.log`. The CSV uses
+`constr` for the number of MILP constraints instead of the SAT `clause` count.
+
+> **Note:** Gurobi must be installed and licensed in the active Python
+> environment. The benchmark uses `OutputFlag=0`, `TimeLimit`, and a greedy
+> MIP start. `OPT` means Gurobi proved optimality; `FEASIBLE` means it found a
+> solution before the time limit without proving optimality.
+
+## Run the CPLEX Hybrid Benchmark
+
+The CPLEX benchmark provides the same graph families and CLI as the Gurobi
+version, using `docplex.mp.model.Model` and a greedy CPLEX MIP start:
+
+```bash
+python3 benchmark_cplex_hybrid.py
+```
+
+For a focused run:
+
+```bash
+python3 benchmark_cplex_hybrid.py --family C --first 3 --last 20 --timeout 600
+```
+
+Results are appended to `results/ket_qua_cplex_hybrid.csv` after each graph,
+and logs are written to `logs/benchmark_cplex_hybrid.log`. The output columns
+are `Graph,n,var,constr,time,lambda,UB,status`.
+
+> **Note:** `docplex` is the modeling layer; the CPLEX Python runtime and a
+> valid CPLEX license are also required. `OPT` means CPLEX reported an optimal
+> solution. A time-limited solution is recorded as `FEASIBLE`, while a run with
+> no solution is recorded as `TIMEOUT`.
+
 ## Run the Extended Hypercube Benchmark
 
 The focused benchmark accepts command-line options:
@@ -236,7 +288,8 @@ Each CSV file contains the following columns:
 | `Graph` | Graph name, such as `C_10` or `Q_6`. |
 | `n` | Number of vertices. |
 | `var` | Number of order-encoding variables. |
-| `clause` | Number of generated CNF clauses. |
+| `clause` | Number of generated CNF clauses for SAT benchmarks. |
+| `constr` | Number of generated MILP constraints for Gurobi and CPLEX benchmarks. |
 | `time` | Solver runtime in seconds. |
 | `lambda` | Computed span or estimated span. |
 | `UB` | Full tested upper-bound history, for example `8 -> 7 -> 6 -> 5`. For `OPT`, the last SAT bound is `lambda`; for `FEASIBLE`, it is not proven optimal. |
@@ -318,6 +371,11 @@ exact SAT results.
 The `UB` column stores every tested bound in order, including the bound that
 returned `UNSAT` or the bound being tested when a timeout occurred.
 
+The MILP benchmarks use the same graph constraints as the SAT model, but
+represent labels directly as integer variables. A greedy feasible labeling is
+used as the initial upper bound and MIP start; the solver minimizes `span`
+directly and reports the number of MILP variables and constraints.
+
 ## Troubleshooting
 
 - If Matplotlib does not open a window, check that the active Python
@@ -327,6 +385,8 @@ returned `UNSAT` or the bound being tested when a timeout occurred.
 - Large benchmark instances can require significant memory and runtime. Use
   `benchmark_q_extended.py` with a smaller `--exact-max-n` when an exact SAT
   run is too expensive.
+- If CPLEX cannot be imported, activate a Python environment compatible with
+  the installed CPLEX Studio runtime and ensure a valid license is available.
 
 ## License
 
