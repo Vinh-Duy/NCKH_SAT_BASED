@@ -1,5 +1,3 @@
-"""Hybrid binary/sequential SAT benchmark for C_n, K_n, and Q_n."""
-
 import argparse
 import csv
 import time
@@ -85,8 +83,6 @@ def solve_and_validate(
     with Cadical195() as solver:
         solver.append_formula(cnf)
         if remaining_time is not None:
-            # CaDiCaL budgets are conflict/propagation budgets, so use a
-            # small budget per remaining second and let solve_limited stop.
             budget = max(1_000, int(remaining_time * 50_000))
             solver.conf_budget(budget)
             solved = solver.solve_limited(expect_interrupt=True)
