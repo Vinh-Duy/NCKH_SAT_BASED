@@ -7,15 +7,15 @@ For a graph $G$, let $L$ be a valid lower bound and $U$ a feasible greedy upper 
 The feasibility predicate is monotone:
 
 $$
-\operatorname{SAT}(s)=\text{true}
+\mathrm{SAT}(s)=\text{true}
 \implies
-\operatorname{SAT}(s')=\text{true}\quad\forall s'\ge s.
+\mathrm{SAT}(s')=\text{true}\quad\forall s'\ge s.
 $$
 
 Therefore, the optimal span is
 
 $$
-\lambda^*=\min\{s\in[L,U]:\operatorname{SAT}(s)=\text{true}\}.
+\lambda^*=\min\{s\in[L,U]:\mathrm{SAT}(s)=\text{true}\}.
 $$
 
 The implementation starts from the degree lower bound and a greedy feasible upper bound, then uses the selected search strategy to identify $\lambda^*$.
