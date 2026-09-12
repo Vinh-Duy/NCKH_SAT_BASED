@@ -1,4 +1,4 @@
-# SAT-Based L(h,k)-Labeling
+# SAT and ILP Methods for L(h,k)-Labeling
 
 This project uses the PySAT toolkit to study the graph labeling problem
 $L(h,k)$ with an order-encoded CNF model. The default configuration is the
@@ -15,34 +15,6 @@ neighbors corresponding to the cube dimensions. These constraints preserve
 SAT/UNSAT status while removing equivalent labelings from the search. Complete
 graphs keep the unrestricted encoding because these family-specific rules do
 not apply to them.
-
-The project includes exact SAT experiments, benchmark generation, and a
-visualization of label assignments on path graphs.
-
-## Project Files
-
-| File | Description |
-| --- | --- |
-| `archive_old_code/bai_tap_L21.py` | Legacy CNF model and path experiment for $P_n$. |
-| `visual.py` | Solves and displays an $L(2,1)$ labeling for a path graph. |
-| `archive_old_code/benchmark.py` | Legacy C/K/Q benchmark entry point. |
-| `archive_old_code/benchmark_q_extended.py` | Legacy focused $Q_n$ benchmark. |
-| `archive_old_code/benchmark_cadical195.py` | Legacy CaDiCaL 1.95 benchmark. |
-| `archive_old_code/benchmark_q_extended_cadical195.py` | Legacy extended $Q_n$ CaDiCaL benchmark. |
-| `archive_old_code/benchmark_hybrid.py` | Legacy hybrid C/K/Q benchmark. |
-| `archive_old_code/benchmark_gurobi_hybrid.py` | Legacy Gurobi MILP benchmark. |
-| `archive_old_code/benchmark_cplex_hybrid.py` | Legacy CPLEX MILP benchmark. |
-| `plot_results.py` | Reads hybrid benchmark results and plots lambda growth for C, K, and Q graphs. |
-| `src/core/` | Shared graph, validation, and incremental benchmark I/O utilities. |
-| `src/models/sat_encoding.py` | Reusable order-encoded CNF and symmetry-breaking model. |
-| `src/solvers/sat_solver.py` | PySAT wrapper with linear and hybrid search strategies. |
-| `benchmarks/run_sat.py` | Focused package entry point for C_n and K_n SAT experiments. |
-| `src/models/ilp_assignment.py` | Binary-assignment ILP data model and warm-start helpers. |
-| `src/solvers/ilp_solver.py` | Gurobi/CPLEX wrapper for assignment and Big-M formulations. |
-| `benchmarks/run_ilp.py` | ILP benchmark runner for C_n, K_n, and Q_n. |
-| `validation.py` | Validates a span and vertex labeling against the $L(h,k)$ constraints. |
-| `results/` | Benchmark results in CSV format and generated plots. |
-| `logs/` | Captured benchmark output and runtime logs. |
 
 ## Requirements
 
@@ -69,360 +41,119 @@ source .venv/bin/activate
 python3 -m pip install python-sat networkx pandas matplotlib openpyxl gurobipy docplex
 ```
 
-## Quick Start
+## Architecture
 
-Solve the sample path graphs:
+The implementation is organized as a reusable Python package:
 
-```bash
-python3 archive_old_code/bai_tap_L21.py
-```
+| Module | Responsibility |
+| --- | --- |
+| `src/core/graph_utils.py` | Construction of $C_n$, $K_n$, and $Q_n$; graph constraints; bounds; greedy labeling. |
+| `src/core/validator.py` | Independent validation of $L(h,k)$ labelings. |
+| `src/core/io.py` | Shared CSV writing and benchmark logging. |
+| `src/models/sat_encoding.py` | Order encoding, forbidden-label clauses, and symmetry breaking. |
+| `src/models/ilp_assignment.py` | Binary assignment formulation and warm-start helpers. |
+| `src/solvers/sat_solver.py` | Glucose3/CaDiCaL wrappers with linear and hybrid search. |
+| `src/solvers/ilp_solver.py` | Gurobi and CPLEX wrappers for assignment and Big-M formulations. |
+| `benchmarks/run_sat.py` | SAT experiments for cycle, complete, and hypercube graphs. |
+| `benchmarks/run_ilp.py` | ILP experiments and assignment-versus-Big-M comparison. |
 
-Display a labeling for the path configured in `visual.py`:
+Detailed mathematical documentation is available in:
 
-```bash
-python3 visual.py
-```
+- [SAT encoding](docs/sat_encoding.md)
+- [ILP formulations](docs/ilp_formulations.md)
+- [Span search strategies](docs/search_strategies.md)
 
-The visualization opens a Matplotlib window and prints the selected span and
-the label assigned to each vertex.
+## Reproducibility
 
-## Plot Hybrid Results
+All benchmark runners write results incrementally. The `--family` option accepts
+`C`, `K`, `Q`, or `ALL`. Use `--first` and `--last` to select the graph-size
+range, and `--timeout` to set the per-instance time limit.
 
-After generating `results/ket_qua_hybrid.csv`, create a three-panel plot for
-cycle, complete, and hypercube graphs:
+### SAT experiments
 
-```bash
-python3 plot_results.py
-```
-
-The script filters rows without a numeric `lambda` value and rows with
-`status=INVALID`. The output is saved to:
-
-```text
-results/bieu_do_lambda.png
-```
-
-## Run the Main Benchmark
-
-Run the complete benchmark suite with:
+Run the default SAT experiment with Glucose3:
 
 ```bash
-python3 archive_old_code/benchmark.py
+python3 -m benchmarks.run_sat \
+  --family ALL \
+  --first 3 \
+  --last 20 \
+  --solver glucose \
+  --strategy hybrid \
+  --timeout 60
 ```
 
-The script benchmarks $C_n$ and $K_n$ for $n=3,\ldots,50$, and $Q_n$ for
-$n=2,\ldots,50$. SAT is used for the smaller hypercubes; larger hypercubes use
-the greedy estimate implemented in the script so that the experiment does not
-attempt to construct graphs with an impractically large number of vertices.
-
-The benchmark writes:
-
-- `results/ket_qua_C.csv` for cycle graphs.
-- `results/ket_qua_K.csv` for complete graphs.
-- `results/ket_qua_Q.csv` for hypercubes.
-- `logs/benchmark_run.log` for console output captured during the run.
-
-> **Note:** Results use real-time incremental save. Each graph result is
-> written directly to its CSV file immediately after solving, so it is safe to
-> stop the process with `Ctrl+C` without losing completed graph results.
-
-The full benchmark can take a substantial amount of time, especially for
-larger complete graphs and hypercubes.
-
-## Refactored SAT Experiments
-
-The reusable package separates graph utilities, validation, CNF encoding, SAT
-solver strategies, and CSV/log writing under `src/`. Run focused C_n and K_n
-experiments with:
+The available SAT solvers are `glucose` and `cadical`. The search strategies
+are `linear` and `hybrid`:
 
 ```bash
-python3 -m benchmarks.run_sat --family ALL --first 3 --last 20
+python3 -m benchmarks.run_sat \
+  --family Q \
+  --first 2 \
+  --last 6 \
+  --solver cadical \
+  --strategy linear \
+  --timeout 300 \
+  --output results/sat_hypercube.csv
 ```
 
-The entry point supports `--solver glucose|cadical`, `--strategy linear|hybrid`,
-`--timeout`, and `--output`. Results use the shared CSV schema
-`Graph,n,var,clause/constr,time,lambda,UB,status` and are written after each graph.
+### ILP experiments
 
-During development, exact instances use a 60-second per-graph timeout by
-default. To run a final report with a larger budget, pass `--timeout` in
-seconds, typically 600 or 900:
+Run the binary-assignment ILP formulation with Gurobi:
 
 ```bash
-python3 archive_old_code/benchmark.py --timeout 600
-python3 archive_old_code/benchmark_cadical195.py --timeout 900
+python3 benchmarks/run_ilp.py \
+  --family ALL \
+  --first 3 \
+  --last 10 \
+  --solver gurobi \
+  --formulation assignment \
+  --timeout 60
 ```
 
-Timed-out instances with a valid SAT result are marked `FEASIBLE`; instances
-without a completed result are marked `TIMEOUT` or `UNSOLVED`. Their `UB`
-column records the tested bounds followed by the estimate used as fallback.
-
-## Run the Hybrid Benchmark
-
-The hybrid benchmark writes C, K, and Q results to one CSV file. It first uses
-binary search to reduce a feasible upper bound, then checks smaller bounds
-sequentially until `UNSAT` proves the previous `SAT` bound optimal. The `UB`
-column records the complete tested history, including the search phase:
-
-```text
-B8:UNSAT -> B12:SAT -> S11:UNSAT
-```
-
-The binary phase uses solver budgets for each bound. The final sequential
-check is limited to the candidate immediately below the binary result. `OPT`
-is emitted only after an UNSAT proof or a proven mathematical lower bound; a
-budget interruption produces `FEASIBLE` or `TIMEOUT`, never `OPT`.
-
-Run the complete combined benchmark with:
+The available ILP solvers are `gurobi` and `cplex`. The assignment formulation
+uses binary variables $x_{v,k}$, a span variable, greedy warm starts, and
+independent labeling validation. The `big-m` formulation is available for
+comparison; `both` writes one result for each formulation:
 
 ```bash
-python3 archive_old_code/benchmark_hybrid.py
+python3 benchmarks/run_ilp.py \
+  --family C \
+  --first 3 \
+  --last 20 \
+  --solver gurobi \
+  --formulation both \
+  --timeout 300 \
+  --output results/ilp_comparison.csv
 ```
 
-Output:
+Gurobi requires an active installation and license. CPLEX requires both the
+`docplex` package and an accessible CPLEX runtime and license.
 
-```text
-results/ket_qua_hybrid.csv
-```
+## Result Status
 
-> **Note:** Hybrid results use real-time incremental save. Each completed
-> graph is appended to `results/ket_qua_hybrid.csv` immediately, so stopping
-> with `Ctrl+C` preserves all graph results already written.
+- `OPT`: the solver proved optimality.
+- `FEASIBLE`: a valid labeling was found, but optimality was not proved before
+  the time limit.
+- `TIMEOUT`: no solver solution was available when the time limit was reached.
+- `UNAVAILABLE`: the selected optimization backend could not be started, for
+  example because its runtime is not installed.
+- `INVALID`: a returned labeling failed independent validation.
 
-For a smaller run, for example:
+## CSV Schema
 
-```bash
-python3 archive_old_code/benchmark_hybrid.py --family ALL --first 3 --last 10 --exact-max-q 5
-```
-
-`OPT` means the binary result passed the final sequential UNSAT check.
-`FEASIBLE` means a valid labeling was found but proof was interrupted. Q dimensions above
-`--exact-max-q` are marked `FEASIBLE_ESTIMATE` and are not exact SAT results.
-
-## Run the ILP Assignment Benchmark
-
-The 0-1 assignment formulation uses binary variables `x[v,k]`, a span variable,
-greedy warm starts, and automatic labeling validation. Gurobi and CPLEX use the
-same wrapper interface:
-
-```bash
-python3 benchmarks/run_ilp.py --solver gurobi --family ALL --first 3 --last 10
-```
-
-Use `--formulation big-m` for the legacy-style Big-M model, or
-`--formulation both` to write both formulations to one CSV for comparison.
-The runner supports `C`, `K`, and `Q` families and writes the shared schema
-`Graph,n,var,clause/constr,time,lambda,UB,status`.
-
-## Run the Gurobi Hybrid Benchmark
-
-The Gurobi benchmark uses the greedy labeling as a MIP start and solves the
-same $L(2,1)$ model with integer label variables and Big-M constraints:
-
-```bash
-python3 archive_old_code/benchmark_gurobi_hybrid.py
-```
-
-Use the same family and timeout options as the SAT hybrid benchmark:
-
-```bash
-python3 archive_old_code/benchmark_gurobi_hybrid.py --family K --first 3 --last 20 --timeout 600
-```
-
-Results are appended to `results/ket_qua_gurobi_hybrid.csv` after each graph,
-and logs are written to `logs/benchmark_gurobi_hybrid.log`. The CSV uses
-`clause/constr` for either the SAT clause count or the MILP constraint count.
-
-> **Note:** Gurobi must be installed and licensed in the active Python
-> environment. The benchmark uses `OutputFlag=0`, `TimeLimit`, and a greedy
-> MIP start. `OPT` means Gurobi proved optimality; `FEASIBLE` means it found a
-> solution before the time limit without proving optimality.
-
-## Run the CPLEX Hybrid Benchmark
-
-The CPLEX benchmark provides the same graph families and CLI as the Gurobi
-version, using `docplex.mp.model.Model` and a greedy CPLEX MIP start:
-
-```bash
-python3 archive_old_code/benchmark_cplex_hybrid.py
-```
-
-For a focused run:
-
-```bash
-python3 archive_old_code/benchmark_cplex_hybrid.py --family C --first 3 --last 20 --timeout 600
-```
-
-Results are appended to `results/ket_qua_cplex_hybrid.csv` after each graph,
-and logs are written to `logs/benchmark_cplex_hybrid.log`. The output columns
-are `Graph,n,var,clause/constr,time,lambda,UB,status`.
-
-> **Note:** `docplex` is the modeling layer; the CPLEX Python runtime and a
-> valid CPLEX license are also required. `OPT` means CPLEX reported an optimal
-> solution. A time-limited solution is recorded as `FEASIBLE`, while a run with
-> no solution is recorded as `TIMEOUT`.
-
-## Run the Extended Hypercube Benchmark
-
-The focused benchmark accepts command-line options:
-
-```bash
-python3 archive_old_code/benchmark_q_extended.py
-```
-
-Available options:
-
-```text
---first N         First hypercube dimension (default: 11)
---last N          Last hypercube dimension (default: 50)
---exact-max-n N   Run exact SAT through this dimension (default: 6)
---timeout SEC     SAT timeout per graph (default: 60)
-```
-
-The timeout is enforced inside each SAT call with the solver conflict budget,
-not only between successive span values. This keeps the 60-second development
-run responsive while allowing 10-15 minute budgets for final measurements.
-
-For example, to solve dimensions 2 through 8 exactly:
-
-```bash
-python3 archive_old_code/benchmark_q_extended.py --first 2 --last 8 --exact-max-n 8 --timeout 300
-```
-
-This script writes `results/ket_qua_Q_extended.csv` and appends runtime information to
-`logs/benchmark_run_q_ext.log`. Rows marked `OPT` are exact SAT results. Rows marked
-`FEASIBLE_ESTIMATE` are fast estimates and should not be interpreted as proof
-of optimality.
-
-> **Note:** The Q extended benchmark uses real-time incremental save. Each
-> completed dimension is appended to the CSV immediately, so an interrupted
-> run retains all dimensions already processed.
-
-## Run the CaDiCaL 1.95 Benchmark
-
-Run a separate benchmark with CaDiCaL 1.95 so the existing Glucose3 results are
-preserved:
-
-```bash
-python3 archive_old_code/benchmark_cadical195.py
-```
-
-The script runs the same `C_n`, `K_n`, and `Q_n` ranges as
-`archive_old_code/benchmark.py`,
-through `n=50`, using CaDiCaL 1.95. Results are written to separate
-`results/ket_qua_<graph>_cadical195.csv` files, with runtime details in
-`logs/benchmark_cadical195.log`.
-
-> **Note:** CaDiCaL results use real-time incremental save. Each graph is
-> written to its CSV immediately after solving, so the process can safely be
-> interrupted with `Ctrl+C` without losing completed results.
-
-## Result Columns
-
-Each CSV file contains the following columns:
+Each runner uses the same output schema:
 
 | Column | Meaning |
 | --- | --- |
-| `Graph` | Graph name, such as `C_10` or `Q_6`. |
-| `n` | Number of vertices. |
-| `var` | Number of order-encoding variables. |
-| `clause/constr` | Number of generated SAT clauses or MILP constraints. |
+| `Graph` | Graph identifier, such as `C_10`, `K_8`, or `Q_4`. |
+| `n` | Number of vertices in the graph. |
+| `var` | Number of solver variables. |
+| `clause/constr` | Number of SAT clauses or ILP constraints. |
 | `time` | Solver runtime in seconds. |
-| `lambda` | Computed span or estimated span. |
-| `UB` | Full tested upper-bound history, for example `8 -> 7 -> 6 -> 5`. For `OPT`, the last SAT bound is `lambda`; for `FEASIBLE`, it is not proven optimal. |
-| `status` | Usually `OPT`, `TIMEOUT`, `UNSOLVED`, or `FEASIBLE_ESTIMATE`. |
-
-## Validate a Labeling
-
-Use `validate_labeling` to check an instance independently from the SAT solver.
-The span `m` is an upper bound, so labels must be integers in `0..m`.
-
-Run the following command from the project directory to validate one known
-labeling manually:
-
-```bash
-python3 -c "from validation import validate_labeling; print(validate_labeling(3, [(0,1),(1,2),(0,2)], [], 4, {0:0,1:2,2:4}, h=2, k=1))"
-```
-
-Expected output:
-
-```text
-(True, [])
-```
-
-The result is a pair `(valid, errors)`. `True` and an empty error list mean
-that `m` and `L` satisfy all constraints. To test an invalid labeling, change
-`{0:0,1:2,2:4}` to `{0:0,1:1,2:4}`. The validator will return `False` and
-describe the violated edge constraint.
-
-```python
-from validation import validate_labeling
-
-valid, errors = validate_labeling(
-  n_vertices=3,
-  edges=[(0, 1), (1, 2), (0, 2)],
-  dist2_pairs=[],
-  span=4,
-  labels={0: 0, 1: 2, 2: 4},
-  h=2,
-  k=1,
-)
-print(valid)   # True
-print(errors)  # []
-```
-
-The benchmark scripts decode each SAT model into `L` and run this validation
-before recording an `OPT` result. A failed check is logged and is not accepted
-as a valid result.
-
-To run a real SAT result through the validator, use this small C3 benchmark:
-
-```bash
-python3 -c "import networkx as nx; from benchmark_cadical195 import run_benchmark; print(run_benchmark('C_3', nx.cycle_graph(3), timeout_sec=10))"
-```
-
-The output should contain `lambda: 4` and `status: 'OPT'`. For the complete
-benchmark, run:
-
-```bash
-python3 archive_old_code/benchmark_cadical195.py
-```
-
-Each SAT model found by the benchmark is decoded into `L`, validated, and only
-then written to the result CSV.
-
-## Implementation Notes
-
-The model represents each label with monotone order variables. For a span
-$s$, the encoding creates variables that represent threshold statements such
-as $f(v) \leq i$. CNF clauses enforce monotonicity and prevent labels that are
-too close for adjacent or distance-two vertex pairs.
-
-The benchmark starts from a feasible upper bound and tests span values in
-descending order. Each SAT result lowers the current upper bound and the next
-smaller span is tested. The first UNSAT after a SAT result proves the previous
-span is optimal. If a timeout occurs after a feasible result, the row is marked
-`FEASIBLE` rather than `OPT`; estimate statuses are also kept separate from
-exact SAT results.
-
-The `UB` column stores every tested bound in order, including the bound that
-returned `UNSAT` or the bound being tested when a timeout occurred.
-
-The MILP benchmarks use the same graph constraints as the SAT model, but
-represent labels directly as integer variables. A greedy feasible labeling is
-used as the initial upper bound and MIP start; the solver minimizes `span`
-directly and reports the number of MILP variables and constraints.
-
-## Troubleshooting
-
-- If Matplotlib does not open a window, check that the active Python
-  environment has a graphical backend available.
-- If a dependency cannot be imported, activate the virtual environment and
-  reinstall the packages with `python3 -m pip`.
-- Large benchmark instances can require significant memory and runtime. Use
-  `archive_old_code/benchmark_q_extended.py` with a smaller `--exact-max-n` when an exact SAT
-  run is too expensive.
-- If CPLEX cannot be imported, activate a Python environment compatible with
-  the installed CPLEX Studio runtime and ensure a valid license is available.
+| `lambda` | Computed span, or empty when no labeling was returned. |
+| `UB` | Greedy upper bound or the current feasible upper-bound record. |
+| `status` | Solver and validation status. |
 
 ## License
 
