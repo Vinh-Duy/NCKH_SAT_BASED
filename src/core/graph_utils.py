@@ -24,6 +24,15 @@ def hypercube_graph(dimension: int) -> nx.Graph:
     return nx.convert_node_labels_to_integers(nx.hypercube_graph(dimension))
 
 
+def petersen_graph(n: int, k: int) -> nx.Graph:
+    """Create the generalized Petersen graph GP(n, k)."""
+    if n < 3:
+        raise ValueError("n must be at least 3")
+    if not 1 <= k < n / 2:
+        raise ValueError("k must satisfy 1 <= k < n / 2")
+    return nx.convert_node_labels_to_integers(nx.generalized_petersen_graph(n, k))
+
+
 def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], list[tuple[Vertex, Vertex]]]:
     """Return edges and unordered vertex pairs at distance two."""
     edges = list(graph.edges())
