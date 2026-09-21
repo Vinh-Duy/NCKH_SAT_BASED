@@ -13,18 +13,23 @@ from src.core.graph_utils import (
     graph_constraints,
     greedy_upper_bound,
     hypercube_graph,
+    petersen_graph,
 )
 from src.core.io import BenchmarkWriter, result_row
 from src.core.validator import validate_labeling
 from src.solvers.ilp_solver import solve_graph
 
 
-def build_graph(family: str, size: int):
+def build_graph(family: str, size: int, jump: int | None = None):
     builders = {
         "C": cycle_graph,
         "K": complete_graph,
         "Q": hypercube_graph,
     }
+    if family == "petersen":
+        if jump is None:
+            raise ValueError("--k is required for the petersen family")
+        return petersen_graph(size, jump)
     try:
         return builders[family](size)
     except KeyError as error:
@@ -45,7 +50,7 @@ def _result_namespace(result, upper_bound):
 
 
 def run_instance(args, writer: BenchmarkWriter, family: str, size: int) -> None:
-    graph = build_graph(family, size)
+    graph = build_graph(family, size, args.k)
     edges, distance_two_pairs = graph_constraints(graph)
     formulations = ("assignment", "big-m") if args.formulation == "both" else (args.formulation,)
 
@@ -70,7 +75,8 @@ def run_instance(args, writer: BenchmarkWriter, family: str, size: int) -> None:
                 writer.log(
                     f"{family}_{size} [{formulation}] invalid labeling: {errors}"
                 )
-        graph_name = f"{family}_{size}" if len(formulations) == 1 else f"{family}_{size}_{formulation}"
+        base_name = f"GP_{size}_{args.k}" if family == "petersen" else f"{family}_{size}"
+        graph_name = base_name if len(formulations) == 1 else f"{base_name}_{formulation}"
         writer.append(result_row(graph_name, graph.number_of_nodes(), normalized))
         writer.log(
             f"{graph_name}: lambda={normalized.span}, status={normalized.status}"
@@ -79,17 +85,25 @@ def run_instance(args, writer: BenchmarkWriter, family: str, size: int) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run L(2,1) ILP benchmarks")
-    parser.add_argument("--family", choices=("C", "K", "Q", "ALL"), default="ALL")
+    parser.add_argument("--family", choices=("C", "K", "Q", "petersen", "ALL"), default="ALL")
     parser.add_argument("--solver", choices=("gurobi", "cplex"), default="gurobi")
     parser.add_argument("--formulation", choices=("assignment", "big-m", "both"), default="assignment")
     parser.add_argument("--first", type=int, default=3)
     parser.add_argument("--last", type=int, default=50)
+    parser.add_argument("--n", type=int, help="Order n for GP(n, k)")
+    parser.add_argument("--k", type=int, help="Jump k for GP(n, k)")
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument(
         "--output",
         default=str(ROOT / "results" / "ilp_assignment.csv"),
     )
     args = parser.parse_args()
+
+    if args.family == "petersen":
+        if args.n is None or args.k is None:
+            parser.error("--family petersen requires --n and --k")
+        args.first = args.n
+        args.last = args.n
 
     writer = BenchmarkWriter(args.output, ROOT / "logs" / "run_ilp.log")
     families = ("C", "K", "Q") if args.family == "ALL" else (args.family,)
