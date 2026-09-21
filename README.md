@@ -47,15 +47,16 @@ The implementation is organized as a reusable Python package:
 
 | Module | Responsibility |
 | --- | --- |
-| `src/core/graph_utils.py` | Construction of $C_n$, $K_n$, and $Q_n$; graph constraints; bounds; greedy labeling. |
+| `src/core/graph_utils.py` | Construction of $C_n$, $K_n$, $Q_n$, and $GP(n,k)$; graph constraints; bounds; greedy labeling. |
 | `src/core/validator.py` | Independent validation of $L(h,k)$ labelings. |
 | `src/core/io.py` | Shared CSV writing and benchmark logging. |
 | `src/models/sat_encoding.py` | Order encoding, forbidden-label clauses, and symmetry breaking. |
 | `src/models/ilp_assignment.py` | Binary assignment formulation and warm-start helpers. |
 | `src/solvers/sat_solver.py` | Glucose3/CaDiCaL wrappers with linear and hybrid search. |
 | `src/solvers/ilp_solver.py` | Gurobi and CPLEX wrappers for assignment and Big-M formulations. |
-| `benchmarks/run_sat.py` | SAT experiments for cycle, complete, and hypercube graphs. |
+| `benchmarks/run_sat.py` | SAT experiments for cycle, complete, hypercube, and generalized Petersen graphs. |
 | `benchmarks/run_ilp.py` | ILP experiments and assignment-versus-Big-M comparison. |
+| `benchmarks/benchmark_petersen.py` | SAT sweep for $GP(n,k)$ with $7 \le n \le 15$. |
 
 Detailed mathematical documentation is available in:
 
@@ -66,8 +67,8 @@ Detailed mathematical documentation is available in:
 ## Reproducibility
 
 All benchmark runners write results incrementally. The `--family` option accepts
-`C`, `K`, `Q`, or `ALL`. Use `--first` and `--last` to select the graph-size
-range, and `--timeout` to set the per-instance time limit.
+`C`, `K`, `Q`, `petersen`, or `ALL`. Use `--first` and `--last` to select the graph-size
+range for the first three families, and `--timeout` to set the per-instance time limit.
 
 ### SAT experiments
 
@@ -95,6 +96,25 @@ python3 -m benchmarks.run_sat \
   --strategy linear \
   --timeout 300 \
   --output results/sat_hypercube.csv
+```
+
+Run one generalized Petersen graph with order `n` and jump `k`:
+
+```bash
+python3 -m benchmarks.run_sat \
+  --family petersen \
+  --n 9 \
+  --k 2 \
+  --solver glucose \
+  --strategy hybrid \
+  --timeout 60 \
+  --output results/sat_petersen_single.csv
+```
+
+Run the complete Georges-Mauro sweep (`7 <= n <= 15`, `1 <= k < n/2`):
+
+```bash
+python3 benchmarks/benchmark_petersen.py
 ```
 
 ### ILP experiments
@@ -126,6 +146,8 @@ python3 benchmarks/run_ilp.py \
   --timeout 300 \
   --output results/ilp_comparison.csv
 ```
+
+The ILP runner also accepts `--family petersen --n <n> --k <k>`.
 
 Gurobi requires an active installation and license. CPLEX requires both the
 `docplex` package and an accessible CPLEX runtime and license.
