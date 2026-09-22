@@ -1,20 +1,15 @@
 # SAT and ILP Methods for L(h,k)-Labeling
 
-This project uses the PySAT toolkit to study the graph labeling problem
-$L(h,k)$ with an order-encoded CNF model. The default configuration is the
-$L(2,1)$-labeling problem:
+This project studies the graph labeling problem $L(h,k)$ with SAT and ILP
+formulations. The default problem is $L(2,1)$-labeling:
 
 - Adjacent vertices must receive labels whose difference is at least $2$.
 - Vertices at graph distance two must receive different labels.
 - The **span** is the smallest value $s$ for which a valid labeling exists.
 
-The shared CNF builder also supports symmetry breaking. Path instances impose
-$f(0) < f(n-1)$, cycle instances fix vertex 0 to label 0 and order its two
-neighbors, and hypercube instances fix vertex 0 to label 0 and order the
-neighbors corresponding to the cube dimensions. These constraints preserve
-SAT/UNSAT status while removing equivalent labelings from the search. Complete
-graphs keep the unrestricted encoding because these family-specific rules do
-not apply to them.
+The SAT model uses order encoding and can apply family-specific symmetry
+breaking for paths, cycles, and hypercubes. Petersen and product graphs do not
+use those assumptions unless they are mathematically justified.
 
 ## Requirements
 
@@ -47,7 +42,7 @@ The implementation is organized as a reusable Python package:
 
 | Module | Responsibility |
 | --- | --- |
-| `src/core/graph_utils.py` | Construction of $C_n$, $K_n$, $Q_n$, and $GP(n,k)$; graph constraints; bounds; greedy labeling. |
+| `src/core/graph_utils.py` | Construction of standard graphs, $GP(n,k)$, Cartesian products, and corona products; graph constraints; bounds; greedy labeling. |
 | `src/core/validator.py` | Independent validation of $L(h,k)$ labelings. |
 | `src/core/io.py` | Shared CSV writing and benchmark logging. |
 | `src/models/sat_encoding.py` | Order encoding, forbidden-label clauses, and symmetry breaking. |
@@ -56,13 +51,17 @@ The implementation is organized as a reusable Python package:
 | `src/solvers/ilp_solver.py` | Gurobi and CPLEX wrappers for assignment and Big-M formulations. |
 | `benchmarks/run_sat.py` | SAT experiments for cycle, complete, hypercube, and generalized Petersen graphs. |
 | `benchmarks/run_ilp.py` | ILP experiments and assignment-versus-Big-M comparison. |
-| `benchmarks/benchmark_petersen.py` | SAT sweep for $GP(n,k)$ with $7 \le n \le 15$. |
+| `benchmarks/benchmark_petersen.py` | SAT sweep for $GP(n,k)$ with $7 \le n \le 50$. |
+| `benchmarks/benchmark_products.py` | SAT sweep for Cartesian and corona product graphs with $3 \le n,m \le 10$. |
 
 Detailed mathematical documentation is available in:
 
 - [SAT encoding](docs/sat_encoding.md)
 - [ILP formulations](docs/ilp_formulations.md)
 - [Span search strategies](docs/search_strategies.md)
+- [Petersen benchmark](docs/petersen_benchmark.md)
+- [Product benchmark](docs/products_benchmark.md)
+- [Solver evaluation](docs/solver_evaluation.md)
 
 ## Reproducibility
 
@@ -111,11 +110,38 @@ python3 -m benchmarks.run_sat \
   --output results/sat_petersen_single.csv
 ```
 
-Run the complete Georges-Mauro sweep (`7 <= n <= 15`, `1 <= k < n/2`):
+Run the complete Georges-Mauro sweep (`7 <= n <= 50`, `1 <= k < n/2`):
 
 ```bash
 python3 benchmarks/benchmark_petersen.py
 ```
+
+### Product experiments
+
+The product benchmark covers three Cartesian families:
+
+- $C_n \square C_m$
+- $C_n \square P_m$
+- $P_n \square P_m$
+
+It also covers three corona families:
+
+- $C_n \circ C_m$
+- $P_n \circ P_m$
+- $C_n \circ P_m$
+
+The graph constructors normalize NetworkX tuple vertices to consecutive
+integer labels before the graph reaches the SAT or ILP encoding. The benchmark
+scans all $n,m \in [3,10]$, for 384 instances in total, using Glucose and the
+hybrid SAT search with a 60-second limit per instance:
+
+```bash
+./.venv-1/bin/python benchmarks/benchmark_products.py
+```
+
+Results are written to `results/products_benchmark.csv` and
+`logs/benchmark_products.log`. The product CSV has the fields `Graph`, `V`,
+`E`, `lambda`, `time`, and `status`.
 
 ### ILP experiments
 
@@ -164,7 +190,7 @@ Gurobi requires an active installation and license. CPLEX requires both the
 
 ## CSV Schema
 
-Each runner uses the same output schema:
+The standard SAT and ILP runners use the following schema:
 
 | Column | Meaning |
 | --- | --- |
@@ -176,6 +202,9 @@ Each runner uses the same output schema:
 | `lambda` | Computed span, or empty when no labeling was returned. |
 | `UB` | Greedy upper bound or the current feasible upper-bound record. |
 | `status` | Solver and validation status. |
+
+The dedicated product benchmark uses a smaller schema focused on graph size
+and experiment tracking: `Graph`, `V`, `E`, `lambda`, `time`, and `status`.
 
 ## License
 
