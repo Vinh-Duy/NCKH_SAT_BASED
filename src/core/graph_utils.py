@@ -33,6 +33,50 @@ def petersen_graph(n: int, k: int) -> nx.Graph:
     return nx.convert_node_labels_to_integers(nx.generalized_petersen_graph(n, k))
 
 
+def _integer_labeled(graph: nx.Graph) -> nx.Graph:
+    """Return a copy whose vertices are consecutive integers."""
+    return nx.convert_node_labels_to_integers(graph, ordering="default")
+
+
+def get_cartesian_cycle_cycle(n: int, m: int) -> nx.Graph:
+    """Create the Cartesian product C_n x C_m."""
+    return _integer_labeled(nx.cartesian_product(nx.cycle_graph(n), nx.cycle_graph(m)))
+
+
+def get_cartesian_cycle_path(n: int, m: int) -> nx.Graph:
+    """Create the Cartesian product C_n x P_m."""
+    return _integer_labeled(nx.cartesian_product(nx.cycle_graph(n), nx.path_graph(m)))
+
+
+def get_cartesian_path_path(n: int, m: int) -> nx.Graph:
+    """Create the Cartesian product P_n x P_m."""
+    return _integer_labeled(nx.cartesian_product(nx.path_graph(n), nx.path_graph(m)))
+
+
+def _family_graph(graph_type: str, size: int) -> nx.Graph:
+    """Build a supported base graph for a corona product."""
+    normalized = graph_type.lower().replace("_", "-")
+    if normalized in {"c", "cycle", "cycles"}:
+        return nx.cycle_graph(size)
+    if normalized in {"p", "path", "paths"}:
+        return nx.path_graph(size)
+    if normalized in {"k", "complete", "clique"}:
+        return nx.complete_graph(size)
+    raise ValueError("graph_type must be one of: cycle, path, complete")
+
+
+def get_corona_graph(
+    g_type: str, h_type: str, n: int, m: int
+) -> nx.Graph:
+    """Create G_n o H_m and relabel its product vertices as integers.
+
+    Supported base families are cycle (C), path (P), and complete (K).
+    """
+    first = _family_graph(g_type, n)
+    second = _family_graph(h_type, m)
+    return _integer_labeled(nx.corona_product(first, second))
+
+
 def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], list[tuple[Vertex, Vertex]]]:
     """Return edges and unordered vertex pairs at distance two."""
     edges = list(graph.edges())
