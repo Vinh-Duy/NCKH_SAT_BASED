@@ -74,7 +74,12 @@ def get_corona_graph(
     """
     first = _family_graph(g_type, n)
     second = _family_graph(h_type, m)
-    return _integer_labeled(nx.corona_product(first, second))
+    product = _integer_labeled(nx.corona_product(first, second))
+    if g_type.lower() in {"c", "cycle", "cycles"} and n >= 3:
+        product.graph["symmetry_root"] = 0
+        product.graph["symmetry_neighbors"] = (1, n - 1)
+        product.graph["symmetry_fix_root_zero"] = False
+    return product
 
 
 def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], list[tuple[Vertex, Vertex]]]:
