@@ -85,11 +85,20 @@ def strict_less_clauses(
 
 
 def symmetry_breaking_clauses(
-    order_vars: OrderVars, symmetry_kind: str | None
+    order_vars: OrderVars,
+    symmetry_kind: str | None,
+    symmetry_vertices: tuple[int, int, int] | None = None,
 ) -> list[list[int]]:
     """Add sound symmetry constraints for supported graph families."""
     if not symmetry_kind or order_vars.n_vertices == 0:
         return []
+    if symmetry_kind == "CORONA":
+        if symmetry_vertices is None:
+            return []
+        _, first_neighbor, second_neighbor = symmetry_vertices
+        if max(symmetry_vertices) >= order_vars.n_vertices:
+            return []
+        return strict_less_clauses(order_vars, first_neighbor, second_neighbor)
     builders = {
         "P": _path_symmetry,
         "C": _cycle_symmetry,
@@ -149,11 +158,14 @@ def build_cnf(
     h: int = 2,
     k: int = 1,
     symmetry_kind: str | None = None,
+    symmetry_vertices: tuple[int, int, int] | None = None,
 ) -> tuple[list[list[int]] | None, OrderVars]:
     """Build an L(h,k) CNF and return it with its order variables."""
     order_vars = OrderVars(n_vertices, span)
     clauses = monotone_clauses(order_vars)
-    clauses += symmetry_breaking_clauses(order_vars, symmetry_kind)
+    clauses += symmetry_breaking_clauses(
+        order_vars, symmetry_kind, symmetry_vertices
+    )
     for first, second in edges:
         clauses += forbid_close_labels(order_vars, first, second, h)
     for first, second in distance_two_pairs:
