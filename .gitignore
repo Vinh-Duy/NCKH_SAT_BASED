@@ -2,3 +2,45 @@ __pycache__/
 .venv/
 .venv-*/
 .DS_Store
+
+# ==========================================
+# LaTeX Output & Auxiliary Files
+# ==========================================
+
+# Core TeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fmt
+*.fot
+*.cb
+*.cb2
+
+# Bibliography / Reference files (BibTeX & Biber)
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*-blx.bib
+
+# Build tools & SyncTeX (Latexmk, SyncTeX, Rubber)
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.synctex.gz(busy)
+*.pdfsync
+*.rubbeercache
+rubber.cache
+
+# PDF Output (File PDF sinh ra từ LaTeX)
+*.pdf
+
+# Intermediate build directories (nếu biên dịch vào folder riêng)
+_minted-*/
+build/
+out/
