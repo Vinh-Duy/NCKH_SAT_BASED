@@ -53,6 +53,7 @@ The implementation is organized as a reusable Python package:
 | `benchmarks/run_ilp.py` | ILP experiments and assignment-versus-Big-M comparison. |
 | `benchmarks/benchmark_petersen.py` | SAT sweep for $GP(n,k)$ with $7 \le n \le 50$. |
 | `benchmarks/benchmark_products.py` | SAT sweep for Cartesian and corona product graphs with $3 \le n,m \le 10$. |
+| `benchmarks/benchmark_symmetry_comparison.py` | Dual-run comparison with and without symmetry breaking. |
 
 Detailed mathematical documentation is available in:
 
@@ -124,16 +125,17 @@ The product benchmark covers three Cartesian families:
 - $C_n \square P_m$
 - $P_n \square P_m$
 
-It also covers three corona families:
+It also covers four corona families:
 
 - $C_n \circ C_m$
 - $P_n \circ P_m$
 - $C_n \circ P_m$
+- $P_n \circ C_m$
 
 The graph constructors normalize NetworkX tuple vertices to consecutive
 integer labels before the graph reaches the SAT or ILP encoding. The benchmark
-scans all $n,m \in [3,10]$, for 384 instances in total, using Glucose and the
-hybrid SAT search with a 60-second limit per instance:
+scans all $n,m \in [3,10]$, for 448 instances in total, using Glucose and the
+hybrid SAT search with a 300-second limit per instance:
 
 ```bash
 ./.venv-1/bin/python benchmarks/benchmark_products.py
@@ -205,6 +207,15 @@ The standard SAT and ILP runners use the following schema:
 
 The dedicated product benchmark uses a smaller schema focused on graph size
 and experiment tracking: `Graph`, `V`, `E`, `lambda`, `time`, and `status`.
+
+To compare SAT search with and without symmetry breaking, run:
+
+```bash
+./.venv-1/bin/python benchmarks/benchmark_symmetry_comparison.py
+```
+
+The comparison writes `results/symmetry_comparison_benchmark.csv` and resumes
+by skipping graph identifiers already present in that file.
 
 ## License
 

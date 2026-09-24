@@ -97,11 +97,11 @@ $$
 Với mỗi cặp $(n,m)$, script sinh sáu instance:
 
 - `C_n x C_m`, `C_n x P_m`, `P_n x P_m`;
-- `C_n o C_m`, `P_n o P_m`, `C_n o P_m`.
+- `C_n o C_m`, `P_n o P_m`, `C_n o P_m`, `P_n o C_m`.
 
-Tổng cộng có $8 \times 8 \times 6 = 384$ instance. Mỗi instance được giải
+Tổng cộng có $8 \times 8 \times 7 = 448$ instance. Mỗi instance được giải
 bằng Glucose thông qua wrapper SAT dùng chiến lược hybrid, với thời gian tối đa
-60 giây cho một đồ thị.
+300 giây cho một đồ thị.
 
 Kết quả được ghi tăng dần vào:
 
