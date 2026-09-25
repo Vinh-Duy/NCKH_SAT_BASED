@@ -30,7 +30,12 @@ def petersen_graph(n: int, k: int) -> nx.Graph:
         raise ValueError("n must be at least 3")
     if not 1 <= k < n / 2:
         raise ValueError("k must satisfy 1 <= k < n / 2")
-    return nx.convert_node_labels_to_integers(nx.generalized_petersen_graph(n, k))
+    graph = nx.convert_node_labels_to_integers(
+        nx.generalized_petersen_graph(n, k)
+    )
+    graph.graph["symmetry_root"] = 0
+    graph.graph["symmetry_fix_root_zero"] = True
+    return graph
 
 
 def _integer_labeled(graph: nx.Graph) -> nx.Graph:
@@ -38,19 +43,44 @@ def _integer_labeled(graph: nx.Graph) -> nx.Graph:
     return nx.convert_node_labels_to_integers(graph, ordering="default")
 
 
+def _mark_root_symmetry(graph: nx.Graph, ordered_neighbors: bool = False) -> nx.Graph:
+    """Mark a representative root for safe root-symmetric constructors."""
+    graph.graph["symmetry_root"] = 0
+    graph.graph["symmetry_fix_root_zero"] = True
+    if ordered_neighbors:
+        neighbors = list(graph.neighbors(0))
+        if len(neighbors) >= 2:
+            minimum_degree = min(graph.degree(node) for node in neighbors)
+            equivalent = [
+                node for node in neighbors if graph.degree(node) == minimum_degree
+            ]
+            if len(equivalent) >= 2:
+                graph.graph["symmetry_neighbors"] = (equivalent[0], equivalent[1])
+    return graph
+
+
 def get_cartesian_cycle_cycle(n: int, m: int) -> nx.Graph:
     """Create the Cartesian product C_n x C_m."""
-    return _integer_labeled(nx.cartesian_product(nx.cycle_graph(n), nx.cycle_graph(m)))
+    graph = _integer_labeled(
+        nx.cartesian_product(nx.cycle_graph(n), nx.cycle_graph(m))
+    )
+    return _mark_root_symmetry(graph, ordered_neighbors=True)
 
 
 def get_cartesian_cycle_path(n: int, m: int) -> nx.Graph:
     """Create the Cartesian product C_n x P_m."""
-    return _integer_labeled(nx.cartesian_product(nx.cycle_graph(n), nx.path_graph(m)))
+    graph = _integer_labeled(
+        nx.cartesian_product(nx.cycle_graph(n), nx.path_graph(m))
+    )
+    return _mark_root_symmetry(graph, ordered_neighbors=True)
 
 
 def get_cartesian_path_path(n: int, m: int) -> nx.Graph:
     """Create the Cartesian product P_n x P_m."""
-    return _integer_labeled(nx.cartesian_product(nx.path_graph(n), nx.path_graph(m)))
+    graph = _integer_labeled(
+        nx.cartesian_product(nx.path_graph(n), nx.path_graph(m))
+    )
+    return _mark_root_symmetry(graph, ordered_neighbors=True)
 
 
 def _family_graph(graph_type: str, size: int) -> nx.Graph:
@@ -78,7 +108,7 @@ def get_corona_graph(
     if g_type.lower() in {"c", "cycle", "cycles"} and n >= 3:
         product.graph["symmetry_root"] = 0
         product.graph["symmetry_neighbors"] = (1, n - 1)
-        product.graph["symmetry_fix_root_zero"] = False
+        product.graph["symmetry_fix_root_zero"] = True
     return product
 
 

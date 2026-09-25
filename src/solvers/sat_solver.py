@@ -37,7 +37,9 @@ def _labels_from_model(
 ) -> dict[int, int]:
     model_literals = set(model)
     return {
-        vertex: next(
+        vertex: order_vars.fixed_labels[vertex]
+        if vertex in order_vars.fixed_labels
+        else next(
             (
                 threshold
                 for threshold in range(span)
@@ -56,6 +58,8 @@ def _solve_span(
     span: int,
     solver_name: str,
     symmetry_kind: str | None,
+    symmetry_vertices: tuple[int, int, int] | None,
+    fixed_labels: dict[int, int],
     timeout: float | None,
 ) -> tuple[str, dict[int, int], int, int]:
     """Solve one span and return status, labels, vars, and clauses."""
@@ -65,6 +69,8 @@ def _solve_span(
         distance_two_pairs,
         span,
         symmetry_kind=symmetry_kind,
+        symmetry_vertices=symmetry_vertices,
+        fixed_labels=fixed_labels,
     )
     if cnf is None:
         return "UNSAT", {}, order_vars.variable_count, 0
@@ -95,8 +101,9 @@ def solve_graph(
     strategy: str = "hybrid",
     timeout_sec: float = 60,
     symmetry_kind: str | None = None,
+    enable_symmetry_breaking: bool = True,
 ) -> SatResult:
-    """Solve a graph using linear descent or hybrid binary search."""
+    """Solve a graph with optional hard-pruned symmetry breaking."""
     edges, distance_two_pairs = graph_constraints(graph)
     lower = lower_bound(graph)
     greedy_span, greedy_labels = greedy_labeling(graph)
@@ -104,6 +111,12 @@ def solve_graph(
     start = time.time()
     history: list[str] = []
     best = SatResult("FEASIBLE", upper, upper, labels=greedy_labels)
+    if not enable_symmetry_breaking:
+        symmetry_kind = None
+    elif symmetry_kind is None:
+        symmetry_kind = _infer_symmetry_kind(graph)
+    symmetry_vertices = _symmetry_vertices(graph, symmetry_kind)
+    fixed_labels = _fixed_labels(graph, symmetry_kind)
 
     def remaining() -> float:
         return max(0.0, timeout_sec - (time.time() - start))
@@ -116,6 +129,8 @@ def solve_graph(
             span,
             solver_name,
             symmetry_kind,
+            symmetry_vertices,
+            fixed_labels,
             remaining(),
         )
         history.append(f"{marker}{span}:{outcome[0]}")
@@ -131,6 +146,33 @@ def solve_graph(
     best.runtime = time.time() - start
     best.history = history
     return best
+
+
+def _symmetry_vertices(graph: Any, symmetry_kind: str | None):
+    if symmetry_kind != "CORONA":
+        return None
+    root = graph.graph.get("symmetry_root")
+    neighbors = graph.graph.get("symmetry_neighbors")
+    if root is None or neighbors is None or len(neighbors) != 2:
+        return None
+    return root, neighbors[0], neighbors[1]
+
+
+def _fixed_labels(graph: Any, symmetry_kind: str | None) -> dict[int, int]:
+    if symmetry_kind in {"C", "K", "Q"} and graph.number_of_nodes() > 0:
+        return {0: 0}
+    if symmetry_kind == "CORONA" and graph.graph.get("symmetry_fix_root_zero"):
+        return {graph.graph["symmetry_root"]: 0}
+    return {}
+
+
+def _infer_symmetry_kind(graph: Any) -> str | None:
+    if graph.graph.get("symmetry_root") is not None:
+        return "CORONA"
+    if graph.number_of_nodes() >= 3 and graph.number_of_edges() == graph.number_of_nodes():
+        if {degree for _, degree in graph.degree()} == {2}:
+            return "C"
+    return None
 
 
 def _sat_result(span, upper, labels, variables, clauses) -> SatResult:
