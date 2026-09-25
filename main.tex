@@ -38,8 +38,8 @@ order encoding, tìm kiếm span hybrid và các ràng buộc phá vỡ đối x
 kiểm soát theo cấu trúc đồ thị. Một benchmark đối chiếu giữa cấu hình cơ sở
 và cấu hình có symmetry breaking được thực hiện trên dữ liệu thu thập từ
 Glucose. Kết quả hiện có gồm 434 instance, trong đó 432 instance đạt tối ưu ở
-cả hai cấu hình. Symmetry breaking không làm giảm số biến, nhưng giúp giảm
-thời gian giải trung bình khoảng 13.09\% trong tập dữ liệu đã ghi nhận.
+cả hai cấu hình. Cơ chế hard-pruning loại các biến order cố định và giúp giảm
+đáng kể số clause trên các đồ thị có đối xứng.
 Các kết quả SAT cũng gợi ý một số giả thuyết về $\lambda_{2,1}$ của các họ
 $P_n\square P_m$, $C_n\circ P_m$ và các họ Corona liên quan.
 \end{abstract}
@@ -151,6 +151,19 @@ bên dưới ứng viên để chứng nhận \texttt{OPT}.
 
 \subsection{Ràng buộc phá vỡ đối xứng}
 
+Phiên bản hiện tại sử dụng cơ chế \emph{hard-pruning} thay vì chỉ thêm các
+mệnh đề đối xứng lên CNF đầy đủ. Với đỉnh gốc $v_0$ được chọn làm đại diện,
+hệ thống cố định
+\[
+ f(v_0)=0.
+\]
+Do đó, các biến order $x_{v_0,i}$ không được cấp phát ngay từ đầu. Khi một
+mệnh đề liên quan đến $v_0$ được sinh, encoder thay thế phần cố định bằng
+hằng đúng hoặc sai và chỉ giữ lại các literal của đỉnh chưa cố định. Chẳng
+hạn, ràng buộc khoảng cách với $v_0$ trở thành các mệnh đề cấm trực tiếp các
+nhãn gần 0; ràng buộc thứ tự cũng được rút gọn thành một literal. Cách làm
+này vừa loại đối xứng dịch nhãn, vừa giảm kích thước CNF thực tế.
+
 Các đồ thị chu kỳ có đối xứng quay và đối xứng phản xạ. Một đại diện chuẩn
 có thể được chọn bằng
 \[
@@ -162,8 +175,9 @@ của chu kỳ.
 Với Corona, không được cố định tùy tiện một đỉnh lõi về nhãn $0$, vì đỉnh lõi
 và các đỉnh trong bản sao của $H$ không nói chung là vertex-transitive. Cài đặt
 hiện tại chỉ thêm thứ tự giữa các lân cận lõi tương đương khi constructor đồ
-thị cung cấp metadata đối xứng. Như vậy, các mệnh đề mới chỉ chọn một đại diện
-trong lớp các nghiệm đẳng cấu và không làm thay đổi giá trị tối ưu.
+thị cung cấp metadata đối xứng; các mệnh đề này cũng được rút gọn khi một đầu
+đã bị cố định. Như vậy, các mệnh đề mới chỉ chọn một đại diện trong lớp các
+nghiệm đẳng cấu và không làm thay đổi giá trị tối ưu.
 
 Tham số điều khiển là:
 \begin{verbatim}
@@ -194,66 +208,83 @@ Dữ liệu hiện tại gồm 434 instance, với phân bố trạng thái:
 
 \subsection{Bảng đối chiếu đại diện}
 
-Bảng~\ref{tab:comparison} lấy trực tiếp từ CSV. Runtime tính bằng giây; phần
-trăm speedup được tính bởi
-$100(1-\mathrm{Time}_{Sym}/\mathrm{Time}_{Base})$.
+Bảng~\ref{tab:comparison} lấy trực tiếp từ CSV. Các cột Delta được định nghĩa
+bởi $\Delta Var=Var_B-Var_S$, $\Delta Clause=Clause_B-Clause_S$ và
+$\Delta Runtime=Time_B-Time_S$. Vì vậy, Delta dương biểu thị symmetry
+breaking làm giảm đại lượng tương ứng.
 
 \begin{table}[H]
 \centering
-\caption{So sánh Baseline và Symmetry Breaking trên các instance lớn.}
+\caption{Chênh lệch đo được giữa Baseline và Symmetry Breaking trên các instance đại diện.}
 \label{tab:comparison}
 \small
-\begin{tabular}{lrrrrrrrrr}
+\begin{tabular}{lrrrrrrr}
 \toprule
-Graph & $V$ & $E$ & $\lambda$ & Var$_B$ & Var$_S$ & Clause$_B$ & Clause$_S$ & Time$_B$ & Time$_S$ \\
+Graph & $V$ & Var$_B$ & Var$_S$ & $\Delta Var$ & $\Delta Clause$ & $\Delta Runtime$ \\
 \midrule
-\texttt{P\_9xP\_6} & 54 & 93 & 6 & 324 & 324 & 3143 & 3143 & 0.123 & 0.030 \\
-\texttt{C\_5oC\_10} & 55 & 105 & 14 & 770 & 770 & 9430 & 9445 & 141.575 & 56.612 \\
-\texttt{C\_6oC\_9} & 60 & 114 & 13 & 780 & 780 & 9144 & 9158 & 22.403 & 9.537 \\
-\texttt{C\_9oP\_9} & 90 & 162 & 13 & 1170 & 1170 & 13482 & 13496 & 15.554 & 8.598 \\
-\texttt{C\_9oC\_10} & 99 & 189 & 14 & 1386 & 1386 & 16974 & 16989 & 159.619 & 106.101 \\
-\texttt{P\_9oP\_10} & 99 & 179 & 14 & 1386 & 1386 & 16349 & 16349 & 123.494 & 115.957 \\
+\texttt{C\_3xC\_3} & 9 & 72 & 64 & 8 (11.11\%) & 122 (18.07\%) & 0.014761 \\
+\texttt{C\_3xP\_3} & 9 & 54 & 48 & 6 (11.11\%) & 67 (15.40\%) & -0.000466 \\
+\texttt{C\_3oC\_3} & 12 & 96 & 88 & 8 (8.33\%) & 161 (20.88\%) & 0.015207 \\
+\texttt{C\_3oP\_3} & 12 & 84 & 77 & 7 (8.33\%) & 140 (22.01\%) & 0.002172 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Số biến không giảm vì symmetry breaking chỉ bổ sung mệnh đề trên tập biến
-order encoding hiện có. Số clause giữ nguyên hoặc tăng nhẹ; ví dụ
-$C_5\circ C_{10}$ tăng từ 9430 lên 9445 clause. Đây là kết quả đúng với bản
-chất kỹ thuật: symmetry breaking tối ưu hóa không gian tìm kiếm chứ không nhất
-thiết làm nhỏ CNF.
+Các instance trong bảng cho thấy Hard-Pruning làm giảm 8--11\% số biến và
+15--22\% số clause. Mức giảm clause 13--22\% là nhất quán với các instance
+đồ thị có cấu trúc đối xứng rõ; runtime delta dương ở ba trong bốn dòng, còn
+giá trị âm nhỏ ở $C_3\square P_3$ cho thấy chi phí biến thiên của solver trên
+instance rất nhỏ.
 
-Trên 434 dòng có runtime hợp lệ, speedup trung bình là 13.09\% và trung vị là
-11.59\%. Tuy nhiên, tác động không đồng nhất: một số instance nhỏ hoặc dễ có
-thể chậm hơn do chi phí clause bổ sung, còn các instance Corona lớn thường có
-mức cải thiện đáng kể.
+Trên toàn bộ benchmark, tác động không đồng nhất theo kích thước và họ đồ
+thị; vì vậy các biểu đồ dưới đây dùng Delta thay vì chồng hai đường tuyệt đối.
 
 \subsection{Biểu đồ thực nghiệm}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{results/plots/var_reduction_comparison.png}
-\caption{So sánh số biến SAT theo số đỉnh $V$.}
-\label{fig:variables}
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{results/plots/delta_runtime_cartesian.png}
+  \smallskip
+  \textbf{(a)} Runtime Delta của Cartesian.
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{results/plots/delta_clauses_cartesian.png}
+  \smallskip
+  \textbf{(b)} Clause Delta của Cartesian.
+\end{minipage}
+\caption{Difference plots cho các tích Cartesian. Delta dương cho biết
+Baseline lớn hơn cấu hình có symmetry breaking; các điểm âm là trường hợp
+symmetry breaking không đem lại lợi ích ở kích thước đó.}
+\label{fig:delta-cartesian}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{results/plots/clause_reduction_comparison.png}
-\caption{So sánh số mệnh đề SAT theo số đỉnh $V$.}
-\label{fig:clauses}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{results/plots/runtime_improvement_comparison.png}
-\caption{So sánh runtime Baseline và Symmetry Breaking theo số đỉnh $V$.}
-\label{fig:runtime}
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{results/plots/delta_runtime_corona.png}
+  \smallskip
+  \textbf{(a)} Runtime Delta của Corona.
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{results/plots/delta_clauses_corona.png}
+  \smallskip
+  \textbf{(b)} Clause Delta của Corona.
+\end{minipage}
+\caption{Difference plots cho các tích Corona. Clause Delta thường dương rõ
+hơn ở các cấu hình Corona, trong khi Runtime Delta phản ánh trực tiếp mức
+tiết kiệm thời gian theo từng kích thước đồ thị.}
+\label{fig:delta-corona}
 \end{figure}
 
 Các biểu đồ được sinh bởi \texttt{scripts/plot\_symmetry\_impact.py}, trong đó các
-instance có cùng số đỉnh được tổng hợp bằng giá trị trung bình. Vì vậy, biểu
-đồ mô tả xu hướng toàn bộ benchmark chứ không phải một instance riêng lẻ.
+instance thuộc cùng họ và có cùng số đỉnh được tổng hợp bằng giá trị trung
+bình. Vì vậy, biểu đồ mô tả xu hướng theo từng họ thay vì làm mất khác biệt
+giữa Cartesian và Corona.
 
 \section{Phát biểu giả thuyết toán học}
 
