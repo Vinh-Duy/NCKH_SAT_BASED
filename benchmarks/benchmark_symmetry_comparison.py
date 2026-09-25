@@ -91,7 +91,6 @@ def _row(graph_name: str, graph, base: SatResult, symmetry: SatResult) -> dict:
 
 
 def _completed_graphs() -> set[str]:
-    """Read graph identifiers already written to the comparison CSV."""
     if not OUTPUT.exists() or OUTPUT.stat().st_size == 0:
         return set()
     with OUTPUT.open("r", newline="", encoding="utf-8") as source:
@@ -135,7 +134,9 @@ def main() -> None:
                         f"Sym(Var={row['Var_Sym']}, "
                         f"Clause={row['Clause_Sym']}, "
                         f"Time={row['Time_Sym']}, "
-                        f"Status={row['Status_Sym']})"
+                        f"Status={row['Status_Sym']}) | "
+                        f"VarReduce={row['Var_Reduce_Pct']}%, "
+                        f"ClauseReduce={row['Clause_Reduce_Pct']}%"
                     )
 
 
