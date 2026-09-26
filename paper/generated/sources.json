@@ -1,0 +1,151 @@
+{
+  "experiments": [
+    {
+      "csv": "results/runs/cycles_main_r1.csv",
+      "files_sha256": {
+        "cycles_main_r1.csv": "e5bced936b8f4289f3af628b2994e28daf7a79e896e7d76f51376fb67c32d4b8",
+        "cycles_main_r1.metadata.json": "0aa43558bf1ed574b4472f9bfb1f33db1f559791c6b45e73a274f80528070ce0",
+        "cycles_main_r1.witnesses.jsonl": "dcd76776c4af30b2fccb63aded52def38908b80629f56b0f107d953418fc0144"
+      },
+      "manifest": {
+        "config": {
+          "family": "C",
+          "order_offset": 0,
+          "first": 3,
+          "last": 50,
+          "m_first": 3,
+          "m_last": 50,
+          "solver": "glucose",
+          "strategy": "hybrid",
+          "timeout": 60.0,
+          "comparison": true
+        },
+        "source_sha256": "7b4485f1a60c066c07f7a22712dda94cdb2b72f51aeccb6cd608b8b295d6e431",
+        "schema": [
+          "Graph",
+          "Family",
+          "V",
+          "E",
+          "lambda_Base",
+          "lambda_Sym",
+          "Time_Base",
+          "Status_Base",
+          "Time_Sym",
+          "Status_Sym",
+          "Count_Span_Kind",
+          "Count_Span",
+          "Symmetry_Rule",
+          "Var_Base",
+          "Var_Sym",
+          "Clause_Raw_Base",
+          "Clause_Raw_Sym",
+          "Clause_Base",
+          "Clause_Sym",
+          "Var_Reduce_Pct",
+          "Clause_Reduce_Pct",
+          "Order",
+          "Consistent",
+          "Completed_Attempts_Base",
+          "Conflicts_Base",
+          "Decisions_Base",
+          "Propagations_Base",
+          "Encoding_Time_Base",
+          "SAT_Solve_Time_Base",
+          "Stats_Complete_Base",
+          "Completed_Attempts_Sym",
+          "Conflicts_Sym",
+          "Decisions_Sym",
+          "Propagations_Sym",
+          "Encoding_Time_Sym",
+          "SAT_Solve_Time_Sym",
+          "Stats_Complete_Sym"
+        ],
+        "packages": {
+          "networkx": "3.6.1",
+          "python-sat": "1.9.dev15",
+          "gurobipy": "13.0.3",
+          "docplex": "2.32.264",
+          "cplex": null
+        },
+        "python": "3.13.7",
+        "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+        "created_utc": "2026-09-26T03:40:25.308550+00:00"
+      },
+      "validated_witnesses": 96
+    },
+    {
+      "csv": "results/runs/products_main_r1.csv",
+      "files_sha256": {
+        "products_main_r1.csv": "acc761feabfbf3b70350bb15bda2541fa988e43020b3bb9407c8ce2a0f71c0d4",
+        "products_main_r1.metadata.json": "5463edfdb58bc417fcb08a7e05db03151ec2946324c7308cff55032ccc21f9b1",
+        "products_main_r1.witnesses.jsonl": "6fa3d51ce03c49fb93070f0b514dbd2b0fcd314f7dcedeeede5d401007ee4793"
+      },
+      "manifest": {
+        "config": {
+          "family": "products",
+          "order_offset": 0,
+          "first": 3,
+          "last": 10,
+          "m_first": 3,
+          "m_last": 10,
+          "solver": "glucose",
+          "strategy": "hybrid",
+          "timeout": 180.0,
+          "comparison": true
+        },
+        "source_sha256": "7b4485f1a60c066c07f7a22712dda94cdb2b72f51aeccb6cd608b8b295d6e431",
+        "schema": [
+          "Graph",
+          "Family",
+          "V",
+          "E",
+          "lambda_Base",
+          "lambda_Sym",
+          "Time_Base",
+          "Status_Base",
+          "Time_Sym",
+          "Status_Sym",
+          "Count_Span_Kind",
+          "Count_Span",
+          "Symmetry_Rule",
+          "Var_Base",
+          "Var_Sym",
+          "Clause_Raw_Base",
+          "Clause_Raw_Sym",
+          "Clause_Base",
+          "Clause_Sym",
+          "Var_Reduce_Pct",
+          "Clause_Reduce_Pct",
+          "Order",
+          "Consistent",
+          "Completed_Attempts_Base",
+          "Conflicts_Base",
+          "Decisions_Base",
+          "Propagations_Base",
+          "Encoding_Time_Base",
+          "SAT_Solve_Time_Base",
+          "Stats_Complete_Base",
+          "Completed_Attempts_Sym",
+          "Conflicts_Sym",
+          "Decisions_Sym",
+          "Propagations_Sym",
+          "Encoding_Time_Sym",
+          "SAT_Solve_Time_Sym",
+          "Stats_Complete_Sym"
+        ],
+        "packages": {
+          "networkx": "3.6.1",
+          "python-sat": "1.9.dev15",
+          "gurobipy": "13.0.3",
+          "docplex": "2.32.264",
+          "cplex": null
+        },
+        "python": "3.13.7",
+        "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+        "created_utc": "2026-09-26T03:41:56.922957+00:00"
+      },
+      "validated_witnesses": 896
+    }
+  ],
+  "exporter_sha256": "55009879a9f9bf00b4490ae2bb8af7ca7d9d2feb599b0ca8a3beed850e92a87d"
+}

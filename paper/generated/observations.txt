@@ -1,0 +1,130 @@
+L(2,1)-LABELING PRODUCT BENCHMARK ANALYSIS
+Statuses are read from the source CSV; no independent optimality audit is implied.
+Input: /Users/vinhduy/Desktop/NCKH_SAT_BASED/results/products_benchmark.csv
+Rows: 448; OPT: 446; non-OPT: 2
+
+=== C o C ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5         6         7         8         9         10
+n                                                                              
+3   8 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+4   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+5   8 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+6   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+7   8 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+8   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+9   8 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+10  7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+Formula or periodicity check:
+No exact linear rule detected in the OPT rows.
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(C o C) appears to remain in the interval [7, 14]. This describes the observed finite sample; check existing theorems before proposing novelty.
+
+=== C o P ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5         6         7         8         9         10
+n                                                                              
+3   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+4   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+5   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+6   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+7   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+8   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+9   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+10  7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+Formula or periodicity check:
+Exact linear patterns observed: lambda = m + 4.
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(C o P) appears to remain in the interval [7, 14]. This describes the observed finite sample; check existing theorems before proposing novelty.
+
+=== C x C ===
+Instances: 64; OPT rows: 62
+Pivot table (cell = lambda [status]):
+m        3        4        5        6        7        8             9              10
+n                                                                                    
+3   8 [OPT]  8 [OPT]  8 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]       8 [OPT]        8 [OPT]
+4   8 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]       7 [OPT]        7 [OPT]
+5   8 [OPT]  7 [OPT]  8 [OPT]  8 [OPT]  7 [OPT]  7 [OPT]       8 [OPT]        8 [OPT]
+6   7 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]       7 [OPT]        7 [OPT]
+7   8 [OPT]  7 [OPT]  7 [OPT]  8 [OPT]  6 [OPT]  7 [OPT]       8 [OPT]        7 [OPT]
+8   7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]       7 [OPT]        7 [OPT]
+9   8 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]       7 [OPT]  10 [FEASIBLE]
+10  8 [OPT]  7 [OPT]  8 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  8 [FEASIBLE]        7 [OPT]
+Formula or periodicity check:
+No exact linear rule detected; lambda takes a small set of values: 6 (1 cases), 7 (39 cases), 8 (22 cases).
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(C x C) appears to remain in the interval [6, 8]. More OPT instances are needed before generalizing it.
+
+=== C x P ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5        6        7        8        9        10
+n                                                                         
+3   6 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+4   7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+5   7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+6   6 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+7   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+8   6 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+9   6 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+10  6 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]  7 [OPT]
+Formula or periodicity check:
+No exact linear rule detected; lambda takes a small set of values: 6 (13 cases), 7 (51 cases).
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(C x P) appears to remain in the interval [6, 7]. This describes the observed finite sample; check existing theorems before proposing novelty.
+
+=== P o C ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5         6         7         8         9         10
+n                                                                              
+3   7 [OPT]  7 [OPT]  8 [OPT]   9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]
+4   7 [OPT]  7 [OPT]  8 [OPT]   9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]
+5   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+6   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+7   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+8   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+9   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+10  7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+Formula or periodicity check:
+No exact linear rule detected in the OPT rows.
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(P o C) appears to remain in the interval [7, 14]. This describes the observed finite sample; check existing theorems before proposing novelty.
+
+=== P o P ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5         6         7         8         9         10
+n                                                                              
+3   6 [OPT]  7 [OPT]  8 [OPT]   9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]
+4   6 [OPT]  7 [OPT]  8 [OPT]   9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]
+5   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+6   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+7   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+8   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+9   7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+10  7 [OPT]  8 [OPT]  9 [OPT]  10 [OPT]  11 [OPT]  12 [OPT]  13 [OPT]  14 [OPT]
+Formula or periodicity check:
+No exact linear rule detected in the OPT rows.
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(P o P) appears to remain in the interval [6, 14]. This describes the observed finite sample; check existing theorems before proposing novelty.
+
+=== P x P ===
+Instances: 64; OPT rows: 64
+Pivot table (cell = lambda [status]):
+m        3        4        5        6        7        8        9        10
+n                                                                         
+3   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+4   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+5   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+6   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+7   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+8   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+9   6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+10  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]  6 [OPT]
+Formula or periodicity check:
+No exact linear rule detected; lambda takes a small set of values: 6 (64 cases).
+Suggested mathematical conjecture:
+For tested parameters, lambda_2,1(P x P) = 6. This describes the observed finite sample; check existing theorems before proposing novelty.
