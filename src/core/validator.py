@@ -14,6 +14,7 @@ def validate_labeling(
     span: int,
     h: int = 2,
     k: int = 1,
+    vertices=None,
 ) -> tuple[bool, list[str]]:
     """Validate labels against edge and distance-two constraints."""
     if not isinstance(span, int) or isinstance(span, bool) or span < 0:
@@ -22,6 +23,8 @@ def validate_labeling(
         return False, ["labels must be a mapping from vertex to label"]
 
     errors = _validate_label_values(labels, span)
+    if vertices is not None and set(labels) != set(vertices):
+        errors.append("label keys must match the complete vertex set")
     errors += _validate_pairs(edges, labels, h, "edge")
     errors += _validate_pairs(distance_two_pairs, labels, k, "distance-2")
     return not errors, errors
@@ -45,6 +48,9 @@ def _validate_pairs(
         if first not in labels or second not in labels:
             errors.append(f"missing label for {relation} pair ({first}, {second})")
             continue
+        if any(not isinstance(labels[v], int) or isinstance(labels[v], bool)
+               for v in (first, second)):
+            continue  # Value errors were already collected above.
         difference = abs(labels[first] - labels[second])
         if difference < minimum_difference:
             errors.append(

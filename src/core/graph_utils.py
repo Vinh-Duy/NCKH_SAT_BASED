@@ -11,6 +11,8 @@ Vertex = Hashable
 
 def cycle_graph(size: int) -> nx.Graph:
     """Create the cycle graph C_size."""
+    if size < 3:
+        raise ValueError("a simple cycle requires at least three vertices")
     return nx.cycle_graph(size)
 
 
@@ -30,12 +32,14 @@ def petersen_graph(n: int, k: int) -> nx.Graph:
         raise ValueError("n must be at least 3")
     if not 1 <= k < n / 2:
         raise ValueError("k must satisfy 1 <= k < n / 2")
-    graph = nx.convert_node_labels_to_integers(
-        nx.generalized_petersen_graph(n, k)
-    )
-    graph.graph["symmetry_root"] = 0
-    graph.graph["symmetry_fix_root_zero"] = True
-    return graph
+    generated = nx.generalized_petersen_graph(n, k)
+    # The library inserts inner vertices in edge-creation order. Relabeling by
+    # insertion order permutes v_i, obscuring the u_i=i, v_i=n+i convention.
+    # Establish canonical node order while retaining the library's integer IDs.
+    graph = nx.empty_graph(2 * n)
+    graph.add_edges_from(generated.edges())
+    graph.graph["name"] = generated.name
+    return _mark_symmetry(graph, neighbors=(1, n - 1))
 
 
 def _integer_labeled(graph: nx.Graph) -> nx.Graph:
@@ -43,36 +47,38 @@ def _integer_labeled(graph: nx.Graph) -> nx.Graph:
     return nx.convert_node_labels_to_integers(graph, ordering="default")
 
 
-def _mark_root_symmetry(graph: nx.Graph, ordered_neighbors: bool = False) -> nx.Graph:
-    """Mark a representative root for safe root-symmetric constructors."""
+def _mark_symmetry(graph: nx.Graph, *, neighbors=None) -> nx.Graph:
+    """Record constructor-proved symmetries, invalidated by structural edits.
+
+    A neighbor order requires a reflection interchanging those neighbors.
+    These structural families use neighbor ordering only. Automatic root fixing
+    is restricted to cycles by the experiment protocol.
+    """
     graph.graph["symmetry_root"] = 0
-    graph.graph["symmetry_fix_root_zero"] = True
-    if ordered_neighbors:
-        neighbors = list(graph.neighbors(0))
-        if len(neighbors) >= 2:
-            minimum_degree = min(graph.degree(node) for node in neighbors)
-            equivalent = [
-                node for node in neighbors if graph.degree(node) == minimum_degree
-            ]
-            if len(equivalent) >= 2:
-                graph.graph["symmetry_neighbors"] = (equivalent[0], equivalent[1])
+    graph.graph["symmetry_fix_root_zero"] = False
+    graph.graph["symmetry_neighbors"] = neighbors
+    graph.graph["symmetry_signature"] = (
+        tuple(graph.nodes()), frozenset(frozenset(edge) for edge in graph.edges())
+    )
     return graph
 
 
 def get_cartesian_cycle_cycle(n: int, m: int) -> nx.Graph:
     """Create the Cartesian product C_n x C_m."""
     graph = _integer_labeled(
-        nx.cartesian_product(nx.cycle_graph(n), nx.cycle_graph(m))
+        nx.cartesian_product(cycle_graph(n), cycle_graph(m))
     )
-    return _mark_root_symmetry(graph, ordered_neighbors=True)
+    return _mark_symmetry(graph, neighbors=(m, (n - 1) * m))
 
 
 def get_cartesian_cycle_path(n: int, m: int) -> nx.Graph:
     """Create the Cartesian product C_n x P_m."""
     graph = _integer_labeled(
-        nx.cartesian_product(nx.cycle_graph(n), nx.path_graph(m))
+        nx.cartesian_product(cycle_graph(n), nx.path_graph(m))
     )
-    return _mark_root_symmetry(graph, ordered_neighbors=True)
+    if m < 1:
+        raise ValueError("path size must be positive")
+    return _mark_symmetry(graph, neighbors=(m, (n - 1) * m))
 
 
 def get_cartesian_path_path(n: int, m: int) -> nx.Graph:
@@ -80,14 +86,16 @@ def get_cartesian_path_path(n: int, m: int) -> nx.Graph:
     graph = _integer_labeled(
         nx.cartesian_product(nx.path_graph(n), nx.path_graph(m))
     )
-    return _mark_root_symmetry(graph, ordered_neighbors=True)
+    if min(n, m) < 1:
+        raise ValueError("path sizes must be positive")
+    return graph
 
 
 def _family_graph(graph_type: str, size: int) -> nx.Graph:
     """Build a supported base graph for a corona product."""
     normalized = graph_type.lower().replace("_", "-")
     if normalized in {"c", "cycle", "cycles"}:
-        return nx.cycle_graph(size)
+        return cycle_graph(size)
     if normalized in {"p", "path", "paths"}:
         return nx.path_graph(size)
     if normalized in {"k", "complete", "clique"}:
@@ -106,9 +114,7 @@ def get_corona_graph(
     second = _family_graph(h_type, m)
     product = _integer_labeled(nx.corona_product(first, second))
     if g_type.lower() in {"c", "cycle", "cycles"} and n >= 3:
-        product.graph["symmetry_root"] = 0
-        product.graph["symmetry_neighbors"] = (1, n - 1)
-        product.graph["symmetry_fix_root_zero"] = True
+        _mark_symmetry(product, neighbors=(1, n - 1))
     return product
 
 
@@ -116,7 +122,8 @@ def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], lis
     """Return edges and unordered vertex pairs at distance two."""
     edges = list(graph.edges())
     nodes = list(graph.nodes())
-    distances = dict(nx.all_pairs_shortest_path_length(graph))
+    validate_graph(graph)
+    distances = dict(nx.all_pairs_shortest_path_length(graph, cutoff=2))
     distance_two = [
         (first, second)
         for index, first in enumerate(nodes)
@@ -129,7 +136,9 @@ def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], lis
 def lower_bound(graph: nx.Graph, h: int = 2) -> int:
     """Return the standard degree lower bound Delta + h - 1."""
     maximum_degree = max(dict(graph.degree()).values(), default=0)
-    return max(0, maximum_degree + h - 1)
+    if h < 1:
+        raise ValueError("degree bound requires h >= 1 and distance-two gap 1")
+    return maximum_degree + h - 1 if maximum_degree else 0
 
 
 def greedy_labeling(
@@ -137,7 +146,10 @@ def greedy_labeling(
 ) -> tuple[int, dict[Vertex, int]]:
     """Build a feasible greedy labeling and return its span and labels."""
     labels: dict[Vertex, int] = {}
-    distances = dict(nx.all_pairs_shortest_path_length(graph))
+    validate_graph(graph)
+    if h < 1:
+        raise ValueError("greedy labeling requires h >= 1")
+    distances = dict(nx.all_pairs_shortest_path_length(graph, cutoff=2))
 
     for vertex in graph.nodes():
         forbidden = {
@@ -159,3 +171,9 @@ def greedy_labeling(
 def greedy_upper_bound(graph: nx.Graph, h: int = 2) -> int:
     """Return only the span of the greedy feasible labeling."""
     return greedy_labeling(graph, h)[0]
+
+
+def validate_graph(graph: nx.Graph) -> None:
+    """The formulations accept simple, undirected, loopless graphs only."""
+    if graph.is_directed() or graph.is_multigraph() or nx.number_of_selfloops(graph):
+        raise ValueError("expected a simple undirected graph without self-loops")
