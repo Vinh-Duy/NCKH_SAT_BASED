@@ -1,222 +1,144 @@
-# SAT and ILP Methods for L(h,k)-Labeling
+# SAT và ILP cho bài toán L(2,1)-labeling
 
-This project studies the graph labeling problem $L(h,k)$ with SAT and ILP
-formulations. The default problem is $L(2,1)$-labeling:
+Project nghiên cứu span nhỏ nhất của nhãn đồ thị: hai đỉnh kề nhau lệch ít nhất
+2, hai đỉnh cách nhau đúng 2 bước lệch ít nhất 1. Nhãn bắt đầu từ 0; span `s`
+cho phép `s + 1` giá trị nhãn. Encoder có tham số `h,k`, nhưng solver tối ưu
+và các benchmark hiện dành cho **L(2,1)**.
 
-- Adjacent vertices must receive labels whose difference is at least $2$.
-- Vertices at graph distance two must receive different labels.
-- The **span** is the smallest value $s$ for which a valid labeling exists.
+SAT dùng order encoding và tìm kiếm linear/hybrid với Glucose hoặc CaDiCaL.
+ILP có assignment và Big-M với Gurobi hoặc CPLEX. Các nghiệm được kiểm tra
+độc lập; `OPT` chỉ được kết luận khi đã có cơ sở tối ưu.
 
-The SAT model uses order encoding and can apply family-specific symmetry
-breaking for paths, cycles, and hypercubes. Petersen and product graphs do not
-use those assumptions unless they are mathematically justified.
+## Cài đặt
 
-## Requirements
-
-- Python 3.8 or newer
-- `python-sat` (PySAT and the Glucose3 solver)
-- `networkx`
-- `pandas`
-- `matplotlib`
-- `openpyxl`
-- `gurobipy` (Gurobi MILP benchmark)
-- `docplex` and the CPLEX Python runtime (CPLEX MILP benchmark)
-
-Install the dependencies directly:
-
-```bash
-python3 -m pip install python-sat networkx pandas matplotlib openpyxl gurobipy docplex
-```
-
-Using a virtual environment is recommended:
+Python **3.11+**; NetworkX 3.6+ cung cấp constructor Petersen đang dùng.
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install python-sat networkx pandas matplotlib openpyxl gurobipy docplex
+.venv/bin/python -m pip install -e '.[analysis]'
+# Nếu cần ILP (runtime/license CPLEX cài riêng):
+.venv/bin/python -m pip install -e '.[ilp]'
 ```
 
-## Architecture
+Máy hiện tại có môi trường `.venv-1`; các lệnh dưới dùng môi trường đó.
+Dependency declaration ở `pyproject.toml` là khoảng tương thích; phiên bản
+thực tế của mỗi lượt chạy được lưu trong manifest, không coi đây là lockfile.
 
-The implementation is organized as a reusable Python package:
+## Cấu trúc
 
-| Module | Responsibility |
-| --- | --- |
-| `src/core/graph_utils.py` | Construction of standard graphs, $GP(n,k)$, Cartesian products, and corona products; graph constraints; bounds; greedy labeling. |
-| `src/core/validator.py` | Independent validation of $L(h,k)$ labelings. |
-| `src/core/io.py` | Shared CSV writing and benchmark logging. |
-| `src/models/sat_encoding.py` | Order encoding, forbidden-label clauses, and symmetry breaking. |
-| `src/models/ilp_assignment.py` | Binary assignment formulation and warm-start helpers. |
-| `src/solvers/sat_solver.py` | Glucose3/CaDiCaL wrappers with linear and hybrid search. |
-| `src/solvers/ilp_solver.py` | Gurobi and CPLEX wrappers for assignment and Big-M formulations. |
-| `benchmarks/run_sat.py` | SAT experiments for cycle, complete, hypercube, and generalized Petersen graphs. |
-| `benchmarks/run_ilp.py` | ILP experiments and assignment-versus-Big-M comparison. |
-| `benchmarks/benchmark_petersen.py` | SAT sweep for $GP(n,k)$ with $7 \le n \le 50$. |
-| `benchmarks/benchmark_products.py` | SAT sweep for Cartesian and corona product graphs with $3 \le n,m \le 10$. |
-| `benchmarks/benchmark_symmetry_comparison.py` | Dual-run comparison with and without symmetry breaking. |
+| Thư mục/file | Vai trò |
+|---|---|
+| `src/core/` | Sinh graph, khoảng cách 2, cận, validator và ghi thí nghiệm |
+| `src/models/` | CNF order encoding và dữ liệu assignment |
+| `src/solvers/` | Tìm kiếm SAT, backend ILP |
+| `benchmarks/` | CLI và một định nghĩa dùng chung cho các họ đồ thị tích |
+| `tests/` | Oracle vét cạn, hồi quy mô hình, timeout và ghi/resume |
+| `results/` | Dữ liệu/ảnh thực nghiệm đã lưu, được bảo toàn |
+| `results/runs/` | Đầu ra mặc định của các lượt chạy mới |
+| `paper/sections/` | Các phần báo cáo LaTeX |
+| `paper/generated/` | Bảng được sinh lại từ CSV và hash nguồn |
+| `scripts/` | Phân tích dữ liệu, xuất bảng và vẽ hình |
+| `archive_old_code/` | Các phiên bản lịch sử, không phải API hiện hành |
+| `main.tex` | Điểm vào báo cáo; PDF mới ở `build/main.pdf` |
 
-Detailed mathematical documentation is available in:
-
-- [SAT encoding](docs/sat_encoding.md)
-- [ILP formulations](docs/ilp_formulations.md)
-- [Span search strategies](docs/search_strategies.md)
-- [Petersen benchmark](docs/petersen_benchmark.md)
-- [Product benchmark](docs/products_benchmark.md)
-- [Solver evaluation](docs/solver_evaluation.md)
-
-## Reproducibility
-
-All benchmark runners write results incrementally. The `--family` option accepts
-`C`, `K`, `Q`, `petersen`, or `ALL`. Use `--first` and `--last` to select the graph-size
-range for the first three families, and `--timeout` to set the per-instance time limit.
-
-### SAT experiments
-
-Run the default SAT experiment with Glucose3:
+## Chạy thực nghiệm
 
 ```bash
-python3 -m benchmarks.run_sat \
-  --family ALL \
-  --first 3 \
-  --last 20 \
-  --solver glucose \
-  --strategy hybrid \
-  --timeout 60
+.venv-1/bin/python -m benchmarks.run_sat \
+  --family C --first 3 --last 20 --solver glucose --strategy hybrid --timeout 60
+
+.venv-1/bin/python -m benchmarks.run_ilp \
+  --family C --first 3 --last 10 --solver gurobi --formulation both --timeout 60
+
+.venv-1/bin/python -m benchmarks.benchmark_petersen --first 7 --last 50
+
+.venv-1/bin/python -m benchmarks.benchmark_products --first 3 --last 10
+
+.venv-1/bin/python -m benchmarks.benchmark_symmetry_comparison --first 3 --last 10
+
+.venv-1/bin/python -m benchmarks.benchmark_symmetry_comparison --family C --first 3 --last 50
 ```
 
-The available SAT solvers are `glucose` and `cadical`. The search strategies
-are `linear` and `hybrid`:
+Chạy mới mặc định tạo file có timestamp, không ghi đè CSV gốc. Có thể đặt
+`--output results/runs/my_run.csv`; nếu file đã tồn tại, runner từ chối ghi đè.
+Resume cần cùng cấu hình, mã nguồn, môi trường và schema:
 
 ```bash
-python3 -m benchmarks.run_sat \
-  --family Q \
-  --first 2 \
-  --last 6 \
-  --solver cadical \
-  --strategy linear \
-  --timeout 300 \
-  --output results/sat_hypercube.csv
+.venv-1/bin/python -m benchmarks.benchmark_products \
+  --first 3 --last 4 --timeout 30 --output results/runs/products_small.csv
+.venv-1/bin/python -m benchmarks.benchmark_products \
+  --first 3 --last 4 --timeout 30 --output results/runs/products_small.csv --resume
 ```
 
-Run one generalized Petersen graph with order `n` and jump `k`:
+Resume bỏ qua các dòng đã có, kể cả FEASIBLE. Để tăng timeout hoặc thay solver,
+tạo lượt chạy mới. Không resume CSV lịch sử thiếu manifest. Không chạy đồng
+thời hai writer lên cùng một file.
+
+Mỗi lượt có CSV, `.metadata.json`, `.witnesses.jsonl` và `.log`. Bản ghi witness
+chứa nhãn khả thi và lịch sử tìm kiếm; không phải chứng thư UNSAT DRAT/LRAT.
+So sánh đối xứng lưu **cả hai span**, kiểm tra chúng khi cả hai đạt OPT và
+luân phiên thứ tự chạy. Nhãn đỉnh trong witness được lưu bằng biểu diễn `repr`.
+
+CSV so sánh hiện đếm lại cả hai CNF tại cùng `Count_Span`, tách
+`Clause_Raw_*` (trước rút gọn) và `Clause_*` (sau rút gọn chung).
+`Symmetry_Rule=none` nghĩa là chưa áp dụng đối xứng riêng cho họ đó.
+Biểu đồ và bảng thời gian tách từng họ, không gộp mọi Cartesian/Corona.
+Theo phạm vi thí nghiệm đã thống nhất, **chỉ chu trình C_n tự động cố định
+f(0)=0**; các họ khác không cố định gốc, kể cả C×C, K và Q. Xem
+[quy ước mã hóa SAT](docs/sat_encoding.md).
+
+## API và trạng thái
+
+```python
+from src.core.graph_utils import get_corona_graph
+from src.solvers.sat_solver import solve_graph
+
+if __name__ == '__main__':
+    graph = get_corona_graph('cycle', 'path', 4, 3)
+    result = solve_graph(graph, timeout_sec=30)
+    print(result.status, result.span, result.proven_lower_bound, result.labels)
+```
+
+SAT có deadline dùng tiến trình con (`spawn`), nên script gọi API cần guard
+`__main__`. `timeout_sec=None` chạy trực tiếp không giới hạn. Runtime bao gồm
+preprocessing/startup/search/validation; preprocessing ở cha và cleanup có
+thể làm vượt ngưỡng danh nghĩa. ILP dùng time limit native cho giai đoạn tối ưu,
+và báo cáo runtime toàn wrapper. Không đồng nhất hai loại budget này.
+
+- `OPT`: cận dưới được chứng minh gặp một nghiệm hợp lệ (SAT), hoặc backend
+  ILP trả optimal với MIP gap bằng 0 và nghiệm qua validator.
+- `FEASIBLE`: có nhãn hợp lệ, chưa chứng minh tối ưu.
+- `TIMEOUT`: ILP hết thời gian mà chưa có nghiệm; SAT thường giữ được greedy incumbent.
+- `UNAVAILABLE`: thiếu package hoặc runtime backend được phát hiện.
+- `INVALID`, `INFEASIBLE`, `ERROR`: cần điều tra; không tự đổi thành timeout
+  hay một kết luận toán học. Lỗi backend/license có thể được ném ra thay vì che giấu.
+
+`UB` trong CSV chuẩn là cận trên tham lam ban đầu. Số biến/mệnh đề SAT thuộc
+CNF cung cấp incumbent (`model_span` trong witness), không phải tổng qua các
+lần gọi; để trống nếu incumbent vẫn là nghiệm tham lam. Riêng CSV comparison
+đếm tại `Count_Span` chung như mô tả trên, kể cả khi incumbent là greedy.
+
+## Kiểm thử và báo cáo
 
 ```bash
-python3 -m benchmarks.run_sat \
-  --family petersen \
-  --n 9 \
-  --k 2 \
-  --solver glucose \
-  --strategy hybrid \
-  --timeout 60 \
-  --output results/sat_petersen_single.csv
+.venv-1/bin/python -m unittest discover -s tests -v
+make report
 ```
 
-Run the complete Georges-Mauro sweep (`7 <= n <= 50`, `1 <= k < n/2`):
+`make report` hiện dùng **`results/runs/cycles_main_r1.csv` và
+`results/runs/products_main_r1.csv`**. Lệnh kiểm tra đủ miền quét, manifest,
+nhãn nghiệm và counts CNF, sinh lại bảng/hình rồi biên dịch bằng latexmk/BibTeX.
+Không chạy lại tìm kiếm SAT và không trộn dữ liệu lịch sử vào kết quả mới.
+Có thể đổi `PYTHON` và `LATEXMK`, ví dụ:
+`make report PYTHON=.venv/bin/python LATEXMK=latexmk`.
+Các số liệu cũ được giữ nguyên; bảng mới phản ánh CSV thực có, không hardcode
+số lượng 434 hay phần trăm của một phiên bản cũ.
 
-```bash
-python3 benchmarks/benchmark_petersen.py
-```
+Phần phương pháp gồm mô hình L(h,k), chứng minh tương đương CNF, assignment,
+Big-M, quy ước 0/1, cận, bất biến tìm kiếm và điều kiện sound của đối xứng.
+Báo cáo trình bày lượt main_r1: 48 chu trình, 448 product, trong đó hai cặp
+product còn FEASIBLE. ILP/Petersen lịch sử không được đưa vào kết quả chính. Xem
+[nguồn gốc dữ liệu](docs/data_provenance.md) và [báo cáo](docs/REPORT.md).
 
-### Product experiments
-
-The product benchmark covers three Cartesian families:
-
-- $C_n \square C_m$
-- $C_n \square P_m$
-- $P_n \square P_m$
-
-It also covers four corona families:
-
-- $C_n \circ C_m$
-- $P_n \circ P_m$
-- $C_n \circ P_m$
-- $P_n \circ C_m$
-
-The graph constructors normalize NetworkX tuple vertices to consecutive
-integer labels before the graph reaches the SAT or ILP encoding. The benchmark
-scans all $n,m \in [3,10]$, for 448 instances in total, using Glucose and the
-hybrid SAT search with a 300-second limit per instance:
-
-```bash
-./.venv-1/bin/python benchmarks/benchmark_products.py
-```
-
-Results are written to `results/products_benchmark.csv` and
-`logs/benchmark_products.log`. The product CSV has the fields `Graph`, `V`,
-`E`, `lambda`, `time`, and `status`.
-
-### ILP experiments
-
-Run the binary-assignment ILP formulation with Gurobi:
-
-```bash
-python3 benchmarks/run_ilp.py \
-  --family ALL \
-  --first 3 \
-  --last 10 \
-  --solver gurobi \
-  --formulation assignment \
-  --timeout 60
-```
-
-The available ILP solvers are `gurobi` and `cplex`. The assignment formulation
-uses binary variables $x_{v,k}$, a span variable, greedy warm starts, and
-independent labeling validation. The `big-m` formulation is available for
-comparison; `both` writes one result for each formulation:
-
-```bash
-python3 benchmarks/run_ilp.py \
-  --family C \
-  --first 3 \
-  --last 20 \
-  --solver gurobi \
-  --formulation both \
-  --timeout 300 \
-  --output results/ilp_comparison.csv
-```
-
-The ILP runner also accepts `--family petersen --n <n> --k <k>`.
-
-Gurobi requires an active installation and license. CPLEX requires both the
-`docplex` package and an accessible CPLEX runtime and license.
-
-## Result Status
-
-- `OPT`: the solver proved optimality.
-- `FEASIBLE`: a valid labeling was found, but optimality was not proved before
-  the time limit.
-- `TIMEOUT`: no solver solution was available when the time limit was reached.
-- `UNAVAILABLE`: the selected optimization backend could not be started, for
-  example because its runtime is not installed.
-- `INVALID`: a returned labeling failed independent validation.
-
-## CSV Schema
-
-The standard SAT and ILP runners use the following schema:
-
-| Column | Meaning |
-| --- | --- |
-| `Graph` | Graph identifier, such as `C_10`, `K_8`, or `Q_4`. |
-| `n` | Number of vertices in the graph. |
-| `var` | Number of solver variables. |
-| `clause/constr` | Number of SAT clauses or ILP constraints. |
-| `time` | Solver runtime in seconds. |
-| `lambda` | Computed span, or empty when no labeling was returned. |
-| `UB` | Greedy upper bound or the current feasible upper-bound record. |
-| `status` | Solver and validation status. |
-
-The dedicated product benchmark uses a smaller schema focused on graph size
-and experiment tracking: `Graph`, `V`, `E`, `lambda`, `time`, and `status`.
-
-To compare SAT search with and without symmetry breaking, run:
-
-```bash
-./.venv-1/bin/python benchmarks/benchmark_symmetry_comparison.py
-```
-
-The comparison writes `results/symmetry_comparison_benchmark.csv` and resumes
-by skipping graph identifiers already present in that file.
-
-## License
-
-No license file is currently included in this repository.
+Các file PDF tham khảo người dùng cung cấp nằm ngoài repository; bibliography
+ở `paper/references.bib`. Project chưa có giấy phép phân phối.
