@@ -1,4 +1,5 @@
 import argparse
+import math
 import sys
 from argparse import Namespace
 from pathlib import Path
@@ -15,7 +16,7 @@ from src.core.graph_utils import (
     hypercube_graph,
     petersen_graph,
 )
-from src.core.io import BenchmarkWriter, result_row
+from src.core.io import BenchmarkWriter, default_output, result_row
 from src.core.validator import validate_labeling
 from src.solvers.ilp_solver import solve_graph
 
@@ -55,6 +56,10 @@ def run_instance(args, writer: BenchmarkWriter, family: str, size: int) -> None:
     formulations = ("assignment", "big-m") if args.formulation == "both" else (args.formulation,)
 
     for formulation in formulations:
+        base_name = f"GP_{size}_{args.k}" if family == "petersen" else f"{family}_{size}"
+        graph_name = base_name if len(formulations) == 1 else f"{base_name}_{formulation}"
+        if graph_name in writer.completed:
+            continue
         result = solve_graph(
             graph,
             solver_name=args.solver,
@@ -69,14 +74,14 @@ def run_instance(args, writer: BenchmarkWriter, family: str, size: int) -> None:
                 distance_two_pairs,
                 normalized.labels,
                 normalized.span,
+                vertices=graph.nodes(),
             )
             if not valid:
                 normalized.status = "INVALID"
                 writer.log(
                     f"{family}_{size} [{formulation}] invalid labeling: {errors}"
                 )
-        base_name = f"GP_{size}_{args.k}" if family == "petersen" else f"{family}_{size}"
-        graph_name = base_name if len(formulations) == 1 else f"{base_name}_{formulation}"
+        writer.record_witness(graph_name, normalized, {"formulation": formulation})
         writer.append(result_row(graph_name, graph.number_of_nodes(), normalized))
         writer.log(
             f"{graph_name}: lambda={normalized.span}, status={normalized.status}"
@@ -89,14 +94,15 @@ def main() -> None:
     parser.add_argument("--solver", choices=("gurobi", "cplex"), default="gurobi")
     parser.add_argument("--formulation", choices=("assignment", "big-m", "both"), default="assignment")
     parser.add_argument("--first", type=int, default=3)
-    parser.add_argument("--last", type=int, default=50)
+    parser.add_argument("--last", type=int, default=5)
     parser.add_argument("--n", type=int, help="Order n for GP(n, k)")
     parser.add_argument("--k", type=int, help="Jump k for GP(n, k)")
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument(
         "--output",
-        default=str(ROOT / "results" / "ilp_assignment.csv"),
+        default=None,
     )
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
 
     if args.family == "petersen":
@@ -105,7 +111,12 @@ def main() -> None:
         args.first = args.n
         args.last = args.n
 
-    writer = BenchmarkWriter(args.output, ROOT / "logs" / "run_ilp.log")
+    if args.first > args.last or (not math.isfinite(args.timeout) or args.timeout < 0):
+        parser.error("invalid range or timeout")
+    if args.resume and not args.output:
+        parser.error("--resume requires --output")
+    writer = BenchmarkWriter(args.output or default_output("ilp"), resume=args.resume,
+                             config={k: v for k, v in vars(args).items() if k not in {"output", "resume"}})
     families = ("C", "K", "Q") if args.family == "ALL" else (args.family,)
     for family in families:
         for size in range(args.first, args.last + 1):
