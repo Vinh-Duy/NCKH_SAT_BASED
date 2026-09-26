@@ -1,0 +1,34 @@
+{
+  "config": {
+    "mode": "sizes_only_at_recorded_bound",
+    "input": "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/runs/symmetry_v2.csv",
+    "input_sha256": "c279d06be58e3ebab683f4c91a28cb949957cb227e462627d61a29bdd62a9093"
+  },
+  "source_sha256": "47f305a0eefa213de8b4956c6e95cd73275582a32cfb41c4530a6082b7e61986",
+  "schema": [
+    "Graph",
+    "Family",
+    "V",
+    "E",
+    "Count_Span",
+    "Symmetry_Rule",
+    "Var_Base",
+    "Var_Sym",
+    "Clause_Raw_Base",
+    "Clause_Raw_Sym",
+    "Clause_Base",
+    "Clause_Sym",
+    "Var_Reduce_Pct",
+    "Clause_Reduce_Pct"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-09-26T02:52:54.991261+00:00"
+}

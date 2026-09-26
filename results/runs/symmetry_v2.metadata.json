@@ -1,0 +1,42 @@
+{
+  "config": {
+    "first": 3,
+    "last": 10,
+    "m_first": 3,
+    "m_last": 10,
+    "solver": "glucose",
+    "strategy": "hybrid",
+    "timeout": 180.0,
+    "comparison": true
+  },
+  "source_sha256": "36e707c1b59e080f5374ef31c203f4a1db748ff29d325445d86e13a7f9d86b42",
+  "schema": [
+    "Graph",
+    "V",
+    "E",
+    "lambda_Base",
+    "lambda_Sym",
+    "Var_Base",
+    "Clause_Base",
+    "Time_Base",
+    "Status_Base",
+    "Var_Sym",
+    "Clause_Sym",
+    "Time_Sym",
+    "Status_Sym",
+    "Var_Reduce_Pct",
+    "Clause_Reduce_Pct",
+    "Order",
+    "Consistent"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-09-25T14:39:56.793346+00:00"
+}
