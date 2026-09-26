@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from typing import Hashable, Mapping
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import networkx as nx
 from matplotlib.colors import Normalize
@@ -19,7 +21,7 @@ from src.core.graph_utils import cycle_graph
 from src.solvers.sat_solver import solve_graph
 
 
-OUTPUT_DIR = ROOT / "results" / "plots"
+OUTPUT_DIR = ROOT / "paper" / "generated" / "plots"
 
 
 def plot_labeling(
