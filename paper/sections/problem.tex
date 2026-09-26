@@ -1,0 +1,78 @@
+\section{Bài toán và phạm vi nghiên cứu}
+\subsection{Định nghĩa và quy ước}
+Cho đồ thị đơn, vô hướng, không có khuyên $G=(V,E)$. Đặt
+\[
+D_2(G)=\{\{u,v\}\subseteq V:d_G(u,v)=2\}.
+\]
+Các cặp trong $D_2(G)$ là cặp không có thứ tự và không bao gồm cạnh của $G$.
+Với hai số nguyên $h\geq k\geq 1$, một phép gán nhãn $L(h,k)$ là ánh xạ
+$f:V\to\mathbb Z_{\geq0}$ thỏa
+\begin{align}
+|f(u)-f(v)|&\geq h &&\forall\{u,v\}\in E,\\
+|f(u)-f(v)|&\geq k &&\forall\{u,v\}\in D_2(G).
+\end{align}
+Span của $f$ là $\max_v f(v)-\min_v f(v)$, và $\lambda_{h,k}(G)$ là
+span nhỏ nhất. Với đồ thị rỗng, quy ước span bằng 0. Khi $h\geq k$, cách định
+nghĩa qua khoảng cách đúng bằng 2 tương đương với điều kiện trên hai đỉnh có
+chung lân cận; nếu xét $h<k$ phải phân biệt hai quy ước này \cite{calamoneri}.
+
+Do các ràng buộc chỉ phụ thuộc hiệu nhãn, phép tịnh tiến
+$f'(v)=f(v)-\min_u f(u)$ bảo toàn tính hợp lệ và span. Vì vậy, có thể dùng
+miền nhãn $\{0,\ldots,s\}$ để kiểm tra span không quá $s$. Có $s+1$ nhãn
+khả dụng, nhưng không bắt buộc dùng hết chúng. Các đỉnh cách nhau hơn 2 bước
+được phép nhận cùng nhãn.
+
+Phần mô hình SAT có tham số $h,k$; các solver tối ưu, cận, thuật toán tham lam
+và benchmark trong phiên bản này tập trung vào $h=2,k=1$. Không suy rộng kết
+quả thực nghiệm thành kết quả cho mọi $L(h,k)$.
+
+\subsection{Cơ sở lý thuyết và mục tiêu}
+Bài toán bắt nguồn từ phân bổ tần số: các trạm gần nhau cần cách biệt tần số
+đủ lớn. Griggs và Yeh đặt nền tảng cho $L(2,1)$, nghiên cứu các họ cơ bản,
+các cận theo bậc và tính NP-đầy đủ của phiên bản quyết định \cite{griggs}.
+Survey của Calamoneri tổng hợp thuật toán, kết quả độ phức tạp và công thức
+trên các họ đồ thị \cite{calamoneri}.
+
+Trên cây không tầm thường, $\lambda_{2,1}(T)\in\{\Delta+1,\Delta+2\}$.
+Hasunuma và cộng sự xây dựng thuật toán tuyến tính dùng quy hoạch động,
+khả năng thay thế nhãn và mạng luồng thu gọn \cite{hasunuma}. Project chưa
+triển khai thuật toán này; đây là nền tảng cho đối chứng chuyên biệt trong
+nghiên cứu tiếp theo.
+
+Mục tiêu của công cụ là giải từng instance bằng mô hình chính xác, đánh giá
+chi phí mã hóa và tìm kiếm, kiểm tra nhãn độc lập, và thu thập bằng chứng tính
+toán có thể truy nguyên. Các họ đã có công thức giúp kiểm tra tính đúng đắn;
+các họ khác giúp khảo sát quy luật và xây dựng giả thuyết. Việc khẳng định một
+kết quả mới đòi hỏi đối chiếu tài liệu riêng, không chỉ dựa vào bảng thực nghiệm.
+
+\subsection{Các họ đồ thị}
+Ngoài chu trình $C_n$, đồ thị đầy đủ $K_n$ và siêu lập phương $Q_d$, benchmark
+xét ba họ Cartesian
+\[
+ C_n\mathbin{\square} C_m,\qquad C_n\mathbin{\square} P_m,\qquad P_n\mathbin{\square} P_m,
+\]
+và bốn họ Corona
+\[
+ C_n\circ C_m,\quad C_n\circ P_m,\quad P_n\circ C_m,\quad P_n\circ P_m.
+\]
+Tích Cartesian có đỉnh $(u,a)$ và cạnh khi một tọa độ giữ nguyên còn tọa độ
+kia là một cạnh trong đồ thị thành phần. Tích Corona $G\circ H$ gồm một bản
+sao $G$, một bản sao riêng của $H$ cho mỗi đỉnh $u\in V(G)$, và nối $u$ với
+mọi đỉnh của bản sao tương ứng \cite{frucht}. Nếu $G,H$ có lần lượt $n,m$
+đỉnh thì
+\[
+|V(G\circ H)|=n(m+1),\qquad
+|E(G\circ H)|=|E(G)|+n|E(H)|+nm.
+\]
+Phiên bản hiện tại xét Corona thông thường; không gộp với edge corona hay
+neighborhood corona.
+
+Họ $GP(n,k)$ trong code có cạnh $u_iu_{i+1}$, $u_iv_i$, $v_iv_{i+k}$,
+với chỉ số modulo $n$ và $1\leq k<n/2$. Đồ thị có $2n$ đỉnh, $3n$ cạnh.
+Cần phân biệt họ này với $GPG(n)$ trong bài của Huang và cộng sự
+\cite{huang}: bài báo dùng hai chu trình độ dài $n$ nối bởi một matching tùy
+ý. Khi $\gcd(n,k)=1$, chu trình bên trong của $GP(n,k)$ liên thông và đồ thị
+thuộc lớp đó; khi $\gcd(n,k)>1$, các cạnh bước $k$ tạo nhiều chu trình.
+Quét các giá trị $k$ cũng không liệt kê mọi matching của $GPG(n)$.
+Do đó, sweep $GP(n,k)$ không phải kiểm chứng toàn bộ giả thuyết Georges--Mauro
+trên $GPG(n)$.

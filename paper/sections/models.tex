@@ -1,0 +1,89 @@
+\section{Các mô hình chính xác}
+\subsection{SAT với order encoding}
+Cho span ứng viên $s\geq0$. Với mỗi đỉnh $v$ và $0\leq i<s$, tạo biến
+\[
+ x_{v,i}\Longleftrightarrow [f(v)\leq i].
+\]
+Dùng hằng $x_{v,-1}=\bot$ và $x_{v,s}=\top$. Các mệnh đề đơn điệu là
+\begin{equation}
+ \neg x_{v,i}\lor x_{v,i+1},\qquad 0\leq i<s-1.
+\end{equation}
+Khi đó $f(v)=a$ tương đương $x_{v,a}\land\neg x_{v,a-1}$. Với cặp đỉnh
+cần cách biệt ít nhất $d$, loại mỗi cặp nhãn $(a,b)$ có $|a-b|<d$ bằng
+\begin{equation}\label{eq:forbidden}
+ \neg x_{u,a}\lor x_{u,a-1}\lor\neg x_{v,b}\lor x_{v,b-1}.
+\end{equation}
+Chọn $d=h$ cho cạnh và $d=k$ cho cặp khoảng cách hai. Các hằng tại biên được
+rút gọn. Với $s=0$, một ràng buộc cách biệt dương sinh mệnh đề rỗng, đúng với
+tính bất khả thi khi mọi đỉnh chỉ có thể nhận nhãn 0.
+
+\begin{proposition}
+Nếu chưa thêm ràng buộc đối xứng, CNF ở trên khả thỏa khi và chỉ khi tồn tại
+một $L(h,k)$-labeling có span không quá $s$.
+\end{proposition}
+\begin{proof}
+Một labeling trong $[0,s]$ xác định các biến ngưỡng, thỏa đơn điệu và không
+chọn bất kỳ cặp nhãn bị cấm nào. Ngược lại, một dãy biến ngưỡng đơn điệu xác
+định duy nhất một nhãn: chỉ số đầu tiên có giá trị đúng, hoặc $s$ nếu mọi
+biến đều sai. Nếu hai nhãn vi phạm một điều kiện cách biệt, mệnh đề
+\eqref{eq:forbidden} tương ứng sẽ sai. Do vậy mọi labeling giải mã đều hợp lệ.
+Tịnh tiến nhãn nhỏ nhất về 0 cho phép áp dụng kết luận với định nghĩa span.
+\end{proof}
+
+Trước khi rút gọn đỉnh cố định, số biến là $|V|s$. Với $L(2,1)$, số mệnh đề
+được sinh trước khi rút gọn hoặc loại trùng là
+\begin{equation}
+ |V|\max(s-1,0)+|E|A(s)+|D_2(G)|(s+1),
+ \quad A(s)=\begin{cases}1&s=0,\\3s+1&s\geq1.\end{cases}
+\end{equation}
+Các số đếm trong kết quả là số biến encoder cấp phát và số mệnh đề truyền
+cho solver, không phải số còn lại sau preprocessing nội bộ của SAT solver.
+
+\subsection{ILP dạng assignment}
+Cho $U$ là cận trên từ một labeling tham lam hợp lệ. Để tránh trùng ngữ nghĩa
+với biến ngưỡng SAT, ký hiệu biến nhị phân ILP là $y_{v,a}$:
+$y_{v,a}=1$ khi và chỉ khi $f(v)=a$. Mô hình tổng quát là
+\begin{align}
+ \min\quad &\ell_{\max}\\
+ \sum_{a=0}^{U}y_{v,a}&=1 &&\forall v\in V,\label{eq:assignment}\\
+ y_{u,a}+y_{v,b}&\leq1
+ &&\forall\{u,v\}\in E,\ |a-b|<h,\\
+ y_{u,a}+y_{v,b}&\leq1
+ &&\forall\{u,v\}\in D_2(G),\ |a-b|<k,\\
+ \sum_{a=0}^{U}a\,y_{v,a}&\leq\ell_{\max} &&\forall v\in V,\\
+ y_{v,a}&\in\{0,1\},\quad \ell_{\max}\in\{0,\ldots,U\}.
+\end{align}
+Trong hai ràng buộc cấm, $a,b\in\{0,\ldots,U\}$. Ràng buộc
+\eqref{eq:assignment} chọn đúng một nhãn. Vì mô hình không ép một đỉnh tùy ý
+về 0, tối thiểu hóa $\ell_{\max}$ đạt span tối ưu nhờ bất biến tịnh tiến.
+Trong triển khai $h=2,k=1$, điều kiện khoảng cách hai chỉ cần cấm nhãn bằng nhau.
+Số biến là $|V|(U+1)+1$, số ràng buộc là
+\[
+2|V|+(3U+1)|E|+(U+1)|D_2(G)|.
+\]
+
+\begin{remark}[Quy ước nhãn bắt đầu từ 1]
+Nếu dùng miền nhãn $\{1,\ldots,U'\}$ như một số cách viết assignment, tối ưu
+của biến nhãn lớn nhất bằng $\lambda_{h,k}(G)+1$ trên đồ thị không rỗng.
+Khi chuyển sang quy ước bắt đầu từ 0 phải dùng $U=U'-1$ và báo cáo
+$\lambda=\ell_{\max}-1$. Không được đồng nhất số nhãn khả dụng với span.
+\end{remark}
+
+\subsection{ILP dạng Big-M}
+Dùng biến nguyên $0\leq f_v\leq U$, $0\leq\ell_{\max}\leq U$ và
+$f_v\leq\ell_{\max}$. Với mỗi cặp cần cách biệt ít nhất $d$, thêm biến
+$z_{uv}\in\{0,1\}$ và
+\begin{align}
+ f_u-f_v&\geq d-Mz_{uv},\\
+ f_v-f_u&\geq d-M(1-z_{uv}).
+\end{align}
+Chọn $M=U+\max(h,k)$ đủ để vô hiệu hóa bất đẳng thức không được chọn vì
+$-U\leq f_u-f_v\leq U$. Mục tiêu vẫn là $\min\ell_{\max}$.
+Triển khai $L(2,1)$ dùng $M=U+2$. Số biến là
+$|V|+1+|E|+|D_2(G)|$; số ràng buộc là
+$|V|+2|E|+2|D_2(G)|$.
+
+Cả hai mô hình dùng nghiệm tham lam làm MIP start. Assignment loại cặp nhãn
+trực tiếp nhưng kích thước tăng theo $U$; Big-M thường gọn hơn nhưng có hệ số
+phụ thuộc cận trên. Đây là lý do cần thực nghiệm đối chứng, chưa phải kết luận
+một mô hình luôn nhanh hơn mô hình còn lại.

@@ -1,380 +1,47 @@
 \documentclass[12pt,a4paper]{article}
-
 \usepackage[utf8]{vietnam}
-\usepackage[a4paper,margin=2.3cm]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{caption}
-\usepackage{array}
-\usepackage{longtable}
-
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue
-}
-
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array}
+\usepackage{graphicx,float,hyperref}
+\usepackage{placeins}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 \newtheorem{definition}{Định nghĩa}[section]
-\newtheorem{theorem}{Định lý}[section]
-\newtheorem{conjecture}{Giả thuyết}[section]
+\newtheorem{proposition}{Mệnh đề}[section]
 \newtheorem{remark}{Nhận xét}[section]
-
-\title{Mô hình SAT và Kỹ thuật Phá vỡ Đối xứng\\
-cho Bài toán $L(2,1)$-Labeling trên Đồ thị Tích}
-\author{Báo cáo Nghiên cứu Khoa học}
+\newcommand{\OPT}{\texttt{OPT}}
+\newcommand{\FEAS}{\texttt{FEASIBLE}}
+\input{paper/generated/counts}
+\title{Phương pháp SAT và ILP\\
+cho bài toán $L(2,1)$-labeling\\[0.5em]
+{\large Mô hình, phá đối xứng và thực nghiệm trên các họ đồ thị}}
+\author{Bản thảo nghiên cứu}
 \date{Tháng 9 năm 2026}
-
 \begin{document}
-
 \maketitle
 \begin{abstract}
-Báo cáo nghiên cứu bài toán $L(2,1)$-labeling trên các họ đồ thị tích
-Cartesian và Corona bằng mô hình thỏa mãn Boolean (SAT). Mô hình sử dụng
-order encoding, tìm kiếm span hybrid và các ràng buộc phá vỡ đối xứng được
-kiểm soát theo cấu trúc đồ thị. Một benchmark đối chiếu giữa cấu hình cơ sở
-và cấu hình có symmetry breaking được thực hiện trên dữ liệu thu thập từ
-Glucose. Kết quả hiện có gồm 434 instance, trong đó 432 instance đạt tối ưu ở
-cả hai cấu hình. Cơ chế hard-pruning loại các biến order cố định và giúp giảm
-đáng kể số clause trên các đồ thị có đối xứng.
-Các kết quả SAT cũng gợi ý một số giả thuyết về $\lambda_{2,1}$ của các họ
-$P_n\square P_m$, $C_n\circ P_m$ và các họ Corona liên quan.
+Nghiên cứu xây dựng công cụ giải chính xác bài toán tối thiểu hóa span của phép
+gán nhãn $L(2,1)$ trên đồ thị. Phương pháp SAT dùng order encoding và tìm kiếm
+trên khoảng cận dưới--cận trên; hai mô hình ILP được triển khai để đối chiếu.
+Báo cáo trình bày tính tương đương của mã hóa, điều kiện hợp lệ của phá đối xứng,
+và cách phân biệt nghiệm khả thi với kết luận tối ưu. Thực nghiệm SAT gồm
+\CycleCount{} chu trình và \ProductCount{} đồ thị tích, mỗi đồ thị chạy hai
+cấu hình Baseline/Symmetry. Có \PairedOpt{} trên \ComparisonCount{} cặp cùng
+xác nhận tối ưu với span bằng nhau; \UnresolvedCount{} cặp còn lại chưa xác
+nhận tối ưu trong budget. Toàn bộ \WitnessCount{} labeling đã lưu được kiểm
+tra lại, và hai CNF được đếm tại cùng span. Chỉ chu trình được cố định gốc;
+các họ product sử dụng thứ tự dựa trên phản xạ hoặc không thêm đối xứng riêng.
+Lợi ích về kích thước và thời gian thay đổi theo họ; một lượt chạy chưa đủ
+để kết luận về độ ổn định của cải thiện hiệu năng. ILP được trình bày ở mức
+mô hình, chưa có đối chứng hiệu năng mới trong hai lượt thực nghiệm này.
 \end{abstract}
-
+\clearpage
 \tableofcontents
-\newpage
-
-\section{Đặt vấn đề}
-
-\subsection{Bài toán $L(2,1)$-labeling}
-
-Cho đồ thị vô hướng $G=(V,E)$. Một phép gán nhãn
-$L(2,1)$ là ánh xạ
-\[
- f:V\longrightarrow \mathbb{Z}_{\geq 0}
-\]
-thỏa mãn
-\[
- |f(u)-f(v)|\geq 2 \quad \text{với mọi }uv\in E,
-\]
-và
-\[
- |f(u)-f(v)|\geq 1 \quad \text{nếu }d_G(u,v)=2.
-\]
-Span của phép gán nhãn $f$ được định nghĩa bởi
-\[
- \operatorname{span}(f)=\max_{v\in V}f(v)-\min_{v\in V}f(v).
-\]
-Ký hiệu $\lambda_{2,1}(G)$ là span nhỏ nhất trong tất cả các phép gán nhãn
-hợp lệ của $G$.
-
-Bài toán này có ý nghĩa trong lập lịch tần số, phân bổ kênh vô tuyến và các
-mô hình mạng, trong đó các đỉnh gần nhau phải nhận các giá trị đủ khác biệt.
-Khi kích thước đồ thị tăng, việc tìm span tối ưu trở thành một bài toán tổ hợp
-khó. Vì vậy, SAT cung cấp một công cụ phù hợp để kiểm tra tính khả thi chính
-xác theo từng giá trị span.
-
-\subsection{Các họ đồ thị tích}
-
-Tích Cartesian của hai đồ thị $G$ và $H$, ký hiệu $G\square H$, có tập đỉnh
-$V(G)\times V(H)$. Hai đỉnh $(g,h)$ và $(g',h')$ kề nhau khi một tọa độ giữ
-nguyên và tọa độ còn lại tạo thành một cạnh trong nhân tương ứng. Benchmark
-xét ba họ:
-\[
- C_n\square C_m,\qquad C_n\square P_m,\qquad P_n\square P_m.
-\]
-Trong đó $P_n\square P_m$ là lưới chữ nhật, còn $C_n\square C_m$ có cấu trúc
-chu kỳ theo hai chiều.
-
-Tích Corona $G\circ H$ được tạo bởi một bản sao của $G$, một bản sao riêng
-của $H$ gắn vào mỗi đỉnh của $G$, và các cạnh nối đỉnh lõi với mọi đỉnh trong
-bản sao tương ứng. Các họ Corona được khảo sát là
-\[
- C_n\circ C_m,\quad C_n\circ P_m,\quad
- P_n\circ C_m,\quad P_n\circ P_m.
-\]
-Ngoài ra, project còn hỗ trợ các đồ thị chuẩn $C_n$, $K_n$, $Q_d$ và đồ thị
-Petersen tổng quát $GP(n,k)$.
-
-Các phép tích trong NetworkX tạo nhãn đỉnh dạng tuple. Trước khi đưa vào
-encoder, project dùng \texttt{convert\_node\_labels\_to\_integers} để đưa toàn bộ đỉnh về
-các số nguyên liên tiếp $0,1,\ldots,|V|-1$.
-
-\subsection{Động lực nghiên cứu}
-
-Các kết quả lý thuyết trên Corona thường mới dừng ở các cận trên và cận dưới
-phụ thuộc bậc cực đại. Với nhiều tham số, các cận này chưa xác định chính xác
-$\lambda_{2,1}$. Mục tiêu của nghiên cứu là xây dựng pipeline tái lập được,
-trong đó SAT xác nhận giá trị tối ưu cho từng instance hữu hạn và symmetry
-breaking giúp giảm các nghiệm đẳng cấu trùng lặp trong quá trình tìm kiếm.
-
-\section{Phương pháp mã hóa SAT và kỹ thuật phá vỡ đối xứng}
-
-\subsection{Order encoding}
-
-Với một span ứng viên $s$, mô hình tạo biến Boolean $x_{v,i}$ cho mỗi đỉnh
-$v$ và $0\leq i<s$, với ngữ nghĩa
-\[
- x_{v,i}=1 \Longleftrightarrow f(v)\leq i.
-\]
-Tính đơn điệu của các biến được mã hóa bởi
-\[
- \neg x_{v,i}\lor x_{v,i+1}.
-\]
-Một nhãn cụ thể được biểu diễn thông qua hai ngưỡng liên tiếp:
-\[
- f(v)=a \Longleftrightarrow (f(v)\leq a)\land\neg(f(v)\leq a-1).
-\]
-
-Đối với cạnh $(u,v)$, encoder loại các cặp nhãn thỏa
-$|f(u)-f(v)|<2$. Đối với cặp đỉnh ở khoảng cách hai, encoder loại các cặp
-nhãn bằng nhau. Do đó, CNF thu được là phép kiểm tra chính xác tính khả thi
-của một span cố định.
-
-Trong order encoding, số biến cơ bản của một CNF là gần $|V|s$. Các mệnh đề
-phụ thuộc vào số span, số cạnh và số cặp đỉnh ở khoảng cách hai. Solver dùng
-Glucose hoặc CaDiCaL, sau đó giải mã model và kiểm tra lại labeling bằng một
-validator độc lập.
-
-\subsection{Tìm kiếm span}
-
-Project hỗ trợ tìm kiếm tuyến tính và hybrid. Với hybrid, tính đơn điệu
-\[
- \operatorname{SAT}(s)\Rightarrow \operatorname{SAT}(s')
- \quad \text{với mọi }s'\geq s
-\]
-cho phép thu hẹp khoảng tìm kiếm bằng binary search, sau đó kiểm tra span ngay
-bên dưới ứng viên để chứng nhận \texttt{OPT}.
-
-\subsection{Ràng buộc phá vỡ đối xứng}
-
-Phiên bản hiện tại sử dụng cơ chế \emph{hard-pruning} thay vì chỉ thêm các
-mệnh đề đối xứng lên CNF đầy đủ. Với đỉnh gốc $v_0$ được chọn làm đại diện,
-hệ thống cố định
-\[
- f(v_0)=0.
-\]
-Do đó, các biến order $x_{v_0,i}$ không được cấp phát ngay từ đầu. Khi một
-mệnh đề liên quan đến $v_0$ được sinh, encoder thay thế phần cố định bằng
-hằng đúng hoặc sai và chỉ giữ lại các literal của đỉnh chưa cố định. Chẳng
-hạn, ràng buộc khoảng cách với $v_0$ trở thành các mệnh đề cấm trực tiếp các
-nhãn gần 0; ràng buộc thứ tự cũng được rút gọn thành một literal. Cách làm
-này vừa loại đối xứng dịch nhãn, vừa giảm kích thước CNF thực tế.
-
-Các đồ thị chu kỳ có đối xứng quay và đối xứng phản xạ. Một đại diện chuẩn
-có thể được chọn bằng
-\[
- f(0)=0,\qquad f(1)<f(n-1).
-\]
-Điều kiện thứ nhất loại đối xứng dịch nhãn; điều kiện thứ hai chọn một hướng
-của chu kỳ.
-
-Với Corona, không được cố định tùy tiện một đỉnh lõi về nhãn $0$, vì đỉnh lõi
-và các đỉnh trong bản sao của $H$ không nói chung là vertex-transitive. Cài đặt
-hiện tại chỉ thêm thứ tự giữa các lân cận lõi tương đương khi constructor đồ
-thị cung cấp metadata đối xứng; các mệnh đề này cũng được rút gọn khi một đầu
-đã bị cố định. Như vậy, các mệnh đề mới chỉ chọn một đại diện trong lớp các
-nghiệm đẳng cấu và không làm thay đổi giá trị tối ưu.
-
-Tham số điều khiển là:
-\begin{verbatim}
-solve_graph(graph, enable_symmetry_breaking=True)
-\end{verbatim}
-Cấu hình baseline dùng \texttt{False}, còn cấu hình đối chiếu dùng \texttt{True}.
-
-\section{Kết quả thực nghiệm và so sánh hiệu năng}
-
-\subsection{Thiết kế benchmark}
-
-Script \texttt{benchmarks/benchmark\_symmetry\_comparison.py} chạy hai lượt độc lập
-trên mỗi đồ thị với cùng solver Glucose, chiến lược hybrid và timeout 180 giây:
-
-\begin{enumerate}
-  \item Baseline: không bật symmetry breaking;
-  \item Symmetry: bật symmetry breaking.
-\end{enumerate}
-
-Kết quả được ghi vào \texttt{results/symmetry\_comparison\_benchmark.csv}. CSV có cơ
-chế flush sau mỗi dòng và hỗ trợ resume bằng cách bỏ qua các graph đã tồn tại.
-Dữ liệu hiện tại gồm 434 instance, với phân bố trạng thái:
-\begin{itemize}
-  \item 432 instance có trạng thái \texttt{OPT} ở cả hai cấu hình;
-  \item 1 instance chuyển từ \texttt{FEASIBLE} sang \texttt{OPT};
-  \item 1 instance có trạng thái \texttt{FEASIBLE} ở cả hai cấu hình.
-\end{itemize}
-
-\subsection{Bảng đối chiếu đại diện}
-
-Bảng~\ref{tab:comparison} lấy trực tiếp từ CSV. Các cột Delta được định nghĩa
-bởi $\Delta Var=Var_B-Var_S$, $\Delta Clause=Clause_B-Clause_S$ và
-$\Delta Runtime=Time_B-Time_S$. Vì vậy, Delta dương biểu thị symmetry
-breaking làm giảm đại lượng tương ứng.
-
-\begin{table}[H]
-\centering
-\caption{Chênh lệch đo được giữa Baseline và Symmetry Breaking trên các instance đại diện.}
-\label{tab:comparison}
-\small
-\begin{tabular}{lrrrrrrr}
-\toprule
-Graph & $V$ & Var$_B$ & Var$_S$ & $\Delta Var$ & $\Delta Clause$ & $\Delta Runtime$ \\
-\midrule
-\texttt{C\_3xC\_3} & 9 & 72 & 64 & 8 (11.11\%) & 122 (18.07\%) & 0.014761 \\
-\texttt{C\_3xP\_3} & 9 & 54 & 48 & 6 (11.11\%) & 67 (15.40\%) & -0.000466 \\
-\texttt{C\_3oC\_3} & 12 & 96 & 88 & 8 (8.33\%) & 161 (20.88\%) & 0.015207 \\
-\texttt{C\_3oP\_3} & 12 & 84 & 77 & 7 (8.33\%) & 140 (22.01\%) & 0.002172 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Các instance trong bảng cho thấy Hard-Pruning làm giảm 8--11\% số biến và
-15--22\% số clause. Mức giảm clause 13--22\% là nhất quán với các instance
-đồ thị có cấu trúc đối xứng rõ; runtime delta dương ở ba trong bốn dòng, còn
-giá trị âm nhỏ ở $C_3\square P_3$ cho thấy chi phí biến thiên của solver trên
-instance rất nhỏ.
-
-Trên toàn bộ benchmark, tác động không đồng nhất theo kích thước và họ đồ
-thị; vì vậy các biểu đồ dưới đây dùng Delta thay vì chồng hai đường tuyệt đối.
-
-\subsection{Biểu đồ thực nghiệm}
-
-\begin{figure}[H]
-\centering
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{results/plots/delta_runtime_cartesian.png}
-  \smallskip
-  \textbf{(a)} Runtime Delta của Cartesian.
-\end{minipage}\hfill
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{results/plots/delta_clauses_cartesian.png}
-  \smallskip
-  \textbf{(b)} Clause Delta của Cartesian.
-\end{minipage}
-\caption{Difference plots cho các tích Cartesian. Delta dương cho biết
-Baseline lớn hơn cấu hình có symmetry breaking; các điểm âm là trường hợp
-symmetry breaking không đem lại lợi ích ở kích thước đó.}
-\label{fig:delta-cartesian}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{results/plots/delta_runtime_corona.png}
-  \smallskip
-  \textbf{(a)} Runtime Delta của Corona.
-\end{minipage}\hfill
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{results/plots/delta_clauses_corona.png}
-  \smallskip
-  \textbf{(b)} Clause Delta của Corona.
-\end{minipage}
-\caption{Difference plots cho các tích Corona. Clause Delta thường dương rõ
-hơn ở các cấu hình Corona, trong khi Runtime Delta phản ánh trực tiếp mức
-tiết kiệm thời gian theo từng kích thước đồ thị.}
-\label{fig:delta-corona}
-\end{figure}
-
-Các biểu đồ được sinh bởi \texttt{scripts/plot\_symmetry\_impact.py}, trong đó các
-instance thuộc cùng họ và có cùng số đỉnh được tổng hợp bằng giá trị trung
-bình. Vì vậy, biểu đồ mô tả xu hướng theo từng họ thay vì làm mất khác biệt
-giữa Cartesian và Corona.
-
-\section{Phát biểu giả thuyết toán học}
-
-Các giả thuyết dưới đây được trích xuất từ
-\texttt{results/conjectures\_summary.txt}. Chúng chỉ là giả thuyết thực nghiệm trên
-miền đã quét, chưa phải định lý tổng quát.
-
-\begin{conjecture}[Lưới đường đi]
-Với miền tham số đã khảo sát, có thể kỳ vọng
-\[
- \lambda_{2,1}(P_n\square P_m)=6.
-\]
-Tất cả 64 instance $3\leq n,m\leq 10$ trong summary đều đạt \texttt{OPT} với span
-bằng 6.
-\end{conjecture}
-
-\begin{conjecture}[Corona chu kỳ--đường đi]
-Với $n,m\geq 3$, dữ liệu thực nghiệm gợi ý công thức
-\[
- \lambda_{2,1}(C_n\circ P_m)=m+4.
-\]
-Công thức này khớp các instance đã kiểm tra, nhưng cần chứng minh cận dưới và
-một construction labeling đạt cận trên trước khi khẳng định tổng quát.
-\end{conjecture}
-
-\begin{conjecture}[Lưới chu kỳ--đường đi]
-Trong miền $3\leq n,m\leq 10$, các giá trị của $C_n\square P_m$ chỉ quan sát
-được ở mức 6 và 7. Vì vậy, phát biểu thận trọng là
-\[
- 6\leq\lambda_{2,1}(C_n\square P_m)\leq 7.
-\]
-
-\end{conjecture}
-
-\begin{conjecture}[Corona đường đi--đường đi]
-Với $P_n\circ P_m$, dữ liệu cho thấy $\lambda_{2,1}$ tăng theo $m$ và có xu
-hướng sai phân 1 khi $m$ tăng, nhưng các giá trị đầu miền còn phụ thuộc $n$.
-Do đó, cần mở rộng benchmark trước khi đề xuất một công thức đóng.
-\end{conjecture}
-
-Đối với $C_n\circ C_m$ và $P_n\circ C_m$, dữ liệu hiện tại chỉ đủ để nêu
-khoảng quan sát lần lượt $[7,14]$ và $[7,14]$ trong miền đã quét. Hai họ này
-cần các phân tích cấu trúc sâu hơn về bậc, khoảng cách và các mẫu labeling.
-Đặc biệt, các dòng \texttt{FEASIBLE} của một số instance $C_n\square C_m$ nhắc rằng
-chỉ các dòng \texttt{OPT} mới nên được dùng làm bằng chứng cho conjecture.
-
-\section{Kết luận và hướng phát triển}
-
-Nghiên cứu đã xây dựng một pipeline SAT hoàn chỉnh cho $L(2,1)$-labeling trên
-các đồ thị tích. Pipeline bao gồm sinh graph, chuẩn hóa nhãn đỉnh, order
-encoding, tìm kiếm span hybrid, validator độc lập, symmetry breaking, benchmark
-đối chiếu, ghi CSV theo thời gian thực, resume execution và trực quan hóa.
-
-Kết quả chính là symmetry breaking đem lại lợi ích về thời gian tìm kiếm, với
-mức cải thiện trung bình 13.09\% trong dữ liệu hiện có. Kỹ thuật này không làm
-giảm số biến và có thể làm tăng nhẹ số clause, do đó không nên đánh giá nó chỉ
-bằng kích thước CNF. Đáp án \texttt{OPT} của SAT cung cấp bằng chứng chính xác cho từng
-instance hữu hạn, nhưng không thay thế chứng minh toán học cho mọi $n,m$.
-
-Các hướng phát triển tiếp theo gồm:
-\begin{enumerate}
-  \item hoàn tất các instance còn \texttt{FEASIBLE} bằng timeout lớn hơn hoặc CaDiCaL;
-  \item mở rộng miền $n,m$ và kiểm tra các họ Corona ngoài miền $[3,10]$;
-  \item chứng minh hoặc bác bỏ công thức
-        $\lambda_{2,1}(C_n\circ P_m)=m+4$;
-  \item so sánh Glucose với CaDiCaL và đối chiếu SAT với các formulation ILP;
-  \item bổ sung kiểm định thống kê theo từng họ đồ thị thay vì chỉ gom theo $V$.
-\end{enumerate}
-
-\begin{thebibliography}{9}
-\bibitem{griggs}
-J. R. Griggs và R. K. Yeh,
-\textit{Labelling graphs with a condition at distance 2},
-SIAM Journal on Discrete Mathematics, 5, 1992.
-
-\bibitem{calamoneri}
-T. Calamoneri,
-\textit{The $L(h,k)$-labelling problem: an updated survey and annotated bibliography},
-The Computer Journal, 2011.
-
-\bibitem{frucht}
-R. Frucht và F. Harary,
-\textit{On the corona of two graphs},
-Aequationes Mathematicae, 4, 1970.
-
-\bibitem{networkx}
-A. Hagberg, D. Schult và P. Swart,
-\textit{NetworkX: Network Analysis in Python},
-\url{https://networkx.org/}.
-
-\end{thebibliography}
-
+\clearpage
+\input{paper/sections/problem}
+\input{paper/sections/models}
+\input{paper/sections/search_symmetry}
+\input{paper/sections/experiments}
+\input{paper/sections/discussion}
+\bibliographystyle{plain}
+\bibliography{paper/references}
 \end{document}

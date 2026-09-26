@@ -1,0 +1,56 @@
+\section{Diễn giải kết quả và hướng phát triển}
+\subsection{Điều có thể kết luận từ lượt main\_r1}
+Hai bộ dữ liệu hoàn chỉnh theo miền quét cho phép đối chiếu mô hình và
+quan sát tác động của phá đối xứng trên cùng backend/cấu hình tìm kiếm.
+Các nhãn đã được kiểm tra lại; các cặp cùng OPT không bất đồng span.
+Tuy nhiên, giảm không gian nghiệm không đồng nghĩa giảm số clause theo
+cùng tỉ lệ, và giảm clause không tự suy ra giảm thời gian tổng. Kết quả
+chu trình cùng các họ product minh họa rõ sự khác nhau giữa ba đại lượng.
+
+Cấu hình hiện tại cố ý chỉ cố định gốc trên $C_n$. Trên product, điều kiện
+thứ tự dựa trên một phản xạ cụ thể chỉ khai thác một phần đối xứng của đồ
+thị. Mức giảm clause nhỏ là kết quả của cấu hình đang được đánh giá, không
+phải giới hạn lý thuyết của mọi phương pháp phá đối xứng trên họ đó. Các
+họ chưa có ràng buộc riêng phải được nhận diện rõ như những lượt lặp cùng
+mô hình. Không đưa thêm cố định gốc hoặc nhiều thứ tự đồng thời nếu chưa
+chứng minh chúng cùng bảo toàn ít nhất một nghiệm trong mỗi lớp cần xét.
+
+\subsection{Kết quả đã biết và quy luật hữu hạn}
+Survey \cite{calamoneri} đã dẫn các kết quả chính xác cho tích của đường đi
+và chu trình. Các giá trị quan sát trên Cartesian đóng vai trò đối chứng;
+không gọi một quy luật là mới chỉ vì nó xuất hiện trong CSV. Điều kiện
+tham số và các trường hợp nhỏ phải được đối chiếu với từng định lý gốc.
+
+Trong lượt product main\_r1, có \CoronaPathMatches{} trên
+\CoronaPathCount{} cặp đã xác nhận tối ưu của $C_n\circ P_m$ thỏa
+\[
+\lambda_{2,1}(C_n\circ P_m)=m+4.
+\]
+Đây là quan sát trên miền tham số đã quét. Để phát biểu cho mọi $n,m$, cần
+đối chiếu tài liệu và chứng minh cả cận dưới lẫn construction đạt cận trên.
+Cận bậc $\Delta+1=m+3$ chưa đủ để kết luận công thức trên. Ghi chú nghiên
+cứu về Corona không phải bằng chứng rằng chưa có công trình giải quyết
+bài toán. Hai instance Cartesian chưa tối ưu cần được khảo sát riêng;
+incumbent của chúng không được đưa vào suy công thức tối ưu.
+
+\subsection{Phần còn thiếu và bước tiếp theo}
+Ưu tiên thực nghiệm là lặp lại các lượt với thứ tự Base/Sym được đảo cân
+bằng, giữ nguyên máy, source và cấu hình để đo biến thiên. Với hai cặp
+chưa tối ưu, có thể tạo lượt kiểm tra riêng với budget lớn hơn hoặc backend
+khác; không ghép thời gian của lượt bổ sung vào bảng Glucose hiện tại như
+cùng điều kiện đo. Để tách tác động của cố định gốc và phản xạ trên chu
+trình, cần thêm các cấu hình ablation tương ứng.
+
+Các bước phương pháp gồm chứng thư UNSAT độc lập; điều kiện phá đối xứng
+mạnh hơn có chứng minh cho từng họ; SAT gia tăng qua assumptions/tái sử
+dụng learned clauses; và đối chứng SAT--ILP trên cùng tập instance khi
+backend ILP hoạt động. Project hiện chưa triển khai thuật toán chuyên biệt
+trên cây, nên hướng đối chiếu với thuật toán đó vẫn là công việc tiếp theo.
+Phần Petersen trong mô hình và tài liệu xác định phạm vi đồ thị; dữ liệu
+lịch sử của nó chưa được đưa vào kết quả chính main\_r1.
+
+Đóng góp được hỗ trợ bởi dữ liệu hiện tại là một quy trình mô hình hóa,
+tìm kiếm tối ưu, áp dụng đối xứng có điều kiện, kiểm tra nhãn và đo thực
+nghiệm có thể truy nguyên. Các kết luận về công thức tổng quát, mức độ mới
+của kết quả toán học và độ ổn định của lợi ích hiệu năng còn cần chứng minh
+hoặc thực nghiệm bổ sung tương ứng.

@@ -1,0 +1,130 @@
+\section{Tìm kiếm span và phá đối xứng}
+\subsection{Cận và bất biến tìm kiếm}
+Với đồ thị có ít nhất một cạnh, cận dưới cho $L(2,1)$ là
+$L=\Delta(G)+1$. Thật vậy, $\Delta$ lân cận của một đỉnh bậc cực đại phải
+nhận nhãn đôi một khác nhau: chúng kề nhau hoặc cách nhau hai bước. Chúng
+cũng không được nhận nhãn của đỉnh trung tâm hay nhãn chênh 1 với nó. Miền
+có span $\Delta$ không đủ chứa các nhãn đó. Đồ thị không có cạnh có span 0.
+
+Thuật toán tham lam duyệt một thứ tự đỉnh cố định, chọn số nguyên không âm
+nhỏ nhất không vi phạm các đỉnh đã gán. Gọi $U$ là span của nghiệm này;
+validator kiểm tra lại trước khi dùng làm incumbent. Bất biến là
+\[
+ L\leq\lambda_{2,1}(G)\leq U,
+\]
+trong đó phía trên luôn có một labeling cụ thể đi kèm.
+
+Tìm kiếm tuyến tính thử $s=U-1$. Tìm kiếm hybrid trong phiên bản hiệu chỉnh
+thử $s=\lfloor(L+U)/2\rfloor$. Nếu SAT, giải mã và chuẩn hóa labeling rồi
+hạ $U$ về span thực tế. Nếu UNSAT, đặt $L=s+1$. Dừng khi $L=U$ và trả
+\OPT. Không cần giải lặp lại một span đã có kết luận. Mỗi lần thử xây CNF
+và tạo solver mới; phiên bản này chưa phải SAT gia tăng qua các span.
+
+\begin{proposition}
+Nếu cận khởi tạo hợp lệ, mã hóa tương đương và các ràng buộc đối xứng bảo toàn
+khả thỏa, thuật toán kết luận \OPT{} chỉ khi incumbent là tối ưu.
+\end{proposition}
+\begin{proof}
+SAT cung cấp cận trên hợp lệ. UNSAT ở $s$ loại mọi span không quá $s$ do tính
+đơn điệu của miền nhãn. Hai cập nhật giữ bất biến; khi hai cận gặp nhau,
+giá trị tối ưu bị kẹp bằng span incumbent.
+\end{proof}
+Timeout không phải UNSAT và không được nâng cận dưới. Nếu hết thời gian khi
+$L<U$, trả \FEAS{} cùng incumbent; khi $L=U$ ngay từ cận tham lam thì có
+thể trả \OPT{} mà không cần gọi SAT. Khi đó số biến và mệnh đề có thể để trống.
+
+\subsection{Điều kiện đúng của phá đối xứng}
+Tịnh tiến chỉ bảo đảm \emph{có một đỉnh} nhận nhãn 0. Để cố định một đỉnh
+đã chọn $v_0$ về 0, cần thêm lập luận về cấu trúc đồ thị.
+\begin{proposition}
+Nếu $G$ là vertex-transitive, có thể thêm $f(v_0)=0$ mà không làm thay đổi
+span tối ưu hoặc tính khả thỏa của bài toán span không quá $s$.
+\end{proposition}
+\begin{proof}
+Chuẩn hóa một labeling hợp lệ để một đỉnh $w$ có nhãn 0. Tính vertex-transitive
+cho một tự đẳng cấu đưa $v_0$ đến $w$. Hợp thành labeling với tự đẳng cấu đó
+bảo toàn mọi khoảng cách và đưa nhãn tại $v_0$ về 0.
+\end{proof}
+
+Riêng với $C_n$, chọn $t$ sao cho $f(t)=\min_i f(i)$ và đặt
+\[
+ g(i)=f((i+t)\bmod n)-f(t).
+\]
+Phép quay bảo toàn khoảng cách và phép tịnh tiến bảo toàn hiệu nhãn, nên
+$g$ hợp lệ, $g(0)=0$ và có cùng span với $f$. Cơ sở là tự đẳng cấu quay
+của chu trình, không phải chỉ việc các đỉnh có cùng bậc.
+
+Trong phạm vi thí nghiệm này, chỉ áp dụng cố định gốc cho chu trình $C_n$.
+Mệnh đề tổng quát trên là cơ sở lý thuyết, không có nghĩa triển khai cố định
+gốc trên mọi họ vertex-transitive. Các họ khác chỉ dùng những thứ tự được
+liệt kê trong bảng dưới. Các biến ngưỡng của đỉnh cố định không cần cấp phát; một đỉnh cố định
+loại $s$ biến. Các ràng buộc liên quan được thay hằng và rút gọn trước khi gọi
+solver. Đây là giảm kích thước CNF do cố định nhãn; việc chỉ thêm một bất đẳng
+thức thứ tự có thể làm tăng số mệnh đề.
+
+Phiên bản hiện tại áp dụng cùng một tiền xử lý cho cả Baseline và Symmetry:
+bỏ mệnh đề hằng đúng, bỏ bản sao và lan truyền đơn vị đến điểm cố định.
+Nếu có mệnh đề đơn $\ell$, mọi mệnh đề chứa $\ell$ được thỏa mãn; trong
+các mệnh đề còn lại có thể bỏ $\neg\ell$. Giữ lại mệnh đề đơn $\ell$ để
+decoder khôi phục đúng nhãn. Mỗi bước giữ tương đương logic trên các biến
+ban đầu; khi suy ra mệnh đề rỗng, công thức là UNSAT. Vì vậy, tác động của
+cố định nhãn và cận suy ra từ thứ tự được lan sang các ràng buộc liên quan.
+Số biến báo cáo là số biến đã cấp phát, không phải số biến chưa bị gán sau
+lan truyền; một đỉnh cố định bị loại biến ngay khi dựng mô hình.
+
+Với một phản xạ đổi chỗ hai đỉnh $u,v$ đã bắt buộc khác nhãn, các nghiệm
+được ghép thành từng cặp có thứ tự nhãn ngược nhau. Điều kiện $f(u)<f(v)$
+giữ đúng một nghiệm của mỗi cặp. Đây là giảm một nửa \emph{số nghiệm} trước
+khi kết hợp các ràng buộc đối xứng khác, không phải công thức giảm một nửa
+số mệnh đề hoặc thời gian giải. CNF được sinh bằng cách thêm ràng buộc rồi
+rút gọn; số mệnh đề cuối cùng phụ thuộc vào phép mã hóa và các suy diễn.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{p{0.25\linewidth}p{0.65\linewidth}}
+\toprule
+Họ & Ràng buộc được dùng trong phiên bản hiệu chỉnh\\
+\midrule
+$C_n$ & $f(0)=0$ và $f(1)<f(n-1)$ nhờ phản xạ quanh 0.\\
+$K_n$ & Tăng nghiêm ngặt theo chỉ số đỉnh, không cố định gốc.\\
+$Q_d$ & Thứ tự trên các lân cận $1,2,4,\ldots$ nhờ hoán vị tọa độ, không cố định gốc.\\
+$C_n\mathbin{\square} C_m$ & Chỉ thứ tự giữa $(1,0)$ và $(n-1,0)$, không cố định gốc.\\
+$C_n\mathbin{\square} P_m$ & Chỉ thứ tự giữa $(1,0)$ và $(n-1,0)$, không cố định gốc.\\
+$GP(n,k)$ & Chỉ thứ tự hai lân cận ngoài $u_1,u_{n-1}$ qua phản xạ $i\mapsto-i$.\\
+$C_n\circ H$ & Chỉ thứ tự hai lân cận lõi 1 và $n-1$, đồng thời phản xạ các bản sao.\\
+$P_n\mathbin{\square} P_m$, $P_n\circ H$ & Không thêm ràng buộc đặc thù trong phiên bản này.\\
+\bottomrule
+\end{tabular}
+\caption{Phá đối xứng dựa trên phép tự đẳng cấu cụ thể.}
+\end{table}
+Trong các thứ tự giữa hai lân cận, hai đỉnh đã bắt buộc khác nhãn vì có khoảng
+cách không quá 2; phản xạ đổi chỗ chúng và giữ các điều kiện còn lại. Cùng bậc
+không đủ để kết luận hai đỉnh có thể đổi chỗ. Metadata cấu trúc chỉ được sử
+dụng khi tập đỉnh và cạnh chưa thay đổi so với constructor; tên họ không
+đủ để áp dụng ràng buộc cho một đồ thị bất kỳ.
+
+Các phản xạ được triển khai có dạng cụ thể: trên tích Cartesian có thừa số
+$C_n$, ánh xạ $(i,j)\mapsto(-i\bmod n,j)$ đổi chỗ hai lân cận được chọn;
+trên $C_n\circ H$, phản xạ chỉ số lõi $i\mapsto-i\bmod n$ đồng thời đưa
+bản sao $H_i$ sang $H_{-i}$ và giữ chỉ số bên trong bản sao. Trên Petersen,
+dùng $u_i\mapsto u_{-i}$ và $v_i\mapsto v_{-i}$; các cạnh bước $k$ được
+đưa thành cạnh bước $-k$, vẫn là cùng tập cạnh vô hướng. Constructor hiện
+tại dùng đúng thứ tự $u_i=i$, $v_i=n+i$ để quy ước này khớp nhãn lưu ra file.
+
+\subsection{Giới hạn thời gian và xác nhận nghiệm}
+Giới hạn số xung đột SAT không tương đương giới hạn theo giây
+\cite{pysat}. Phiên bản hiệu chỉnh chạy quá trình tìm kiếm trong một tiến
+trình con, dùng đồng hồ đơn điệu và chấm dứt tiến trình khi hết thời gian
+còn lại. Cách này áp dụng cho cả Glucose và CaDiCaL mà không phụ thuộc API
+ngắt của từng backend. Runtime SAT bao gồm tiền xử lý, khởi động tiến trình,
+tạo CNF, tìm kiếm, kiểm tra nghiệm và thu hồi tiến trình. Tiền xử lý ở tiến
+trình cha không bị cưỡng bức ngắt; tổng runtime có thể vượt ngưỡng do phần
+này và chi phí thu hồi tiến trình. Gọi không giới hạn thời gian chạy trực tiếp.
+
+ILP dùng giới hạn thời gian native của backend cho giai đoạn tối ưu;
+runtime báo cáo bao gồm cả xây mô hình và validation. Không coi hai cơ chế
+budget này là đồng nhất khi so sánh SAT với ILP.
+Validator kiểm tra miền nhãn, đủ tập đỉnh kể cả đỉnh cô lập, điều kiện cạnh
+và khoảng cách hai. Nó xác nhận nghiệm khả thi; không tự xác nhận UNSAT.
+Lịch sử tìm kiếm cũng không phải chứng thư UNSAT độc lập: phiên bản này chưa
+xuất và kiểm tra DRAT/LRAT.
