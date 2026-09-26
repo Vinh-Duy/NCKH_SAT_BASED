@@ -1,0 +1,2 @@
+Family,Rows,Paired_OPT,Unresolved_Pairs,Base_FEASIBLE,Sym_FEASIBLE,Symmetry_Rules,Paired_Time_Base,Paired_Time_Sym,Median_Paired_Speedup,Median_Paired_Clause_Reduction_Pct
+C,18,18,0,0,0,root=0+order,15.409843,15.000853,1.030458053019403,29.040404040404038
