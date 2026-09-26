@@ -43,7 +43,6 @@ class AssignmentSpec:
             + len(self.vertices)
             + edge_constraints
             + distance_two_constraints
-            + 1
         )
 
 

@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
+import math
 import time
 from typing import Any
 
 from src.core.graph_utils import graph_constraints, greedy_labeling
 from src.core.validator import validate_labeling
 from src.models.ilp_assignment import (
-    AssignmentSpec,
     labeling_from_values,
     make_spec,
     warm_start_values,
@@ -20,18 +20,34 @@ def solve_graph(
     solver_name: str = "gurobi",
     timeout_sec: float = 60,
     formulation: str = "assignment",
-) -> tuple[int | None, int, int, float, str, dict]:
+) -> tuple[int | None, int | None, int | None, float, str, dict]:
     """Solve an L(2,1) instance with the selected backend and formulation."""
+    if solver_name.lower() not in {"gurobi", "cplex"}:
+        raise ValueError("solver_name must be 'gurobi' or 'cplex'")
+    if formulation not in {"assignment", "big-m"}:
+        raise ValueError("formulation must be 'assignment' or 'big-m'")
+    if not math.isfinite(timeout_sec) or timeout_sec < 0:
+        raise ValueError("timeout_sec must be finite and non-negative")
+    start = time.perf_counter()
     edges, distance_two_pairs = graph_constraints(graph)
     upper_bound, greedy_labels = greedy_labeling(graph)
     spec = make_spec(
         graph.nodes(), edges, distance_two_pairs, max(0, upper_bound)
     )
-    if formulation == "assignment":
-        return _solve_assignment(spec, greedy_labels, solver_name, timeout_sec)
-    if formulation == "big-m":
-        return _solve_big_m(spec, greedy_labels, solver_name, timeout_sec)
-    raise ValueError("formulation must be 'assignment' or 'big-m'")
+    try:
+        if formulation == "assignment":
+            result = _solve_assignment(spec, greedy_labels, solver_name, timeout_sec)
+        else:
+            result = _solve_big_m(spec, greedy_labels, solver_name, timeout_sec)
+    except ImportError:
+        return None, None, None, time.perf_counter() - start, "UNAVAILABLE", {}
+    span, variables, constraints, _, status, labels = result
+    if span is not None:
+        valid, _ = validate_labeling(edges, distance_two_pairs, labels, span,
+                                     vertices=spec.vertices)
+        if not valid:
+            status = "INVALID"
+    return span, variables, constraints, time.perf_counter() - start, status, labels
 
 
 def _solve_assignment(spec, greedy_labels, solver_name, timeout_sec):
@@ -48,6 +64,8 @@ def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec):
 
     model = gp.Model("L21_Assignment")
     model.Params.OutputFlag = 0
+    model.Params.MIPGap = 0
+    model.Params.MIPGapAbs = 0
     model.Params.TimeLimit = max(0.0, timeout_sec)
     x = {
         (vertex, label): model.addVar(vtype=GRB.BINARY, name=f"x_{vertex}_{label}")
@@ -58,14 +76,16 @@ def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec):
     _add_assignment_constraints_gurobi(model, spec, x, span)
     _set_gurobi_start(x, span, warm_start_values(spec, greedy_labels), spec.upper_bound)
     model.setObjective(span, GRB.MINIMIZE)
-    return _run_gurobi(model, spec, x)
+    try:
+        return _run_gurobi(model, spec, x)
+    finally:
+        model.dispose()
 
 
 def _add_assignment_constraints_gurobi(model, spec, x, span):
     _add_assignment_and_span_gurobi(model, spec, x, span)
     _add_edge_constraints_gurobi(model, spec, x)
     _add_distance_two_constraints_gurobi(model, spec, x)
-    _add_symmetry_constraint_gurobi(model, spec, x)
 
 
 def _add_assignment_and_span_gurobi(model, spec, x, span):
@@ -86,12 +106,6 @@ def _add_distance_two_constraints_gurobi(model, spec, x):
     for first, second in spec.distance_two_pairs:
         for label in spec.labels:
             model.addConstr(x[first, label] + x[second, label] <= 1)
-
-
-def _add_symmetry_constraint_gurobi(model, spec, x):
-    first_vertex = spec.vertices[0] if spec.vertices else None
-    if first_vertex is not None:
-        model.addConstr(x[first_vertex, 0] == 1)
 
 
 def _set_gurobi_start(x, span, values, upper_bound):
@@ -116,8 +130,10 @@ def _run_gurobi(model, spec, x):
         status = "OPT"
     elif model.SolCount:
         status = "FEASIBLE"
-    else:
+    elif model.Status == GRB.TIME_LIMIT:
         status = "TIMEOUT"
+    else:
+        status = "INFEASIBLE" if model.Status == GRB.INFEASIBLE else "ERROR"
     return span_value, spec.variable_count, model.NumConstrs, runtime, status, labels
 
 
@@ -126,6 +142,8 @@ def _solve_assignment_cplex(spec, greedy_labels, timeout_sec):
 
     model = Model(name="L21_Assignment")
     model.parameters.timelimit = max(0.0, timeout_sec)
+    model.parameters.mip.tolerances.mipgap = 0
+    model.parameters.mip.tolerances.absmipgap = 0
     x = {
         (vertex, label): model.binary_var(name=f"x_{vertex}_{label}")
         for vertex in spec.vertices
@@ -135,41 +153,10 @@ def _solve_assignment_cplex(spec, greedy_labels, timeout_sec):
     _add_assignment_constraints_cplex(model, spec, x, span)
     _set_cplex_start(model, x, span, warm_start_values(spec, greedy_labels), spec.upper_bound)
     model.minimize(span)
-    start = time.perf_counter()
-    try:
-        solution = model.solve(log_output=False)
-    except Exception:
-        runtime = time.perf_counter() - start
-        return (
-            None,
-            spec.variable_count,
-            model.number_of_constraints,
-            runtime,
-            "UNAVAILABLE",
-            {},
-        )
-    runtime = time.perf_counter() - start
-    labels = {}
-    span_value = None
-    if solution is not None:
+    def decode(solution):
         values = {key: solution.get_value(variable) for key, variable in x.items()}
-        labels = labeling_from_values(spec, values)
-        span_value = int(round(solution.get_value(span)))
-    solve_status = model.get_solve_status().name if solution is not None else ""
-    if solve_status == "OPTIMAL_SOLUTION":
-        status = "OPT"
-    elif solution is not None:
-        status = "FEASIBLE"
-    else:
-        status = "TIMEOUT"
-    return (
-        span_value,
-        spec.variable_count,
-        model.number_of_constraints,
-        runtime,
-        status,
-        labels,
-    )
+        return labeling_from_values(spec, values)
+    return _run_cplex(model, span, decode)
 
 
 def _add_assignment_constraints_cplex(model, spec, x, span):
@@ -186,8 +173,6 @@ def _add_assignment_constraints_cplex(model, spec, x, span):
     for first, second in spec.distance_two_pairs:
         for label in spec.labels:
             model.add_constraint(x[first, label] + x[second, label] <= 1)
-    if spec.vertices:
-        model.add_constraint(x[spec.vertices[0], 0] == 1)
 
 
 def _set_cplex_start(model, x, span, values, upper_bound):
@@ -212,6 +197,8 @@ def _solve_big_m_gurobi(spec, greedy_labels, timeout_sec):
 
     model = gp.Model("L21_BigM")
     model.Params.OutputFlag = 0
+    model.Params.MIPGap = 0
+    model.Params.MIPGapAbs = 0
     model.Params.TimeLimit = max(0.0, timeout_sec)
     labels = {
         vertex: model.addVar(vtype=GRB.INTEGER, lb=0, ub=spec.upper_bound, name=f"f_{vertex}")
@@ -225,7 +212,10 @@ def _solve_big_m_gurobi(spec, greedy_labels, timeout_sec):
     _add_big_m_constraints_gurobi(model, spec.distance_two_pairs, labels, big_m, 1)
     _set_big_m_start_gurobi(labels, span, greedy_labels, spec.upper_bound)
     model.setObjective(span, GRB.MINIMIZE)
-    return _run_gurobi_label_model(model, labels)
+    try:
+        return _run_gurobi_label_model(model, labels)
+    finally:
+        model.dispose()
 
 
 def _add_big_m_constraints_gurobi(model, pairs, labels, big_m, minimum):
@@ -255,8 +245,10 @@ def _run_gurobi_label_model(model, labels):
         status = "OPT"
     elif model.SolCount:
         status = "FEASIBLE"
-    else:
+    elif model.Status == GRB.TIME_LIMIT:
         status = "TIMEOUT"
+    else:
+        status = "INFEASIBLE" if model.Status == GRB.INFEASIBLE else "ERROR"
     return span, model.NumVars, model.NumConstrs, runtime, status, labeling
 
 
@@ -265,6 +257,8 @@ def _solve_big_m_cplex(spec, greedy_labels, timeout_sec):
 
     model = Model(name="L21_BigM")
     model.parameters.timelimit = max(0.0, timeout_sec)
+    model.parameters.mip.tolerances.mipgap = 0
+    model.parameters.mip.tolerances.absmipgap = 0
     labels = {
         vertex: model.integer_var(lb=0, ub=spec.upper_bound, name=f"f_{vertex}")
         for vertex in spec.vertices
@@ -281,30 +275,35 @@ def _solve_big_m_cplex(spec, greedy_labels, timeout_sec):
     start.add_var_value(span, spec.upper_bound)
     model.add_mip_start(start)
     model.minimize(span)
-    begin = time.perf_counter()
+    def decode(solution):
+        return {v: int(round(solution.get_value(variable))) for v, variable in labels.items()}
+    return _run_cplex(model, span, decode)
+
+
+def _run_cplex(model, span, decode):
+    start = time.perf_counter()
+    variables, constraints = model.number_of_variables, model.number_of_constraints
     try:
+        if not model.has_cplex():
+            return None, variables, constraints, 0.0, "UNAVAILABLE", {}
         solution = model.solve(log_output=False)
-    except Exception:
-        runtime = time.perf_counter() - begin
-        return (
-            None,
-            model.number_of_variables,
-            model.number_of_constraints,
-            runtime,
-            "UNAVAILABLE",
-            {},
-        )
-    runtime = time.perf_counter() - begin
-    labeling = {vertex: int(round(solution.get_value(variable))) for vertex, variable in labels.items()} if solution else {}
-    span_value = int(round(solution.get_value(span))) if solution else None
-    solve_status = model.get_solve_status().name if solution else ""
-    if solve_status == "OPTIMAL_SOLUTION":
-        status = "OPT"
-    elif solution:
-        status = "FEASIBLE"
-    else:
-        status = "TIMEOUT"
-    return span_value, model.number_of_variables, model.number_of_constraints, runtime, status, labeling
+        details = str(model.solve_details.status).lower()
+        solve_status = model.get_solve_status().name
+        if solve_status == "OPTIMAL_SOLUTION":
+            status = "OPT"
+        elif solution is not None:
+            status = "FEASIBLE"
+        elif "infeasible" in details:
+            status = "INFEASIBLE"
+        elif "time limit" in details:
+            status = "TIMEOUT"
+        else:
+            status = "ERROR"
+        labels = decode(solution) if solution is not None else {}
+        value = int(round(solution.get_value(span))) if solution is not None else None
+        return value, variables, constraints, time.perf_counter() - start, status, labels
+    finally:
+        model.end()
 
 
 def _add_big_m_constraints_cplex(model, pairs, labels, big_m, minimum):
