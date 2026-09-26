@@ -1,4 +1,3 @@
-\
 from __future__ import annotations
 
 import re
@@ -9,7 +8,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUT = ROOT / "results" / "products_benchmark.csv"
-OUTPUT = ROOT / "results" / "conjectures_summary.txt"
+OUTPUT = ROOT / "paper" / "generated" / "observations.txt"
 GRAPH_PATTERN = re.compile(r"^(?P<left>[A-Za-z]+)_(?P<n>\d+)(?P<op>[xo])(?P<right>[A-Za-z]+)_(?P<m>\d+)$")
 
 
@@ -84,15 +83,6 @@ def _linear_candidates(optimal: pd.DataFrame) -> list[str]:
     residual = optimal["lambda"] - optimal["n"] - optimal["m"]
     if residual.nunique() == 1:
         candidates.append(f"lambda = n+m + {int(residual.iloc[0])}")
-    for variable in ("n", "m"):
-        grouped = optimal.groupby(variable)["lambda"].mean()
-        if len(grouped) < 2:
-            continue
-        differences = grouped.diff().dropna()
-        if differences.nunique() == 1:
-            candidates.append(
-                f"lambda changes by {int(differences.iloc[0])} when {variable} increases by 1"
-            )
     return candidates
 
 
@@ -101,7 +91,7 @@ def _periodic_candidates(optimal: pd.DataFrame) -> list[str]:
     for variable, label in (("n", "n"), ("m", "m")):
         for period in (2, 3):
             grouped = optimal.groupby(optimal[variable] % period)["lambda"]
-            if len(grouped) >= 2 and all(values.nunique() == 1 for _, values in grouped):
+            if optimal["lambda"].nunique() > 1 and len(grouped) >= 2 and all(len(values) >= 2 and values.nunique() == 1 for _, values in grouped):
                 pattern = ", ".join(
                     f"{remainder}->{int(values.iloc[0])}"
                     for remainder, values in grouped
@@ -123,7 +113,7 @@ def _conjecture(family: str, frame: pd.DataFrame, optimal: pd.DataFrame) -> str:
             f"the interval [{minimum}, {maximum}]."
         )
     if len(optimal) >= 10 and frame["status"].eq("OPT").all():
-        statement += " This is a candidate conjecture for all parameters in the same range."
+        statement += " This describes the observed finite sample; check existing theorems before proposing novelty."
     else:
         statement += " More OPT instances are needed before generalizing it."
     return statement
@@ -133,6 +123,7 @@ def analyze() -> str:
     frame = _load_results()
     sections = [
         "L(2,1)-LABELING PRODUCT BENCHMARK ANALYSIS",
+        "Statuses are read from the source CSV; no independent optimality audit is implied.",
         f"Input: {INPUT}",
         f"Rows: {len(frame)}; OPT: {(frame['status'] == 'OPT').sum()}; "
         f"non-OPT: {(frame['status'] != 'OPT').sum()}",
@@ -156,6 +147,13 @@ def analyze() -> str:
 
 
 def main() -> None:
+    import argparse
+    global INPUT, OUTPUT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=INPUT)
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    args = parser.parse_args()
+    INPUT, OUTPUT = args.input, args.output
     try:
         report = analyze()
     except (OSError, ValueError, KeyError) as error:
