@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lhk-sat-research"
+version = "0.1.0"
+description = "Exact SAT and ILP experiments for L(2,1) graph labeling"
+requires-python = ">=3.11"
+dependencies = ["networkx>=3.6,<4", "python-sat>=1.8.dev13"]
+
+[project.optional-dependencies]
+analysis = ["pandas>=2", "matplotlib>=3.7", "openpyxl>=3.1"]
+ilp = ["gurobipy>=11", "docplex>=2.25"]
+
+[tool.setuptools.packages.find]
+include = ["src*", "benchmarks*"]
