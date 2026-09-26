@@ -1,5 +1,58 @@
 """Order-encoded CNF model for L(h,k)-labeling."""
 
+from collections import defaultdict, deque
+
+
+def simplify_cnf(clauses: list[list[int]]) -> list[list[int]]:
+    """Deduplicate and propagate units, retaining units for model reconstruction.
+
+    The returned formula is logically equivalent over the original variables.
+    This is the same preprocessing for baseline and symmetry configurations;
+    it does not attempt to reproduce a SAT backend's internal preprocessing.
+    """
+    unique = set()
+    residual = {}
+    occurrences = defaultdict(set)
+    queue = deque()
+    for clause in clauses:
+        literals = frozenset(clause)
+        if not literals:
+            return [[]]
+        if any(-literal in literals for literal in literals) or literals in unique:
+            continue
+        unique.add(literals)
+        index = len(residual)
+        residual[index] = set(literals)
+        for literal in literals:
+            occurrences[literal].add(index)
+        if len(literals) == 1:
+            queue.append(next(iter(literals)))
+    assigned = set()
+    while queue:
+        literal = queue.popleft()
+        if -literal in assigned:
+            return [[]]
+        if literal in assigned:
+            continue
+        assigned.add(literal)
+        for index in occurrences[literal]:
+            residual.pop(index, None)
+        for index in sorted(occurrences[-literal]):
+            clause = residual.get(index)
+            if clause is None:
+                continue
+            clause.discard(-literal)
+            if not clause:
+                return [[]]
+            if len(clause) == 1:
+                queue.append(next(iter(clause)))
+    # Shortening may create duplicate clauses. Stable output keeps solver input
+    # reproducible; propagated units must remain to constrain the decoder.
+    shortened = dict.fromkeys(tuple(sorted(c)) for c in residual.values())
+    return [[literal] for literal in sorted(assigned, key=abs)] + [
+        list(clause) for clause in shortened
+    ]
+
 
 class OrderVars:
     """Map each vertex and threshold to a positive SAT variable."""
@@ -10,9 +63,15 @@ class OrderVars:
         span: int,
         fixed_labels: dict[int, int] | None = None,
     ):
+        if n_vertices < 0 or span < 0:
+            raise ValueError("vertex count and span must be non-negative")
+        if any(v not in range(n_vertices) or label not in range(span + 1)
+               for v, label in (fixed_labels or {}).items()):
+            raise ValueError("fixed labels must belong to the vertex and label domains")
         self.n_vertices = n_vertices
         self.span = span
         self.fixed_labels = fixed_labels or {}
+        self.raw_clause_count = 0
         self.next_var = 1
         self.x = {
             vertex: {
@@ -145,7 +204,7 @@ def symmetry_breaking_clauses(
     """Add sound symmetry constraints for supported graph families."""
     if not symmetry_kind or order_vars.n_vertices == 0:
         return []
-    if symmetry_kind == "CORONA":
+    if symmetry_kind in {"CORONA", "STRUCTURAL"}:
         if symmetry_vertices is None:
             return []
         _, first_neighbor, second_neighbor = symmetry_vertices
@@ -165,9 +224,8 @@ def symmetry_breaking_clauses(
 
 
 def _path_symmetry(order_vars: OrderVars) -> list[list[int]]:
-    if order_vars.n_vertices < 2:
-        return []
-    return strict_less_clauses(order_vars, 0, order_vars.n_vertices - 1)
+    # Endpoints can have equal labels in an optimum: strict order is unsound.
+    return []
 
 
 def _cycle_symmetry(order_vars: OrderVars) -> list[list[int]]:
@@ -207,10 +265,15 @@ def build_cnf(
     symmetry_kind: str | None = None,
     symmetry_vertices: tuple[int, int, int] | None = None,
     fixed_labels: dict[int, int] | None = None,
+    simplify: bool = True,
 ) -> tuple[list[list[int]] | None, OrderVars]:
-    """Build an L(h,k) CNF and return it with its order variables."""
+    """Build CNF; callers supplying symmetries must justify their soundness."""
+    if h < 0 or k < 0:
+        raise ValueError("separation thresholds must be non-negative")
+    if symmetry_kind and min(h, k) < 1:
+        raise ValueError("strict symmetry orders require positive separation gaps")
     fixed = dict(fixed_labels or {})
-    if symmetry_kind in {"C", "K", "Q"} and n_vertices > 0:
+    if symmetry_kind == "C" and n_vertices > 0:
         fixed.setdefault(0, 0)
     order_vars = OrderVars(n_vertices, span, fixed)
     clauses = monotone_clauses(order_vars)
@@ -221,6 +284,9 @@ def build_cnf(
         clauses += forbid_close_labels(order_vars, first, second, h)
     for first, second in distance_two_pairs:
         clauses += forbid_close_labels(order_vars, first, second, k)
+    order_vars.raw_clause_count = len(clauses)
+    if simplify:
+        clauses = simplify_cnf(clauses)
     if any(not clause for clause in clauses):
         return None, order_vars
     return clauses, order_vars
