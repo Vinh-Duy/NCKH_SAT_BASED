@@ -7,8 +7,8 @@ from pathlib import Path
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "results" / "products_benchmark.csv"
-OUTPUT = ROOT / "paper" / "generated" / "observations.txt"
+INPUT = ROOT / "results" / "archive" / "legacy" / "products_benchmark.csv"
+OUTPUT = ROOT / "results" / "analysis" / "observations.txt"
 GRAPH_PATTERN = re.compile(r"^(?P<left>[A-Za-z]+)_(?P<n>\d+)(?P<op>[xo])(?P<right>[A-Za-z]+)_(?P<m>\d+)$")
 
 
