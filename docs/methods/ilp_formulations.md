@@ -17,4 +17,4 @@ constraints, xây mô hình và kiểm tra nghiệm. Không diễn giải trạn
 hay infeasible thành timeout. License/runtime backend cần cài riêng.
 
 Công thức đầy đủ, số biến/ràng buộc và giải thích quy ước nhãn bắt đầu từ 1
-nằm trong [phần mô hình LaTeX](../paper/sections/models.tex).
+nằm trong [phần mô hình LaTeX](../../paper/sections/models.tex).

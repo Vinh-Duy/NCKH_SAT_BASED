@@ -10,7 +10,7 @@ Span 0 và mệnh đề rỗng được xử lý rõ ràng.
 Đỉnh được cố định hợp lệ không cấp phát biến; decoder phục hồi nhãn đó.
 Mỗi phép gán SAT giải mã thành labeling và qua validator gồm đủ tập đỉnh.
 Tính đầy đủ và tính đúng của CNF được chứng minh trong
-[models.tex](../paper/sections/models.tex).
+[models.tex](../../paper/sections/models.tex).
 
 Phá đối xứng:
 

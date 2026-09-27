@@ -24,7 +24,7 @@ là CNF gửi vào backend sau tiền xử lý; không đo clause học bên tro
 
 Chỉ cần kích thước CNF có thể dùng `benchmarks.benchmark_symmetry_sizes`
 với `--input` CSV có hai span. Lệnh này không chứng minh lại span và không
-ghi runtime hoặc witness mới. Xem [quy ước mã hóa](sat_encoding.md).
+ghi runtime hoặc witness mới. Xem [quy ước mã hóa](../methods/sat_encoding.md).
 
 Mục tiêu Cartesian gồm tái kiểm chứng các kết quả đã có trong survey.
 Một mẫu số liệu không tự trở thành giả thuyết mới. Các quy luật Corona cần

@@ -38,7 +38,7 @@ thực tế của mỗi lượt chạy được lưu trong manifest, không coi 
 | `paper/sections/` | Các phần báo cáo LaTeX |
 | `paper/generated/` | Bảng được sinh lại từ CSV và hash nguồn |
 | `scripts/` | Phân tích dữ liệu, xuất bảng và vẽ hình |
-| `archive_old_code/` | Các phiên bản lịch sử, không phải API hiện hành |
+| `archive/code/` | Các phiên bản lịch sử, không phải API hiện hành |
 | `main.tex` | Điểm vào báo cáo; PDF mới ở `build/main.pdf` |
 
 ## Chạy thực nghiệm
@@ -85,7 +85,7 @@ CSV so sánh hiện đếm lại cả hai CNF tại cùng `Count_Span`, tách
 Biểu đồ và bảng thời gian tách từng họ, không gộp mọi Cartesian/Corona.
 Theo phạm vi thí nghiệm đã thống nhất, **chỉ chu trình C_n tự động cố định
 f(0)=0**; các họ khác không cố định gốc, kể cả C×C, K và Q. Xem
-[quy ước mã hóa SAT](docs/sat_encoding.md).
+[quy ước mã hóa SAT](docs/methods/sat_encoding.md).
 
 ## API và trạng thái
 
@@ -138,7 +138,7 @@ Phần phương pháp gồm mô hình L(h,k), chứng minh tương đương CNF,
 Big-M, quy ước 0/1, cận, bất biến tìm kiếm và điều kiện sound của đối xứng.
 Báo cáo trình bày lượt main_r1: 48 chu trình, 448 product, trong đó hai cặp
 product còn FEASIBLE. ILP/Petersen lịch sử không được đưa vào kết quả chính. Xem
-[nguồn gốc dữ liệu](docs/data_provenance.md) và [báo cáo](docs/REPORT.md).
+[nguồn gốc dữ liệu](docs/data_provenance.md) và [báo cáo](docs/guides/REPORT.md).
 
 Các file PDF tham khảo người dùng cung cấp nằm ngoài repository; bibliography
 ở `paper/references.bib`. Project chưa có giấy phép phân phối.
