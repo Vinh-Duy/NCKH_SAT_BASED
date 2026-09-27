@@ -1,4 +1,4 @@
-"""Exact L(2,1) search, with a process deadline for both SAT backends."""
+"""Exact L(h,k) search, with a process deadline for both SAT backends."""
 
 from dataclasses import dataclass, field
 import math
@@ -34,6 +34,8 @@ class SatResult:
     encoding_time: float = 0.0
     sat_solve_time: float = 0.0
     attempt_statistics: list[dict] = field(default_factory=list)
+    h: int = 2
+    k: int = 1
 
 
 SOLVERS = {"glucose": Glucose3, "cadical": Cadical195, "cadical195": Cadical195}
@@ -51,13 +53,13 @@ def _labels_from_model(n_vertices, span, model, order_vars: OrderVars):
 
 def _solve_span(n_vertices, edges, distance_two_pairs, span, solver_name,
                 symmetry_kind=None, symmetry_vertices=None, fixed_labels=None,
-                statistics=None):
+                statistics=None, h=2, k=1):
     """Unbounded SAT call; the parent process enforces the wall-clock deadline."""
     encoding_start = time.perf_counter()
     cnf, variables = build_cnf(
         n_vertices, edges, distance_two_pairs, span,
         symmetry_kind=symmetry_kind, symmetry_vertices=symmetry_vertices,
-        fixed_labels=fixed_labels,
+        fixed_labels=fixed_labels, h=h, k=k,
     )
     if statistics is not None:
         statistics.update(encoding_time=time.perf_counter() - encoding_start,
@@ -77,7 +79,7 @@ def _solve_span(n_vertices, edges, distance_two_pairs, span, solver_name,
             return "UNSAT", {}, variables.variable_count, len(cnf)
         labels = _labels_from_model(n_vertices, span, solver.get_model() or [], variables)
     valid, errors = validate_labeling(
-        edges, distance_two_pairs, labels, span, vertices=range(n_vertices)
+        edges, distance_two_pairs, labels, span, h, k, vertices=range(n_vertices)
     )
     if not valid:
         raise RuntimeError(f"invalid SAT model: {errors}")
@@ -131,7 +133,7 @@ def _search(n, edges, distance_two, solver_name, strategy, plan, best, publish):
         statistics = {}
         outcome, labels, variables, clauses = _solve_span(
             n, edges, distance_two, candidate, solver_name, kind, vertices, fixed,
-            statistics=statistics,
+            statistics=statistics, h=best.h, k=best.k,
         )
         best.completed_attempts += 1
         best.encoding_time += statistics["encoding_time"]
@@ -171,7 +173,7 @@ def _search_worker(connection, args):
 
 
 def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_sec=60,
-                symmetry_kind=None, enable_symmetry_breaking=True) -> SatResult:
+                symmetry_kind=None, enable_symmetry_breaking=True, h=2, k=1) -> SatResult:
     """Solve with a validated incumbent and an explicit optimality lower bound.
 
     Timing includes preprocessing, worker startup, CNF construction, search,
@@ -190,14 +192,15 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
     # Keep external node names in the returned labeling, including isolated nodes.
     normalized = nx.relabel_nodes(graph, {v: i for i, v in enumerate(original_nodes)}, copy=True)
     edges, distance_two = graph_constraints(normalized)
-    upper, labels = greedy_labeling(normalized)
-    valid, errors = validate_labeling(edges, distance_two, labels, upper, vertices=range(len(graph)))
+    upper, labels = greedy_labeling(normalized, h, k)
+    valid, errors = validate_labeling(edges, distance_two, labels, upper, h, k, vertices=range(len(graph)))
     if not valid:
         raise RuntimeError(f"invalid greedy labeling: {errors}")
-    low = lower_bound(normalized)
+    low = lower_bound(normalized, h, k)
     best = SatResult("OPT" if low == upper else "FEASIBLE", upper, upper,
-                     labels=labels, proven_lower_bound=low)
-    plan = _symmetry_plan(normalized, symmetry_kind, enable_symmetry_breaking)
+                     labels=labels, proven_lower_bound=low, h=h, k=k)
+    plan = _symmetry_plan(normalized, symmetry_kind,
+                          enable_symmetry_breaking and min(h, k) > 0)
     args = (len(graph), edges, distance_two, solver_name, strategy, plan, best)
     if low < upper and timeout_sec is None:
         best = _search(*args, publish=lambda result: None)

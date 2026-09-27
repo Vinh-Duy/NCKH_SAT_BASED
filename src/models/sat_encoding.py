@@ -2,6 +2,8 @@
 
 from collections import defaultdict, deque
 
+from src.core.parameters import validate_gaps
+
 
 def simplify_cnf(clauses: list[list[int]]) -> list[list[int]]:
     """Deduplicate and propagate units, retaining units for model reconstruction.
@@ -268,8 +270,7 @@ def build_cnf(
     simplify: bool = True,
 ) -> tuple[list[list[int]] | None, OrderVars]:
     """Build CNF; callers supplying symmetries must justify their soundness."""
-    if h < 0 or k < 0:
-        raise ValueError("separation thresholds must be non-negative")
+    validate_gaps(h, k)
     if symmetry_kind and min(h, k) < 1:
         raise ValueError("strict symmetry orders require positive separation gaps")
     fixed = dict(fixed_labels or {})
