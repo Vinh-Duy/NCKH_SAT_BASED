@@ -1,9 +1,11 @@
-"""Graph construction and L(2,1) bound utilities."""
+"""Graph construction and L(h,k) bound utilities."""
 
 from itertools import count
 from typing import Hashable
 
 import networkx as nx
+
+from src.core.parameters import validate_gaps
 
 
 Vertex = Hashable
@@ -133,22 +135,26 @@ def graph_constraints(graph: nx.Graph) -> tuple[list[tuple[Vertex, Vertex]], lis
     return edges, distance_two
 
 
-def lower_bound(graph: nx.Graph, h: int = 2) -> int:
-    """Return the standard degree lower bound Delta + h - 1."""
+def lower_bound(graph: nx.Graph, h: int = 2, k: int = 1) -> int:
+    """Safe closed-neighborhood bound h + (Delta-1) min(h,k).
+
+    Sort the labels of a maximum-degree vertex and its neighbors. Every
+    consecutive gap is at least min(h,k); at least one touches the center
+    and is at least h. This also covers h < k and zero gaps.
+    """
+    validate_gaps(h, k)
+    validate_graph(graph)
     maximum_degree = max(dict(graph.degree()).values(), default=0)
-    if h < 1:
-        raise ValueError("degree bound requires h >= 1 and distance-two gap 1")
-    return maximum_degree + h - 1 if maximum_degree else 0
+    return h + (maximum_degree - 1) * min(h, k) if maximum_degree else 0
 
 
 def greedy_labeling(
-    graph: nx.Graph, h: int = 2
+    graph: nx.Graph, h: int = 2, k: int = 1
 ) -> tuple[int, dict[Vertex, int]]:
     """Build a feasible greedy labeling and return its span and labels."""
     labels: dict[Vertex, int] = {}
     validate_graph(graph)
-    if h < 1:
-        raise ValueError("greedy labeling requires h >= 1")
+    validate_gaps(h, k)
     distances = dict(nx.all_pairs_shortest_path_length(graph, cutoff=2))
 
     for vertex in graph.nodes():
@@ -159,18 +165,19 @@ def greedy_labeling(
             for difference in range(-h + 1, h)
         }
         forbidden.update(
-            labels[other]
+            labels[other] + difference
             for other in labels
             if distances[vertex].get(other) == 2
+            for difference in range(-k + 1, k)
         )
         labels[vertex] = next(label for label in count() if label not in forbidden)
 
     return max(labels.values(), default=0), labels
 
 
-def greedy_upper_bound(graph: nx.Graph, h: int = 2) -> int:
+def greedy_upper_bound(graph: nx.Graph, h: int = 2, k: int = 1) -> int:
     """Return only the span of the greedy feasible labeling."""
-    return greedy_labeling(graph, h)[0]
+    return greedy_labeling(graph, h, k)[0]
 
 
 def validate_graph(graph: nx.Graph) -> None:

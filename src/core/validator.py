@@ -3,6 +3,8 @@
 from collections.abc import Mapping
 from typing import Hashable
 
+from src.core.parameters import validate_gaps
+
 
 Vertex = Hashable
 
@@ -17,6 +19,10 @@ def validate_labeling(
     vertices=None,
 ) -> tuple[bool, list[str]]:
     """Validate labels against edge and distance-two constraints."""
+    try:
+        validate_gaps(h, k)
+    except ValueError as error:
+        return False, [str(error)]
     if not isinstance(span, int) or isinstance(span, bool) or span < 0:
         return False, [f"span must be a non-negative integer, got {span!r}"]
     if not isinstance(labels, Mapping):
