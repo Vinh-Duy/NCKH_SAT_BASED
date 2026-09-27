@@ -21,7 +21,7 @@ from src.core.graph_utils import cycle_graph
 from src.solvers.sat_solver import solve_graph
 
 
-OUTPUT_DIR = ROOT / "paper" / "generated" / "plots"
+OUTPUT_DIR = ROOT / "results" / "plots" / "labelings"
 
 
 def plot_labeling(

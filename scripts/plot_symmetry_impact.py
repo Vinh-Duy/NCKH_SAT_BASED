@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "results" / "symmetry_comparison_benchmark.csv"
-OUTPUT_DIR = ROOT / "paper" / "generated" / "plots"
+INPUT = ROOT / "results" / "archive" / "legacy" / "symmetry_comparison_benchmark.csv"
+OUTPUT_DIR = ROOT / "results" / "plots" / "symmetry"
 FAMILIES = {
     "C": "Cycles C_n",
     "CxC": "Cycle × Cycle", "CxP": "Cycle × Path", "PxP": "Path × Path",
