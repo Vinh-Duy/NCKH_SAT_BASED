@@ -44,3 +44,6 @@ rubber.cache
 _minted-*/
 build/
 out/
+
+# Compiled caches retained with historical code
+archive/cache/
