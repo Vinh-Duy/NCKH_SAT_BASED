@@ -1,0 +1,91 @@
+{
+  "config": {
+    "families": [
+      "tree"
+    ],
+    "min_vertices": 20,
+    "max_vertices": 120,
+    "pairs": [
+      [
+        3,
+        2
+      ]
+    ],
+    "methods": [
+      "cadical",
+      "gurobi"
+    ],
+    "repeats": 1,
+    "seed": 0,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "tree_sizes": [
+      100,
+      200,
+      400,
+      800,
+      1600
+    ],
+    "timeout": 60.0,
+    "max_instances": null,
+    "allow_unavailable": false,
+    "protocol": "isolated-wall-v1",
+    "symmetry": false,
+    "ilp_threads": 1,
+    "preflight": {
+      "cadical": "OPT",
+      "gurobi": "OPT"
+    }
+  },
+  "source_sha256": "25bd555d9fdbf9367453b112ad66a376fb6bca67fa06f08a7fbb8b95ac34db61",
+  "schema": [
+    "Graph",
+    "Instance",
+    "Family",
+    "h",
+    "k",
+    "Repeat",
+    "Position",
+    "Method",
+    "V",
+    "E",
+    "Delta",
+    "Diameter",
+    "Limit",
+    "Status",
+    "Termination",
+    "Span",
+    "LB",
+    "Wall_Time",
+    "Peak_RSS_MB",
+    "Memory_Scope",
+    "Variables",
+    "Constraints",
+    "Model_Span",
+    "Count_Scope",
+    "Decisions",
+    "Conflicts",
+    "Stats_Complete",
+    "Error"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-09-26T14:10:55.072144+00:00"
+}
