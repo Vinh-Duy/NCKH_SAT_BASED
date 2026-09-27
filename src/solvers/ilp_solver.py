@@ -1,4 +1,4 @@
-"""Common Gurobi and CPLEX wrappers for L(2,1) ILP formulations."""
+"""Common Gurobi and CPLEX wrappers for L(h,k) ILP formulations."""
 
 from __future__ import annotations
 
@@ -20,8 +20,10 @@ def solve_graph(
     solver_name: str = "gurobi",
     timeout_sec: float = 60,
     formulation: str = "assignment",
+    h: int = 2,
+    k: int = 1,
 ) -> tuple[int | None, int | None, int | None, float, str, dict]:
-    """Solve an L(2,1) instance with the selected backend and formulation."""
+    """Solve an L(h,k) instance with the selected backend and formulation."""
     if solver_name.lower() not in {"gurobi", "cplex"}:
         raise ValueError("solver_name must be 'gurobi' or 'cplex'")
     if formulation not in {"assignment", "big-m"}:
@@ -30,9 +32,9 @@ def solve_graph(
         raise ValueError("timeout_sec must be finite and non-negative")
     start = time.perf_counter()
     edges, distance_two_pairs = graph_constraints(graph)
-    upper_bound, greedy_labels = greedy_labeling(graph)
+    upper_bound, greedy_labels = greedy_labeling(graph, h, k)
     spec = make_spec(
-        graph.nodes(), edges, distance_two_pairs, max(0, upper_bound)
+        graph.nodes(), edges, distance_two_pairs, max(0, upper_bound), h, k
     )
     try:
         if formulation == "assignment":
@@ -43,7 +45,7 @@ def solve_graph(
         return None, None, None, time.perf_counter() - start, "UNAVAILABLE", {}
     span, variables, constraints, _, status, labels = result
     if span is not None:
-        valid, _ = validate_labeling(edges, distance_two_pairs, labels, span,
+        valid, _ = validate_labeling(edges, distance_two_pairs, labels, span, h, k,
                                      vertices=spec.vertices)
         if not valid:
             status = "INVALID"
@@ -62,8 +64,9 @@ def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec):
     import gurobipy as gp
     from gurobipy import GRB
 
-    model = gp.Model("L21_Assignment")
+    model = gp.Model("Lhk_Assignment")
     model.Params.OutputFlag = 0
+    model.Params.Threads = 1
     model.Params.MIPGap = 0
     model.Params.MIPGapAbs = 0
     model.Params.TimeLimit = max(0.0, timeout_sec)
@@ -96,16 +99,14 @@ def _add_assignment_and_span_gurobi(model, spec, x, span):
 
 def _add_edge_constraints_gurobi(model, spec, x):
     for first, second in spec.edges:
-        for first_label in spec.labels:
-            for second_label in spec.labels:
-                if abs(first_label - second_label) <= 1:
-                    model.addConstr(x[first, first_label] + x[second, second_label] <= 1)
+        for a, b in spec.forbidden_pairs(spec.h):
+            model.addConstr(x[first, a] + x[second, b] <= 1)
 
 
 def _add_distance_two_constraints_gurobi(model, spec, x):
     for first, second in spec.distance_two_pairs:
-        for label in spec.labels:
-            model.addConstr(x[first, label] + x[second, label] <= 1)
+        for a, b in spec.forbidden_pairs(spec.k):
+            model.addConstr(x[first, a] + x[second, b] <= 1)
 
 
 def _set_gurobi_start(x, span, values, upper_bound):
@@ -140,7 +141,8 @@ def _run_gurobi(model, spec, x):
 def _solve_assignment_cplex(spec, greedy_labels, timeout_sec):
     from docplex.mp.model import Model
 
-    model = Model(name="L21_Assignment")
+    model = Model(name="Lhk_Assignment")
+    model.parameters.threads = 1
     model.parameters.timelimit = max(0.0, timeout_sec)
     model.parameters.mip.tolerances.mipgap = 0
     model.parameters.mip.tolerances.absmipgap = 0
@@ -166,13 +168,11 @@ def _add_assignment_constraints_cplex(model, spec, x, span):
             model.sum(label * x[vertex, label] for label in spec.labels) <= span
         )
     for first, second in spec.edges:
-        for first_label in spec.labels:
-            for second_label in spec.labels:
-                if abs(first_label - second_label) <= 1:
-                    model.add_constraint(x[first, first_label] + x[second, second_label] <= 1)
+        for a, b in spec.forbidden_pairs(spec.h):
+            model.add_constraint(x[first, a] + x[second, b] <= 1)
     for first, second in spec.distance_two_pairs:
-        for label in spec.labels:
-            model.add_constraint(x[first, label] + x[second, label] <= 1)
+        for a, b in spec.forbidden_pairs(spec.k):
+            model.add_constraint(x[first, a] + x[second, b] <= 1)
 
 
 def _set_cplex_start(model, x, span, values, upper_bound):
@@ -195,8 +195,9 @@ def _solve_big_m_gurobi(spec, greedy_labels, timeout_sec):
     import gurobipy as gp
     from gurobipy import GRB
 
-    model = gp.Model("L21_BigM")
+    model = gp.Model("Lhk_BigM")
     model.Params.OutputFlag = 0
+    model.Params.Threads = 1
     model.Params.MIPGap = 0
     model.Params.MIPGapAbs = 0
     model.Params.TimeLimit = max(0.0, timeout_sec)
@@ -205,11 +206,11 @@ def _solve_big_m_gurobi(spec, greedy_labels, timeout_sec):
         for vertex in spec.vertices
     }
     span = model.addVar(vtype=GRB.INTEGER, lb=0, ub=spec.upper_bound, name="lambda")
-    big_m = spec.upper_bound + 2
+    big_m = spec.upper_bound + max(spec.h, spec.k)
     for vertex, variable in labels.items():
         model.addConstr(span >= variable)
-    _add_big_m_constraints_gurobi(model, spec.edges, labels, big_m, 2)
-    _add_big_m_constraints_gurobi(model, spec.distance_two_pairs, labels, big_m, 1)
+    _add_big_m_constraints_gurobi(model, spec.edges, labels, big_m, spec.h)
+    _add_big_m_constraints_gurobi(model, spec.distance_two_pairs, labels, big_m, spec.k)
     _set_big_m_start_gurobi(labels, span, greedy_labels, spec.upper_bound)
     model.setObjective(span, GRB.MINIMIZE)
     try:
@@ -255,7 +256,8 @@ def _run_gurobi_label_model(model, labels):
 def _solve_big_m_cplex(spec, greedy_labels, timeout_sec):
     from docplex.mp.model import Model
 
-    model = Model(name="L21_BigM")
+    model = Model(name="Lhk_BigM")
+    model.parameters.threads = 1
     model.parameters.timelimit = max(0.0, timeout_sec)
     model.parameters.mip.tolerances.mipgap = 0
     model.parameters.mip.tolerances.absmipgap = 0
@@ -264,11 +266,11 @@ def _solve_big_m_cplex(spec, greedy_labels, timeout_sec):
         for vertex in spec.vertices
     }
     span = model.integer_var(lb=0, ub=spec.upper_bound, name="lambda")
-    big_m = spec.upper_bound + 2
+    big_m = spec.upper_bound + max(spec.h, spec.k)
     for vertex, variable in labels.items():
         model.add_constraint(span >= variable)
-    _add_big_m_constraints_cplex(model, spec.edges, labels, big_m, 2)
-    _add_big_m_constraints_cplex(model, spec.distance_two_pairs, labels, big_m, 1)
+    _add_big_m_constraints_cplex(model, spec.edges, labels, big_m, spec.h)
+    _add_big_m_constraints_cplex(model, spec.distance_two_pairs, labels, big_m, spec.k)
     start = model.new_solution()
     for vertex, variable in labels.items():
         start.add_var_value(variable, greedy_labels.get(vertex, 0))

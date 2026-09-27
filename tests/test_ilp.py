@@ -69,19 +69,20 @@ class AssignmentTests(unittest.TestCase):
         package = "gurobipy" if backend == "gurobi" else "docplex"
         if importlib.util.find_spec(package) is None:
             self.skipTest(f"{package} is not installed")
-        for formulation in ("assignment", "big-m"):
-            try:
-                result = solve_graph(nx.path_graph(4), solver_name=backend,
-                                     formulation=formulation, timeout_sec=10)
-            except Exception as error:
-                # Only skip a specific license/runtime limitation, not modeling errors.
-                if ("license" in str(error).lower() or "no cplex runtime" in str(error).lower()
-                        or ("token.gurobi.com" in str(error) and "Could not resolve host" in str(error))):
-                    self.skipTest(str(error))
-                raise
-            if result[4] == "UNAVAILABLE":
-                self.skipTest(f"{backend} runtime unavailable")
-            self.assertEqual((result[0], result[4]), (3, "OPT"), result)
+        for h, k, expected in ((2, 1, 3), (3, 2, 5), (1, 1, 2)):
+            for formulation in ("assignment", "big-m"):
+                try:
+                    result = solve_graph(nx.path_graph(4), solver_name=backend,
+                                         formulation=formulation, timeout_sec=10, h=h, k=k)
+                except Exception as error:
+                    # Only skip a specific license/runtime limitation, not modeling errors.
+                    if ("license" in str(error).lower() or "no cplex runtime" in str(error).lower()
+                            or ("token.gurobi.com" in str(error) and "Could not resolve host" in str(error))):
+                        self.skipTest(str(error))
+                    raise
+                if result[4] == "UNAVAILABLE":
+                    self.skipTest(f"{backend} runtime unavailable")
+                self.assertEqual((result[0], result[4]), (expected, "OPT"), result)
 
     def test_gurobi_path_four(self):
         self._check_backend("gurobi")

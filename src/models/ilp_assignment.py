@@ -3,21 +3,26 @@
 from dataclasses import dataclass
 from typing import Hashable, Mapping
 
+from src.core.parameters import validate_gaps
+
 
 Vertex = Hashable
 
 
 @dataclass(frozen=True)
 class AssignmentSpec:
-    """Immutable data needed to build an L(2,1) assignment model."""
+    """Immutable data needed to build an L(h,k) assignment model."""
 
     vertices: tuple[Vertex, ...]
     edges: tuple[tuple[Vertex, Vertex], ...]
     distance_two_pairs: tuple[tuple[Vertex, Vertex], ...]
     upper_bound: int
+    h: int = 2
+    k: int = 1
 
     def __post_init__(self) -> None:
-        if self.upper_bound < 0:
+        validate_gaps(self.h, self.k)
+        if not isinstance(self.upper_bound, int) or isinstance(self.upper_bound, bool) or self.upper_bound < 0:
             raise ValueError("upper_bound must be non-negative")
 
     @property
@@ -34,10 +39,8 @@ class AssignmentSpec:
 
     @property
     def constraint_count(self) -> int:
-        edge_constraints = len(self.edges) * (3 * self.upper_bound + 1)
-        distance_two_constraints = len(self.distance_two_pairs) * (
-            self.upper_bound + 1
-        )
+        edge_constraints = len(self.edges) * self.forbidden_pair_count(self.h)
+        distance_two_constraints = len(self.distance_two_pairs) * self.forbidden_pair_count(self.k)
         return (
             len(self.vertices)
             + len(self.vertices)
@@ -45,19 +48,33 @@ class AssignmentSpec:
             + distance_two_constraints
         )
 
+    def forbidden_pairs(self, gap):
+        """Ordered label pairs with absolute difference strictly below gap."""
+        for a in self.labels:
+            for b in range(max(0, a-gap+1), min(self.upper_bound, a+gap-1)+1):
+                yield a, b
+
+    def forbidden_pair_count(self, gap):
+        if gap == 0:
+            return 0
+        t = min(self.upper_bound, gap - 1)
+        return (self.upper_bound + 1) * (2*t + 1) - t*(t + 1)
+
 
 def make_spec(
     vertices,
     edges,
     distance_two_pairs,
     upper_bound: int,
+    h: int = 2,
+    k: int = 1,
 ) -> AssignmentSpec:
     """Create an assignment specification with stable tuple-backed inputs."""
     return AssignmentSpec(
         tuple(vertices),
         tuple(edges),
         tuple(distance_two_pairs),
-        int(upper_bound),
+        upper_bound, h, k,
     )
 
 
