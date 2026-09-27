@@ -1,0 +1,13 @@
+Graph,Instance,Family,h,k,Repeat,Position,Method,V,E,Delta,Diameter,Limit,Status,Termination,Span,LB,Wall_Time,Peak_RSS_MB,Memory_Scope,Variables,Constraints,Model_Span,Count_Scope,Decisions,Conflicts,Stats_Complete,Error
+tree_100_seed0__h3_k2__r0__cadical,tree_100_seed0,tree,3,2,0,0,cadical,100,99,6,26,10.0,OPT,RETURNED,13,13,0.7046875189989805,51.51953125,worker_high_water,1300,13336,13,last_sat_witness,1155,35,True,
+tree_100_seed0__h3_k2__r0__gurobi,tree_100_seed0,tree,3,2,0,1,gurobi,100,99,6,26,10.0,OPT,RETURNED,13,13,1.1836002109994297,58.85546875,worker_high_water,1601,14196,15,assignment_at_greedy_UB,,,False,
+tree_100_seed1__h3_k2__r0__gurobi,tree_100_seed1,tree,3,2,0,0,gurobi,100,99,6,31,10.0,OPT,RETURNED,13,13,1.0240616049995879,56.671875,worker_high_water,1501,13352,14,assignment_at_greedy_UB,,,False,
+tree_100_seed1__h3_k2__r0__cadical,tree_100_seed1,tree,3,2,0,1,cadical,100,99,6,31,10.0,OPT,RETURNED,13,13,0.5748694850008178,50.015625,worker_high_water,1300,13416,13,last_sat_witness,1080,21,True,
+tree_200_seed0__h3_k2__r0__cadical,tree_200_seed0,tree,3,2,0,0,cadical,200,199,6,29,10.0,OPT,RETURNED,13,13,1.0457313370025076,74.52734375,worker_high_water,2600,27856,13,last_sat_witness,7338,146,True,
+tree_200_seed0__h3_k2__r0__gurobi,tree_200_seed0,tree,3,2,0,1,gurobi,200,199,6,29,10.0,OPT,RETURNED,13,13,1.897583742000279,69.55078125,worker_high_water,3201,29754,15,assignment_at_greedy_UB,,,False,
+tree_200_seed1__h3_k2__r0__gurobi,tree_200_seed1,tree,3,2,0,0,gurobi,200,199,6,45,10.0,OPT,RETURNED,13,13,1.4934501369971258,60.62109375,worker_high_water,2801,24536,13,assignment_at_greedy_UB,,,False,
+tree_200_seed1__h3_k2__r0__cadical,tree_200_seed1,tree,3,2,0,1,cadical,200,199,6,45,10.0,OPT,RETURNED,13,13,0.4253617810027208,33.85546875,worker_high_water,,,,last_sat_witness,0,0,True,
+tree_400_seed0__h3_k2__r0__cadical,tree_400_seed0,tree,3,2,0,0,cadical,400,399,6,55,10.0,OPT,RETURNED,13,13,1.7252135150010872,109.05078125,worker_high_water,5200,55216,13,last_sat_witness,3047,2,True,
+tree_400_seed0__h3_k2__r0__gurobi,tree_400_seed0,tree,3,2,0,1,gurobi,400,399,6,55,10.0,OPT,RETURNED,13,13,3.0419799529990996,85.94921875,worker_high_water,6401,58938,15,assignment_at_greedy_UB,,,False,
+tree_400_seed1__h3_k2__r0__gurobi,tree_400_seed1,tree,3,2,0,0,gurobi,400,399,6,40,10.0,OPT,RETURNED,13,13,2.912164468998526,86.59375,worker_high_water,6401,57374,15,assignment_at_greedy_UB,,,False,
+tree_400_seed1__h3_k2__r0__cadical,tree_400_seed1,tree,3,2,0,1,cadical,400,399,6,40,10.0,OPT,RETURNED,13,13,1.593890926000313,109.87109375,worker_high_water,5200,53856,13,last_sat_witness,7795,21,True,

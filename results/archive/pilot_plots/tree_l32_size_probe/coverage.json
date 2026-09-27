@@ -1,0 +1,30 @@
+[
+  {
+    "family": "tree",
+    "h": 3,
+    "k": 2,
+    "paired_observations": 6,
+    "status_counts": {
+      "cadical": {
+        "ERROR": 0,
+        "FEASIBLE": 0,
+        "INFEASIBLE": 0,
+        "INVALID": 0,
+        "OPT": 6,
+        "SKIPPED": 0,
+        "TIMEOUT": 0,
+        "UNAVAILABLE": 0
+      },
+      "gurobi": {
+        "ERROR": 0,
+        "FEASIBLE": 0,
+        "INFEASIBLE": 0,
+        "INVALID": 0,
+        "OPT": 6,
+        "SKIPPED": 0,
+        "TIMEOUT": 0,
+        "UNAVAILABLE": 0
+      }
+    }
+  }
+]
