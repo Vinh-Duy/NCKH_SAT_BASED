@@ -1,16 +1,35 @@
 \section{Tìm kiếm span và phá đối xứng}
+Hình~\ref{fig:pipeline} mô tả quy trình giải đang được triển khai. Mỗi
+span được thử bằng một công thức riêng; cận và nghiệm tốt nhất được giữ
+ở tầng tối ưu hóa, không phải learned clauses giữa các lần gọi SAT.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{paper/generated/manuscript_figures/solver_pipeline.pdf}
+\caption{Quy trình SAT cho $L(h,k)$. Khi SAT, kiểm tra nhãn rồi hạ cận
+trên; khi UNSAT, tăng cận dưới. Timeout giữ cận và nghiệm khả thi,
+không được thay bằng kết luận UNSAT.}
+\label{fig:pipeline}
+\end{figure}
 \subsection{Cận và bất biến tìm kiếm}
-Với đồ thị có ít nhất một cạnh, cận dưới cho $L(2,1)$ là
-$L=\Delta(G)+1$. Thật vậy, $\Delta$ lân cận của một đỉnh bậc cực đại phải
-nhận nhãn đôi một khác nhau: chúng kề nhau hoặc cách nhau hai bước. Chúng
-cũng không được nhận nhãn của đỉnh trung tâm hay nhãn chênh 1 với nó. Miền
-có span $\Delta$ không đủ chứa các nhãn đó. Đồ thị không có cạnh có span 0.
+Với đồ thị có ít nhất một cạnh và $m=\min(h,k)$, dùng cận
+\[
+ L=h+(\Delta(G)-1)m.
+\]
+Xét một đỉnh bậc cực đại và các lân cận của nó. Mọi cặp trong tập này
+có khoảng cách đồ thị 1 hoặc 2, nên các nhãn sau khi sắp tăng có mỗi
+khoảng liên tiếp ít nhất $m$. Ít nhất một khoảng chạm nhãn của đỉnh trung
+tâm và có độ dài ít nhất $h$. Cộng $\Delta$ khoảng được cận đã nêu.
+Với $(2,1)$, cận này đúng bằng $\Delta+1$ như trong main\_r1.
+Đồ thị không có cạnh có span 0.
+Thuật toán tham lam loại các nhãn lệch dưới $h$ với đỉnh kề đã gán nhãn,
+và lệch dưới $k$ với đỉnh ở khoảng cách đúng bằng 2 đã gán nhãn.
+Các thứ tự đối xứng nghiêm ngặt chỉ được bật khi $h,k>0$.
 
 Thuật toán tham lam duyệt một thứ tự đỉnh cố định, chọn số nguyên không âm
 nhỏ nhất không vi phạm các đỉnh đã gán. Gọi $U$ là span của nghiệm này;
 validator kiểm tra lại trước khi dùng làm incumbent. Bất biến là
 \[
- L\leq\lambda_{2,1}(G)\leq U,
+ L\leq\lambda_{h,k}(G)\leq U,
 \]
 trong đó phía trên luôn có một labeling cụ thể đi kèm.
 

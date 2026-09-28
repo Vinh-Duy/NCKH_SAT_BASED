@@ -56,11 +56,28 @@ $y_{v,a}=1$ khi và chỉ khi $f(v)=a$. Mô hình tổng quát là
 Trong hai ràng buộc cấm, $a,b\in\{0,\ldots,U\}$. Ràng buộc
 \eqref{eq:assignment} chọn đúng một nhãn. Vì mô hình không ép một đỉnh tùy ý
 về 0, tối thiểu hóa $\ell_{\max}$ đạt span tối ưu nhờ bất biến tịnh tiến.
-Trong triển khai $h=2,k=1$, điều kiện khoảng cách hai chỉ cần cấm nhãn bằng nhau.
+Triển khai sinh mọi cặp nhãn bị cấm theo $h,k$. Đặt $F(U,0)=0$;
+với $d\geq1$, đặt $t=\min(U,d-1)$ và
+\[
+F(U,d)=(U+1)(2t+1)-t(t+1).
+\]
+Đây là số cặp nhãn có thứ tự $(a,b)$ với $|a-b|<d$ trong $[0,U]^2$.
 Số biến là $|V|(U+1)+1$, số ràng buộc là
 \[
-2|V|+(3U+1)|E|+(U+1)|D_2(G)|.
+2|V|+F(U,h)|E|+F(U,k)|D_2(G)|.
 \]
+Với $(h,k)=(2,1)$, công thức trở thành
+$2|V|+(3U+1)|E|+(U+1)|D_2(G)|$.
+Tương tự, trước rút gọn CNF không có đối xứng, số mệnh đề tổng quát là
+$|V|\max(s-1,0)+F(s,h)|E|+F(s,k)|D_2(G)|$.
+
+Với mỗi nhãn $a$, triển khai chỉ duyệt
+$\max(0,a-d+1)\leq b\leq\min(s,a+d-1)$ khi $d>0$.
+Chi phí liệt kê cặp nhãn trên mỗi cặp đỉnh bị ràng buộc là
+$O((s+1)\min(s+1,2d-1))$; với $d=0$ không có cặp cấm.
+Do đó bước này đã tuyến tính theo $s$ khi $h,k$ cố định, nhưng có thể
+bậc hai nếu ngưỡng tăng theo $s$. Nhận xét này chỉ xét việc liệt kê cặp
+nhãn, không khẳng định toàn bộ tìm kiếm SAT là tuyến tính.
 
 \begin{remark}[Quy ước nhãn bắt đầu từ 1]
 Nếu dùng miền nhãn $\{1,\ldots,U'\}$ như một số cách viết assignment, tối ưu
@@ -87,3 +104,19 @@ Cả hai mô hình dùng nghiệm tham lam làm MIP start. Assignment loại c�
 trực tiếp nhưng kích thước tăng theo $U$; Big-M thường gọn hơn nhưng có hệ số
 phụ thuộc cận trên. Đây là lý do cần thực nghiệm đối chứng, chưa phải kết luận
 một mô hình luôn nhanh hơn mô hình còn lại.
+
+
+\subsection{Đối chiếu kích thước với direct encoding}
+Đặt $B=|E|F(s,h)+|D_2(G)|F(s,k)$. Với direct encoding dùng exactly-one
+và at-most-one dạng pairwise, chưa phá đối xứng hay rút gọn, có:
+\[
+\begin{array}{c|c|c}
+\text{Encoding}&\text{Biến}&\text{Mệnh đề}\\\hline
+\text{Direct (pairwise AMO)}&|V|(s+1)&|V|\left(1+\binom{s+1}{2}\right)+B\\
+\text{Order}&|V|s&|V|\max(s-1,0)+B
+\end{array}
+\]
+Cùng một cặp nhãn bị cấm, direct dùng clause hai literal, còn order dùng
+tối đa bốn literal. Mã hóa AMO khác có thể giảm số clause của direct bằng
+biến phụ. Bảng này là đếm ký hiệu, chưa phải ablation thực nghiệm và không
+chứng minh order encoding luôn chạy nhanh hơn.

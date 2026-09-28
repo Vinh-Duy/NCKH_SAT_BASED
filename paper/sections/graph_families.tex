@@ -1,0 +1,33 @@
+\section{Các họ đồ thị có cấu trúc và quy ước constructor}
+Ngoài chu trình $C_n$, đồ thị đầy đủ $K_n$ và siêu lập phương $Q_d$, benchmark
+xét ba họ Cartesian
+\[
+ C_n\mathbin{\square} C_m,\qquad C_n\mathbin{\square} P_m,\qquad P_n\mathbin{\square} P_m,
+\]
+và bốn họ Corona
+\[
+ C_n\circ C_m,\quad C_n\circ P_m,\quad P_n\circ C_m,\quad P_n\circ P_m.
+\]
+Tích Cartesian có đỉnh $(u,a)$ và cạnh khi một tọa độ giữ nguyên còn tọa độ
+kia là một cạnh trong đồ thị thành phần. Tích Corona $G\circ H$ gồm một bản
+sao $G$, một bản sao riêng của $H$ cho mỗi đỉnh $u\in V(G)$, và nối $u$ với
+mọi đỉnh của bản sao tương ứng \cite{frucht}. Nếu $G,H$ có lần lượt $n,m$
+đỉnh thì
+\[
+|V(G\circ H)|=n(m+1),\qquad
+|E(G\circ H)|=|E(G)|+n|E(H)|+nm.
+\]
+Phiên bản hiện tại xét Corona thông thường; không gộp với edge corona hay
+neighborhood corona.
+
+Họ $GP(n,k)$ trong code có cạnh $u_iu_{i+1}$, $u_iv_i$, $v_iv_{i+k}$,
+với chỉ số modulo $n$ và $1\leq k<n/2$. Đồ thị có $2n$ đỉnh, $3n$ cạnh.
+Cần phân biệt họ này với $GPG(n)$ trong bài của Huang và cộng sự
+\cite{huang}: bài báo dùng hai chu trình độ dài $n$ nối bởi một matching tùy
+ý. Khi $\gcd(n,k)=1$, chu trình bên trong của $GP(n,k)$ liên thông và đồ thị
+thuộc lớp đó; khi $\gcd(n,k)>1$, các cạnh bước $k$ tạo nhiều chu trình.
+Quét các giá trị $k$ cũng không liệt kê mọi matching của $GPG(n)$.
+Do đó, sweep $GP(n,k)$ không phải kiểm chứng toàn bộ giả thuyết Georges--Mauro
+trên $GPG(n)$.
+
+

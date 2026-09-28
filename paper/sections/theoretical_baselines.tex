@@ -1,0 +1,71 @@
+\section{Các cận đối chứng có chứng minh}
+Các kết quả sau phục vụ kiểm tra mô hình, không được tuyên bố là đóng góp
+mới về phân loại đồ thị. Đặc biệt, tài liệu đã nghiên cứu labeling trên các
+lớp tích Cartesian \cite{calamoneri}. Chứng minh dưới đây được trình bày
+đầy đủ để không suy công thức vô hạn chỉ từ dữ liệu hữu hạn.
+
+\begin{proposition}\label{prop:equal-tree}
+Với cây không rỗng $T$ và số nguyên $h=k\geq1$,
+$\lambda_{h,h}(T)=h\Delta(T)$.
+\end{proposition}
+\begin{proof}
+Lân cận đóng của đỉnh bậc $\Delta$ có $\Delta+1$ đỉnh đôi một cách nhau
+không quá 2, nên nhãn cần span ít nhất $h\Delta$. Để có cận trên, gốc hóa
+cây và tô màu bình phương cây bằng $\Delta+1$ màu, theo thứ tự các mức.
+Tô các con của mỗi đỉnh bằng các màu phân biệt, khác màu đỉnh đó và cha
+của nó nếu có. Với đỉnh không phải gốc có nhiều nhất $\Delta-1$ con, còn
+ít nhất $\Delta-1$ màu; gốc có nhiều nhất $\Delta$ con và $\Delta$ màu
+khả dụng. Những cặp ở khoảng cách 1 hoặc 2 là cha--con, ông--cháu hoặc
+anh em, nên cách tô hợp lệ. Nhân các màu $0,\ldots,\Delta$ với $h$ cho
+labeling đạt cận. Cây một đỉnh có span 0, cũng thỏa công thức.
+\end{proof}
+
+Trên đồ thị $n$ đỉnh bất kỳ, gán các nhãn khác nhau
+$0,q,\ldots,(n-1)q$, $q=\max(h,k)$, cho cận trên cơ bản
+$\lambda_{h,k}\leq(n-1)q$. Cận này có thể rất lỏng; nó khác cận trên
+thu được từ một nghiệm heuristic cụ thể. Trong phần đối chiếu, cận bậc
+$h+(\Delta-1)\min(h,k)$ cũng được ghi riêng với cận cuối solver.
+
+\begin{proposition}\label{prop:extreme}
+Trong một $L(2,1)$-labeling dùng nhãn $0,\ldots,\Delta+1$, mọi đỉnh bậc
+$\Delta$ phải có nhãn 0 hoặc $\Delta+1$.
+\end{proposition}
+\begin{proof}
+Các lân cận của đỉnh đó phải nhận $\Delta$ nhãn phân biệt: mỗi cặp kề nhau
+hoặc có khoảng cách 2. Nếu nhãn trung tâm là $a\in\{1,\ldots,\Delta\}$,
+ba nhãn $a-1,a,a+1$ đều bị cấm trên lân cận. Chỉ còn $\Delta-1$ nhãn,
+không đủ. Do đó nhãn trung tâm phải là một trong hai đầu miền.
+\end{proof}
+
+\begin{proposition}\label{prop:grid}
+Với $n,m\geq4$, $\lambda_{2,1}(P_n\square P_m)=6$.
+\end{proposition}
+\begin{proof}
+Đánh số tọa độ từ 0 và đặt $f(i,j)=(2i+3j)\bmod7$, lấy đại diện trong
+$\{0,\ldots,6\}$. Trên cạnh, hiệu nhãn modulo 7 là $\pm2$ hoặc $\pm3$,
+nên hiệu tuyệt đối của hai đại diện ít nhất 2. Ở khoảng cách 2, độ dịch
+tọa độ là $(\pm2,0),(0,\pm2),(\pm1,\pm1)$; hiệu modulo 7 thuộc
+$\{\pm4,\pm6,\pm1,\pm5\}$, đều khác 0. Vậy labeling hợp lệ và span
+không quá 6.
+
+Giả sử có labeling với span không quá 5; tịnh tiến về miền $0,\ldots,5$.
+Trong lưới có ba đỉnh nội bộ $(1,1),(1,2),(2,2)$, đều bậc 4. Theo
+Mệnh đề~\ref{prop:extreme}, chúng chỉ có thể mang nhãn 0 hoặc 5.
+Hai cạnh liên tiếp buộc hai nhãn luân phiên, nên hai đầu bằng nhãn.
+Nhưng hai đầu có khoảng cách 2, mâu thuẫn. Suy ra span ít nhất 6.
+\end{proof}
+Cận $\Delta+1=5$ riêng lẻ không đủ cho kết luận này; cần cấu trúc ba đỉnh
+bậc cực đại nói trên. Chứng minh này không phát biểu trường hợp $n<4$ hoặc
+$m<4$, dù công thức construction vẫn cho một cận trên hợp lệ.
+
+\begin{proposition}\label{prop:corona-lower}
+Với $n\geq3,m\geq1$, $\lambda_{2,1}(C_n\circ P_m)\geq m+4$.
+\end{proposition}
+\begin{proof}
+Mỗi đỉnh lõi có bậc $\Delta=m+2$. Cận bậc cho span ít nhất $m+3$.
+Nếu span không quá $m+3$, Mệnh đề~\ref{prop:extreme} buộc mọi đỉnh lõi
+có nhãn 0 hoặc $m+3$. Chọn ba đỉnh lõi liên tiếp: mọi cặp trong bộ ba
+kề nhau hoặc cách nhau đúng 2. Chúng phải mang ba nhãn phân biệt, mâu thuẫn.
+\end{proof}
+Đây mới là cận dưới. Quan sát $m+4$ trên miền quét không thay thế construction
+cận trên cho mọi $n,m$, và không đủ để công bố đẳng thức tổng quát.
