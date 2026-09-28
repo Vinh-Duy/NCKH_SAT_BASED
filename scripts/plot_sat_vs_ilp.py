@@ -16,6 +16,7 @@ FAMILY_LABELS = {
     "PxP": r"$P_n\,□\,P_m$", "CxC": r"$C_n\,□\,C_m$",
     "CxP": r"$C_n\,□\,P_m$", "CoP": r"$C_n\circ P_m$",
     "Q": r"$Q_d$", "tree": "Random trees",
+    "ER": r"Erdős–Rényi $G(n,p)$", "BA": "Barabási–Albert (m=2)",
 }
 
 VALID_STATUSES = {"OPT", "FEASIBLE", "TIMEOUT", "UNAVAILABLE", "SKIPPED", "ERROR", "INVALID", "INFEASIBLE"}

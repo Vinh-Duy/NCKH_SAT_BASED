@@ -13,11 +13,14 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 INPUT = ROOT / "results" / "archive" / "legacy" / "symmetry_comparison_benchmark.csv"
 OUTPUT_DIR = ROOT / "results" / "plots" / "symmetry"
+# Mathtext uses DejaVu glyphs directly; this Matplotlib does not implement
+# the LaTeX commands \square/\Box. U+25A1 inside math mode is supported.
+plt.rcParams.update({"mathtext.fontset": "dejavusans", "text.usetex": False})
 FAMILIES = {
-    "C": "Cycles C_n",
-    "CxC": "Cycle × Cycle", "CxP": "Cycle × Path", "PxP": "Path × Path",
-    "CoC": "Cycle ∘ Cycle", "CoP": "Cycle ∘ Path", "PoC": "Path ∘ Cycle",
-    "PoP": "Path ∘ Path", "petersen": "Petersen",
+    "C": r"$C_n$",
+    "CxC": r"$C_n\,□\,C_m$", "CxP": r"$C_n\,□\,P_m$", "PxP": r"$P_n\,□\,P_m$",
+    "CoC": r"$C_n\circ C_m$", "CoP": r"$C_n\circ P_m$", "PoC": r"$P_n\circ C_m$",
+    "PoP": r"$P_n\circ P_m$", "petersen": r"$GP(n,k)$",
 }
 
 
@@ -68,7 +71,7 @@ def _plot(frame, metric, ylabel, title, output):
         axis.plot(grouped.index, grouped.values, marker="o", markersize=4,
                   label=FAMILIES[family])
     axis.axhline(0, color="black", linewidth=0.9, alpha=0.7)
-    axis.set(title=title, xlabel="Number of vertices V", ylabel=ylabel + " (Base − Sym)")
+    axis.set(title=title, xlabel=r"Number of vertices $|V|$", ylabel=ylabel + " (Base − Sym)")
     axis.grid(True, linestyle=":", alpha=0.65)
     axis.legend()
     figure.tight_layout()
