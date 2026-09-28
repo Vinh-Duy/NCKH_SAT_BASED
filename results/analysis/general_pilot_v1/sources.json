@@ -1,0 +1,101 @@
+{
+  "files_sha256": {
+    "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/runs/general_pilot_v1.csv": "f1f762c299d78aa0690a1837aaa56614c3dfa7bea4e8061314cee60693d1aea7",
+    "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/runs/general_pilot_v1.metadata.json": "3b0624835e9d74667863b0c09109275718b10e05d4c7bce2e0c4c5435c6e0b50",
+    "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/runs/general_pilot_v1.witnesses.jsonl": "928978d99fb8f2d71c552e90e7bd9a710138f7218974f590573c19d5c06b9712",
+    "/Users/vinhduy/Desktop/NCKH_SAT_BASED/scripts/audit_general_pilot.py": "b9f0cb25288c3e7c0465eb08317f9f5d4c55fc32199d0a2f7e15577010382059",
+    "/Users/vinhduy/Desktop/NCKH_SAT_BASED/benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd"
+  },
+  "original_manifest": {
+    "config": {
+      "suite": "general-pilot-v1",
+      "families": [
+        "tree",
+        "PxP",
+        "ER",
+        "BA"
+      ],
+      "min_vertices": 20,
+      "max_vertices": 60,
+      "pairs": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "methods": [
+        "cadical",
+        "gurobi"
+      ],
+      "repeats": 1,
+      "seed": null,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "tree_sizes": null,
+      "timeout": 30.0,
+      "max_instances": null,
+      "allow_unavailable": false,
+      "protocol": "isolated-wall-v1",
+      "symmetry": false,
+      "ilp_threads": 1,
+      "preflight": {
+        "cadical": "OPT",
+        "gurobi": "OPT"
+      }
+    },
+    "source_sha256": "a5c54bd945ed35f385a379252a7dac6f6eeaf43a9fc12990394fa1a34ef07760",
+    "schema": [
+      "Graph",
+      "Instance",
+      "Family",
+      "h",
+      "k",
+      "Repeat",
+      "Position",
+      "Method",
+      "V",
+      "E",
+      "Delta",
+      "Diameter",
+      "Limit",
+      "Status",
+      "Termination",
+      "Span",
+      "LB",
+      "Wall_Time",
+      "Peak_RSS_MB",
+      "Memory_Scope",
+      "Variables",
+      "Constraints",
+      "Model_Span",
+      "Count_Scope",
+      "Decisions",
+      "Conflicts",
+      "Stats_Complete",
+      "Error"
+    ],
+    "packages": {
+      "networkx": "3.6.1",
+      "python-sat": "1.9.dev15",
+      "gurobipy": "13.0.3",
+      "docplex": "2.32.264",
+      "cplex": null
+    },
+    "python": "3.13.7",
+    "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+    "created_utc": "2026-09-27T06:07:34.565386+00:00"
+  },
+  "observations": 234,
+  "scope": "Regenerated graphs, independent shortest-path witness validation, reference bounds and paired consistency; no UNSAT proof, timer reconstruction or CNF recount."
+}
