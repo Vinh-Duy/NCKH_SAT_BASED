@@ -1,170 +1,143 @@
-\section{Thực nghiệm SAT trên hai lượt main\_r1}
-\subsection{Nguồn dữ liệu và kiểm tra tính đầy đủ}
-Kết quả chính của bản thảo này lấy từ hai lượt chạy đã hoàn tất:
-\begin{itemize}
-\item \path{results/runs/cycles_main_r1.csv}: $C_n$ với
-$\CycleFirst\leq n\leq\CycleLast$, gồm \CycleCount{} đồ thị;
-\item \path{results/runs/products_main_r1.csv}: bảy họ product với
-$\ProductFirst\leq n\leq\ProductLast$ và
-$\ProductMFirst\leq m\leq\ProductMLast$, gồm \ProductCount{} đồ thị.
-\end{itemize}
-Mỗi dòng là một cặp Baseline/Symmetry trên cùng đồ thị. Tổng cộng có
-\ComparisonCount{} cặp, tương ứng \WitnessCount{} lượt chạy. Các CSV lịch sử
-vẫn được giữ để đối chiếu nhưng không được ghép vào bảng hoặc hình thực
-nghiệm dưới đây. Sweep Petersen lịch sử và các kết quả ILP cũ không phải
-đối chứng của hai lượt này.
+\section{Thiết kế thực nghiệm và kết quả hiện có}
+\subsection{Phân biệt các bộ dữ liệu}
+Đối chứng chính hiện có là \path{results/runs/tree_l32_screen_v2.csv}:
+\TreeGraphCount{} cây, \TreeObservationCount{} lượt solver, chỉ với
+$(h,k)=(3,2)$. Lượt nhỏ \path{tree_l32_compare_r1.csv} gồm ba cây
+20,30,40 đỉnh, mỗi backend lặp ba lần, dùng kiểm tra pipeline. Hai lượt
+main\_r1 thuộc $L(2,1)$, so sánh Baseline/Symmetry bằng Glucose và được
+trình bày riêng ở Phụ lục~\ref{sec:legacy-experiments}. Không gộp các lượt
+khác backend, budget và phiên bản nguồn thành một phép đo đồng nhất.
 
-Mỗi CSV đi kèm manifest cấu hình/mã nguồn/môi trường và JSONL chứa nhãn
-incumbent, cận dưới, lịch sử thử span, bộ đếm của các lần thử đã hoàn tất.
-Script xuất bảng kiểm tra tập tên đồ thị đúng miền quét, không trùng hoặc
-thiếu dòng, hai span của mọi cặp OPT/OPT bằng nhau, và witness khớp dòng CSV.
-Tất cả \WitnessCount{} labeling được kiểm tra lại bằng cách duyệt cạnh và
-đường đi hai bước. Đồng thời dựng lại hai CNF tại \texttt{Count\_Span} để
-đối chiếu số biến, clause thô và clause sau rút gọn; bước này không gọi SAT.
-Hash của CSV, manifest, witness và script xuất bảng được lưu trong
-\path{paper/generated/sources.json}. Kiểm tra nhãn không phải kiểm tra độc
-lập các kết luận UNSAT: nghiên cứu chưa xuất chứng thư DRAT/LRAT.
+\subsection{Giao thức SAT--ILP}
+CaDiCaL dùng order encoding và tìm kiếm span, dựng solver mới ở mỗi lần
+thử. Gurobi dùng assignment ILP, một thread, với cận trên và MIP start từ
+nghiệm tham lam. Cả hai dùng cùng $(h,k)$ và cùng đồ thị; tắt đối xứng trong
+đối chứng này. Từng backend chạy tuần tự trong một process mới, thứ tự
+backend xoay theo instance/lần lặp. Preflight kiểm tra backend trước sweep.
 
-\subsection{Cấu hình và định nghĩa phép đo}
+Giới hạn ngoài cho mỗi lượt của screen là 60 giây. \texttt{Wall\_Time}
+bao gồm startup, dựng mô hình, giải và thu hồi process; kiểm tra nhãn ở
+parent nằm ngoài thời gian này. Khi hết hạn ngoài, giữ nhãn tham lam đã
+nhận nếu có và trả \FEAS; đây không nhất thiết là incumbent tốt nhất mà
+solver tìm được trước khi bị ngắt. Chỉ \OPT{} trong budget được tính là
+solved. Backend không khả dụng không được coi là timeout hay một chiến
+thắng của backend khác.
+
+Peak RSS là mức cao nhất của worker do hệ điều hành báo, gồm cả Python và
+thư viện native; nếu process bị ngắt trước khi gửi thì để trống. Số clause
+SAT thuộc mô hình cuối trả nghiệm, còn số ràng buộc ILP thuộc mô hình ở
+cận trên tham lam. Chúng có thể ở hai span khác nhau, nên không dùng tỉ số
+hai con số để kết luận mức tiết kiệm mã hóa tại cùng span.
+
+\subsection{Khảo sát 50 cây \texorpdfstring{$L(3,2)$}{L(3,2)} đã hoàn tất}
+Các cỡ cây là 100, 200, 400, 800 và 1600; mỗi cỡ có 10 seed từ 0 đến 9.
+Cây được sinh bằng hàm \path{random_labeled_tree} của NetworkX. Mỗi cây chạy một
+lần mỗi backend. Manifest ghi Python 3.13.7, NetworkX 3.6.1, PySAT 1.9.dev15,
+Gurobi 13.0.3 và macOS 13.7.8 x86\_64. Chưa có đủ thông tin CPU, RAM và tải
+nền để mô tả một cấu hình máy tham chiếu đầy đủ.
+
 \begin{table}[H]
-\centering\small\input{paper/generated/run_config}
-\caption{Cấu hình lấy từ manifest. Với product, miền $m$ là
-$\ProductMFirst$--$\ProductMLast$; budget áp dụng cho từng cấu hình của từng đồ thị.}
+\centering\small
+\caption{Kết quả đã đo trên cây: các khoảng bậc/span là min--max của 10 cây;
+thời gian là trung vị trên 10 lượt từng backend tại mỗi kích thước.}
+\label{tab:tree-screen}
+\input{paper/generated/tree_screen}
 \end{table}
-Hai lượt dùng Python 3.13.7, NetworkX 3.6.1 và PySAT 1.9.dev15 trên môi trường
-macOS 13.7.8 x86\_64 được ghi trong manifest. Chưa lưu đầy đủ thông tin CPU,
-RAM hoặc tải nền nên không diễn giải các số đo như đặc tính độc lập với máy.
-Tên tùy chọn \texttt{hybrid} được giữ để tương thích CLI; lựa chọn span hiện
-là trung điểm của khoảng cận, tức tìm kiếm nhị phân, với solver mới ở mỗi
-lần thử. Thứ tự Base/Sym luân phiên theo instance; cả hai lượt dùng
-\texttt{order\_offset=0}.
+Bảng~\ref{tab:tree-screen} cho thấy cả hai backend trả \OPT{} trong budget trên mọi cây và không bất đồng
+span. CaDiCaL có trung vị thời gian thấp hơn Gurobi ở cả năm kích thước
+trong lượt này. Do chỉ có một lần đo mỗi backend trên một cây, chưa có
+ước lượng độ biến thiên do chạy lặp. Số đỉnh, bậc lớn nhất và cấu trúc
+cùng thay đổi, nên bảng không cô lập tác động của riêng số đỉnh.
 
-Baseline và Symmetry dùng cùng encoder và tiền xử lý chung. Chỉ $C_n$ cố
-định $f(0)=0$, kết hợp thứ tự hai lân cận qua phản xạ; thí nghiệm này chưa
-phân tách riêng tác động của hai điều kiện đó. Product không cố định gốc.
-Các họ ghi ``Không thêm'' dùng cùng mô hình ở cả hai lượt, đóng vai trò
-quan sát biến thiên khi lặp, không phải một kỹ thuật phá đối xứng mới.
-
-\texttt{Time\_*} tính toàn bộ preprocessing, khởi động tiến trình, xây CNF,
-tìm kiếm, validation và cleanup. Deadline được áp dụng cho tiến trình tìm
-kiếm; preprocessing/cleanup có thể làm runtime vượt nhẹ budget. Thời gian
-dựng lại hai CNF để đo kích thước nằm ngoài hai runtime này. Thời gian
-\texttt{Encoding\_Time} và \texttt{SAT\_Solve\_Time} chỉ cộng các lần thử đã
-hoàn tất, không bao gồm mọi overhead.
-
-\texttt{Count\_Span} là giá trị lớn hơn của hai span incumbent. Khi cả hai
-lượt chứng minh cùng tối ưu, đây là span tối ưu; nếu chưa, đây chỉ là một
-cận trên khả thi chung. \texttt{Clause\_Raw\_*} đếm sau thay hằng ở gốc và
-trước tiền xử lý chung; \texttt{Clause\_*} đếm sau tiền xử lý, gồm unit giữ
-lại. Số biến là số được cấp phát, không phải số chưa bị gán bởi lan truyền.
-Đây là CNF đầu vào, không phải số clause sau preprocessing/học của backend.
-
-\subsection{Phạm vi đã giải và các trường hợp chưa tối ưu}
-\begin{table}[H]
-\centering\small\setlength{\tabcolsep}{4pt}
-\input{paper/generated/coverage}
-\caption{Kết quả theo từng họ. Span chỉ tổng hợp các cặp OPT/OPT bằng nhau;
-``Chưa tối ưu'' đếm cặp có ít nhất một lượt chưa xác nhận tối ưu.}
-\end{table}
-Có \PairedOpt{} cặp cùng OPT và không có cặp OPT/OPT nào bất đồng span.
-Mọi chu trình trong miền khảo sát đạt span 4. Hai instance product chưa
-xác nhận tối ưu ở cả hai cấu hình là $C_9\mathbin{\square}C_{10}$ và
-$C_{10}\mathbin{\square}C_9$:
-\begin{table}[H]
-\centering\small\input{paper/generated/unresolved}
-\caption{Khoảng cận $[L,U]$ ở các lượt FEASIBLE; $U$ có labeling cụ thể.
-Các cận lấy từ witness, không suy từ một công thức chưa chứng minh.}
-\end{table}
-Hai đồ thị này đẳng cấu qua đổi tọa độ. Incumbent có thể khác nhau do thứ tự
-đỉnh và lịch sử tìm kiếm; không coi hai cận trên đó là hai giá trị tối ưu.
-Ở $C_9\mathbin{\square}C_{10}$, cả hai lượt bị ngắt trước khi có lần thử span
-hoàn tất, nên bộ đếm đã ghi bằng 0 không có nghĩa solver không thực hiện
-công việc. Cả bốn lượt FEASIBLE đều có \texttt{Stats\_Complete=False}.
-
-\subsection{Kích thước CNF và thời gian theo từng họ}
-Đặt $t_B,t_S$ là thời gian của hai cấu hình. Tỉ số $t_B/t_S>1$ cho biết
-lượt Symmetry nhanh hơn trên cặp đó. Bảng dưới dùng riêng tập cặp cùng OPT;
-các cặp FEASIBLE đã được báo riêng và không được gán runtime thay thế.
-\begin{table}[H]
-\centering\small\input{paper/generated/timing}
-\caption{Tổng runtime và trung vị tỉ số trên các cặp cùng OPT. Tổng thời gian
-và trung vị tỉ số là hai đại lượng khác nhau.}
-\end{table}
-\begin{table}[H]
-\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/encoding}
-\caption{Trung vị phần trăm giảm biến và clause; ba cột cuối đếm số cặp có
-clause Symmetry giảm/bằng/tăng so với Baseline. Cùng tập cặp OPT/OPT như bảng thời gian.}
-\end{table}
-Với chu trình, trung vị giảm clause là \CycleClauseMedian\%, nhưng trung vị
-$t_B/t_S$ chỉ là \CycleTimeRatio. Vì các instance nhỏ, chi phí khởi động và
-phần ngoài lời gọi SAT đáng kể; dữ liệu một lượt này chưa cho thấy lợi ích
-thời gian tổng rõ rệt từ việc giảm kích thước CNF.
-
-Trên các cặp cùng OPT của $C_n\mathbin{\square}C_m$, trung vị tỉ số là
-\CxCTimeRatio, trong khi tỉ số hai tổng thời gian là \CxCTotalTimeRatio.
-Sự khác nhau cho thấy tổng thời gian chịu ảnh hưởng nhiều hơn bởi một số
-instance tốn thời gian. Với $C_n\circ C_m$ và $C_n\circ P_m$, trung vị lần
-lượt là \CoCTimeRatio{} và \CoPTimeRatio. Đây là cải thiện quan sát trong
-lượt chạy này, chưa phải khẳng định ổn định qua nhiều lần lặp. Các họ
-$P_n\mathbin{\square}P_m$, $P_n\circ P_m$, $P_n\circ C_m$ không thêm đối xứng
-riêng; chênh lệch thời gian giữa hai lượt của chúng phản ánh biến thiên phép đo.
-
+Hình~\ref{fig:tree-runtime} thể hiện phân bố thời gian giữa các seed và
+ghép cặp hai backend trên cùng cây. Khoảng tứ phân vị mô tả biến thiên
+giữa graph đầu vào, không phải khoảng tin cậy hay biến thiên do lặp lại.
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_runtime_C.png}
-\includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_clauses_C.png}
-\caption{Chu trình: chênh lệch runtime và số clause Base trừ Sym. Giá trị
-âm ở hình thời gian nghĩa là lượt Symmetry chậm hơn.}
+\includegraphics[width=\linewidth]{paper/generated/manuscript_figures/tree_runtime.pdf}
+\caption{Runtime thực đo trên 50 cây $L(3,2)$: (a) đường trung vị và dải
+25--75\% theo 10 seed ở mỗi cỡ; (b) mỗi điểm là một cây, dưới đường chéo
+nghĩa là lượt CaDiCaL có thời gian thấp hơn. Trục thời gian dùng thang log.
+Tất cả các lượt trong hình là OPT; mỗi graph chỉ đo một lần/backend.}
+\label{fig:tree-runtime}
 \end{figure}
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_cartesian.png}
-\includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_corona.png}
-\caption{Runtime product: mỗi đường là một họ riêng, mỗi điểm là trung bình
-chênh lệch trên các cặp cùng họ, cùng số đỉnh và cùng OPT. Không gộp các họ
-thành một đường trung bình; hai cặp chưa tối ưu không nằm trong hình này.}
-\end{figure}
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_cartesian.png}
-\includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_corona.png}
-\caption{Clause product: Base trừ Sym tại cùng span, sau cùng tiền xử lý,
-trên tập cặp OPT/OPT. Các đường giá trị 0 có thể trùng nhau ở những họ không
-thêm điều kiện đối xứng riêng.}
-\end{figure}
-\FloatBarrier
 
-\subsection{Bộ đếm tìm kiếm và thời gian thành phần}
+Với $L(3,2)$, cận theo bậc là $3+2(\Delta-1)=2\Delta+1$.
+Có \TreeTightCount{} trên \TreeGraphCount{} cây đạt cận này: nhãn khả thi
+cùng cận toán học đủ xác nhận tối ưu cho chúng. Hai trường hợp còn lại là
+\texttt{tree\_100\_seed5}, $\Delta=4$, span 10 thay vì cận 9, và
+\texttt{tree\_400\_seed3}, $\Delta=5$, span 12 thay vì cận 11.
+Hai backend thống nhất giá trị tối ưu trên hai instance này, nhưng chưa
+lưu chứng thư UNSAT để kiểm tra độc lập mọi kết luận bất khả thi.
+Dữ liệu không hỗ trợ công thức $\lambda_{3,2}(T)=2\Delta+1$ cho mọi cây.
+
+Script \path{scripts/export_tree_screen.py} kiểm tra đủ miền seed/kích
+thước, graph được sinh lại khớp cạnh đã lưu, nhãn bằng duyệt khoảng cách
+ngắn nhất độc lập với encoder, và sự nhất quán giữa CSV, manifest, witness.
+Bảng được sinh từ CSV; hash đầu vào và mã kiểm tra lưu trong
+\path{paper/generated/tree_screen_sources.json}. Việc kiểm tra lại nghiệm
+không tái tạo phép đo runtime hoặc đếm lại CNF lịch sử.
+
+\subsection{Thiết kế và kiểm tra pilot đa họ}
+Cohort \texttt{general-pilot-v1} giữ cố định 39 mẫu đồ thị trước khi chạy:
 \begin{table}[H]
-\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/search_stats}
-\caption{Tổng xung đột và quyết định của Glucose qua các lần thử span đã
-hoàn tất, chỉ trên cặp OPT/OPT. Bao gồm cả lần thử SAT và UNSAT.}
+\centering\small
+\caption{Thiết kế khảo sát đa họ, không phải bảng kết quả.}
+\label{tab:planned-cohort}
+\begin{tabular}{p{3.0cm}p{9.0cm}r}
+\toprule
+Họ & Miền sinh & Mẫu\\\midrule
+Cây & $|V|=20,40,60$, mỗi cỡ seed $0,1,2$ & 9\\
+Lưới & $P_4\square P_5$, $P_5\square P_8$, $P_6\square P_{10}$ & 3\\
+Erdős--Rényi & $G(n,p)$, $n=20,40,60$, $p=0.15,0.30$, seed $0,1,2$ & 18\\
+Barabási--Albert & $n=20,40,60$, thêm $m=2$ cạnh mỗi đỉnh mới, seed $0,1,2$ & 9\\
+\bottomrule
+\end{tabular}
 \end{table}
+Giữ cả mẫu Erdős--Rényi không liên thông, không sinh lại để chọn mẫu dễ
+hay khó. Mỗi graph chạy ba cặp $(1,1),(2,1),(3,2)$, mỗi backend một lượt:
+117 bài toán gán nhãn, 234 lượt solver. Với budget 30 giây/lượt, tổng budget
+solver tối đa 1.95 giờ, chưa gồm preflight và xử lý ngoài lượt đo. Kích thước
+này nhằm khảo sát ban đầu, chưa phải bằng chứng scaling quy mô lớn.
+Đã kiểm tra đủ 234 dòng và 234 witness: sinh lại đồ thị theo cấu hình,
+đối chiếu tập đỉnh/cạnh, kiểm tra mọi điều kiện nhãn bằng khoảng cách ngắn
+nhất độc lập với encoder và kiểm tra nhất quán giữa CSV và witness.
+Kết quả audit không tái tạo phép đo thời gian, CNF hoặc chứng thư UNSAT.
+
 \begin{table}[H]
-\centering\small\input{paper/generated/components}
-\caption{Trung vị thời gian dựng CNF và thời gian bên trong lời gọi SAT
-(giây), cộng theo từng quá trình tìm kiếm rồi lấy trung vị trên cặp OPT/OPT.}
+\centering\small
+\caption{Pilot 30 giây mỗi lượt: số bài được ghi nhận tối ưu và số bài có
+công thức chính xác áp dụng trong bộ đối chứng hiện tại. Mỗi mẫu chạy cả
+hai backend một lần; phần còn lại của mỗi cột solver là \FEAS.}
+\input{results/analysis/general_pilot_v1/summary.tex}
+\label{tab:general-pilot}
 \end{table}
-Số clause ở một span chung đo kích thước mô hình; tổng quyết định/xung đột
-đo công việc qua toàn bộ các span đã thử. Hai cấu hình có thể đi qua những
-span khác nhau khi tìm được incumbent khác nhau; do đó không diễn giải
-bộ đếm tổng thành hiệu năng của một lời gọi tại span cố định. Bộ đếm đầy đủ
-ở các lượt OPT hỗ trợ phân tích tìm kiếm nhưng không tự thay thế phép đo
-runtime hoặc các lượt lặp. Các bộ đếm khác backend cũng không được mặc
-nhiên coi là cùng thước đo.
+CaDiCaL xác định tối ưu 79/117 bài, Gurobi 97/117. Có 78 bài cả hai cùng
+\OPT{} và cùng giá trị, 19 bài chỉ Gurobi \OPT, một bài chỉ CaDiCaL \OPT,
+và 19 bài cả hai còn \FEAS. Toàn bộ 58 lượt \FEAS{} vẫn có nhãn hợp lệ;
+chúng không được gọi là nghiệm tối ưu. Không có kết quả \OPT{} nào vượt
+budget theo thời gian được ghi. Chênh lệch coverage tập trung ở ER; đây là
+bằng chứng Gurobi giải tối ưu nhiều bài hơn trong pilot này, không phải
+định lý về ưu thế trên mọi đồ thị.
 
-\subsection{Tái lập và giới hạn kiểm chứng}
-Lệnh \texttt{make report} kiểm tra hai CSV cùng manifest/witness, dựng lại
-counts, sinh bảng, sinh hình rồi biên dịch bản thảo. Các file kết quả gốc
-không bị sửa. Resume của benchmark chỉ nhận cùng cấu hình, source, schema
-và môi trường; muốn đổi budget hoặc thử lại dòng FEASIBLE phải tạo lượt mới.
+\paragraph{Đối chứng lý thuyết.}
+Chín cây với $(h,k)=(1,1)$ dùng Mệnh đề~\ref{prop:equal-tree}; ba lưới với
+$(h,k)=(2,1)$ dùng Mệnh đề~\ref{prop:grid}. Cả 24 kết quả của hai backend
+trên 12 bài này đều khớp giá trị chính xác. Trên toàn pilot, 122 witness
+(61 bài, mỗi bài hai backend) đạt cận dưới toán học được áp dụng, nên
+labeling và cận cùng xác nhận tối ưu mà không chỉ dựa vào sự đồng thuận
+giữa hai solver. Các cận gồm cận bậc và công thức chính xác khi có; không
+đồng nhất với cột \texttt{LB} cuối lượt solver. Với bài chưa đạt cận,
+chênh lệch dương chỉ cho biết cận chưa xác nhận tối ưu của witness đó,
+không tự bác bỏ cận hay chứng minh kết quả mới cho toàn bộ họ.
+Nguồn, phạm vi audit và bảng đối chiếu từng lượt được lưu riêng tại
+\path{results/analysis/general_pilot_v1/}.
 
-Bộ kiểm thử dùng oracle vét cạn trên mọi đồ thị atlas đến 5 đỉnh, kiểm tra
-mọi phép gán trên đồ thị 3 đỉnh, các giá trị $h,k$ ở mức encoder, tính tương
-đương của rút gọn, phản xạ của các constructor và các ràng buộc ILP. Hai
-kiểm thử tích hợp ILP chưa qua vì giới hạn runtime/license trong môi trường
-kiểm tra. Vì vậy bản thảo này không đưa ra kết luận SAT nhanh hơn ILP.
-Hai lượt main\_r1 là một lần đo mỗi cấu hình trên mỗi instance; chưa có
-ước lượng phương sai hoặc khoảng tin cậy. Chọn riêng các cặp OPT/OPT có
-thể thiên về instance dễ, nên các bảng thời gian không đại diện toàn bộ
-miền khi vẫn còn cặp timeout.
+Phân tích tiếp theo báo cáo riêng từng họ và $(h,k)$: số OPT/FEASIBLE/TIMEOUT, khoảng cận,
+runtime, peak RSS quan sát được và kích thước mô hình cùng \texttt{Model\_Span}.
+Runtime ghép cặp dùng tập cùng OPT và phải đi kèm coverage/cactus trên tập
+đủ backend. Trung vị gộp nhiều mật độ chỉ có ý nghĩa mô tả; kết luận về mật
+độ phải tách các giá trị $p$, không gộp thành một hiệu ứng duy nhất.
+Sau khảo sát, định nghĩa một lượt xác nhận riêng, lặp ít nhất ba lần trên
+cùng cohort; nếu đổi quy mô/budget thì ghi phiên bản mới và lý do trước khi
+chạy, giữ cả kết quả timeout. Không chỉ chọn lại những instance SAT thắng.

@@ -1,0 +1,17 @@
+\section{Kết luận}
+Nghiên cứu trình bày một triển khai SAT cho bài toán tối ưu span
+$L(h,k)$ trên đồ thị đơn vô hướng, với chứng minh tương đương order
+encoding, bất biến cận trong tìm kiếm và điều kiện áp dụng phá đối xứng.
+Đối chứng với assignment ILP trên 50 cây $L(3,2)$ thu được cùng span tối
+ưu trên từng cây; 48 cây đạt cận bậc, hai cây cần span lớn hơn cận này.
+Pilot đa họ gồm 117 bài cho 79 bài \OPT{} bằng CaDiCaL và 97 bằng Gurobi;
+78 bài cả hai cùng tối ưu đều khớp. Đối chứng công thức trên 12 bài khớp ở
+cả hai backend; tất cả 234 witness pilot hợp lệ. Những kết quả này hỗ trợ
+đánh giá phương pháp chính xác và giới hạn tính toán, không xác lập ưu thế
+SAT trên mọi họ đồ thị.
+
+Bước xác nhận tiếp theo là mở rộng đối chứng công thức/cận đúng miền áp
+dụng và đo lặp để đánh giá độ ổn định. Incremental SAT,
+chứng thư UNSAT và đối chứng thuật toán chuyên biệt là những mở rộng cần
+thực hiện và đánh giá riêng. Các biến thể gán nhãn cạnh và $L(h,1,1)$
+được phân biệt trong tài liệu liên quan, không trộn với kết quả hiện tại.

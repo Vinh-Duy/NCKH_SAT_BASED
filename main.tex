@@ -1,9 +1,10 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{vietnam}
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,booktabs,array}
 \usepackage{graphicx,float,hyperref}
 \usepackage{placeins}
+\usepackage[font=small,labelfont=bf]{caption}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
 \newtheorem{definition}{Định nghĩa}[section]
 \newtheorem{proposition}{Mệnh đề}[section]
@@ -11,37 +12,47 @@
 \newcommand{\OPT}{\texttt{OPT}}
 \newcommand{\FEAS}{\texttt{FEASIBLE}}
 \input{paper/generated/counts}
-\title{Phương pháp SAT và ILP\\
-cho bài toán $L(2,1)$-labeling\\[0.5em]
-{\large Mô hình, phá đối xứng và thực nghiệm trên các họ đồ thị}}
-\author{Bản thảo nghiên cứu}
-\date{Tháng 9 năm 2026}
+\input{paper/generated/tree_screen_counts}
+\title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs\\[0.5em]
+{\large Bản thảo nghiên cứu: phương pháp và thực nghiệm}}
+\author{}
+\date{Ngày 27 tháng 9 năm 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-Nghiên cứu xây dựng công cụ giải chính xác bài toán tối thiểu hóa span của phép
-gán nhãn $L(2,1)$ trên đồ thị. Phương pháp SAT dùng order encoding và tìm kiếm
-trên khoảng cận dưới--cận trên; hai mô hình ILP được triển khai để đối chiếu.
-Báo cáo trình bày tính tương đương của mã hóa, điều kiện hợp lệ của phá đối xứng,
-và cách phân biệt nghiệm khả thi với kết luận tối ưu. Thực nghiệm SAT gồm
-\CycleCount{} chu trình và \ProductCount{} đồ thị tích, mỗi đồ thị chạy hai
-cấu hình Baseline/Symmetry. Có \PairedOpt{} trên \ComparisonCount{} cặp cùng
-xác nhận tối ưu với span bằng nhau; \UnresolvedCount{} cặp còn lại chưa xác
-nhận tối ưu trong budget. Toàn bộ \WitnessCount{} labeling đã lưu được kiểm
-tra lại, và hai CNF được đếm tại cùng span. Chỉ chu trình được cố định gốc;
-các họ product sử dụng thứ tự dựa trên phản xạ hoặc không thêm đối xứng riêng.
-Lợi ích về kích thước và thời gian thay đổi theo họ; một lượt chạy chưa đủ
-để kết luận về độ ổn định của cải thiện hiệu năng. ILP được trình bày ở mức
-mô hình, chưa có đối chứng hiệu năng mới trong hai lượt thực nghiệm này.
+Nghiên cứu xây dựng phương pháp thỏa mãn Boolean (SAT) để tối thiểu hóa span của phép gán nhãn
+$L(h,k)$ trên đồ thị đơn vô hướng, với $h\geq k\geq1$. Order encoding biểu
+diễn các nhãn bằng biến ngưỡng; tìm kiếm trên khoảng cận dùng nghiệm tham lam
+làm cận trên và phân biệt nghiệm khả thi với kết luận tối ưu. Mã hóa áp dụng
+cho cả đồ thị không liên thông, không phụ thuộc một họ cấu trúc riêng.
+Quy hoạch tuyến tính nguyên (ILP) dạng assignment là mô hình đối chứng.
+Bản thảo trình bày chứng minh tương
+đương, điều kiện phá đối xứng và quy trình lưu, kiểm tra độc lập nghiệm.
+Khảo sát $L(3,2)$ hiện có gồm \TreeGraphCount{} cây ngẫu nhiên với 100--1600
+đỉnh: hai backend trả cùng span tối ưu trên mọi cây, và toàn bộ
+\TreeObservationCount{} nghiệm đã được kiểm tra lại. Có \TreeTightCount{}
+cây đạt cận dưới theo bậc. Dữ liệu $L(2,1)$ trên chu trình và đồ thị tích
+được giữ làm thí nghiệm bổ sung về đối xứng. Các kết quả này chưa xác lập
+ưu thế hiệu năng trên đồ thị tổng quát. Pilot đa họ 117 bài ghi nhận
+79 bài tối ưu bằng SAT và 97 bằng ILP trong giới hạn 30 giây mỗi lượt;
+12 bài có công thức đối chứng đều khớp ở cả hai backend. Solver
+hiện tại chưa dùng incremental SAT và chưa xuất chứng thư UNSAT độc lập.
 \end{abstract}
-\clearpage
-\tableofcontents
-\clearpage
+\noindent\textbf{Từ khóa:} $L(h,k)$-labeling, SAT, order encoding,
+tối ưu span, đối chứng ILP, thực nghiệm tái lập.
+\input{paper/sections/introduction}
 \input{paper/sections/problem}
+\input{paper/sections/related_work}
 \input{paper/sections/models}
 \input{paper/sections/search_symmetry}
 \input{paper/sections/experiments}
 \input{paper/sections/discussion}
+\input{paper/sections/conclusion}
 \bibliographystyle{plain}
 \bibliography{paper/references}
+\clearpage
+\appendix
+\input{paper/sections/theoretical_baselines}
+\input{paper/sections/graph_families}
+\input{paper/sections/experiments_l21}
 \end{document}
