@@ -1,0 +1,5 @@
+Graph,Instance,Family,h,k,Repeat,Position,Method,V,E,Limit,Status,Termination,Span,LB,Wall_Time,Peak_RSS_MB,Memory_Scope,Variables,Constraints,Model_Span,Count_Scope,Decisions,Conflicts,Stats_Complete,Error
+P_2xP_10__h3_k2__r0__cadical,P_2xP_10,PxP,3,2,0,0,cadical,20,28,10.0,OPT,RETURNED,9,9,0.4518414619997202,38.04296875,worker_high_water,180,2344,9,last_sat_witness,280,175,True,
+P_2xP_10__h3_k2__r0__gurobi,P_2xP_10,PxP,3,2,0,1,gurobi,20,28,10.0,OPT,RETURNED,9,9,1.5138199960019847,53.62890625,worker_high_water,301,3434,14,assignment_at_greedy_UB,,,False,
+P_2xP_11__h3_k2__r0__gurobi,P_2xP_11,PxP,3,2,0,0,gurobi,22,31,10.0,OPT,RETURNED,9,9,1.4676648060012667,54.09375,worker_high_water,331,3817,14,assignment_at_greedy_UB,,,False,
+P_2xP_11__h3_k2__r0__cadical,P_2xP_11,PxP,3,2,0,1,cadical,22,31,10.0,OPT,RETURNED,9,9,0.620895615000336,38.16015625,worker_high_water,198,2604,9,last_sat_witness,287,177,True,

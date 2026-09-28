@@ -1,0 +1,63 @@
+{
+  "config": {
+    "family": "cartesian",
+    "pairs": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "first": 3,
+    "last": 3,
+    "m_first": 3,
+    "m_last": 3,
+    "seeds": [
+      0
+    ],
+    "solver": "glucose",
+    "formulation": "assignment",
+    "strategy": "hybrid",
+    "symmetry": false,
+    "timeout": 10.0
+  },
+  "source_sha256": "bbdab7619365760a2af74f90df8a6f4010da4f2ab12323a804b4fcd529b47882",
+  "schema": [
+    "Graph",
+    "Graph_Name",
+    "Family",
+    "h",
+    "k",
+    "V",
+    "E",
+    "Delta",
+    "Solver",
+    "Formulation",
+    "lambda",
+    "LB",
+    "status",
+    "time",
+    "variables",
+    "constraints",
+    "Model_Span",
+    "Baseline",
+    "Baseline_Check"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-09-26T09:24:23.090300+00:00"
+}

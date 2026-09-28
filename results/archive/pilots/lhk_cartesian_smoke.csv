@@ -1,0 +1,10 @@
+Graph,Graph_Name,Family,h,k,V,E,Delta,Solver,Formulation,lambda,LB,status,time,variables,constraints,Model_Span,Baseline,Baseline_Check
+CxC_3_3__h1_k1,CxC_3_3,CxC,1,1,9,18,4,glucose,order,8,8,OPT,0.7880600930002402,,,,,NA
+CxC_3_3__h2_k1,CxC_3_3,CxC,2,1,9,18,4,glucose,order,8,8,OPT,0.8098278079996817,72,675,8,,NA
+CxC_3_3__h3_k2,CxC_3_3,CxC,3,2,9,18,4,glucose,order,16,16,OPT,0.815159865998794,144,2439,16,,NA
+CxP_3_3__h1_k1,CxP_3_3,CxP,1,1,9,15,4,glucose,order,5,5,OPT,0.5669472350000433,45,216,5,,NA
+CxP_3_3__h2_k1,CxP_3_3,CxP,2,1,9,15,4,glucose,order,6,6,OPT,0.47116877999906137,54,435,6,,NA
+CxP_3_3__h3_k2,CxP_3_3,CxP,3,2,9,15,4,glucose,order,12,12,OPT,0.5120578810001462,108,1539,12,,NA
+PxP_3_3__h1_k1,PxP_3_3,PxP,1,1,9,12,4,glucose,order,4,4,OPT,0.4498524320006254,36,157,4,,NA
+PxP_3_3__h2_k1,PxP_3_3,PxP,2,1,9,12,4,glucose,order,6,6,OPT,0.49593569399985427,54,371,6,,NA
+PxP_3_3__h3_k2,PxP_3_3,PxP,3,2,9,12,4,glucose,order,9,9,OPT,0.47331527799906326,81,992,9,,NA
