@@ -6,6 +6,7 @@ FEASIBLE retains a validated witness when the external budget expires.
 
 import argparse
 import csv
+from collections import Counter
 from dataclasses import asdict
 import math
 import multiprocessing as mp
@@ -20,6 +21,7 @@ if str(ROOT) not in sys.path:
 
 import networkx as nx
 from benchmarks.benchmark_lhk_general import parse_pair
+from benchmarks.general_suite import SUITE_NAME, general_pilot
 from src.core.graph_utils import (get_cartesian_path_path, get_corona_graph,
                                  graph_constraints, greedy_labeling, lower_bound)
 from src.core.io import BenchmarkWriter, default_output
@@ -145,13 +147,14 @@ def run_isolated(graph, method, h, k, limit, *, target=_worker):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--families", nargs="+", choices=("Q", "PxP", "CoP", "tree"), default=["Q", "PxP", "CoP"])
-    parser.add_argument("--min-vertices", type=int, default=20)
-    parser.add_argument("--max-vertices", type=int, default=120)
+    parser.add_argument("--suite", choices=[SUITE_NAME], help="fixed 39-graph cohort; does not fix h,k, methods or budget")
+    parser.add_argument("--families", nargs="+", choices=("Q", "PxP", "CoP", "tree"))
+    parser.add_argument("--min-vertices", type=int)
+    parser.add_argument("--max-vertices", type=int)
     parser.add_argument("--pairs", nargs="+", type=parse_pair, default=[(1,1), (2,1), (3,2)])
     parser.add_argument("--methods", nargs="+", choices=METHODS, default=["cadical", "gurobi"])
     parser.add_argument("--repeats", type=int, default=3)
-    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--seed", type=int)
     parser.add_argument("--seeds", nargs="+", type=int, help="independent tree generation seeds; overrides --seed")
     parser.add_argument("--tree-sizes", nargs="+", type=int, help="explicit tree orders; overrides vertex range for trees only")
     parser.add_argument("--timeout", type=float, default=300)
@@ -161,6 +164,13 @@ def main():
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--plan-only", action="store_true", help="print experiment count and maximum solver budget without running")
     args = parser.parse_args()
+    if args.suite and any(getattr(args, key) is not None for key in
+                          ("families", "min_vertices", "max_vertices", "seed", "seeds", "tree_sizes", "max_instances")):
+        parser.error("--suite has a fixed graph domain; do not combine it with graph selection options")
+    args.families = args.families or ["Q", "PxP", "CoP"]
+    args.min_vertices = 20 if args.min_vertices is None else args.min_vertices
+    args.max_vertices = 120 if args.max_vertices is None else args.max_vertices
+    args.seed = 0 if args.seed is None else args.seed
     if not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("timeout must be finite and positive")
     if args.min_vertices < 2 or args.max_vertices < args.min_vertices or args.repeats < 1:
@@ -180,7 +190,14 @@ def main():
     args.methods = list(dict.fromkeys(args.methods))
     args.families = list(dict.fromkeys(args.families))
     args.pairs = [list(pair) for pair in dict.fromkeys(args.pairs)]
-    graphs = list(instances(args.families, args.min_vertices, args.max_vertices, args.seed, args.tree_sizes, args.seeds))
+    graphs = list(general_pilot() if args.suite else
+                  instances(args.families, args.min_vertices, args.max_vertices, args.seed, args.tree_sizes, args.seeds))
+    if args.suite:
+        # Record effective domains rather than inactive CLI defaults.
+        args.families = list(dict.fromkeys(family for _, family, _ in graphs))
+        args.min_vertices, args.max_vertices = 20, 60
+        args.seed = None
+        args.seeds = [0, 1, 2]
     if args.max_instances:
         graphs = graphs[:args.max_instances]
     if not graphs:
@@ -188,6 +205,7 @@ def main():
     observations = len(graphs)*len(args.pairs)*args.repeats*len(args.methods)
     print(f"Plan: {len(graphs)} graphs, {observations} solver observations; "
           f"maximum solver budget {observations*args.timeout/3600:.2f} hours", flush=True)
+    print(f"Families: {dict(Counter(family for _, family, _ in graphs))}", flush=True)
     if args.plan_only:
         return
     probes = {method: run_isolated(nx.path_graph(3), method, 2, 1, 10) for method in args.methods}
