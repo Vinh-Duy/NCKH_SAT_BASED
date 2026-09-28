@@ -1,0 +1,13 @@
+{
+  "inputs": {
+    "results/runs/tree_l32_screen_v2.csv": "910bced0d2f544ebc490e9ab8b790488a4268686ba16801313c2fb02e7b034b6",
+    "results/runs/tree_l32_screen_v2.metadata.json": "6e8933a2f3127ccf516442f8019eb82cc7dced1d23172a67a564b2eb4c35ed55",
+    "results/runs/tree_l32_screen_v2.witnesses.jsonl": "692bb85283c831f5dc7f9fe0c61f8b0be0bacda10fd3afc72488cdfcc5f852a0"
+  },
+  "observations": 100,
+  "matplotlib": "3.11.1",
+  "numpy": "2.5.2",
+  "script_sha256": "7d22c1457218aa8d301fb7a84d3062bf638b78067a96281036c1b2541d5261bf",
+  "auditor_sha256": "bace6c03d5519e92b4337f165c1033bde8aa998765ff2248b230ed984aee6dc0",
+  "scope": "original validated example; implementation diagram; measured tree screen (median/IQR, paired scatter)"
+}
