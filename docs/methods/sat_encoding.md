@@ -4,7 +4,9 @@ Với span s, x[v,i] biểu diễn f(v) ≤ i, 0 ≤ i < s. Các hằng biên l�
 = false và x[v,s] = true. Dãy ngưỡng đơn điệu dùng clause `-x[v,i] or x[v,i+1]`.
 
 Phủ định f(v)=a là `-x[v,a] or x[v,a-1]`. Với cặp nhãn bị cấm |a-b| < d,
-ghép hai phủ định bằng OR. Dùng d=2 cho cạnh, d=1 cho khoảng cách đúng 2.
+ghép hai phủ định bằng OR. Dùng d=h cho cạnh, d=k cho khoảng cách đúng 2;
+mặc định (h,k)=(2,1). API dùng h,k nguyên không âm; miền nghiên cứu chính
+h≥k≥1. Đây là ngưỡng trên hiệu nhãn, không phải khoảng cách đồ thị.
 Span 0 và mệnh đề rỗng được xử lý rõ ràng.
 
 Đỉnh được cố định hợp lệ không cấp phát biến; decoder phục hồi nhãn đó.
@@ -24,6 +26,9 @@ Phá đối xứng:
 API thấp `build_cnf` giả định người gọi chứng minh được các đối xứng truyền
 vào. API `solve_graph` kiểm tra cấu trúc canonical/metadata trước khi dùng.
 Không có cơ chế tự tính toàn bộ nhóm tự đẳng cấu.
+Khi h hoặc k bằng 0, solver tắt các thứ tự nghiêm ngặt có thể không còn
+hợp lệ. Chi tiết tổng quát ở [L(h,k)](lhk_general.md); giải nghĩa CNF,
+clause, raw, unit và counts ở [từ điển dữ liệu](../data_dictionary.md).
 
 Tiền xử lý chung cho cả hai cấu hình: bỏ clause hằng đúng/trùng, lan truyền
 đơn vị đến điểm cố định, rồi loại bản sao sinh ra do rút gọn. Các unit được

@@ -1,9 +1,16 @@
 # Benchmark đồ thị tích
 
 Bảy họ dùng chung ở `benchmarks/families.py`:
-C×C, C×P, P×P, C∘C, P∘P, C∘P, P∘C.
+C×C, C×P, P×P, C∘C, P∘P, C∘P, P∘C. C là chu trình, P là đường đi;
+× trong tên cũ/□ là Cartesian (nm đỉnh), ∘ là Corona (n(m+1) đỉnh).
+Tham số n,m là số đỉnh của hai đồ thị thành phần, không phải lần lặp.
 Với n,m=3..10 có 448 cấu hình. CSV lịch sử hiện có 446 dòng OPT và 2 dòng
 FEASIBLE; đây là trạng thái được ghi, chưa xác nhận lại bằng code hiệu chỉnh.
+
+Phân biệt CSV lịch sử `results/archive/legacy/products_benchmark.csv` với
+`results/runs/products_main_r1.csv`: main_r1 là so sánh hai cấu hình và đã
+được dùng trong audit/bản thảo, còn CSV legacy là một cấu hình thiếu provenance.
+Xem [README main_r1](../../results/runs/products_main_r1.README.md).
 
 Chạy `python -m benchmarks.benchmark_products --first 3 --last 10`.
 Có thể đặt riêng `--m-first`, `--m-last`, `--solver`, `--strategy`, `--timeout`.

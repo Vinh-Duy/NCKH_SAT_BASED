@@ -2,8 +2,12 @@
 
 Constructor tạo GP(n,k): u_i–u_(i+1), u_i–v_i, v_i–v_(i+k), chỉ số modulo n;
 1 ≤ k < n/2. Sweep mặc định n=7..50 có 594 cấu hình.
+GP(n,k) có **2n đỉnh**. k trong GP là bước nối vành trong, khác k của
+L(h,k). Ví dụ GP_7_1 có 14 đỉnh; cột `n` trong CSV kiểu cũ ghi 14.
+Đây là sweep L(2,1), không phải sweep tham số khoảng cách nhãn k.
+Xem [chú giải CSV lịch sử](../../results/archive/legacy/README.md).
 
-CSV lịch sử `results/sat_petersen.csv` ghi OPT cho 594 dòng: span 5 ở 133 dòng,
+CSV lịch sử `results/archive/legacy/sat_petersen.csv` ghi OPT cho 594 dòng: span 5 ở 133 dòng,
 6 ở 458 dòng, 7 ở 3 dòng (GP(10,2), GP(11,2), GP(11,5)). Dữ liệu được giữ
 nguyên, chưa chạy lại bằng solver hiệu chỉnh.
 
