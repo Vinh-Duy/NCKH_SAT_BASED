@@ -1,168 +1,118 @@
-# Cách đọc bộ thử nghiệm general_pilot_v1
+# Reading the general_pilot_v1 benchmark
 
-Tài liệu đi kèm `general_pilot_v1.csv`, dành cho người đọc không cần mở mã nguồn.
-Đề tài: **SAT-Based Approach for L(h,k)-Labeling of General Graphs**.
+Companion to `general_pilot_v1.csv`, intended to be understandable without opening the code. Topic: **SAT-Based Approach for L(h,k)-Labeling of General Graphs**.
 
-Các bộ cũ có cấu hình/schema khác: tra [mục lục từng CSV](../../docs/results_catalog.md)
-và [từ điển chung](../../docs/data_dictionary.md). Không lấy cấu hình pilot
-trong file này áp cho các lượt cây hoặc symmetry cũ.
+Older datasets use different configurations/schemas; see the [CSV catalog](../../docs/results_catalog.md) and [shared dictionary](../../docs/data_dictionary.md). Do not apply this pilot's configuration to earlier tree or symmetry experiments.
 
-## 1. Mục đích và cấu hình
+## 1. Purpose and configuration
 
-**Pilot** nghĩa là đợt thử nghiệm thăm dò ban đầu. **Plot** nghĩa là biểu đồ
-được vẽ từ kết quả. “Cấu hình pilot” là cách chọn đồ thị, tham số và bộ giải;
-“cấu hình plot” là cách chọn trục, nhóm dữ liệu và trình bày hình.
+A **pilot** is an initial exploratory experiment; a **plot** is a visualization of results. Pilot configuration specifies graphs, parameters, and solvers; plot configuration specifies axes, grouping, and presentation.
 
-Đợt này so sánh SAT (CaDiCaL, Order Encoding) với ILP (Gurobi, mô hình
-assignment) trên cùng đồ thị và cùng cặp `(h,k)`. Mục tiêu là khảo sát độ khó
-và hiệu năng trên nhiều cấu trúc trước khi thiết kế thực nghiệm lớn hơn.
+This run compares SAT (CaDiCaL, order encoding) and ILP (Gurobi, assignment) on identical graphs and `(h,k)` pairs, exploring difficulty and performance across structures before designing larger experiments.
 
-| Thành phần | Cấu hình đã ghi trong metadata |
+| Component | Recorded configuration |
 |---|---|
-| Bộ đồ thị | `general-pilot-v1`, gồm 39 đồ thị |
-| Tham số nhãn | `(h,k) = (1,1), (2,1), (3,2)` |
-| Bộ giải | `cadical`, `gurobi` |
-| Số lần chạy mỗi bộ giải trên mỗi bài toán | 1 (`r0`) |
-| Giới hạn | 30 giây cho mỗi lượt bộ giải |
-| Phá đối xứng | Tắt ở cả hai phương pháp |
-| Luồng giải | SAT một luồng; Gurobi đặt một luồng |
-| Tổng dự kiến khi chạy đủ | 39 × 3 = 117 bài toán; 117 × 2 = **234 dòng CSV** |
+| Cohort | `general-pilot-v1`, 39 graphs |
+| Label parameters | `(h,k) = (1,1), (2,1), (3,2)` |
+| Backends | `cadical`, `gurobi` |
+| Runs per backend/instance | 1 (`r0`) |
+| Time limit | 30 seconds per solver run |
+| Symmetry breaking | Disabled for both methods |
+| Threads | One SAT thread; Gurobi configured with one thread |
+| Complete size | 39 × 3 = 117 instances; 117 × 2 = **234 CSV rows** |
 
-Đợt này đã đủ 234 dòng và được kiểm tra lại 234 witness bằng graph sinh từ
-seed và khoảng cách ngắn nhất độc lập. [Kết quả audit](../analysis/general_pilot_v1/README.md)
-phân biệt 176 lượt OPT với 58 lượt FEASIBLE. Một dòng là một lượt bộ giải,
-không phải một đồ thị mới; audit không phải chứng thư UNSAT độc lập.
+All 234 rows and witnesses were audited using regenerated graphs and independent shortest-path distances. The [audit](../analysis/general_pilot_v1/README.md) distinguishes 176 OPT from 58 FEASIBLE observations. A row is one solver run, not a new graph; the audit is not independent UNSAT certification.
 
-## 2. Các họ đồ thị và ký hiệu
+## 2. Graph families and notation
 
-| Họ trong CSV | Ý nghĩa | Các mẫu trong đợt này |
+| CSV family | Meaning | Samples |
 |---|---|---|
-| `tree` | Cây ngẫu nhiên có nhãn: liên thông, không có chu trình | 20, 40, 60 đỉnh; mỗi kích thước có seed 0, 1, 2 → 9 cây |
-| `PxP` | Lưới, tích Cartesian của hai đường đi | 4×5, 5×8, 6×10 → 3 lưới |
-| `ER` | Erdős–Rényi, ký hiệu G(n,p): mỗi cặp đỉnh phân biệt có cạnh độc lập với xác suất p | n = 20, 40, 60; p = 0.15, 0.30; mỗi cấu hình có 3 seed → 18 đồ thị |
-| `BA` | Barabási–Albert: thêm dần đỉnh, ưu tiên nối với đỉnh đang có bậc lớn, thường tạo ra các đỉnh trung tâm có nhiều cạnh | n = 20, 40, 60; m = 2; mỗi cấu hình có 3 seed → 9 đồ thị |
+| `tree` | Random labeled tree: connected and acyclic | 20,40,60 vertices, seeds 0,1,2 per size → nine trees |
+| `PxP` | Grid, Cartesian product of two paths | 4×5, 5×8, 6×10 → three grids |
+| `ER` | Erdős–Rényi G(n,p): each distinct vertex pair independently forms an edge with probability p | n=20,40,60; p=0.15,0.30; three seeds/configuration → 18 graphs |
+| `BA` | Barabási–Albert preferential attachment: new vertices preferentially connect to existing high-degree vertices, often producing hubs | n=20,40,60; m=2; three seeds/configuration → nine graphs |
 
-- **n**: số đỉnh trong tên cây, ER, BA. Với lưới `P_4xP_5`, các số 4 và 5
-  là số đỉnh của hai đường đi; lưới có 4×5 = 20 đỉnh. `x` trong tên file
-  biểu diễn tích Cartesian, ký hiệu toán học là □.
-- **p** trong ER: xác suất nối cạnh, không phải số cạnh hay tỷ lệ cạnh chính
-  xác của từng mẫu. Ví dụ p = 0.15 nghĩa là mỗi cặp có xác suất 15% được nối.
-  ER có thể không liên thông hoặc có đỉnh cô lập; bộ thử nghiệm giữ các mẫu đó.
-- **m** trong BA: mỗi đỉnh mới nối tới m đỉnh đã có. `m2` nghĩa là 2 cạnh
-  được thêm cho mỗi đỉnh mới; **không có nghĩa mọi đỉnh đều có bậc 2**.
-  Chữ m trong kích thước lưới có ý nghĩa khác: số đỉnh của đường đi thứ hai.
-- **seed**: số khởi tạo bộ sinh ngẫu nhiên. Cùng thuật toán, phiên bản thư viện
-  và seed cho phép sinh lại mẫu. Đổi seed nhằm lấy mẫu khác, nhưng không bảo
-  đảm các mẫu không đẳng cấu. Đây là seed **sinh đồ thị**, không phải seed solver.
-- **r0, r1, r2**: lần chạy lặp thứ nhất, thứ hai, thứ ba trên **cùng đồ thị,
-  cùng h,k, cùng bộ giải**; code đếm từ 0. Lặp dùng để đo dao động thời gian.
-  Đợt này chỉ có r0 vì `repeats = 1`.
-- **h, k**: khoảng cách nhãn tối thiểu ở các cặp đỉnh có khoảng cách đồ thị
-  chính xác bằng 1 và 2. Nhãn là các số nguyên không âm.
+- **n** is the vertex count in tree, ER, and BA names. In `P_4xP_5`, 4 and 5 are factor vertex counts and the grid has 20 vertices. Filename `x` denotes Cartesian product, mathematically □.
+- **p** in ER is an edge probability, not the exact number or fraction of edges in a sample. p=0.15 gives each pair a 15% connection probability. Disconnected samples and isolates are retained.
+- **m** in BA is the number of existing vertices connected to each new vertex. `m2` means two edges per new vertex, **not degree 2 for every vertex**. In a grid dimension, m instead counts vertices of the second path.
+- **seed** initializes graph generation. Reproduction requires the same algorithm, library version, and seed. Changing seeds samples inputs but does not guarantee nonisomorphic graphs. This is a **graph seed**, not a solver seed.
+- **r0,r1,r2** are the first, second, and third runs on the **same graph, h,k, and solver**, using zero-based numbering. Repetitions measure timing variation. This pilot has only r0 because `repeats=1`.
+- **h,k** are minimum label differences at graph distances exactly 1 and 2. Labels are nonnegative integers.
 
-Ba seed là ba đầu vào sinh ra; ba lần lặp là ba phép đo trên một đầu vào.
-Không coi hai loại này là tương đương. Hậu tố `_r1` trong tên một file lịch sử
-như `products_main_r1.csv` là tên đợt đã đặt; số lần lặp thực tế nằm ở cột `Repeat`.
+Three seeds generate three inputs; three repetitions measure one input three times. These are not interchangeable. `_r1` in a historical filename such as `products_main_r1.csv` names the experiment; actual repetitions are recorded in `Repeat`.
 
-## 3. Đọc một tên kết quả
+## 3. Reading an observation ID
 
 ```text
 ER_40_p0.15_seed2__h3_k2__r0__cadical
-└──── Instance ──┘ └ h,k ┘ └r┘ └ solver ┘
 ```
 
-Tên này chỉ một lượt CaDiCaL trên đồ thị ER 40 đỉnh, p = 0.15, sinh bằng
-seed 2; giải L(3,2), lần chạy thứ nhất. Đây là ví dụ cách đọc tên, không phải
-khẳng định trạng thái hay giá trị tối ưu của lượt đó.
+This identifies the first CaDiCaL run for L(3,2) on a 40-vertex ER graph with p=0.15 and graph seed 2. It illustrates naming only, not that run's status or optimum. `BA_40_m2_seed2` denotes a 40-vertex BA graph with m=2 and seed 2. `tree_20_seed0` denotes a 20-vertex tree; `P_4xP_5` a 20-vertex grid.
 
-`BA_40_m2_seed2` tương tự là một đồ thị BA 40 đỉnh với m = 2 và seed 2.
-`tree_20_seed0` là cây 20 đỉnh với seed 0; `P_4xP_5` là lưới 20 đỉnh.
+## 4. CSV column dictionary
 
-## 4. Từ điển các cột CSV
-
-| Cột | Cách đọc |
+| Column | Interpretation |
 |---|---|
-| `Graph` | Mã đầy đủ của lượt chạy: đồ thị + h,k + lần lặp + bộ giải |
-| `Instance` | Tên đồ thị đầu vào, chưa kèm h,k hoặc bộ giải |
-| `Family` | Họ đồ thị: tree, PxP, ER, BA |
-| `h`, `k` | Hai tham số khoảng cách nhãn |
-| `Repeat` | Số thứ tự lần lặp từ 0; tương ứng r trong tên |
-| `Position` | Vị trí chạy bộ giải trong cặp, từ 0; thứ tự được luân phiên, không phải thứ hạng hiệu năng |
+| `Graph` | Complete observation ID: graph + h,k + repetition + solver |
+| `Instance` | Input graph name without h,k or solver |
+| `Family` | tree, PxP, ER, or BA |
+| `h`, `k` | Label-separation parameters |
+| `Repeat` | Zero-based repetition index, matching r in the ID |
+| `Position` | Zero-based backend execution position in a pair; rotated, not a performance rank |
 | `Method` | cadical = SAT; gurobi = ILP |
-| `V`, `E` | Số đỉnh và số cạnh của đồ thị thực tế |
-| `Delta` | Bậc lớn nhất của đồ thị |
-| `Diameter` | Đường kính; benchmark này chỉ tính cho cây. Ô trống ở họ khác không có nghĩa đường kính bằng 0 |
-| `Limit` | Giới hạn thời gian mỗi lượt, đơn vị giây |
-| `Status` | Trạng thái lời giải; xem bảng bên dưới |
-| `Termination` | Cách lượt chạy kết thúc; độc lập với việc đã có nghiệm hay chưa |
-| `Span` | Span của nghiệm được trả về; chỉ gọi là tối ưu khi Status = OPT |
-| `LB` | Cận dưới được ghi nhận ở cuối lượt; có thể đã được nâng trong quá trình tìm kiếm, không nhất thiết là cận lý thuyết ban đầu |
-| `Wall_Time` | Thời gian thực của lượt chạy (giây), gồm khởi động worker, dựng mô hình, giải và thu hồi worker; kiểm tra nhãn ở tiến trình cha nằm ngoài phép đo |
-| `Peak_RSS_MB` | Bộ nhớ cư trú cực đại của worker (MB), gồm cả thư viện và môi trường, không chỉ mô hình |
-| `Memory_Scope` | worker_high_water nếu ghi được bộ nhớ; not_observed nếu không thu được |
-| `Variables` | Số biến của mô hình được báo cáo; ILP có cả biến span, không phải chỉ biến nhị phân |
-| `Constraints` | Số mệnh đề CNF của SAT hoặc số ràng buộc ILP; hai loại này không đồng nhất |
-| `Model_Span` | Mốc miền nhãn dùng cho mô hình được đếm; có thể khác Span |
-| `Count_Scope` | last_sat_witness: mô hình SAT cuối trả nghiệm; assignment_at_greedy_UB: ILP dựng tại cận trên từ heuristic greedy |
-| `Decisions`, `Conflicts` | Thống kê quyết định và xung đột SAT tích lũy qua các lượt kiểm tra span đã hoàn tất; không phải số node nhánh-cận của ILP |
-| `Stats_Complete` | Cờ thống kê: script đặt True với CaDiCaL trả OPT, False ở các trường hợp khác; không phải cờ xác nhận mọi cột đều có dữ liệu |
-| `Error` | Loại lỗi nếu có |
+| `V`, `E` | Actual vertex and edge counts |
+| `Delta` | Maximum degree |
+| `Diameter` | Diameter, computed only for trees in this benchmark; blanks elsewhere do not mean zero |
+| `Limit` | Per-run time limit in seconds |
+| `Status` | Solution status, defined below |
+| `Termination` | How execution ended, independent of solution availability |
+| `Span` | Returned labeling span, optimal only if Status=OPT |
+| `LB` | Final recorded lower bound, potentially strengthened during search, not necessarily the initial theoretical bound |
+| `Wall_Time` | Seconds including worker startup, construction, solving, and cleanup; parent labeling validation is outside this measurement |
+| `Peak_RSS_MB` | Worker peak resident memory in MB, including libraries/environment, not just the model |
+| `Memory_Scope` | worker_high_water when observed; not_observed otherwise |
+| `Variables` | Reported model variables; ILP includes the span variable, not just binary variables |
+| `Constraints` | SAT CNF clauses or ILP constraints; these are not equivalent objects |
+| `Model_Span` | Label-domain bound for the counted model, potentially different from Span |
+| `Count_Scope` | last_sat_witness: last SAT model yielding a witness; assignment_at_greedy_UB: ILP at the greedy upper bound |
+| `Decisions`, `Conflicts` | SAT statistics accumulated over completed span trials, not ILP branch-and-bound nodes |
+| `Stats_Complete` | True for CaDiCaL returning OPT and False otherwise; not a guarantee that all fields are populated |
+| `Error` | Error type, if any |
 
-Ô trống nghĩa là không có số đo/không áp dụng, **không được thay bằng 0**.
-`Wall_Time` có thể nhỉnh hơn `Limit` do chi phí thu hồi worker.
-Khi so kích thước mô hình phải xem cả `Model_Span` và `Count_Scope`; không lấy
-hai số Constraints chia nhau rồi gọi là tỷ lệ giảm số mệnh đề của cùng một mô hình.
+Blank means unobserved or inapplicable, **not zero**. `Wall_Time` can slightly exceed `Limit` because of cleanup. Model-size comparisons require both `Model_Span` and `Count_Scope`; dividing Constraints values alone does not measure a same-model clause reduction.
 
-| Status | Ý nghĩa |
+| Status | Meaning |
 |---|---|
-| `OPT` | Pipeline xác định được nghiệm tối ưu; kiểm tra nhãn hợp lệ không tự nó là chứng minh tối ưu |
-| `FEASIBLE` | Có nghiệm hợp lệ, chưa khẳng định tối ưu; có thể là nghiệm greedy ban đầu được giữ khi hết giờ |
-| `TIMEOUT` | Hết thời gian mà chưa trả được nghiệm được lưu |
-| `UNAVAILABLE`, `SKIPPED` | Bộ giải không dùng được hoặc lượt bị bỏ qua; không tính như một bài toán khó bị timeout |
-| `ERROR`, `INVALID`, `INFEASIBLE` | Cần điều tra trước khi phân tích hiệu năng; với miền nhãn không giới hạn, bài toán trên đồ thị hữu hạn có nghiệm |
+| `OPT` | The pipeline establishes optimality; valid labels alone do not prove it |
+| `FEASIBLE` | A valid labeling without an optimality conclusion, possibly the initial greedy labeling retained at timeout |
+| `TIMEOUT` | Budget exhausted without a retained returned solution |
+| `UNAVAILABLE`, `SKIPPED` | Backend unavailable or run skipped; not a difficult-instance timeout |
+| `ERROR`, `INVALID`, `INFEASIBLE` | Investigate before performance analysis; finite graphs admit a labeling when the label domain is unrestricted |
 
-`Termination = RETURNED` nghĩa là worker đã trả kết quả, không nhất thiết
-là OPT. `WALL_TIMEOUT` nghĩa là chạm giới hạn thời gian bên ngoài; vẫn có
-thể đi kèm FEASIBLE nếu trước đó đã có nghiệm. `PREFLIGHT_FAILED` nghĩa là
-kiểm tra bộ giải trước benchmark thất bại; `ERROR` chỉ kết thúc do lỗi.
+`Termination=RETURNED` means the worker returned, not necessarily OPT. `WALL_TIMEOUT` indicates the external deadline and may accompany FEASIBLE if a labeling was already received. `PREFLIGHT_FAILED` indicates failed backend availability checks; `ERROR` indicates abnormal termination.
 
-## 5. Đọc các biểu đồ
+## 5. Plot interpretation
 
-Script `scripts/plot_sat_vs_ilp.py` tách hình theo **họ đồ thị và cặp h,k**.
-Tên như `ER_h3_k2_runtime.pdf` nghĩa là biểu đồ thời gian của ER với L(3,2).
+`scripts/plot_sat_vs_ilp.py` separates figures by **family and h,k**. `ER_h3_k2_runtime.pdf` is the ER L(3,2) runtime plot.
 
-- **Runtime**: trục ngang là số đỉnh; trục dọc là trung vị thời gian (giây),
-  dùng thang log. Chỉ lấy các cặp mà cả hai bộ giải đạt OPT trong giới hạn.
-  Thấp hơn là nhanh hơn trên phần dữ liệu đó. Trung vị hiện phản ánh các mẫu
-  đầu vào, không phải nhiều lần đo cùng một đồ thị vì đợt này chỉ có r0.
-- **Cactus**: trục ngang là ngưỡng thời gian; trục dọc là số lượt xác định
-  tối ưu trong ngưỡng đó. Tại cùng một thời gian, đường cao hơn là giải tối
-  ưu được nhiều lượt hơn. FEASIBLE không được tính là đã giải tối ưu.
-- **coverage.json**: số lượt ghép cặp và số lượt theo trạng thái, cần đọc cùng
-  hình để không bỏ qua những trường hợp chưa tối ưu hoặc thiếu bộ giải.
+- **Runtime:** x is vertex count; y is median seconds on a logarithmic scale. Only pairs with both backends OPT within budget are included. Lower is faster on that subset. Here medians describe input variation, not repeated timings on one graph, because only r0 exists.
+- **Cactus:** x is a time threshold; y is the number of observations solved to optimality within it. At a fixed threshold, higher means more OPT observations. FEASIBLE does not count as solved to optimality.
+- **coverage.json:** paired-run counts and statuses; read with plots so unresolved or unavailable-backend cases are not ignored.
 
-Hình runtime ER hiện gộp p = 0.15 và p = 0.30 tại cùng số đỉnh. Vì vậy chưa
-dùng hình này để kết luận riêng ảnh hưởng của mật độ cạnh. Chọn các cặp cùng
-OPT cũng có thể loại các ca khó; không chỉ dựa vào hình runtime để kết luận
-SAT hay ILP luôn tốt hơn. Một lần lặp chưa đo được độ ổn định thời gian.
+The original pilot ER runtime plot pools p=0.15 and 0.30 at each size and cannot isolate density effects. Selecting jointly OPT pairs can exclude hard cases; runtime plots alone do not establish universal SAT or ILP superiority. One repetition does not measure timing stability.
 
-## 6. Các file gửi kèm và khả năng tái lập
+## 6. Companion files and reproducibility
 
-Để trao đổi ban đầu, gửi **CSV + file giải thích này + bản thảo PDF**. Khi có
-hình đã kiểm tra, gửi thêm hình và coverage; không cần người đọc đoán từ tên file.
+For an initial discussion, share **CSV + this README + the manuscript PDF**, followed by validated figures and coverage when available. Readers should not need to guess from filenames.
 
-Để lưu trữ/tái kiểm tra đầy đủ, giữ cùng nhau:
+For complete archiving/revalidation, keep together:
 
-- `general_pilot_v1.csv`: từng lượt chạy.
-- `general_pilot_v1.README.md`: tài liệu này.
-- `general_pilot_v1.metadata.json`: cấu hình, phiên bản thư viện, hash nguồn.
-- `general_pilot_v1.witnesses.jsonl`: đồ thị và nhãn nghiệm phục vụ kiểm tra.
-- `general_pilot_v1.log`: tiến trình chạy.
+- `general_pilot_v1.csv`: individual observations.
+- `general_pilot_v1.README.md`: this guide.
+- `general_pilot_v1.metadata.json`: configuration, versions, source hashes.
+- `general_pilot_v1.witnesses.jsonl`: graphs and labelings.
+- `general_pilot_v1.log`: execution log.
 
-Metadata của đợt này ghi Python 3.13.7, NetworkX 3.6.1, python-sat 1.9.dev15,
-Gurobi 13.0.3, macOS 13.7.8 x86_64. CPU/RAM chưa được ghi trong metadata này;
-không suy đoán cấu hình phần cứng từ thời gian chạy.
+Metadata records Python 3.13.7, NetworkX 3.6.1, python-sat 1.9.dev15, Gurobi 13.0.3, and macOS 13.7.8 x86_64. CPU/RAM were not recorded; do not infer hardware from runtimes.
 
-Nguồn đối chiếu: `benchmarks/general_suite.py`, `benchmarks/benchmark_sat_vs_ilp.py`,
-`scripts/plot_sat_vs_ilp.py` và metadata đi kèm. Hướng dẫn thao tác nằm trong
-`docs/guides/research_next_steps.md`; tài liệu này tập trung vào cách hiểu dữ liệu.
+References: `benchmarks/general_suite.py`, `benchmarks/benchmark_sat_vs_ilp.py`, `scripts/plot_sat_vs_ilp.py`, and the companion metadata. This file documents the dataset and its interpretation.

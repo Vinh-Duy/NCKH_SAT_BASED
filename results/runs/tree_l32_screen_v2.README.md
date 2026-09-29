@@ -1,46 +1,22 @@
-# Đọc tree_l32_screen_v2 — cây L(3,2)
+# Reading tree_l32_screen_v2 — L(3,2) trees
 
-- Phạm vi: 50 cây: n=100,200,400,800,1600; seed=0..9.
-- Cặp nhãn (h,k)=(3,2); CaDiCaL Order Encoding và Gurobi assignment.
-- Metadata: repeats=1, deadline ngoài 60 giây/lượt, symmetry tắt,
-  Gurobi một luồng; hai backend chạy lần lượt, luân phiên thứ tự.
-- 100 dòng = 50 cây × 1 lần đo × 2 solver, chỉ có r0. Seed 0..9 là mười mẫu ở mỗi kích thước, không phải mười lần chạy cùng cây. Có 100 OPT và hai solver cùng span trên từng cây.
+- 50 trees: n=100,200,400,800,1600; seeds=0..9.
+- (h,k)=(3,2); CaDiCaL order encoding and Gurobi assignment.
+- Metadata: repeats=1, 60-second external deadline/run, symmetry disabled, one Gurobi thread; backends execute sequentially with alternating order.
+- 100 rows = 50 trees × one repetition × two solvers, with r0 only. Seeds 0..9 give ten samples per size, not ten runs on one tree. All 100 observations are OPT and both solvers agree on each tree's span.
 
-`tree_20_seed0__h3_k2__r0__cadical` minh họa cấu trúc tên: cây, số đỉnh,
-seed sinh đồ thị, hai khoảng cách nhãn, lần lặp từ 0, bộ giải. `l32` trong
-file là L(3,2), không phải 32 đỉnh. `screen_v2` là phiên bản khảo sát,
-`compare_r1` là tên đợt; đọc cột Repeat để biết số lần lặp.
+`tree_20_seed0__h3_k2__r0__cadical` illustrates the naming scheme: tree, vertex count, graph seed, label thresholds, zero-based repetition, and solver. `l32` means L(3,2), not 32 vertices. `screen_v2` and `compare_r1` identify experiments; inspect Repeat for actual repetitions.
 
-`V` là số đỉnh, `E=V−1` với cây; `Delta` là bậc lớn nhất, `Diameter` là
-khoảng cách ngắn nhất lớn nhất giữa hai đỉnh. `Span` chỉ được gọi tối ưu
-khi OPT. `LB` là cận dưới cuối lượt, không nhất thiết bằng cận cấu trúc
-ban đầu 2Δ+1. `Wall_Time` là giây gồm khởi động/dựng mô hình/giải/thu hồi
-worker. Bộ nhớ là peak của cả worker, không chỉ CNF. Ô trống không phải 0.
+`V` counts vertices and `E=V−1` for a tree. `Delta` is maximum degree; `Diameter` is the largest shortest-path distance. `Span` is optimal only when OPT. `LB` is the final recorded bound, not necessarily the initial structural bound 2Δ+1. `Wall_Time` includes worker startup, model construction, solving, and cleanup, in seconds. Memory is whole-worker peak RSS, not CNF memory only. Blank is not zero.
 
-Counts SAT được ghi ở mô hình cuối trả witness, ILP tại cận trên greedy;
-phải xem Model_Span và Count_Scope trước khi so số biến/ràng buộc. Conflicts
-và Decisions là thống kê SAT, không phải số node ILP. OPT không đồng nghĩa
-đã xuất chứng thư UNSAT độc lập.
+SAT counts refer to the last witness-producing model, while ILP counts use the greedy upper bound. Check Model_Span and Count_Scope before comparing variables/constraints. Conflicts and Decisions are SAT statistics, not ILP node counts. OPT does not mean an independent UNSAT certificate was exported.
 
-Biểu đồ runtime lấy trung vị trên các cặp cùng OPT trong budget; cactus đếm
-lượt OPT (bao gồm repeat), không phải số cây độc lập. Xem coverage.json
-cùng hình. Không gộp compare (300s, ba lần) với screen (60s, một lần) như
-cùng một protocol.
+Runtime plots use medians over pairs jointly OPT within budget. Cactus plots count OPT observations, including repetitions, not independent trees. Read coverage.json with the figures. Do not pool compare (300s, three repetitions) and screen (60s, one repetition) as a single protocol.
 
-Screen đã được audit 100 witness và tái sinh graph theo seed trong lần cập
-nhật bản thảo trước. 48 cây đạt cận 2Δ+1; hai ngoại lệ tree_100_seed5 và
-tree_400_seed3 có span lớn hơn cận này 1. Không suy công thức cho mọi cây.
-Metadata còn giữ min_vertices/max_vertices mặc định; khi có tree_sizes thì
-**tree_sizes mới quyết định các kích thước cây đã quét** (đến 1600 đỉnh).
-`make tree-tables` kiểm tra/xuất bảng screen, không đo lại thời gian.
+All 100 witnesses were audited and graphs regenerated from seeds during the manuscript update. 48 trees attain 2Δ+1; tree_100_seed5 and tree_400_seed3 have spans one above this bound. Do not infer a formula for all trees. Metadata retains default min_vertices/max_vertices, but **tree_sizes determines the actual tree sweep** when supplied, here through 1600 vertices. `make tree-tables` validates/exports the screen without remeasuring runtimes.
 
-## Đọc tên, cột và file đi kèm
+## Names, columns, and companion files
 
-Xem [từ điển ký hiệu và schema](../../docs/data_dictionary.md) và
-[mục lục mọi CSV](../../docs/results_catalog.md). CSV đi cùng `.metadata.json`
-(cấu hình/phiên bản/hash nguồn), `.witnesses.jsonl` (nhãn nghiệm) và `.log`
-(nhật ký). Gửi CSV cùng README này; gửi thêm từ điển nếu người nhận chưa
-quen các cột. Không dùng tên file để đoán cấu hình đã đo.
+See the [notation/schema dictionary](../../docs/data_dictionary.md) and [CSV catalog](../../docs/results_catalog.md). Keep the CSV with `.metadata.json` (configuration, versions, source hashes), `.witnesses.jsonl` (solution labels), and `.log` (execution log). Share the CSV with its README and, if needed, the dictionary. Do not infer the measured configuration from filenames.
 
-Không ghi đè CSV/metadata hoặc dùng nguồn mới để resume lượt cũ. Mô tả dưới
-đây dựa trên cấu hình đã lưu, không phải lệnh yêu cầu chạy lại.
+Do not overwrite CSV/metadata or resume historical runs under new source. These descriptions document saved configurations, not instructions to rerun them.

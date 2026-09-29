@@ -1,13 +1,10 @@
-# Đọc products_main_r1 — đối xứng trên các đồ thị tích
+# Reading products_main_r1 — graph-product symmetry
 
-- File: `products_main_r1.csv`; 448 dòng = 7 họ × 8 giá trị n × 8 giá trị m;
-  mỗi dòng có hai cấu hình, tổng 896 lượt.
-- n,m = 3..10, giữ cả thứ tự cặp n,m. Không gọi 448 mẫu là 448 lớp đồ thị
-  không đẳng cấu: chẳng hạn đổi hai chiều của lưới có thể cho đồ thị đẳng cấu.
-- Metadata: Glucose, hybrid, L(2,1), timeout API 180 giây/cấu hình,
-  order_offset=0. Không phải đối chứng SAT–ILP.
+- `products_main_r1.csv`: 448 rows = seven families × eight n values × eight m values; two configurations per row, 896 runs total.
+- n,m=3..10, retaining ordered pairs. These are not 448 nonisomorphic classes: exchanging grid dimensions can yield isomorphic graphs.
+- Metadata: Glucose, hybrid, L(2,1), 180-second API timeout/configuration, order_offset=0. This is not a SAT–ILP comparison.
 
-| Family | Nghĩa | Số đỉnh | Quy tắc Sym của đợt này |
+| Family | Meaning | Vertices | Sym rule in this run |
 |---|---|---:|---|
 | CxC | C_n □ C_m | nm | order |
 | CxP | C_n □ P_m | nm | order |
@@ -17,47 +14,22 @@
 | PoC | P_n ◦ C_m | n(m+1) | none |
 | PoP | P_n ◦ P_m | n(m+1) | none |
 
-C là chu trình, P là đường đi; x/□ là Cartesian; o/◦ là Corona (gắn một
-bản sao đồ thị thứ hai vào mỗi đỉnh đồ thị thứ nhất). Ví dụ C_3xP_4 có 12
-đỉnh, C_3oP_4 có 15 đỉnh. Không cố định gốc trong các họ product của đợt này.
-`none` nghĩa hai cấu hình cùng mô hình, không phải hiệu quả symmetry bằng 0
-đã được đo chính xác; runtime có thể khác do dao động thực thi.
+C is a cycle and P a path; x/□ denotes Cartesian product and o/◦ corona, attaching a copy of the second graph to each vertex of the first. C_3xP_4 has 12 vertices; C_3oP_4 has 15. No product family in this run fixes a root. `none` means identical models, not an exactly measured zero symmetry benefit; runtimes can vary.
 
-446 cặp OPT/OPT; C_9xC_10 và C_10xC_9 có cả hai FEASIBLE. Hai cặp này không
-được coi là đã biết tối ưu, không bỏ khỏi báo cáo coverage. So sánh counts
-ở cận trên chung vẫn không chứng minh cận trên đó là tối ưu.
+446 pairs are OPT/OPT; C_9xC_10 and C_10xC_9 are FEASIBLE for both configurations. They are not known optima and remain in coverage reports. Common-upper-bound model counts do not prove that bound optimal.
 
-## Cách đọc thí nghiệm
+## Interpreting the experiment
 
-Một dòng gồm **hai lượt** Glucose: `Base` tắt đối xứng, `Sym` bật đối xứng.
-Đây là L(2,1), nhãn từ 0, tìm span bằng hybrid (chọn trung điểm, mỗi span
-một CNF/solver mới), không phải SAT gia tăng. Hậu tố `main_r1` là tên đợt,
-không có nghĩa ba lần đo; mỗi cấu hình chỉ được chạy một lần trên mỗi đồ thị.
-`Order` ghi thứ tự thực thi được luân phiên, khác Order Encoding.
+Each row contains **two Glucose runs**: `Base` disables symmetry; `Sym` enables it. This is zero-based L(2,1) with hybrid midpoint span search and a fresh CNF/solver per span, not incremental SAT. `main_r1` is a run name, not a claim of three measurements; each configuration is measured once per graph. `Order` records alternating execution order, not order encoding.
 
-`lambda_Base/Sym` là giá trị trả về; chỉ gọi tối ưu nếu Status tương ứng là
-OPT. `Consistent=YES` yêu cầu cả hai OPT cùng span; `UNPROVEN` chưa đủ kết
-luận. Counts được dựng lại ở chung `Count_Span=max(lambda_Base,lambda_Sym)`,
-ngoài phép đo `Time_Base/Sym`. Raw là trước tiền xử lý chung, Clause là sau;
-Var là số biến cấp phát. Phần trăm giảm = 100×(Base−Sym)/Base; âm là tăng.
+`lambda_Base/Sym` is a returned value, described as optimal only when its status is OPT. `Consistent=YES` requires both OPT with equal spans; `UNPROVEN` means insufficient evidence. Models are rebuilt at `Count_Span=max(lambda_Base,lambda_Sym)` outside `Time_Base/Sym`. Raw counts precede common preprocessing; Clause counts follow it; Var counts allocated variables. Percentage reduction is 100×(Base−Sym)/Base; negative means an increase.
 
-Biểu đồ `delta_*` là Base−Sym theo số đỉnh (trung bình trong từng họ/cỡ),
-không phải %. `Median_Paired_Speedup` trong bảng tổng hợp là trung vị từng
-Time_Base/Time_Sym, >1 có lợi cho Sym. Chỉ tính tốc độ trên cặp cùng OPT và
-báo riêng số cặp chưa tối ưu. Một lượt không đánh giá được biến thiên thời gian.
+`delta_*` plots show Base−Sym against vertex count, averaging within each family/size; they are not percentages. Summary `Median_Paired_Speedup` is the median of Time_Base/Time_Sym, with values >1 favoring Sym. Timings use jointly OPT pairs and report unresolved pairs separately. One measurement does not estimate repeated-run variability.
 
-Snapshot bảng/hình main_r1 giữ trong `paper/generated/`, đưa vào phụ lục.
-`make manuscript` dùng snapshot đó; `make report` tái đếm yêu cầu đúng hash
-nguồn lịch sử, không sửa hash để vượt kiểm tra. Chứng nhận nhãn không phải
-chứng thư UNSAT. Việc bổ sung README không phải tái chạy/audit solver.
+main_r1 table/figure snapshots are preserved in `paper/generated/` and used in the appendix, with English presentation copies for translated tables. `make manuscript` uses these snapshots; `make report` requires matching historical source hashes for reconstruction. Do not edit hashes to bypass checks. Label validation is not UNSAT certification. Adding a README is not a new solver run or audit.
 
-## Đọc tên, cột và file đi kèm
+## Names, columns, and companion files
 
-Xem [từ điển ký hiệu và schema](../../docs/data_dictionary.md) và
-[mục lục mọi CSV](../../docs/results_catalog.md). CSV đi cùng `.metadata.json`
-(cấu hình/phiên bản/hash nguồn), `.witnesses.jsonl` (nhãn nghiệm) và `.log`
-(nhật ký). Gửi CSV cùng README này; gửi thêm từ điển nếu người nhận chưa
-quen các cột. Không dùng tên file để đoán cấu hình đã đo.
+See the [notation/schema dictionary](../../docs/data_dictionary.md) and [CSV catalog](../../docs/results_catalog.md). Keep the CSV with `.metadata.json` (configuration, versions, source hashes), `.witnesses.jsonl` (solution labels), and `.log` (execution log). Share the CSV with its README and, if needed, the dictionary. Do not infer the measured configuration from filenames.
 
-Không ghi đè CSV/metadata hoặc dùng nguồn mới để resume lượt cũ. Mô tả dưới
-đây dựa trên cấu hình đã lưu, không phải lệnh yêu cầu chạy lại.
+Do not overwrite CSV/metadata or resume historical runs under new source. These descriptions document saved configurations, not instructions to rerun them.

@@ -1,5 +1,5 @@
-# Các lượt hiện hành
+# Current runs
 
-Mỗi CSV tại đây có file .README.md cùng tên để giải thích cấu hình, ký hiệu và cột. Tên r1/v2/v1 là nhãn đợt; phải xem Repeat hoặc metadata để biết số lần đo. Khi gửi CSV cho người đọc, gửi README cùng tên.
+Each CSV has a matching .README.md explaining configuration, notation, and columns. Suffixes r1/v2/v1 are experiment labels; consult Repeat or metadata for measurement counts. Share each CSV with its companion README.
 
-[Danh mục từng CSV](../../docs/results_catalog.md) · [Từ điển dữ liệu](../../docs/data_dictionary.md)
+[CSV catalog](../../docs/results_catalog.md) · [Data dictionary](../../docs/data_dictionary.md)
