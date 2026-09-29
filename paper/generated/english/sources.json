@@ -1,0 +1,113 @@
+{
+  "purpose": "English presentation only; original numerical values retained",
+  "files": [
+    {
+      "source": "paper/generated/coverage.tex",
+      "source_sha256": "caf5c4ee60c57420d18cfc8640e923db16cc4add0325703b660c094c0cc36e34",
+      "translation": "paper/generated/english/paper/generated/coverage.tex",
+      "translation_sha256": "5375401e90ad81e9aede50cbcf1035b09b93c8c1fec7d8e2144cae2c54db9eb6"
+    },
+    {
+      "source": "paper/generated/timing.tex",
+      "source_sha256": "797dd25e0a4c5956027b2ad810c86624690bc81ecb6252445ec9c7445fb7a214",
+      "translation": "paper/generated/english/paper/generated/timing.tex",
+      "translation_sha256": "36c6a3d53bd01f3bb633b469cbc193d63a0cc4e3525058a6d869d34fe6b13cc6"
+    },
+    {
+      "source": "paper/generated/encoding.tex",
+      "source_sha256": "6a47525077e6c96cbf33fc19855958e456984c86ed435ea81ac0e21f63aa4009",
+      "translation": "paper/generated/english/paper/generated/encoding.tex",
+      "translation_sha256": "b080b621fb31f1f08163d4c520dc1c0cb9645e696bf36139b3059bec02123b04"
+    },
+    {
+      "source": "paper/generated/components.tex",
+      "source_sha256": "f8a71043e4b6b37f65dc4666870790c89c481df30ad3083f4a23a456ccaa7ff7",
+      "translation": "paper/generated/english/paper/generated/components.tex",
+      "translation_sha256": "385e73e05aa8efe638de2ae1437cbe047d3b8f7eb0f996c4b7ec883d78ab1177"
+    },
+    {
+      "source": "paper/generated/search_stats.tex",
+      "source_sha256": "b7b11a1562c452036876a7da8d42288b4d1e3f2a79f12382027742d384010dfe",
+      "translation": "paper/generated/english/paper/generated/search_stats.tex",
+      "translation_sha256": "98c8f6f014df530687ddadd315bccf75e6185fb9ee0757485c036d47f8c0d158"
+    },
+    {
+      "source": "paper/generated/run_config.tex",
+      "source_sha256": "f85671b62625ecf59796a6a728055ba3d74a403c992268c71e68a0ddbca79cfc",
+      "translation": "paper/generated/english/paper/generated/run_config.tex",
+      "translation_sha256": "9d87918ff34721eacd71fe11adb036499e4690618a1f0d8ecbdcaf73d1237e8d"
+    },
+    {
+      "source": "paper/generated/unresolved.tex",
+      "source_sha256": "20e9e3fb8ebf950788e3eef1e48c20aa11bf5a9a0fe799ccb0463924c796c7f1",
+      "translation": "paper/generated/english/paper/generated/unresolved.tex",
+      "translation_sha256": "4ad455ce315a7d211ac0182d1e6abbbe82cc647a3e88e965c6df97ad1dcc2b00"
+    },
+    {
+      "source": "results/analysis/general_pilot_v1/summary.tex",
+      "source_sha256": "040d5a0c56431951451eeaaee233ea56f3c5d1fb4667374a89d3c5124c3ad6cd",
+      "translation": "paper/generated/english/results/analysis/general_pilot_v1/summary.tex",
+      "translation_sha256": "5edde82e3161d4ced27cb095ab14f7f7fb7f9c7bb9634898f75e8a5fbb61042d"
+    },
+    {
+      "source": "results/analysis/exact_review_20260928/models.tex",
+      "source_sha256": "be687f8a71adb0a68065018ccac2edfef270337e64fd4b17c22be3c0830f602e",
+      "translation": "paper/generated/english/results/analysis/exact_review_20260928/models.tex",
+      "translation_sha256": "3bed13d1ce4faa32e5ed626db3fbbcf1a6f514a2d3a809b162174027142f58cd"
+    },
+    {
+      "source": "results/archive/paper_outputs/petersen.tex",
+      "source_sha256": "e1e712c397df0b3cbab6f4724584c2509e62b8cfbb2eb9453871f48c60f3fcdf",
+      "translation": "paper/generated/english/results/archive/paper_outputs/petersen.tex",
+      "translation_sha256": "85e3f3c78a0142ab7501609a88c0e1e6d26b147e95dfc0f3b2eef0ecac5536b3"
+    },
+    {
+      "source": "results/archive/paper_outputs/products.tex",
+      "source_sha256": "6a7565e07320b5bca8c9f19edca77b181ed6a4d17df642aa53dcd75b7f8017eb",
+      "translation": "paper/generated/english/results/archive/paper_outputs/products.tex",
+      "translation_sha256": "f9c065524a5597272605e1e94191e9920fdc7e80a875771121923981dc6aa3ae"
+    },
+    {
+      "source": "results/archive/paper_outputs/statuses.tex",
+      "source_sha256": "df0b4d86c3ef1869b08719eb4e7984d9d8ad3fe5ab9ce3b0eec29050fd79f231",
+      "translation": "paper/generated/english/results/archive/paper_outputs/statuses.tex",
+      "translation_sha256": "07758e280fabf2167216d26890177d64bb955c19d65177e72dd4a05fcb582e03"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/9739e8fe30b51d41/summary.tex",
+      "source_sha256": "c8a85630305130eb9497a96f80d513ff853c92f132dfe5862b3c156a8f8db41f",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/9739e8fe30b51d41/summary.tex",
+      "translation_sha256": "a4b79f35b15e734de07d7cce972ff375b2a789fb8235a88eb282cdebc24cd393"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/9739e8fe30b51d41/timing.tex",
+      "source_sha256": "8de26e34e58b04402d438e86f190d648359c284867cdb4e090f066cc98e83174",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/9739e8fe30b51d41/timing.tex",
+      "translation_sha256": "c6648c9856e3fc81eca4c57150cf7a4553627fc52c66d4057a3f8676fd6c59e2"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/fd04d7ad88883904/summary.tex",
+      "source_sha256": "c8a85630305130eb9497a96f80d513ff853c92f132dfe5862b3c156a8f8db41f",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/fd04d7ad88883904/summary.tex",
+      "translation_sha256": "a4b79f35b15e734de07d7cce972ff375b2a789fb8235a88eb282cdebc24cd393"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/fd04d7ad88883904/timing.tex",
+      "source_sha256": "8de26e34e58b04402d438e86f190d648359c284867cdb4e090f066cc98e83174",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/fd04d7ad88883904/timing.tex",
+      "translation_sha256": "c6648c9856e3fc81eca4c57150cf7a4553627fc52c66d4057a3f8676fd6c59e2"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/8caaed4049ceb7e9/summary.tex",
+      "source_sha256": "c8a85630305130eb9497a96f80d513ff853c92f132dfe5862b3c156a8f8db41f",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/8caaed4049ceb7e9/summary.tex",
+      "translation_sha256": "a4b79f35b15e734de07d7cce972ff375b2a789fb8235a88eb282cdebc24cd393"
+    },
+    {
+      "source": "results/analysis/general_confirm_r1/8caaed4049ceb7e9/timing.tex",
+      "source_sha256": "8de26e34e58b04402d438e86f190d648359c284867cdb4e090f066cc98e83174",
+      "translation": "paper/generated/english/results/analysis/general_confirm_r1/8caaed4049ceb7e9/timing.tex",
+      "translation_sha256": "c6648c9856e3fc81eca4c57150cf7a4553627fc52c66d4057a3f8676fd6c59e2"
+    }
+  ]
+}
