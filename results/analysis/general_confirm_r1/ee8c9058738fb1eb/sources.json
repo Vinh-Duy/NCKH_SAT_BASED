@@ -1,0 +1,138 @@
+{
+  "identity": {
+    "inputs": {
+      "results/runs/general_confirm_r1.csv": "f8e2d56bbc511c599c041f729ac9acc4bd2e3446db8957941dd814825e8758f5",
+      "results/runs/general_confirm_r1.metadata.json": "9c37d8666d7b657b86b3a26a1ff37371896cb72f4c9be90ba6cbd93ecf2ab4ea",
+      "results/runs/general_confirm_r1.witnesses.jsonl": "913d728a0aef0f3a2e4459730961a3c8bad408c3714d34c7c7dfdf26360282ea"
+    },
+    "sources": {
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/audit_general_pilot.py": "0289ad01f372d3753639acf93e9a0011f7ef1c84126a50683af00167a5d93bf1",
+      "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+    },
+    "environment": {
+      "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+      "networkx": "3.6.1",
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2"
+    }
+  },
+  "counts": {
+    "ConfirmObservations": 702,
+    "ConfirmInstances": 117,
+    "ConfirmSATOpt": 232,
+    "ConfirmILPOpt": 284,
+    "ConfirmSATStable": 77,
+    "ConfirmILPStable": 94,
+    "ConfirmJointStable": 76,
+    "ConfirmReferenceInstances": 12,
+    "ConfirmReferenceMatches": 72,
+    "ConfirmFeasible": 186,
+    "ConfirmOutsideBudget": 0
+  },
+  "original_manifest": {
+    "config": {
+      "suite": "general-pilot-v1",
+      "families": [
+        "tree",
+        "PxP",
+        "ER",
+        "BA"
+      ],
+      "min_vertices": 20,
+      "max_vertices": 60,
+      "pairs": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "methods": [
+        "cadical",
+        "gurobi"
+      ],
+      "repeats": 3,
+      "seed": null,
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "tree_sizes": null,
+      "timeout": 30.0,
+      "max_instances": null,
+      "allow_unavailable": false,
+      "protocol": "isolated-wall-v1",
+      "symmetry": false,
+      "ilp_threads": 1,
+      "preflight": {
+        "cadical": "OPT",
+        "gurobi": "OPT"
+      }
+    },
+    "source_sha256": "a5c54bd945ed35f385a379252a7dac6f6eeaf43a9fc12990394fa1a34ef07760",
+    "schema": [
+      "Graph",
+      "Instance",
+      "Family",
+      "h",
+      "k",
+      "Repeat",
+      "Position",
+      "Method",
+      "V",
+      "E",
+      "Delta",
+      "Diameter",
+      "Limit",
+      "Status",
+      "Termination",
+      "Span",
+      "LB",
+      "Wall_Time",
+      "Peak_RSS_MB",
+      "Memory_Scope",
+      "Variables",
+      "Constraints",
+      "Model_Span",
+      "Count_Scope",
+      "Decisions",
+      "Conflicts",
+      "Stats_Complete",
+      "Error"
+    ],
+    "packages": {
+      "networkx": "3.6.1",
+      "python-sat": "1.9.dev15",
+      "gurobipy": "13.0.3",
+      "docplex": "2.32.264",
+      "cplex": null
+    },
+    "python": "3.13.7",
+    "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+    "created_utc": "2026-09-28T02:42:23.171510+00:00"
+  },
+  "outputs_sha256": {
+    "runtime.png": "e797b721de49ed6ec11cab91d60c5eeeeb8e3f173319d56abd6828eb48200d0b",
+    "summary.csv": "6759d518e0b3a4145ac091a36d14b1a65410cc32984893135d02c1a2f1d92322",
+    "runtime.pdf": "d9b483bd9b830d4278e67cc4d630099bee17e98ca9190a710e57e54be63d8a51",
+    "timing.tex": "c6648c9856e3fc81eca4c57150cf7a4553627fc52c66d4057a3f8676fd6c59e2",
+    "README.md": "47ad8cc5d621376a75688cba4430be71ba8518e0bec7647f53bead4214de34c6",
+    "instances.csv": "59680c9d45ac15982c7a0a26f718a1fe8de6b625d1e032b16a57f2530d54b007",
+    "summary.tex": "a4b79f35b15e734de07d7cce972ff375b2a789fb8235a88eb282cdebc24cd393",
+    "coverage.png": "9d40736ac872ac47cb27c217b00a7722fb627b496700c4c516c3c0a0a205f7b3",
+    "coverage.pdf": "d5307e9384b6cc98393449c479d7e8c5825b72d3a880aafcfde36802b00c30ee",
+    "counts.tex": "d4805b0aa2a70d73839f7ff29e2d99de556fa0f92af1b8b48209f0f8fb502fbc",
+    "observations.csv": "2b89a763323bc8c8ba5845dee29d5271dc3ad224b2077b07bdb1baec5df9900f"
+  }
+}
