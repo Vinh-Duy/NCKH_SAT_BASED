@@ -170,7 +170,7 @@ def export(path, output):
                     scope='Regenerated graphs, independent shortest-path witness validation, reference bounds and paired consistency; no UNSAT proof, timer reconstruction or CNF recount.')
     (output/'sources.json').write_text(json.dumps(manifest,indent=2)+'\n')
     lines=[r'\begin{tabular}{llrrrr}',r'\toprule',
-           r'Họ & $(h,k)$ & Mẫu & SAT OPT & ILP OPT & Có công thức\\',r'\midrule']
+           r'Family & $(h,k)$ & Cases & SAT OPT & ILP OPT & Exact ref.\\',r'\midrule']
     for r in summaries:
         lines.append(f"{r['Family']} & $({r['h']},{r['k']})$ & {r['Cases']} & {r['cadical_OPT']} & {r['gurobi_OPT']} & {r['Exact_Reference_Cases']}"+r'\\')
     lines.extend([r'\bottomrule',r'\end{tabular}'])

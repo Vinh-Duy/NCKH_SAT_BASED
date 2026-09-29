@@ -27,7 +27,7 @@ LABELS = {'C': r'$C_n$', **{
     f'{a}{op}{b}': f'${a}_n ' + (r'\mathbin{\square}' if op == 'x' else r'\circ') + f' {b}_m$'
     for a in 'CP' for b in 'CP' for op in 'xo'
 }}
-RULES = {'root=0+order': 'Gốc + thứ tự', 'order': 'Thứ tự', 'none': 'Không thêm'}
+RULES = {'root=0+order': 'Root + order', 'order': 'Order', 'none': 'None added'}
 
 
 def table(output, filename, columns, header, body):
@@ -180,23 +180,23 @@ def main():
                                             for key in ('Conflicts', 'Decisions') for suffix in ('Base', 'Sym')]])
             components.append([LABELS[family], *[f'{median(key+"_"+suffix):.4f}'
                                                 for key in ('Encoding_Time', 'SAT_Solve_Time') for suffix in ('Base','Sym')]])
-    table(output,'coverage.tex','lrrrrl', r'Họ & Số cặp & OPT/OPT & Chưa tối ưu & Span (OPT) & Đối xứng',coverage)
-    table(output,'timing.tex','lrrrr',r'Họ & OPT/OPT & $\sum t_B$ (s) & $\sum t_S$ (s) & Trung vị $t_B/t_S$',timing)
-    table(output,'encoding.tex','lrrrrr',r'Họ & Giảm biến (\%) & Giảm clause (\%) & Giảm & Bằng & Tăng',encoding)
-    table(output,'search_stats.tex','lrrrr',r'Họ & Xung đột B & Xung đột S & Quyết định B & Quyết định S',search)
-    table(output,'components.tex','lrrrr',r'Họ & Dựng CNF B & Dựng CNF S & SAT B & SAT S',components)
+    table(output,'coverage.tex','lrrrrl', r'Family & Pairs & OPT/OPT & Unresolved & Span (OPT) & Symmetry',coverage)
+    table(output,'timing.tex','lrrrr',r'Family & OPT/OPT & $\sum t_B$ (s) & $\sum t_S$ (s) & Median $t_B/t_S$',timing)
+    table(output,'encoding.tex','lrrrrr',r'Family & Var. reduction (\%) & Clause reduction (\%) & Fewer & Equal & More',encoding)
+    table(output,'search_stats.tex','lrrrr',r'Family & Conflicts B & Conflicts S & Decisions B & Decisions S',search)
+    table(output,'components.tex','lrrrr',r'Family & CNF build B & CNF build S & SAT B & SAT S',components)
     unresolved = [r for r in rows if r['Consistent'] != 'YES']
     def graph_tex(name):
         a,n,op,b,m = re.fullmatch(r'([CP])_(\d+)([xo])([CP])_(\d+)',name).groups()
         return f'${a}_{{{n}}}'+(r'\mathbin{\square}' if op=='x' else r'\circ')+f'{b}_{{{m}}}$'
-    table(output,'unresolved.tex','lrrrrr',r'Đồ thị & $L_B$ & $U_B$ & $L_S$ & $U_S$ & Span đếm',
+    table(output,'unresolved.tex','lrrrrr',r'Graph & $L_B$ & $U_B$ & $L_S$ & $U_S$ & Count span',
           [[graph_tex(r['Graph']),r['Lower_Base'],r['lambda_Base'],r['Lower_Sym'],r['lambda_Sym'],r['Count_Span']] for r in unresolved])
     configuration = []
     for title, metadata, data in (('Chu trình',cm,cycles),('Product',pm,product_rows)):
         config=metadata['config']
         domain=f"{config['first']}--{config['last']}"
         configuration.append([title, domain, len(data), config['solver'], config['strategy'], f"{config['timeout']:g}"])
-    table(output,'run_config.tex','llrllr',r'Tập & Miền $n$ & Số cặp & Solver & Search & Budget (s)',configuration)
+    table(output,'run_config.tex','llrllr',r'Dataset & $n$ range & Pairs & Solver & Search & Budget (s)',configuration)
     macros={'CycleCount':len(cycles),'ProductCount':len(product_rows),'ComparisonCount':len(rows),
             'PairedOpt':sum(r['Consistent']=='YES' for r in rows),'UnresolvedCount':len(unresolved),
             'WitnessCount':cp['validated_witnesses']+pp['validated_witnesses'],

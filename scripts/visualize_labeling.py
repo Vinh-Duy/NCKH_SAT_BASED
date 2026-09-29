@@ -50,7 +50,7 @@ def plot_labeling(
     normalizer = Normalize(vmin=min(values, default=0), vmax=max(values, default=1))
     node_colors = [label_values[node] for node in graph.nodes()]
     node_labels = {
-        node: f"Đỉnh {node}\nL={label_values[node]}" for node in graph.nodes()
+        node: f"Vertex {node}\nL={label_values[node]}" for node in graph.nodes()
     }
 
     nx.draw_networkx_edges(
