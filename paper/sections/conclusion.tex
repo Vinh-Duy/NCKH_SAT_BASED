@@ -1,17 +1,31 @@
-\section{Kết luận}
-Nghiên cứu trình bày một triển khai SAT cho bài toán tối ưu span
-$L(h,k)$ trên đồ thị đơn vô hướng, với chứng minh tương đương order
-encoding, bất biến cận trong tìm kiếm và điều kiện áp dụng phá đối xứng.
-Đối chứng với assignment ILP trên 50 cây $L(3,2)$ thu được cùng span tối
-ưu trên từng cây; 48 cây đạt cận bậc, hai cây cần span lớn hơn cận này.
-Pilot đa họ gồm 117 bài cho 79 bài \OPT{} bằng CaDiCaL và 97 bằng Gurobi;
-78 bài cả hai cùng tối ưu đều khớp. Đối chứng công thức trên 12 bài khớp ở
-cả hai backend; tất cả 234 witness pilot hợp lệ. Những kết quả này hỗ trợ
-đánh giá phương pháp chính xác và giới hạn tính toán, không xác lập ưu thế
-SAT trên mọi họ đồ thị.
+\section{Conclusion}
+We presented a SAT implementation for minimum-span $L(h,k)$-labeling of
+simple undirected graphs, including order-encoding equivalence, the
+span-search bound invariant, and conditions for valid symmetry breaking.
+Comparison with assignment ILP on 50 $L(3,2)$ trees yields the same optimal
+span for every tree: 48 attain the degree bound and two require larger spans.
+The multi-family pilot contains 117 instances, of which 79 are OPT for
+CaDiCaL and 97 for Gurobi. The 78 instances solved to optimality by both
+have matching values. All 12 instances with exact reference formulas agree
+with both backends, and all 234 pilot witnesses are valid. These results
+support an assessment of exact methods and their computational limits,
+not a claim that SAT dominates across graph families.
 
-Bước xác nhận tiếp theo là mở rộng đối chứng công thức/cận đúng miền áp
-dụng và đo lặp để đánh giá độ ổn định. Incremental SAT,
-chứng thư UNSAT và đối chứng thuật toán chuyên biệt là những mở rộng cần
-thực hiện và đánh giá riêng. Các biến thể gán nhãn cạnh và $L(h,1,1)$
-được phân biệt trong tài liệu liên quan, không trộn với kết quả hiện tại.
+The three-repetition confirmation on the same 117 instances records
+\ConfirmSATOpt/351 OPT observations for SAT and \ConfirmILPOpt/351 for ILP.
+Under the all-three-OPT criterion, the backends solve \ConfirmSATStable{}
+and \ConfirmILPStable{} instances, respectively, with \ConfirmJointStable{}
+in their intersection. Runtime statistics on this intersection must be
+read alongside coverage and do not represent instances remaining FEASIBLE.
+Broader formula/bound comparisons, incremental SAT, UNSAT certificates,
+and specialized algorithm baselines require separate implementation and
+evaluation. Edge labeling and $L(h,1,1)$ are distinguished in the related
+work and are not mixed with the present results.
+
+Across the three methodological perspectives, theory supplies values or
+bounds within stated domains, while SAT/ILP provides a means to find and
+certify solutions on general inputs within a computational budget.
+Common-span model size measures representation size, not runtime rank.
+The adapted GA will be evaluated after the SAT--ILP comparison is consolidated,
+using upper-bound quality and solution cost. There is currently no experimental
+evidence establishing superiority or inferiority of SAT/ILP relative to GA.

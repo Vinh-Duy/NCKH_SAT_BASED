@@ -1,67 +1,71 @@
-\section{Thảo luận và hướng phát triển}
-\subsection{Phạm vi kết luận hiện tại}
-Mô hình và tìm kiếm áp dụng cho đồ thị đơn vô hướng tổng quát. Điều này
-được phân biệt với phạm vi thực nghiệm: screen cây $L(3,2)$ và pilot đa họ
-được báo riêng do khác miền đồ thị và budget. Pilot cho Gurobi số bài \OPT{}
-lớn hơn CaDiCaL, trong khi có một bài chỉ CaDiCaL xác định được tối ưu.
-Độ đúng của encoding không phụ thuộc bên nào nhanh hơn.
-Cây 1600 đỉnh đã đủ cho khảo sát kích thước ban đầu; việc giải nhanh không
-phải lỗi và không chứng minh lớp cây nói chung dễ. Trong dữ liệu này,
-48 cây đạt cận bậc, còn hai cây cho thấy cận đó không luôn chặt.
+\section{Discussion and future work}
+\subsection{Scope of the current conclusions}
+The formulation and search apply to general simple undirected graphs.
+This is distinct from experimental scope: the $L(3,2)$ tree screen and
+multi-family pilot are reported separately because their graph domains
+and budgets differ. In the pilot, Gurobi solves more instances to optimality
+than CaDiCaL, while one instance is solved to optimality only by CaDiCaL.
+Encoding correctness does not depend on which backend is faster. Trees
+with 1600 vertices provide an initial size study; short runtimes are not
+an error and do not establish that trees are easy in general. In this
+sample, 48 trees attain the degree bound and two show that it is not always tight.
 
-Chỉ chu trình được cố định gốc trong thí nghiệm đối xứng. Phản xạ trên các
-họ product cần phép tự đẳng cấu cụ thể; không suy từ việc hai đỉnh cùng bậc.
-Giảm số nghiệm đối xứng không đồng nghĩa giảm clause hay runtime theo cùng
-tỉ lệ. Các họ không thêm đối xứng riêng phải được mô tả là lặp cùng mô hình.
-Những kết quả này không tạo thành đánh giá incremental SAT: solver hiện
-chưa tái sử dụng learned clauses giữa các span.
+Only cycles use root fixing in the symmetry experiments. Reflections on
+product families require explicit automorphisms, not merely equal vertex
+degrees. Reducing symmetric solutions does not imply proportional reductions
+in clauses or runtime. Families without additional symmetry constraints
+must be described as repeated runs of the same model. These results are
+not an evaluation of incremental SAT: learned clauses are not reused across spans.
 
-\subsection{Giới hạn nghiên cứu}
-Một nhãn hợp lệ xác nhận cận trên; muốn xác nhận tối ưu phải có cận dưới
-trùng, phép chứng minh không tồn tại nhãn span nhỏ hơn, hoặc công thức
-chính xác đúng miền áp dụng. Hai backend đồng thuận là kiểm tra chéo,
-không thay thế chứng minh tổng quát. Giá trị nằm giữa cận dưới và cận trên
-lý thuyết là phù hợp với các cận dù không bằng cận nào. Thực nghiệm hữu
-hạn khớp công thức là đối chứng, không tự chứng minh công thức trên cả họ.
+\subsection{Limitations}
+A valid labeling establishes an upper bound. Optimality additionally requires
+a matching lower bound, a proof excluding smaller spans, or an exact formula
+within its validity domain. Agreement between two backends is a cross-check,
+not a general proof. A value between theoretical lower and upper bounds is
+consistent with them even if it attains neither. Finite agreement with a
+formula is validation evidence, not a proof over an entire family.
 
-Greedy hiện được dùng để tạo incumbent và MIP start, chưa được đo như
-một đối chứng heuristic độc lập. Heuristic/metaheuristic có thể tìm nghiệm
-tốt nhanh nhưng không mặc nhiên chứng minh tối ưu; nếu nghiệm đạt cận dưới
-đã chứng minh thì vẫn có thể xác nhận tối ưu. Không khẳng định mọi heuristic
-đều nhanh hơn phương pháp chính xác và không nhận tối ưu chỉ từ chất lượng
-nghiệm. Một benchmark heuristic riêng cần cùng miền nhãn, validator và
-định nghĩa thời gian trước khi so sánh.
-Hướng GA chuyển đổi từ radio labeling \cite{sarhan2026genetic} cần cùng
-ngân sách và nhiều seed thuật toán, cùng baseline thử nhiều thứ tự ngẫu
-nhiên để đánh giá phần lợi ích của tiến hóa. Nghiệm tốt nhất từ GA vẫn là
-cận trên, trừ khi có bằng chứng tối ưu bổ sung. Hiện chưa có số liệu GA
-để kết luận về chất lượng nghiệm hoặc tốc độ so với SAT--ILP.
+Greedy labeling currently supplies incumbents and MIP starts; it has not
+been timed as a separate heuristic baseline. Heuristics and metaheuristics
+may find good solutions quickly but do not automatically prove optimality.
+A solution attaining a proven lower bound can nevertheless be certified
+optimal. We neither assume that every heuristic is faster than exact methods
+nor infer optimality from solution quality alone. A separate heuristic
+benchmark requires common label-domain conventions, validation, and timing definitions.
+A GA adapted from radio labeling \cite{sarhan2026genetic} should use a common
+budget and multiple algorithmic seeds, together with a random-order multi-start
+baseline to isolate the benefit of evolution. Its best solution remains an
+upper bound unless supported by additional optimality evidence. No GA data
+are currently available to compare quality or speed with SAT--ILP.
 
-Chưa có đối chứng thực nghiệm direct-vs-order, thuật toán chuyên biệt trên
-cây, hoặc MILP khác assignment trong screen mới. Không suy ưu thế đối với
-mọi ILP chỉ từ một formulation/backend. Seed sinh graph đo biến thiên
-đầu vào; lặp cùng graph đo biến thiên thời gian. Hai khái niệm không thay
-thế nhau. Runtime nhỏ còn chịu chi phí startup và license; chỉ dùng cùng
-một định nghĩa thời gian trong mỗi phép so sánh.
+The new screen does not include a direct-versus-order ablation, specialized
+tree algorithms, or MILP formulations other than assignment. Results for
+one formulation/backend cannot establish superiority over all ILP methods.
+Graph-generation seeds measure input variation; repeated runs on one graph
+measure timing variation. These are not interchangeable. Short runtimes
+also reflect startup and licensing overhead; each comparison must use a
+consistent timing definition.
 
-Các công thức đã biết và các chứng minh đối chứng ở phụ lục dùng kiểm tra
-pipeline, chưa được nhận là đóng góp toán học mới. Cận dưới $m+4$ cho
-$C_n\circ P_m$ không đủ khẳng định đẳng thức tổng quát nếu thiếu construction
-cận trên. Một ghi chú khảo sát hoặc đề xuất do AI tạo không thay thế bài
-báo gốc khi khẳng định tính mới hay độ phức tạp của một họ cụ thể.
+Known formulas and the reference proofs in the appendix validate the
+pipeline and are not claimed as new mathematical contributions. The lower
+bound $m+4$ for $C_n\circ P_m$ does not establish equality without an upper-bound
+construction. A survey note or AI-generated proposal does not replace an
+original publication when establishing novelty or complexity for a graph class.
 
-\subsection{Ưu tiên tiếp theo}
-Bước gần nhất là chốt danh mục công thức/cận đối chứng với đúng miền áp
-dụng, phân tích những trường hợp pilot chưa tối ưu, rồi định nghĩa lượt
-xác nhận có lặp trên cùng thiết kế. Giữ các kết quả Gurobi tốt hơn; không
-chọn lại bộ dữ liệu chỉ để tăng tỷ lệ SAT thắng.
-Sau đó mới chọn một cải tiến SAT có thể đánh giá bằng ablation, chẳng hạn
-tái sử dụng solver giữa các span hoặc tối ưu sinh ràng buộc. Chứng thư
-UNSAT độc lập là hướng tăng độ tin cậy cho kết luận tối ưu khi cận toán học
-không đủ. Không bổ sung đồng thời nhiều kỹ thuật rồi quy toàn bộ cải thiện
-cho một kỹ thuật riêng.
+\subsection{Next priorities}
+The repeated confirmation experiment has now been completed. The immediate
+priority is to review the formula/bound references within their applicability
+domains and interpret instances for which optimality remains unresolved.
+Results favoring Gurobi must be retained; the dataset should not be reselected
+to increase the fraction of SAT wins. The SAT--ILP comparison should be
+consolidated before proceeding to the proposed GA baseline.
+A subsequent SAT improvement should be evaluated by ablation, for example
+solver reuse across spans or more efficient constraint generation. Independently
+checkable UNSAT certificates would strengthen optimality conclusions where
+mathematical bounds are insufficient. Multiple techniques should not be
+introduced simultaneously and their combined gains attributed to a single technique.
 
-Đánh giá tiếp theo cần phân biệt chi phí sinh mô hình với chi phí tìm kiếm,
-đồng thời giữ các instance không giải được trong budget. Điều này giúp
-xác định một cải tiến có hiệu quả ở bước nào, thay vì suy cơ chế chỉ từ
-runtime tổng hoặc từ số clause ở một span riêng lẻ.
+Further evaluation should distinguish model-construction cost from search
+cost and retain instances not solved within budget. This helps identify
+where an improvement acts, rather than inferring its mechanism solely
+from total runtime or clause counts at one span.

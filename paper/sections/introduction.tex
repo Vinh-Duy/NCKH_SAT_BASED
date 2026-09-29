@@ -1,49 +1,48 @@
-\section{Giới thiệu và câu hỏi nghiên cứu}
-Bài toán $L(h,k)$-labeling mô hình hóa yêu cầu cách biệt nhãn ở hai mức
-khoảng cách, xuất phát từ phân bổ tần số \cite{griggs,calamoneri}. Nghiên cứu
-này xét một bộ giải SAT dùng chung cho đồ thị đầu vào và cặp $(h,k)$.
-Tính tổng quát là phạm vi áp dụng của mô hình; một tập benchmark hữu hạn
-không đại diện mọi đồ thị và không bảo đảm giải nhanh mọi instance.
+\section{Introduction and research questions}
+The $L(h,k)$-labeling problem models label-separation requirements at two
+graph distances and originates in frequency assignment \cite{griggs,calamoneri}.
+This study considers a SAT solver applicable to an input graph and a pair
+$(h,k)$. Generality refers to the scope of the formulation: a finite benchmark
+set neither represents all graphs nor guarantees efficient solution of every instance.
 
-Trọng tâm là phương pháp giải chính xác và mức độ xác nhận kết quả;
-không đặt giả định SAT phải nhanh hơn ILP trên mọi đầu vào.
-Bốn câu hỏi chi phối thiết kế nghiên cứu:
+The focus is exact optimization and the strength of the evidence supporting
+its results. We do not assume that SAT must outperform ILP on every input.
+Four questions guide the study:
 \begin{enumerate}
-\item Mã hóa và quá trình tìm span có bảo toàn tính khả thi, cận và kết
-luận tối ưu khi thay đổi đồ thị và $(h,k)$ không?
-\item Trên miền có công thức chính xác hoặc cận đã chứng minh, nghiệm và
-kết luận của solver có phù hợp không; những cận nào đạt dấu bằng trên
-các instance đã khảo sát?
-\item Chi phí tổng, kích thước mô hình và khả năng chứng minh tối ưu của
-SAT so với assignment ILP thay đổi thế nào theo quy mô và cấu trúc đồ thị?
-\item Trên những họ có phép đối xứng đã chứng minh, thêm ràng buộc đối xứng
-ảnh hưởng thế nào đến kích thước CNF và thời gian giải?
+\item Do the encoding and span search preserve feasibility, bounds, and
+optimality conclusions across graphs and parameter pairs $(h,k)$?
+\item Where exact formulas or proven bounds apply, do solver results agree
+with them, and which bounds are attained on the evaluated instances?
+\item How do total computational cost, model size, and the ability to prove
+optimality differ between SAT and assignment ILP as graph size and structure vary?
+\item On families with justified symmetries, how do symmetry-breaking
+constraints affect CNF size and solution time?
 \end{enumerate}
-Câu hỏi thứ nhất được xử lý bằng chứng minh và kiểm thử với oracle vét cạn.
-Công thức đối chứng có điều kiện áp dụng rõ ràng được tách khỏi cận tổng
-quát và cận cuối tìm kiếm. Dữ liệu cây và pilot đa họ cung cấp bằng chứng
-ban đầu về độ khớp và khả năng xác định tối ưu trong thời hạn.
-Các lượt $L(2,1)$ ở phụ lục trả lời một phần câu hỏi thứ tư.
-Kết quả đối xứng không thay thế đối chứng SAT--ILP;
-kết quả trên cây không đủ suy ra hiệu năng trên mọi đồ thị.
+The first question is addressed through proofs and tests against an exhaustive
+oracle. Reference formulas with explicit applicability conditions are separated
+from general bounds and final search bounds. The tree experiments and the
+multi-family pilot provide initial evidence of agreement and the ability to
+establish optimality within a time limit. The supplementary $L(2,1)$ experiments
+partially address the fourth question. Symmetry experiments do not replace
+SAT--ILP comparisons, and results on trees do not establish performance on all graphs.
 
-\subsection{Nội dung đóng góp và phạm vi bằng chứng}
-Nghiên cứu hiện thực hiện ba nội dung sau:
+\subsection{Contributions and scope of evidence}
+The current study provides the following:
 \begin{enumerate}
-\item Trình bày pipeline SAT cho $L(h,k)$ với chứng minh tương đương khả
-thi của mã hóa ngưỡng và bất biến tìm span, cùng mô hình assignment ILP
-làm đối chứng phương pháp chính xác.
-\item Xây dựng quy trình kiểm chứng nghiệm độc lập, lưu cấu hình và witness,
-đối chiếu công thức/cận đúng miền áp dụng, đồng thời phân biệt kết quả tối
-ưu đã xác nhận với nghiệm khả thi khi hết ngân sách.
-\item Khảo sát khả năng chứng minh tối ưu và chi phí tính toán trên các
-instance có cấu trúc và ngẫu nhiên; báo cả trường hợp SAT và ILP chưa xác
-định tối ưu, thay vì chỉ so thời gian trên các instance dễ.
+\item An $L(h,k)$ SAT pipeline, including a proof of feasibility equivalence
+for the threshold encoding and a span-search invariant, together with an
+assignment ILP formulation as an exact baseline.
+\item An independent labeling-validation procedure, configuration and witness
+records, and comparisons with formulas and bounds within their validity domains,
+distinguishing established optima from feasible solutions at the time limit.
+\item An evaluation of optimality coverage and computational cost on structured
+and random instances, including cases where SAT or ILP does not establish
+optimality, rather than timing comparisons restricted to easy instances.
 \end{enumerate}
-Đây là các nội dung có bằng chứng trong bản thảo hiện tại, không phải
-tuyên bố order encoding là kỹ thuật mới hoặc SAT luôn vượt ILP.
-Các chứng minh cận cho đồ thị có cấu trúc phục vụ kiểm chứng. Thực nghiệm
-hữu hạn chưa xác lập công thức mới cho toàn bộ họ hoặc giải quyết một
-giả thuyết mở; mọi tuyên bố như vậy cần chứng minh và đối chiếu tài liệu
-riêng. Phần công trình liên quan xác định các kỹ thuật đã có và phân biệt
-những biến thể labeling.
+These are the contributions supported by the current manuscript. They do not
+claim that order encoding is new or that SAT always outperforms ILP. Bounds
+for structured graphs serve as validation references. Finite experiments do
+not establish a new formula for an entire family or resolve an open conjecture;
+such claims require separate proofs and comparison with prior work. The
+related-work section identifies established techniques and distinguishes
+between labeling variants.

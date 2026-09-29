@@ -1,88 +1,107 @@
-\section{Công trình liên quan và vị trí nghiên cứu}
-\subsection{Gán nhãn ở hai khoảng cách}
-Griggs và Yeh nghiên cứu $L(2,1)$ và các cận theo cấu trúc đồ thị
-\cite{griggs}. Survey của Calamoneri hệ thống hóa nhiều chế độ $(h,k)$
-và họ đồ thị \cite{calamoneri}. $L(2,1)$ là trường hợp kinh điển, thích hợp
-làm mặc định và đối chứng; không phải chế độ có ràng buộc mạnh nhất trong
-mọi $L(h,k)$. Trên cùng đồ thị, tăng một ngưỡng trong khi giữ ngưỡng kia
-không đổi chỉ có thể thu hẹp tập labeling khả thi.
+\section{Related work and research positioning}
+\subsection{Three complementary comparison perspectives}
+We organize the evidence around three perspectives: theoretical formulas
+and bounds on specified graph classes; heuristics and metaheuristics that
+construct feasible solutions; and exact SAT/ILP methods that can establish
+optimality upon completion. These categories are not mutually exclusive.
+Exact solvers may use heuristics to obtain incumbents and theoretical bounds
+to prune the search. At a time limit, an exact solver may return only bounds
+or a feasible solution. Conversely, a heuristic solution attaining a proven
+lower bound can also be certified optimal.
 
-Trên cây không tầm thường, $\lambda_{2,1}(T)$ thuộc
-$\{\Delta+1,\Delta+2\}$; có thuật toán chuyên biệt tuyến tính
-\cite{hasunuma}. Fiala, Golovach và Kratochvíl chứng minh việc tìm span tối
-thiểu trên cây là NP-hard khi $q$ không chia $p$ \cite{fiala2008trees}.
-Do đó $(3,2)$ là một lựa chọn có cơ sở cho khảo sát. Đây là phát biểu độ
-phức tạp trường hợp xấu nhất của một lớp đầu vào, không dự báo rằng mọi
-cây ngẫu nhiên hoặc mọi họ con như đường đi đều khó.
-NP-hard cũng không có nghĩa SAT và ILP là những phương pháp chính xác
-duy nhất; suy luận loại trừ thuật toán đa thức tổng quát cần giả thiết
-$\mathrm{P}\ne\mathrm{NP}$ và đúng miền tham số của định lý.
+We assess SAT/ILP through formulation correctness, agreement with theory,
+optimality coverage, remaining bound gaps, and computational cost. Without
+a sufficiently systematic literature review, we do not claim that exact
+methods are the least-studied class. The current experimental sequence is
+to audit existing results and complete the SAT--ILP comparison before
+evaluating an adapted genetic algorithm (GA).
 
-Murugan \cite{murugan2015corona} đã nghiên cứu $L(2,1)$ trên các tích corona
-và cận cho corona tổng quát. Vì vậy nghiên cứu này không nhận là công trình
-đầu tiên về gán nhãn corona. Việc thế bậc cực đại của một họ vào cận tổng
-quát là đối chứng lý thuyết, chưa tự tạo thành một cận mới.
+\subsection{Labeling with two distance constraints}
+Griggs and Yeh studied $L(2,1)$-labeling and graph-structural bounds
+\cite{griggs}. Calamoneri's survey covers many $(h,k)$ regimes and graph
+families \cite{calamoneri}. $L(2,1)$ is a classical case suitable as a default
+and reference, not the most restrictive regime among all $L(h,k)$ problems.
+On a fixed graph, increasing either threshold while holding the other fixed
+can only reduce the set of feasible labelings.
 
-\subsection{Tham số cấu trúc và các biến thể}
-Fiala và cộng sự \cite{fiala2018parameterized} nghiên cứu gán nhãn khoảng
-cách và channel assignment dưới góc độ tham số hóa. Kết quả FPT cho
-$L(p_1,\ldots,p_r)$ dùng đồng thời neighborhood diversity, $r$ và
-$\max_i p_i$. Bản thảo này không triển khai thuật toán FPT đó. Kết quả
-nhấn mạnh vai trò của cấu trúc, nên đánh giá runtime chỉ theo số đỉnh là
-chưa đủ; cần báo cả bậc và họ/mô hình sinh đồ thị.
+For nontrivial trees, $\lambda_{2,1}(T)\in\{\Delta+1,\Delta+2\}$, and a
+specialized linear-time algorithm exists \cite{hasunuma}. Fiala, Golovach,
+and Kratochvíl proved NP-hardness of minimum-span labeling on trees when
+$q$ does not divide $p$ \cite{fiala2008trees}. This motivates the choice
+$(3,2)$ for investigation. The result concerns worst-case complexity over
+an input class; it does not predict that every random tree or every subclass,
+such as paths, is difficult. NP-hardness also does not imply that SAT and ILP
+are the only exact methods. Excluding a general polynomial-time algorithm
+requires $\mathrm{P}\ne\mathrm{NP}$ and the parameter domain of the theorem.
 
-Berthe và cộng sự \cite{berthe2023edge} nghiên cứu gán nhãn \emph{cạnh}.
-Bài toán tương ứng với gán nhãn đỉnh trên đồ thị đường (line graph),
-nhưng cần giữ đúng định nghĩa khoảng cách. Bài đó áp dụng điều kiện thứ
-hai cho cặp nối bằng đường đi dài 2; triển khai hiện tại dùng khoảng cách
-ngắn nhất đúng bằng 2. Hai định nghĩa tương đương trong miền $h\geq k$,
-nhưng không thể chuyển nguyên kết luận sang API $h<k$ mà bỏ qua khác biệt.
-Thí dụ $K_3$ với $(h,k)=(1,2)$ nhận nhãn $0,1,2$ theo định nghĩa của
-triển khai, còn điều kiện chung lân cận cần ba nhãn cách nhau ít nhất 2.
+Murugan \cite{murugan2015corona} studied $L(2,1)$-labeling of corona products
+and bounds for general coronas. Accordingly, this study does not claim to be
+the first work on corona labeling. Substituting a family's maximum degree
+into a general bound provides a theoretical reference, not automatically a new bound.
 
-King, Ras và Zhou \cite{king2010trees} xét $L(h,1,1)$ trên cây, yêu cầu
-nhãn khác nhau ở cả khoảng cách 2 \emph{và 3}. Vì vậy các cận trong bài đó
-không được thay trực tiếp cho cận $L(h,1)$ hoặc $L(h,k)$ ở đây. Chẳng hạn,
-$P_4$ mang nhãn $0,2,4,0$ là $L(2,1)$ hợp lệ, nhưng vi phạm điều kiện
-khoảng cách 3 của $L(2,1,1)$. Hai biến thể gán nhãn cạnh và khoảng cách 3
-là tài liệu mở rộng, chưa thuộc mục tiêu triển khai của nghiên cứu này.
+\subsection{Structural parameters and labeling variants}
+Fiala et al.\ \cite{fiala2018parameterized} studied distance labeling and
+channel assignment from a parameterized-complexity perspective. Their FPT
+result for $L(p_1,\ldots,p_r)$ uses neighborhood diversity, $r$, and
+$\max_i p_i$ jointly as parameters. We do not implement that FPT algorithm.
+The result highlights the role of structure: runtime evaluation based solely
+on vertex count is insufficient, and should also report degree information
+and graph families or generation models.
+
+Berthe et al.\ \cite{berthe2023edge} studied \emph{edge} labeling. This
+corresponds to vertex labeling on a line graph, subject to the appropriate
+distance convention. Their second condition applies to pairs joined by a
+path of length 2, whereas the present implementation uses shortest-path
+distance exactly 2. The definitions agree when $h\geq k$, but results cannot
+be transferred unchanged to the API regime $h<k$. For example, $K_3$ with
+$(h,k)=(1,2)$ admits labels $0,1,2$ under our convention, whereas the
+common-neighbor condition requires three labels separated by at least 2.
+
+King, Ras, and Zhou \cite{king2010trees} studied $L(h,1,1)$-labeling of trees,
+requiring distinct labels at distances 2 \emph{and 3}. Their bounds cannot
+therefore be substituted directly for $L(h,1)$ or $L(h,k)$ bounds here.
+For example, labels $0,2,4,0$ on $P_4$ form a valid $L(2,1)$-labeling but
+violate the distance-3 condition of $L(2,1,1)$. Edge labeling and distance-3
+labeling are related extensions outside the present implementation scope.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Phạm vi của các nhóm công trình và vai trò trong nghiên cứu.}
+\caption{Scope of related work and its role in this study.}
 \label{tab:related}
-\begin{tabular}{p{0.24\linewidth}p{0.31\linewidth}p{0.36\linewidth}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}p{0.36\linewidth}}
 \toprule
-Nguồn & Đối tượng & Vai trò / giới hạn áp dụng\\\midrule
-Griggs--Yeh; Calamoneri \cite{griggs,calamoneri} & $L(2,1)$; survey $L(h,k)$ & Định nghĩa, kết quả nền và đối chứng đã biết.\\
-Fiala và cộng sự \cite{fiala2008trees,fiala2018parameterized} & Độ phức tạp trên cây; tham số cấu trúc & Cơ sở chọn $(3,2)$, xét nhiều cấu trúc; không phải solver đã triển khai.\\
-Berthe và cộng sự \cite{berthe2023edge} & $L(p,q)$ trên cạnh / line graph & Biến thể liên quan; chú ý quy ước đường đi dài 2.\\
-King và cộng sự \cite{king2010trees} & $L(h,1,1)$ trên cây & Có ràng buộc khoảng cách 3, nằm ngoài mô hình hiện tại.\\
-Vu Thanh và cộng sự \cite{vu2026radio} & Radio labeling, preprint & Đối chiếu mô hình và hướng SAT; không xem là kết quả của nghiên cứu này.\\
+Source & Problem & Role and limitations\\\midrule
+Griggs--Yeh; Calamoneri \cite{griggs,calamoneri} & $L(2,1)$; $L(h,k)$ survey & Definitions, foundational results, and established references.\\
+Fiala et al.\ \cite{fiala2008trees,fiala2018parameterized} & Tree complexity; structural parameters & Motivation for $(3,2)$ and structural diversity; not implemented solvers.\\
+Berthe et al.\ \cite{berthe2023edge} & Edge / line-graph $L(p,q)$ & Related variant; uses the length-2-path convention.\\
+King et al.\ \cite{king2010trees} & $L(h,1,1)$ on trees & Distance-3 constraints, outside the current model.\\
+Vu Thanh et al.\ \cite{vu2026radio} & Radio labeling, preprint & Related formulation and SAT approach; not results of this study.\\
 \bottomrule
 \end{tabular}
 \end{table}
-Bảng~\ref{tab:related} phân biệt tài liệu nền với biến thể mở rộng; việc cùng
-mang tên ``labeling'' không làm các bài toán hoặc giá trị tối ưu đồng nhất.
+Table~\ref{tab:related} distinguishes foundational references from extensions.
+The shared term ``labeling'' does not make these problems or their optima identical.
 
-\subsection{Quan hệ với phương pháp SAT cho radio labeling}
-Preprint của Vu Thanh và cộng sự \cite{vu2026radio} dùng order encoding và
-incremental SAT cho radio labeling; đánh giá trong bài chọn tham số radio
-bằng đường kính. Bài hiện được trích dưới dạng preprint, không gán tên tạp
-chí hay thông tin chấp nhận khi chưa có bản xuất bản chính thức.
-Với tham số radio $r$, ngưỡng là $r+1-d(u,v)$; $r=2$ cho $L(2,1)$,
-nhưng $r=3$ còn ràng buộc khoảng cách 3 nên khác $L(3,2)$. Không đối chiếu
-span/runtime của hai nghiên cứu như cùng một bài toán. Phương pháp hiện
-xét hai ngưỡng tùy chỉnh và dựng solver mới ở từng span. Khác biệt này xác
-định phạm vi, chưa tự chứng minh tính mới hoặc hiệu năng tốt hơn.
+\subsection{Relation to SAT methods for radio labeling}
+The preprint by Vu Thanh et al.\ \cite{vu2026radio} uses order encoding and
+incremental SAT for radio labeling; its evaluation sets the radio parameter
+to the graph diameter. It is cited as a preprint, without assigning journal
+or acceptance information in the absence of an official publication.
+With radio parameter $r$, the threshold is $r+1-d(u,v)$. Setting $r=2$
+yields $L(2,1)$, whereas $r=3$ also imposes a distance-3 constraint and thus
+differs from $L(3,2)$. Spans and runtimes from the two studies are not compared
+as results for an identical problem. Our approach uses two configurable
+thresholds and a fresh solver at each span. This distinction specifies scope;
+it does not itself establish novelty or superior performance.
 
-\subsection{Đối chứng heuristic từ thuật toán di truyền}
-Sarhan và cộng sự \cite{sarhan2026genetic} nghiên cứu GA cho radio labeling
-với tham số bằng đường kính đồ thị. Bài đó không trực tiếp giải $L(h,k)$.
-Chẳng hạn $C_3$ có đường kính 1 nên radio labeling đạt span 2, còn
-$L(2,1)$ cần span 4. Do đó không nhập các số liệu radio vào bảng đối chứng
-ở đây. Một hướng chuyển đổi là tìm hoán vị đỉnh bằng GA và giải mã tham
-lam với ngưỡng $h$ ở khoảng cách 1, $k$ ở khoảng cách 2, và 0 ở các cặp
-còn lại. Nhãn có thể lặp trên các đỉnh không bị ràng buộc với nhau.
-Đây là thiết kế đối chứng bổ sung, chưa được triển khai hoặc thực nghiệm
-trong bản thảo; không phải tái lập nguyên thuật toán và dữ liệu của bài gốc.
+\subsection{A genetic-algorithm heuristic baseline}
+Sarhan et al.\ \cite{sarhan2026genetic} studied a GA for radio labeling with
+the parameter set to the graph diameter. Their algorithm does not directly
+solve $L(h,k)$. For example, $C_3$ has diameter 1 and radio span 2, whereas
+$L(2,1)$ requires span 4. Their radio-labeling results are therefore not
+imported into our comparison tables. One possible adaptation uses a GA to
+search vertex permutations and a greedy decoder with thresholds $h$ at
+distance 1, $k$ at distance 2, and 0 otherwise. Unconstrained vertices may
+share labels. This supplementary baseline is a proposed design, not an
+implemented or evaluated method in this manuscript, nor a reproduction
+of the original algorithm and data.
