@@ -1,51 +1,60 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{vietnam}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,booktabs,array}
 \usepackage{graphicx,float,hyperref}
 \usepackage{placeins}
 \usepackage[font=small,labelfont=bf]{caption}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
-\newtheorem{definition}{Định nghĩa}[section]
-\newtheorem{proposition}{Mệnh đề}[section]
-\newtheorem{remark}{Nhận xét}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{remark}{Remark}[section]
 \newcommand{\OPT}{\texttt{OPT}}
 \newcommand{\FEAS}{\texttt{FEASIBLE}}
 \input{paper/generated/counts}
 \input{paper/generated/tree_screen_counts}
+\input{paper/generated/general_confirm}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs\\[0.5em]
-{\large Bản thảo nghiên cứu: phương pháp và thực nghiệm}}
+{\large Research manuscript: methods and experiments}}
 \author{}
-\date{Ngày 27 tháng 9 năm 2026}
+\date{September 29, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-Nghiên cứu xây dựng phương pháp thỏa mãn Boolean (SAT) để tối thiểu hóa span của phép gán nhãn
-$L(h,k)$ trên đồ thị đơn vô hướng, với $h\geq k\geq1$. Order encoding biểu
-diễn các nhãn bằng biến ngưỡng; tìm kiếm trên khoảng cận dùng nghiệm tham lam
-làm cận trên và phân biệt nghiệm khả thi với kết luận tối ưu. Mã hóa áp dụng
-cho cả đồ thị không liên thông, không phụ thuộc một họ cấu trúc riêng.
-Quy hoạch tuyến tính nguyên (ILP) dạng assignment là mô hình đối chứng.
-Bản thảo trình bày chứng minh tương
-đương, điều kiện phá đối xứng và quy trình lưu, kiểm tra độc lập nghiệm.
-Khảo sát $L(3,2)$ hiện có gồm \TreeGraphCount{} cây ngẫu nhiên với 100--1600
-đỉnh: hai backend trả cùng span tối ưu trên mọi cây, và toàn bộ
-\TreeObservationCount{} nghiệm đã được kiểm tra lại. Có \TreeTightCount{}
-cây đạt cận dưới theo bậc. Dữ liệu $L(2,1)$ trên chu trình và đồ thị tích
-được giữ làm thí nghiệm bổ sung về đối xứng. Các kết quả này chưa xác lập
-ưu thế hiệu năng trên đồ thị tổng quát. Pilot đa họ 117 bài ghi nhận
-79 bài tối ưu bằng SAT và 97 bằng ILP trong giới hạn 30 giây mỗi lượt;
-12 bài có công thức đối chứng đều khớp ở cả hai backend. Solver
-hiện tại chưa dùng incremental SAT và chưa xuất chứng thư UNSAT độc lập.
+We develop a Boolean satisfiability (SAT) approach to minimizing the span of
+$L(h,k)$-labelings of simple undirected graphs, with $h\geq k\geq1$.
+Order encoding represents labels using threshold variables. A bounded
+search uses a greedy labeling as an upper bound and distinguishes feasible
+solutions from proven optima. The encoding also handles disconnected graphs
+and does not rely on a particular graph family. An assignment integer linear
+programming (ILP) formulation serves as an exact baseline. We establish
+encoding equivalence, specify the conditions for symmetry breaking, and
+provide a procedure for storing and independently validating labelings.
+The current $L(3,2)$ study includes \TreeGraphCount{} random trees with
+100--1600 vertices: both backends report the same optimal span on every
+tree, and all \TreeObservationCount{} labelings have been revalidated.
+The degree-based lower bound is attained on \TreeTightCount{} trees.
+Archived $L(2,1)$ results on cycles and graph products provide supplementary
+symmetry experiments. These results do not establish a performance advantage
+on general graphs. A pilot study comprising 117 instances across several
+families yields 79 instances solved to optimality by SAT and 97 by ILP
+within 30 seconds per run; all 12 instances with exact reference formulas
+agree with both backends. A confirmation experiment with three repetitions
+on the same cohort yields \ConfirmSATStable/117 instances solved to optimality
+in all three runs by SAT and \ConfirmILPStable/117 by ILP. The current solver
+does not use incremental SAT or export independently checkable UNSAT certificates.
 \end{abstract}
-\noindent\textbf{Từ khóa:} $L(h,k)$-labeling, SAT, order encoding,
-tối ưu span, đối chứng ILP, thực nghiệm tái lập.
+\noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
+span minimization, ILP baseline, reproducible experiments.
 \input{paper/sections/introduction}
 \input{paper/sections/problem}
 \input{paper/sections/related_work}
 \input{paper/sections/models}
 \input{paper/sections/search_symmetry}
 \input{paper/sections/experiments}
+\input{paper/sections/confirmation}
 \input{paper/sections/discussion}
 \input{paper/sections/conclusion}
 \bibliographystyle{plain}

@@ -1,172 +1,177 @@
-\section{Thực nghiệm bổ sung \texorpdfstring{$L(2,1)$}{L(2,1)} về đối xứng}\label{sec:legacy-experiments}
-\subsection{Nguồn dữ liệu và kiểm tra tính đầy đủ}
-Thí nghiệm đối xứng này lấy từ hai lượt chạy đã hoàn tất:
+\section{Supplementary \texorpdfstring{$L(2,1)$}{L(2,1)} symmetry experiments}\label{sec:legacy-experiments}
+\subsection{Data sources and completeness checks}
+These symmetry experiments use two completed runs:
 \begin{itemize}
-\item \path{results/runs/cycles_main_r1.csv}: $C_n$ với
-$\CycleFirst\leq n\leq\CycleLast$, gồm \CycleCount{} đồ thị;
-\item \path{results/runs/products_main_r1.csv}: bảy họ product với
-$\ProductFirst\leq n\leq\ProductLast$ và
-$\ProductMFirst\leq m\leq\ProductMLast$, gồm \ProductCount{} đồ thị.
+\item \path{results/runs/cycles_main_r1.csv}: $C_n$ with
+$\CycleFirst\leq n\leq\CycleLast$, comprising \CycleCount{} graphs;
+\item \path{results/runs/products_main_r1.csv}: seven product families with
+$\ProductFirst\leq n\leq\ProductLast$ and
+$\ProductMFirst\leq m\leq\ProductMLast$, comprising \ProductCount{} graphs.
 \end{itemize}
-Mỗi dòng là một cặp Baseline/Symmetry trên cùng đồ thị. Tổng cộng có
-\ComparisonCount{} cặp, tương ứng \WitnessCount{} lượt chạy. Các CSV lịch sử
-vẫn được giữ để đối chiếu nhưng không được ghép vào bảng hoặc hình thực
-nghiệm dưới đây. Sweep Petersen lịch sử và các kết quả ILP cũ không phải
-đối chứng của hai lượt này.
+Each row pairs Baseline and Symmetry on the same graph. There are
+\ComparisonCount{} pairs, corresponding to \WitnessCount{} runs. Historical
+CSVs are retained for reference but are not pooled into the following tables
+or figures. The historical Petersen sweep and older ILP results are not
+baselines for these two runs.
 
-Mỗi CSV đi kèm manifest cấu hình/mã nguồn/môi trường và JSONL chứa nhãn
-incumbent, cận dưới, lịch sử thử span, bộ đếm của các lần thử đã hoàn tất.
-Script xuất bảng kiểm tra tập tên đồ thị đúng miền quét, không trùng hoặc
-thiếu dòng, hai span của mọi cặp OPT/OPT bằng nhau, và witness khớp dòng CSV.
-Tất cả \WitnessCount{} labeling được kiểm tra lại bằng cách duyệt cạnh và
-đường đi hai bước. Đồng thời dựng lại hai CNF tại \texttt{Count\_Span} để
-đối chiếu số biến, clause thô và clause sau rút gọn; bước này không gọi SAT.
-Hash của CSV, manifest, witness và script xuất bảng được lưu trong
-\path{paper/generated/sources.json}. Kiểm tra nhãn không phải kiểm tra độc
-lập các kết luận UNSAT: nghiên cứu chưa xuất chứng thư DRAT/LRAT.
+Each CSV has a configuration/source/environment manifest and a JSONL file
+containing incumbent labels, lower bounds, span-search history, and counters
+for completed trials. The exporter checks graph names against the sweep
+domain, absence of missing or duplicate rows, equal spans in every OPT/OPT
+pair, and consistency between witnesses and CSV rows. All \WitnessCount{}
+labelings are rechecked by traversing edges and two-step paths. Under the
+matching historical source version, both CNFs are rebuilt at
+\texttt{Count\_Span} to verify variable, raw-clause, and simplified-clause
+counts without solving SAT. CSV, manifest, witness, and exporter hashes
+are stored in \path{paper/generated/sources.json}. Labeling checks do not
+independently verify UNSAT conclusions; DRAT/LRAT certificates are not exported.
 
-\subsection{Cấu hình và định nghĩa phép đo}
+\subsection{Configuration and measurement definitions}
 \begin{table}[H]
-\centering\small\input{paper/generated/run_config}
-\caption{Cấu hình lấy từ manifest. Với product, miền $m$ là
-$\ProductMFirst$--$\ProductMLast$; budget áp dụng cho từng cấu hình của từng đồ thị.}
+\centering\small\input{paper/generated/english/paper/generated/run_config}
+\caption{Configuration from the manifests. For products, the $m$ range is
+$\ProductMFirst$--$\ProductMLast$; the budget applies to each configuration
+on each graph.}
 \end{table}
-Hai lượt dùng Python 3.13.7, NetworkX 3.6.1 và PySAT 1.9.dev15 trên môi trường
-macOS 13.7.8 x86\_64 được ghi trong manifest. Chưa lưu đầy đủ thông tin CPU,
-RAM hoặc tải nền nên không diễn giải các số đo như đặc tính độc lập với máy.
-Tên tùy chọn \texttt{hybrid} được giữ để tương thích CLI; lựa chọn span hiện
-là trung điểm của khoảng cận, tức tìm kiếm nhị phân, với solver mới ở mỗi
-lần thử. Thứ tự Base/Sym luân phiên theo instance; cả hai lượt dùng
-\texttt{order\_offset=0}.
+Both runs used Python 3.13.7, NetworkX 3.6.1, and PySAT 1.9.dev15 on the
+recorded macOS 13.7.8 x86\_64 environment. CPU, RAM, and background-load
+information was not fully recorded, so timings are not machine-independent
+characteristics. The option name \texttt{hybrid} is retained for CLI
+compatibility; span selection uses the interval midpoint, i.e., binary search,
+with a fresh solver per trial. Base/Sym order alternates by instance;
+both runs use \texttt{order\_offset=0}.
 
-Baseline và Symmetry dùng cùng encoder và tiền xử lý chung. Chỉ $C_n$ cố
-định $f(0)=0$, kết hợp thứ tự hai lân cận qua phản xạ; thí nghiệm này chưa
-phân tách riêng tác động của hai điều kiện đó. Product không cố định gốc.
-Các họ ghi ``Không thêm'' dùng cùng mô hình ở cả hai lượt, đóng vai trò
-quan sát biến thiên khi lặp, không phải một kỹ thuật phá đối xứng mới.
+Baseline and Symmetry share the encoder and common preprocessing. Only $C_n$
+fixes $f(0)=0$, combined with reflection-based neighbor ordering; these
+experiments do not isolate the effects of the two constraints. Products do
+not use root fixing. Families marked ``None added'' use the same model in
+both runs and measure repeated-run variation, not a new symmetry-breaking technique.
 
-\texttt{Time\_*} tính toàn bộ preprocessing, khởi động tiến trình, xây CNF,
-tìm kiếm, validation và cleanup. Deadline được áp dụng cho tiến trình tìm
-kiếm; preprocessing/cleanup có thể làm runtime vượt nhẹ budget. Thời gian
-dựng lại hai CNF để đo kích thước nằm ngoài hai runtime này. Thời gian
-\texttt{Encoding\_Time} và \texttt{SAT\_Solve\_Time} chỉ cộng các lần thử đã
-hoàn tất, không bao gồm mọi overhead.
+\texttt{Time\_*} includes preprocessing, process startup, CNF construction,
+search, validation, and cleanup. The deadline applies to the search process;
+preprocessing and cleanup may cause slight overruns. Rebuilding the two
+CNFs for size measurement is outside these runtimes.
+\texttt{Encoding\_Time} and \texttt{SAT\_Solve\_Time} sum completed trials
+only and do not include all overhead.
 
-\texttt{Count\_Span} là giá trị lớn hơn của hai span incumbent. Khi cả hai
-lượt chứng minh cùng tối ưu, đây là span tối ưu; nếu chưa, đây chỉ là một
-cận trên khả thi chung. \texttt{Clause\_Raw\_*} đếm sau thay hằng ở gốc và
-trước tiền xử lý chung; \texttt{Clause\_*} đếm sau tiền xử lý, gồm unit giữ
-lại. Số biến là số được cấp phát, không phải số chưa bị gán bởi lan truyền.
-Đây là CNF đầu vào, không phải số clause sau preprocessing/học của backend.
+\texttt{Count\_Span} is the larger incumbent span. When both runs establish
+the same optimum, it is the optimal span; otherwise, it is only a common
+feasible upper bound. \texttt{Clause\_Raw\_*} is counted after root-constant
+substitution and before common preprocessing; \texttt{Clause\_*} is counted
+after preprocessing, including retained units. Variable counts refer to
+allocated variables, not those left unassigned by propagation. These are
+input CNF counts, not counts after backend preprocessing or clause learning.
 
-\subsection{Phạm vi đã giải và các trường hợp chưa tối ưu}
+\subsection{Optimality coverage and unresolved instances}
 \begin{table}[H]
 \centering\small\setlength{\tabcolsep}{4pt}
-\input{paper/generated/coverage}
-\caption{Kết quả theo từng họ. Span chỉ tổng hợp các cặp OPT/OPT bằng nhau;
-``Chưa tối ưu'' đếm cặp có ít nhất một lượt chưa xác nhận tối ưu.}
+\input{paper/generated/english/paper/generated/coverage}
+\caption{Results by family. Span ranges include only matching OPT/OPT
+pairs; ``Unresolved'' counts pairs with at least one run lacking an optimality conclusion.}
 \end{table}
-Có \PairedOpt{} cặp cùng OPT và không có cặp OPT/OPT nào bất đồng span.
-Mọi chu trình trong miền khảo sát đạt span 4. Hai instance product chưa
-xác nhận tối ưu ở cả hai cấu hình là $C_9\mathbin{\square}C_{10}$ và
-$C_{10}\mathbin{\square}C_9$:
+There are \PairedOpt{} jointly OPT pairs, with no span disagreements.
+Every cycle in the evaluated domain has span 4. Two product instances
+remain unresolved under both configurations:
+$C_9\mathbin{\square}C_{10}$ and $C_{10}\mathbin{\square}C_9$.
 \begin{table}[H]
-\centering\small\input{paper/generated/unresolved}
-\caption{Khoảng cận $[L,U]$ ở các lượt FEASIBLE; $U$ có labeling cụ thể.
-Các cận lấy từ witness, không suy từ một công thức chưa chứng minh.}
+\centering\small\input{paper/generated/english/paper/generated/unresolved}
+\caption{Bound intervals $[L,U]$ for FEASIBLE runs; each $U$ has an explicit
+labeling. Bounds come from witnesses, not from an unproved formula.}
 \end{table}
-Hai đồ thị này đẳng cấu qua đổi tọa độ. Incumbent có thể khác nhau do thứ tự
-đỉnh và lịch sử tìm kiếm; không coi hai cận trên đó là hai giá trị tối ưu.
-Ở $C_9\mathbin{\square}C_{10}$, cả hai lượt bị ngắt trước khi có lần thử span
-hoàn tất, nên bộ đếm đã ghi bằng 0 không có nghĩa solver không thực hiện
-công việc. Cả bốn lượt FEASIBLE đều có \texttt{Stats\_Complete=False}.
+These graphs are isomorphic by coordinate exchange. Incumbents can differ
+because of vertex order and search history; their upper bounds are not two
+optimal values. For $C_9\mathbin{\square}C_{10}$, both runs were interrupted
+before completing a span trial, so recorded zero counters do not mean the
+solver performed no work. All four FEASIBLE runs have
+\texttt{Stats\_Complete=False}.
 
-\subsection{Kích thước CNF và thời gian theo từng họ}
-Đặt $t_B,t_S$ là thời gian của hai cấu hình. Tỉ số $t_B/t_S>1$ cho biết
-lượt Symmetry nhanh hơn trên cặp đó. Bảng dưới dùng riêng tập cặp cùng OPT;
-các cặp FEASIBLE đã được báo riêng và không được gán runtime thay thế.
+\subsection{CNF size and runtime by family}
+Let $t_B,t_S$ denote the two runtimes. A ratio $t_B/t_S>1$ indicates a faster
+Symmetry run for that pair. The following tables use jointly OPT pairs only.
+FEASIBLE pairs are reported separately and are not assigned substitute runtimes.
 \begin{table}[H]
-\centering\small\input{paper/generated/timing}
-\caption{Tổng runtime và trung vị tỉ số trên các cặp cùng OPT. Tổng thời gian
-và trung vị tỉ số là hai đại lượng khác nhau.}
+\centering\small\input{paper/generated/english/paper/generated/timing}
+\caption{Total runtimes and median ratios on jointly OPT pairs. Total time
+and the median of pairwise ratios are different statistics.}
 \end{table}
 \begin{table}[H]
-\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/encoding}
-\caption{Trung vị phần trăm giảm biến và clause; ba cột cuối đếm số cặp có
-clause Symmetry giảm/bằng/tăng so với Baseline. Cùng tập cặp OPT/OPT như bảng thời gian.}
+\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/english/paper/generated/encoding}
+\caption{Median percentage reductions in variables and clauses. The final
+three columns count pairs with fewer/equal/more Symmetry clauses than Baseline.
+The subset is the same OPT/OPT subset as in the runtime table.}
 \end{table}
-Với chu trình, trung vị giảm clause là \CycleClauseMedian\%, nhưng trung vị
-$t_B/t_S$ chỉ là \CycleTimeRatio. Vì các instance nhỏ, chi phí khởi động và
-phần ngoài lời gọi SAT đáng kể; dữ liệu một lượt này chưa cho thấy lợi ích
-thời gian tổng rõ rệt từ việc giảm kích thước CNF.
+For cycles, the median clause reduction is \CycleClauseMedian\%, whereas
+the median $t_B/t_S$ is only \CycleTimeRatio. These small instances incur
+substantial startup and non-SAT overhead. This single-run dataset does not
+show a clear total-runtime benefit from the reduced CNF size.
 
-Trên các cặp cùng OPT của $C_n\mathbin{\square}C_m$, trung vị tỉ số là
-\CxCTimeRatio, trong khi tỉ số hai tổng thời gian là \CxCTotalTimeRatio.
-Sự khác nhau cho thấy tổng thời gian chịu ảnh hưởng nhiều hơn bởi một số
-instance tốn thời gian. Với $C_n\circ C_m$ và $C_n\circ P_m$, trung vị lần
-lượt là \CoCTimeRatio{} và \CoPTimeRatio. Đây là cải thiện quan sát trong
-lượt chạy này, chưa phải khẳng định ổn định qua nhiều lần lặp. Các họ
-$P_n\mathbin{\square}P_m$, $P_n\circ P_m$, $P_n\circ C_m$ không thêm đối xứng
-riêng; chênh lệch thời gian giữa hai lượt của chúng phản ánh biến thiên phép đo.
+For jointly OPT $C_n\mathbin{\square}C_m$ pairs, the median ratio is
+\CxCTimeRatio, while the ratio of total runtimes is \CxCTotalTimeRatio.
+The difference indicates that totals are more sensitive to a few expensive
+instances. For $C_n\circ C_m$ and $C_n\circ P_m$, median ratios are
+\CoCTimeRatio{} and \CoPTimeRatio, respectively. These are observed gains
+in this run, not established improvements across repeated runs.
+$P_n\mathbin{\square}P_m$, $P_n\circ P_m$, and $P_n\circ C_m$ add no
+family-specific symmetry constraints; timing differences reflect measurement variation.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_runtime_C.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_clauses_C.png}
-\caption{Chu trình: chênh lệch runtime và số clause Base trừ Sym. Giá trị
-âm ở hình thời gian nghĩa là lượt Symmetry chậm hơn.}
+\caption{Cycles: runtime and clause differences, Base minus Sym. Negative
+runtime differences indicate slower Symmetry runs.}
 \end{figure}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_cartesian.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_corona.png}
-\caption{Runtime product: mỗi đường là một họ riêng, mỗi điểm là trung bình
-chênh lệch trên các cặp cùng họ, cùng số đỉnh và cùng OPT. Không gộp các họ
-thành một đường trung bình; hai cặp chưa tối ưu không nằm trong hình này.}
+\caption{Product runtimes: each curve represents a separate family; each
+point is the mean difference over jointly OPT pairs in that family with the
+same vertex count. Families are not pooled; the two unresolved pairs are excluded.}
 \end{figure}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_cartesian.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_corona.png}
-\caption{Clause product: Base trừ Sym tại cùng span, sau cùng tiền xử lý,
-trên tập cặp OPT/OPT. Các đường giá trị 0 có thể trùng nhau ở những họ không
-thêm điều kiện đối xứng riêng.}
+\caption{Product clauses: Base minus Sym at a common span after common
+preprocessing, restricted to OPT/OPT pairs. Zero-valued curves may overlap
+for families with no additional symmetry constraints.}
 \end{figure}
 \FloatBarrier
 
-\subsection{Bộ đếm tìm kiếm và thời gian thành phần}
+\subsection{Search counters and runtime components}
 \begin{table}[H]
-\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/search_stats}
-\caption{Tổng xung đột và quyết định của Glucose qua các lần thử span đã
-hoàn tất, chỉ trên cặp OPT/OPT. Bao gồm cả lần thử SAT và UNSAT.}
+\centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/english/paper/generated/search_stats}
+\caption{Total Glucose conflicts and decisions over completed span trials
+on OPT/OPT pairs, including both SAT and UNSAT trials.}
 \end{table}
 \begin{table}[H]
-\centering\small\input{paper/generated/components}
-\caption{Trung vị thời gian dựng CNF và thời gian bên trong lời gọi SAT
-(giây), cộng theo từng quá trình tìm kiếm rồi lấy trung vị trên cặp OPT/OPT.}
+\centering\small\input{paper/generated/english/paper/generated/components}
+\caption{Median CNF-construction and internal SAT-call times in seconds,
+summed within each search and then summarized over OPT/OPT pairs.}
 \end{table}
-Số clause ở một span chung đo kích thước mô hình; tổng quyết định/xung đột
-đo công việc qua toàn bộ các span đã thử. Hai cấu hình có thể đi qua những
-span khác nhau khi tìm được incumbent khác nhau; do đó không diễn giải
-bộ đếm tổng thành hiệu năng của một lời gọi tại span cố định. Bộ đếm đầy đủ
-ở các lượt OPT hỗ trợ phân tích tìm kiếm nhưng không tự thay thế phép đo
-runtime hoặc các lượt lặp. Các bộ đếm khác backend cũng không được mặc
-nhiên coi là cùng thước đo.
+Clause counts at a common span measure model size; total decisions/conflicts
+measure work over all completed span trials. The two configurations may
+visit different spans after finding different incumbents. Aggregate counters
+therefore do not measure a single fixed-span call. Complete OPT-run counters
+support search analysis but do not replace runtime measurements or repeated
+runs. Counters from different backends are not automatically equivalent metrics.
 
-\subsection{Tái lập và giới hạn kiểm chứng}
-Với đúng phiên bản nguồn đã chạy, \texttt{make report} kiểm tra hai CSV cùng manifest/witness, dựng lại
-counts, sinh bảng, sinh hình rồi biên dịch bản thảo. Các file kết quả gốc
-không bị sửa. Resume của benchmark chỉ nhận cùng cấu hình, source, schema
-và môi trường; muốn đổi budget hoặc thử lại dòng FEASIBLE phải tạo lượt mới.
+\subsection{Reproduction and verification limits}
+With the matching historical source version, \texttt{make report} checks
+the two CSVs and their manifests/witnesses, reconstructs counts, generates
+tables and figures, and compiles the manuscript. Raw results remain unchanged.
+Benchmark resume requires matching configuration, source, schema, and environment;
+a different budget or a retry of FEASIBLE rows requires a new run.
 
-Bộ kiểm thử dùng oracle vét cạn trên mọi đồ thị atlas đến 5 đỉnh, kiểm tra
-mọi phép gán trên đồ thị 3 đỉnh, các giá trị $h,k$ ở mức encoder, tính tương
-đương của rút gọn, phản xạ của các constructor và các ràng buộc ILP.
-Các đối chứng Gurobi mới được báo riêng trong phần thực nghiệm chính,
-không ghép thời gian vào hai lượt SAT này. Sau khi mã nguồn thay đổi,
-exporter từ chối dựng lại CNF nếu hash khác manifest. PDF hiện tại dùng
-các bảng đã lưu; không sửa hash cũ để bỏ qua kiểm tra.
-Hai lượt main\_r1 là một lần đo mỗi cấu hình trên mỗi instance; chưa có
-ước lượng phương sai hoặc khoảng tin cậy. Chọn riêng các cặp OPT/OPT có
-thể thiên về instance dễ, nên các bảng thời gian không đại diện toàn bộ
-miền khi vẫn còn cặp timeout.
+Tests use an exhaustive oracle on all atlas graphs through five vertices,
+enumerate all assignments on three-vertex graphs, check multiple encoder-level
+$h,k$ values, simplification equivalence, constructor reflections, and ILP
+constraints. New Gurobi comparisons are reported in the main experimental
+section; their times are not pooled with these SAT runs. After source changes,
+the exporter refuses CNF reconstruction if hashes differ from the manifest.
+The current PDF uses archived tables; old hashes are not changed to bypass checks.
+Each main\_r1 instance has one measurement per configuration, so no variance
+or confidence interval is estimated. Restricting timing to OPT/OPT pairs
+can favor easier instances; these tables do not represent the complete domain
+while timeout pairs remain.

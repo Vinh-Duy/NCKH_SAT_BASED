@@ -1,7 +1,15 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data english-tables
+
+# Audit completed confirmation data, publish tables/figures, then compile.
+# No benchmark or solver is run; repeating this target is safe.
+confirmation-data:
+	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_confirmation_report.py
+
+confirmation: confirmation-data
+	$(MAKE) pdf
 
 test:
 	$(PYTHON) -m unittest discover -s tests -v
@@ -13,7 +21,7 @@ tree-tables:
 paper-figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_manuscript_figures.py
 
-manuscript: tree-tables paper-figures
+manuscript: tree-tables paper-figures confirmation-data
 	$(MAKE) pdf
 
 tables:
@@ -27,5 +35,8 @@ report: tables figures tree-tables
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex
 
 # Compile the manuscript using the already archived generated tables.
-pdf:
+english-tables:
+	$(PYTHON) scripts/export_english_tables.py
+
+pdf: english-tables
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex

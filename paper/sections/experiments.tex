@@ -1,143 +1,189 @@
-\section{Thiết kế thực nghiệm và kết quả hiện có}
-\subsection{Phân biệt các bộ dữ liệu}
-Đối chứng chính hiện có là \path{results/runs/tree_l32_screen_v2.csv}:
-\TreeGraphCount{} cây, \TreeObservationCount{} lượt solver, chỉ với
-$(h,k)=(3,2)$. Lượt nhỏ \path{tree_l32_compare_r1.csv} gồm ba cây
-20,30,40 đỉnh, mỗi backend lặp ba lần, dùng kiểm tra pipeline. Hai lượt
-main\_r1 thuộc $L(2,1)$, so sánh Baseline/Symmetry bằng Glucose và được
-trình bày riêng ở Phụ lục~\ref{sec:legacy-experiments}. Không gộp các lượt
-khác backend, budget và phiên bản nguồn thành một phép đo đồng nhất.
+\section{Experimental design and available results}
+\subsection{Scope of the results audit}
+The audit dated September 28, 2026 revalidated witnesses from five current
+runs: the multi-family pilot, the tree screen, the repeated tree comparison,
+and the two main\_r1 symmetry runs. It used shortest-path distances and
+cross-checked configurations, labels, statuses, and bounds across configurations
+or backends. Other archived CSVs were inventoried by source, row count, and
+hash, rather than implicitly certified as correct. The historical main\_r1
+source differs from the current implementation; the audit therefore neither
+recounts historical CNFs nor changes manifest hashes to bypass provenance
+checks. Witness validation is not independent verification of an UNSAT certificate.
+Detailed results are stored in \path{results/analysis/exact_review_20260928/}.
 
-\subsection{Giao thức SAT--ILP}
-CaDiCaL dùng order encoding và tìm kiếm span, dựng solver mới ở mỗi lần
-thử. Gurobi dùng assignment ILP, một thread, với cận trên và MIP start từ
-nghiệm tham lam. Cả hai dùng cùng $(h,k)$ và cùng đồ thị; tắt đối xứng trong
-đối chứng này. Từng backend chạy tuần tự trong một process mới, thứ tự
-backend xoay theo instance/lần lặp. Preflight kiểm tra backend trước sweep.
+\subsection{Separation of datasets}
+The tree comparison uses \path{results/runs/tree_l32_screen_v2.csv}:
+\TreeGraphCount{} trees and \TreeObservationCount{} solver observations,
+all with $(h,k)=(3,2)$. The smaller \path{tree_l32_compare_r1.csv} contains
+three trees with 20, 30, and 40 vertices, each run three times per backend
+to check the pipeline. The two main\_r1 runs concern $L(2,1)$ and compare
+Baseline/Symmetry using Glucose; they are reported separately in
+Appendix~\ref{sec:legacy-experiments}. Runs with different backends, budgets,
+and source versions are not pooled as homogeneous measurements.
 
-Giới hạn ngoài cho mỗi lượt của screen là 60 giây. \texttt{Wall\_Time}
-bao gồm startup, dựng mô hình, giải và thu hồi process; kiểm tra nhãn ở
-parent nằm ngoài thời gian này. Khi hết hạn ngoài, giữ nhãn tham lam đã
-nhận nếu có và trả \FEAS; đây không nhất thiết là incumbent tốt nhất mà
-solver tìm được trước khi bị ngắt. Chỉ \OPT{} trong budget được tính là
-solved. Backend không khả dụng không được coi là timeout hay một chiến
-thắng của backend khác.
+\subsection{SAT--ILP protocol}
+CaDiCaL uses order encoding and span search with a fresh solver for each
+trial. Gurobi uses assignment ILP with one thread, a greedy upper bound,
+and a greedy MIP start. Both receive the same graph and $(h,k)$; symmetry
+breaking is disabled in this comparison. Each backend runs sequentially
+in a fresh process, with backend order rotated across instances and
+repetitions. A preflight check verifies backend availability before the sweep.
 
-Peak RSS là mức cao nhất của worker do hệ điều hành báo, gồm cả Python và
-thư viện native; nếu process bị ngắt trước khi gửi thì để trống. Số clause
-SAT thuộc mô hình cuối trả nghiệm, còn số ràng buộc ILP thuộc mô hình ở
-cận trên tham lam. Chúng có thể ở hai span khác nhau, nên không dùng tỉ số
-hai con số để kết luận mức tiết kiệm mã hóa tại cùng span.
+Each tree-screen run has a 60-second external limit. \texttt{Wall\_Time}
+includes startup, model construction, solving, and process cleanup; labeling
+validation in the parent process is excluded. On external timeout, the run
+retains the received greedy labeling, if available, and reports \FEAS.
+This need not be the best incumbent found internally before interruption.
+Only \OPT{} within budget counts as solved. An unavailable backend is
+neither a timeout nor a win for another backend.
 
-\subsection{Khảo sát 50 cây \texorpdfstring{$L(3,2)$}{L(3,2)} đã hoàn tất}
-Các cỡ cây là 100, 200, 400, 800 và 1600; mỗi cỡ có 10 seed từ 0 đến 9.
-Cây được sinh bằng hàm \path{random_labeled_tree} của NetworkX. Mỗi cây chạy một
-lần mỗi backend. Manifest ghi Python 3.13.7, NetworkX 3.6.1, PySAT 1.9.dev15,
-Gurobi 13.0.3 và macOS 13.7.8 x86\_64. Chưa có đủ thông tin CPU, RAM và tải
-nền để mô tả một cấu hình máy tham chiếu đầy đủ.
+Peak RSS is the worker's operating-system-reported maximum resident memory,
+including Python and native libraries; it is left blank if the process is
+terminated before reporting it. SAT clause counts refer to the last model
+returning a solution, while ILP constraint counts refer to the model built
+at the greedy upper bound. These may use different spans, so their ratio
+does not measure encoding savings at a common span.
+
+\subsection{Completed screen of 50 \texorpdfstring{$L(3,2)$}{L(3,2)} trees}
+Tree sizes are 100, 200, 400, 800, and 1600, with ten seeds, 0--9, per size.
+Trees are generated with NetworkX's \path{random_labeled_tree}. Each tree
+is run once per backend. The manifest records Python 3.13.7, NetworkX 3.6.1,
+PySAT 1.9.dev15, Gurobi 13.0.3, and macOS 13.7.8 x86\_64. CPU, RAM, and
+background-load information is insufficient to specify a complete reference machine.
 
 \begin{table}[H]
 \centering\small
-\caption{Kết quả đã đo trên cây: các khoảng bậc/span là min--max của 10 cây;
-thời gian là trung vị trên 10 lượt từng backend tại mỗi kích thước.}
+\caption{Measured tree results. Degree and span ranges are minima and maxima
+across ten trees; times are medians of ten runs per backend at each size.}
 \label{tab:tree-screen}
 \input{paper/generated/tree_screen}
 \end{table}
-Bảng~\ref{tab:tree-screen} cho thấy cả hai backend trả \OPT{} trong budget trên mọi cây và không bất đồng
-span. CaDiCaL có trung vị thời gian thấp hơn Gurobi ở cả năm kích thước
-trong lượt này. Do chỉ có một lần đo mỗi backend trên một cây, chưa có
-ước lượng độ biến thiên do chạy lặp. Số đỉnh, bậc lớn nhất và cấu trúc
-cùng thay đổi, nên bảng không cô lập tác động của riêng số đỉnh.
+Table~\ref{tab:tree-screen} shows that both backends report \OPT{} within
+budget on every tree, with no disagreement in span. CaDiCaL has a lower
+median time than Gurobi at all five sizes in this run. With only one run
+per tree and backend, repeated-run variability cannot be estimated. Vertex
+count, maximum degree, and structure vary together, so the table does not
+isolate the effect of vertex count alone.
 
-Hình~\ref{fig:tree-runtime} thể hiện phân bố thời gian giữa các seed và
-ghép cặp hai backend trên cùng cây. Khoảng tứ phân vị mô tả biến thiên
-giữa graph đầu vào, không phải khoảng tin cậy hay biến thiên do lặp lại.
+Figure~\ref{fig:tree-runtime} shows runtime variation across seeds and pairs
+the backends on each tree. The interquartile range describes variation
+across input graphs, not a confidence interval or repeated-run variability.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{paper/generated/manuscript_figures/tree_runtime.pdf}
-\caption{Runtime thực đo trên 50 cây $L(3,2)$: (a) đường trung vị và dải
-25--75\% theo 10 seed ở mỗi cỡ; (b) mỗi điểm là một cây, dưới đường chéo
-nghĩa là lượt CaDiCaL có thời gian thấp hơn. Trục thời gian dùng thang log.
-Tất cả các lượt trong hình là OPT; mỗi graph chỉ đo một lần/backend.}
+\caption{Measured runtimes on 50 $L(3,2)$ trees: (a) median curves and
+25--75\% bands over ten seeds per size; (b) each point represents one tree,
+with points below the diagonal indicating lower CaDiCaL runtime. Time axes
+are logarithmic. All runs are OPT; each graph is measured once per backend.}
 \label{fig:tree-runtime}
 \end{figure}
 
-Với $L(3,2)$, cận theo bậc là $3+2(\Delta-1)=2\Delta+1$.
-Có \TreeTightCount{} trên \TreeGraphCount{} cây đạt cận này: nhãn khả thi
-cùng cận toán học đủ xác nhận tối ưu cho chúng. Hai trường hợp còn lại là
-\texttt{tree\_100\_seed5}, $\Delta=4$, span 10 thay vì cận 9, và
-\texttt{tree\_400\_seed3}, $\Delta=5$, span 12 thay vì cận 11.
-Hai backend thống nhất giá trị tối ưu trên hai instance này, nhưng chưa
-lưu chứng thư UNSAT để kiểm tra độc lập mọi kết luận bất khả thi.
-Dữ liệu không hỗ trợ công thức $\lambda_{3,2}(T)=2\Delta+1$ cho mọi cây.
+For $L(3,2)$, the degree bound is $3+2(\Delta-1)=2\Delta+1$.
+It is attained by \TreeTightCount{} of \TreeGraphCount{} trees: the feasible
+labeling and mathematical bound together establish optimality. The other
+two cases are \texttt{tree\_100\_seed5}, with $\Delta=4$ and span 10 rather
+than bound 9, and \texttt{tree\_400\_seed3}, with $\Delta=5$ and span 12
+rather than bound 11. Both backends agree on the optimal values for these
+instances, but no UNSAT certificates were saved for independent verification
+of all infeasibility conclusions. The data do not support the formula
+$\lambda_{3,2}(T)=2\Delta+1$ for every tree.
 
-Script \path{scripts/export_tree_screen.py} kiểm tra đủ miền seed/kích
-thước, graph được sinh lại khớp cạnh đã lưu, nhãn bằng duyệt khoảng cách
-ngắn nhất độc lập với encoder, và sự nhất quán giữa CSV, manifest, witness.
-Bảng được sinh từ CSV; hash đầu vào và mã kiểm tra lưu trong
-\path{paper/generated/tree_screen_sources.json}. Việc kiểm tra lại nghiệm
-không tái tạo phép đo runtime hoặc đếm lại CNF lịch sử.
+The script \path{scripts/export_tree_screen.py} checks the complete seed/size
+domain, equality between regenerated graphs and stored edge sets, labelings
+using shortest-path traversal independent of the encoder, and consistency
+among the CSV, manifest, and witnesses. Tables are generated from the CSV;
+input and audit-source hashes are stored in
+\path{paper/generated/tree_screen_sources.json}. Revalidating labelings
+does not reproduce runtime measurements or recount historical CNFs.
 
-\subsection{Thiết kế và kiểm tra pilot đa họ}
-Cohort \texttt{general-pilot-v1} giữ cố định 39 mẫu đồ thị trước khi chạy:
+\subsection{Multi-family pilot design and validation}
+The \texttt{general-pilot-v1} cohort fixes 39 graph samples before execution:
 \begin{table}[H]
 \centering\small
-\caption{Thiết kế khảo sát đa họ, không phải bảng kết quả.}
+\caption{Multi-family study design, not experimental results.}
 \label{tab:planned-cohort}
 \begin{tabular}{p{3.0cm}p{9.0cm}r}
 \toprule
-Họ & Miền sinh & Mẫu\\\midrule
-Cây & $|V|=20,40,60$, mỗi cỡ seed $0,1,2$ & 9\\
-Lưới & $P_4\square P_5$, $P_5\square P_8$, $P_6\square P_{10}$ & 3\\
-Erdős--Rényi & $G(n,p)$, $n=20,40,60$, $p=0.15,0.30$, seed $0,1,2$ & 18\\
-Barabási--Albert & $n=20,40,60$, thêm $m=2$ cạnh mỗi đỉnh mới, seed $0,1,2$ & 9\\
+Family & Generation domain & Samples\\\midrule
+Trees & $|V|=20,40,60$, seeds $0,1,2$ per size & 9\\
+Grids & $P_4\square P_5$, $P_5\square P_8$, $P_6\square P_{10}$ & 3\\
+Erdős--Rényi & $G(n,p)$, $n=20,40,60$, $p=0.15,0.30$, seeds $0,1,2$ & 18\\
+Barabási--Albert & $n=20,40,60$, $m=2$ edges per new vertex, seeds $0,1,2$ & 9\\
 \bottomrule
 \end{tabular}
 \end{table}
-Giữ cả mẫu Erdős--Rényi không liên thông, không sinh lại để chọn mẫu dễ
-hay khó. Mỗi graph chạy ba cặp $(1,1),(2,1),(3,2)$, mỗi backend một lượt:
-117 bài toán gán nhãn, 234 lượt solver. Với budget 30 giây/lượt, tổng budget
-solver tối đa 1.95 giờ, chưa gồm preflight và xử lý ngoài lượt đo. Kích thước
-này nhằm khảo sát ban đầu, chưa phải bằng chứng scaling quy mô lớn.
-Đã kiểm tra đủ 234 dòng và 234 witness: sinh lại đồ thị theo cấu hình,
-đối chiếu tập đỉnh/cạnh, kiểm tra mọi điều kiện nhãn bằng khoảng cách ngắn
-nhất độc lập với encoder và kiểm tra nhất quán giữa CSV và witness.
-Kết quả audit không tái tạo phép đo thời gian, CNF hoặc chứng thư UNSAT.
+Disconnected Erdős--Rényi samples are retained; graphs are not regenerated
+to select easy or difficult cases. Each graph is evaluated with $(1,1),(2,1),(3,2)$,
+once per backend: 117 labeling instances and 234 solver observations.
+At 30 seconds per run, the maximum total solver budget is 1.95 hours,
+excluding preflight and work outside the measured runs. This is an exploratory
+study, not evidence of large-scale performance.
+All 234 rows and witnesses were checked: graphs were regenerated from their
+configurations, vertex and edge sets were compared, label constraints were
+checked using shortest-path distances independently of the encoder, and
+CSV--witness consistency was verified. The audit does not reproduce timings,
+CNFs, or UNSAT certificates.
 
 \begin{table}[H]
 \centering\small
-\caption{Pilot 30 giây mỗi lượt: số bài được ghi nhận tối ưu và số bài có
-công thức chính xác áp dụng trong bộ đối chứng hiện tại. Mỗi mẫu chạy cả
-hai backend một lần; phần còn lại của mỗi cột solver là \FEAS.}
-\input{results/analysis/general_pilot_v1/summary.tex}
+\caption{Pilot with 30 seconds per run: instances reported optimal and
+instances covered by exact reference formulas. Each sample is run once by
+both backends; the remaining entries in each solver column are \FEAS.}
+\input{paper/generated/english/results/analysis/general_pilot_v1/summary.tex}
 \label{tab:general-pilot}
 \end{table}
-CaDiCaL xác định tối ưu 79/117 bài, Gurobi 97/117. Có 78 bài cả hai cùng
-\OPT{} và cùng giá trị, 19 bài chỉ Gurobi \OPT, một bài chỉ CaDiCaL \OPT,
-và 19 bài cả hai còn \FEAS. Toàn bộ 58 lượt \FEAS{} vẫn có nhãn hợp lệ;
-chúng không được gọi là nghiệm tối ưu. Không có kết quả \OPT{} nào vượt
-budget theo thời gian được ghi. Chênh lệch coverage tập trung ở ER; đây là
-bằng chứng Gurobi giải tối ưu nhiều bài hơn trong pilot này, không phải
-định lý về ưu thế trên mọi đồ thị.
+CaDiCaL establishes optimality on 79/117 instances and Gurobi on 97/117.
+Both report \OPT{} with the same value on 78 instances; 19 are \OPT{} only
+for Gurobi, one only for CaDiCaL, and 19 remain \FEAS{} for both. All 58
+\FEAS{} observations have valid labelings, but are not described as optimal.
+No \OPT{} observation exceeds the recorded time budget. The coverage gap
+is concentrated in ER graphs. This shows that Gurobi solves more instances
+to optimality in this pilot, not that it dominates on all graphs.
 
-\paragraph{Đối chứng lý thuyết.}
-Chín cây với $(h,k)=(1,1)$ dùng Mệnh đề~\ref{prop:equal-tree}; ba lưới với
-$(h,k)=(2,1)$ dùng Mệnh đề~\ref{prop:grid}. Cả 24 kết quả của hai backend
-trên 12 bài này đều khớp giá trị chính xác. Trên toàn pilot, 122 witness
-(61 bài, mỗi bài hai backend) đạt cận dưới toán học được áp dụng, nên
-labeling và cận cùng xác nhận tối ưu mà không chỉ dựa vào sự đồng thuận
-giữa hai solver. Các cận gồm cận bậc và công thức chính xác khi có; không
-đồng nhất với cột \texttt{LB} cuối lượt solver. Với bài chưa đạt cận,
-chênh lệch dương chỉ cho biết cận chưa xác nhận tối ưu của witness đó,
-không tự bác bỏ cận hay chứng minh kết quả mới cho toàn bộ họ.
-Nguồn, phạm vi audit và bảng đối chiếu từng lượt được lưu riêng tại
-\path{results/analysis/general_pilot_v1/}.
+\paragraph{Theoretical references.}
+The nine $(h,k)=(1,1)$ trees use Proposition~\ref{prop:equal-tree}; the three
+$(h,k)=(2,1)$ grids use Proposition~\ref{prop:grid}. All 24 backend results
+on these 12 instances agree with the exact values. Across the pilot,
+122 witnesses (61 instances, two backends each) attain the applicable
+mathematical lower bound. Their labelings and bounds establish optimality
+without relying solely on solver agreement. These bounds include the degree
+bound and exact formulas where applicable; they are distinct from the final
+solver \texttt{LB} column. A positive gap above a bound means that the bound
+does not certify that witness as optimal. It neither refutes the bound nor
+establishes a new result for an entire family. Sources, audit scope, and
+per-run comparisons are stored in \path{results/analysis/general_pilot_v1/}.
 
-Phân tích tiếp theo báo cáo riêng từng họ và $(h,k)$: số OPT/FEASIBLE/TIMEOUT, khoảng cận,
-runtime, peak RSS quan sát được và kích thước mô hình cùng \texttt{Model\_Span}.
-Runtime ghép cặp dùng tập cùng OPT và phải đi kèm coverage/cactus trên tập
-đủ backend. Trung vị gộp nhiều mật độ chỉ có ý nghĩa mô tả; kết luận về mật
-độ phải tách các giá trị $p$, không gộp thành một hiệu ứng duy nhất.
-Sau khảo sát, định nghĩa một lượt xác nhận riêng, lặp ít nhất ba lần trên
-cùng cohort; nếu đổi quy mô/budget thì ghi phiên bản mới và lý do trước khi
-chạy, giữ cả kết quả timeout. Không chỉ chọn lại những instance SAT thắng.
+The subsequent confirmation experiment retains the cohort and budget and
+uses three repetitions per backend. Its analysis reports coverage by family
+and $(h,k)$, separates the two ER densities, and compares runtimes on instances
+solved to optimality in all three repetitions by both backends. Unsolved
+instances remain in the cohort; repetitions are not counted as independent
+graphs. Model size at a common label domain is analyzed separately below,
+not inferred from runtime rankings.
+
+\subsection{Model counts at a common label domain}
+For each of the 117 pilot instances, choose $s$ as the smaller span of the
+two validated witnesses. This is a feasible domain selected after the
+experiment for size comparison, not a common initial bound used in the
+historical runs. We rebuild order CNF without symmetry breaking or
+simplification and compare actual variable/clause counts with the formulas.
+Assignment ILP uses the same domain $0,\ldots,s$ and is counted from its
+specification; backend presolve is not executed for this comparison.
+
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Median model sizes using a common span per instance. SAT counts
+raw clauses; ILP counts binary variables, with one additional integer
+$\ell_{\max}$ per model. Column medians are computed separately and may
+come from different instances; fractional values do not denote half a clause.}
+\label{tab:common-model-size}
+\input{paper/generated/english/results/analysis/exact_review_20260928/models.tex}
+\end{table}
+Table~\ref{tab:common-model-size} describes representation size, not equivalent
+solution difficulty. At the same $s$, both models have
+$B=|E|F(s,h)+|D_2|F(s,k)$ forbidden-pair constraints. SAT adds
+$|V|\max(s-1,0)$ monotonicity clauses; assignment adds $2|V|$ constraints.
+SAT can therefore use fewer variables but more clauses than assignment uses
+constraints. There is no requirement that every SAT count be smaller than
+the corresponding ILP count. These counts do not replace historical counts
+or constitute new runtime measurements.

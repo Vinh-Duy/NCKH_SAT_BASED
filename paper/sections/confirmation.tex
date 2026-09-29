@@ -1,0 +1,71 @@
+\subsection{Confirmation experiment with three repetitions}
+After the pilot, the same 39 graphs, three $(h,k)$ pairs, two backends, and
+30-second budget per run were retained, with three repetitions per backend
+and instance. The file \path{results/runs/general_confirm_r1.csv} contains
+\ConfirmObservations{} observations for \ConfirmInstances{} graph/$(h,k)$
+instances. These data are analyzed separately from the pilot; additional
+repetitions do not increase the number of independent graphs.
+Every witness was checked using shortest-path distances on the regenerated
+graph. No inconsistency in spans, bounds, or OPT values was found across
+repetitions or backends. Exact reference formulas cover
+\ConfirmReferenceInstances{} instances, with \ConfirmReferenceMatches{}
+matching observations. This is neither independent UNSAT-certificate
+verification nor a reproduction of historical timing measurements.
+
+CaDiCaL records \ConfirmSATOpt/351 OPT observations within budget and Gurobi
+\ConfirmILPOpt/351, leaving \ConfirmFeasible{} FEASIBLE observations across
+both backends. There are \ConfirmOutsideBudget{} observations reporting OPT
+outside the external budget. Requiring OPT in all three repetitions yields
+\ConfirmSATStable/117 instances for CaDiCaL and \ConfirmILPStable/117 for
+Gurobi, with \ConfirmJointStable{} instances satisfying the criterion for
+both. Repeated-run variability is retained rather than reporting the
+fastest run as the representative time.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Confirmation results: distinct instances, OPT observations within
+30 seconds, and instances OPT in all three repetitions. ER groups are
+separated by edge probability $p$.}
+\label{tab:confirmation-coverage}
+\input{\ConfirmReportDir/summary.tex}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\ConfirmReportDir/coverage.pdf}
+\caption{Instances solved to optimality in all three repetitions, by group.
+The denominator is the number of graph/$(h,k)$ instances in the group,
+not the number of repetitions.}
+\label{fig:confirmation-coverage}
+\end{figure}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Runtime on the common subset solved to optimality in all three
+repetitions by both backends. The median of three runs is computed per
+instance, followed by the median across instances in each group. A dash
+indicates no eligible instances, not zero seconds.}
+\label{tab:confirmation-time}
+\input{\ConfirmReportDir/timing.tex}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\ConfirmReportDir/runtime.pdf}
+\caption{Each point represents an instance in the common all-three-OPT
+subset. Coordinates are median runtimes; error bars show the minimum and
+maximum of three runs, not confidence intervals. Points below the diagonal
+indicate lower SAT runtime. Interpret together with coverage in
+Figure~\ref{fig:confirmation-coverage}.}
+\label{fig:confirmation-runtime}
+\end{figure}
+
+These runtime medians are subject to selection bias because they include
+only the common solved subset; they do not represent instances remaining
+FEASIBLE. OPT-observation counts and the all-three-OPT criterion provide
+complementary information about optimality coverage within budget. The
+results establish neither general superiority of one formulation nor any
+comparison with GA. Tables and figures are exported with data and audit-source
+hashes. The preceding model-size counts remain a separate common-span
+analysis, not counts of models used in the confirmation runs.
+\FloatBarrier
