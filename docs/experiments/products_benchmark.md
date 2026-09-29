@@ -1,38 +1,15 @@
-# Benchmark đồ thị tích
+# Graph-product benchmarks
 
-Bảy họ dùng chung ở `benchmarks/families.py`:
-C×C, C×P, P×P, C∘C, P∘P, C∘P, P∘C. C là chu trình, P là đường đi;
-× trong tên cũ/□ là Cartesian (nm đỉnh), ∘ là Corona (n(m+1) đỉnh).
-Tham số n,m là số đỉnh của hai đồ thị thành phần, không phải lần lặp.
-Với n,m=3..10 có 448 cấu hình. CSV lịch sử hiện có 446 dòng OPT và 2 dòng
-FEASIBLE; đây là trạng thái được ghi, chưa xác nhận lại bằng code hiệu chỉnh.
+`benchmarks/families.py` defines seven shared families: C×C, C×P, P×P, C∘C, P∘P, C∘P, P∘C. C is a cycle and P a path. Historical × / mathematical □ denotes Cartesian product (nm vertices); ∘ denotes corona (n(m+1) vertices). n,m are factor vertex counts, not repetitions. The n,m=3..10 sweep has 448 configurations. The historical CSV records 446 OPT and two FEASIBLE rows; these statuses have not been recertified by the revised code.
 
-Phân biệt CSV lịch sử `results/archive/legacy/products_benchmark.csv` với
-`results/runs/products_main_r1.csv`: main_r1 là so sánh hai cấu hình và đã
-được dùng trong audit/bản thảo, còn CSV legacy là một cấu hình thiếu provenance.
-Xem [README main_r1](../../results/runs/products_main_r1.README.md).
+Distinguish `results/archive/legacy/products_benchmark.csv` from `results/runs/products_main_r1.csv`: main_r1 compares two configurations and is used in the audit/manuscript; the legacy CSV represents one configuration with incomplete provenance. See the [main_r1 README](../../results/runs/products_main_r1.README.md).
 
-Chạy `python -m benchmarks.benchmark_products --first 3 --last 10`.
-Có thể đặt riêng `--m-first`, `--m-last`, `--solver`, `--strategy`, `--timeout`.
-Đầu ra luôn tạo mới trừ khi truyền `--resume --output <file>` và manifest khớp.
+Run `python -m benchmarks.benchmark_products --first 3 --last 10`. Options include `--m-first`, `--m-last`, `--solver`, `--strategy`, and `--timeout`. Outputs are new unless `--resume --output <file>` is supplied with a matching manifest.
 
-Chạy `python -m benchmarks.benchmark_symmetry_comparison` để giải từng đồ thị
-hai cấu hình. Schema mới lưu riêng lambda_Base/lambda_Sym, thời gian,
-counts, trạng thái, thứ tự chạy và mức đồng nhất. Nếu hai kết quả OPT khác
-nhau, ghi dữ liệu rồi dừng báo lỗi. File cũ có một cột lambda không cung cấp
-đủ dữ liệu để kiểm tra điều này hồi tố.
+`python -m benchmarks.benchmark_symmetry_comparison` solves each graph under two configurations. The new schema separately records lambda_Base/lambda_Sym, runtimes, counts, statuses, execution order, and consistency. If OPT results disagree, it writes the data and stops with an error. The old single-lambda schema cannot retrospectively support this check.
 
-Từ đợt sửa 26/09/2026, counts được dựng lại ở cùng `Count_Span` cho hai
-cấu hình, lấy max của hai incumbent. `Count_Span_Kind=OPT` chỉ khi cả hai
-chứng minh cùng tối ưu; nếu không ghi `FEASIBLE_UB`. Việc đếm lại nằm ngoài
-`Time_Base/Time_Sym`. `Clause_Raw_*` là trước tiền xử lý chung, `Clause_*`
-là CNF gửi vào backend sau tiền xử lý; không đo clause học bên trong solver.
-`Var_*` đếm biến được cấp phát, gồm cả biến đã suy ra giá trị bằng unit.
+Since September 26, 2026, both configurations are recounted at a shared `Count_Span`, the maximum of their incumbents. `Count_Span_Kind=OPT` requires both to prove the same optimum; otherwise it is `FEASIBLE_UB`. Recounting is outside `Time_Base/Time_Sym`. `Clause_Raw_*` precedes common preprocessing; `Clause_*` is the CNF passed to the backend afterward, not learned-clause counts. `Var_*` counts allocated variables, including those assigned by unit propagation.
 
-Chỉ cần kích thước CNF có thể dùng `benchmarks.benchmark_symmetry_sizes`
-với `--input` CSV có hai span. Lệnh này không chứng minh lại span và không
-ghi runtime hoặc witness mới. Xem [quy ước mã hóa](../methods/sat_encoding.md).
+For size-only analysis, use `benchmarks.benchmark_symmetry_sizes` with an `--input` CSV containing both spans. It does not reprove spans or record new solver runtimes/witnesses. See [encoding conventions](../methods/sat_encoding.md).
 
-Mục tiêu Cartesian gồm tái kiểm chứng các kết quả đã có trong survey.
-Một mẫu số liệu không tự trở thành giả thuyết mới. Các quy luật Corona cần
-đối chiếu tài liệu, mô hình sound và chứng minh tổng quát riêng.
+Cartesian experiments include validation against surveyed results. An observed pattern is not automatically a new conjecture. Corona patterns require literature comparison, sound modeling, and separate general proofs.

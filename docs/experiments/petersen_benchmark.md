@@ -1,24 +1,12 @@
-# Petersen: phạm vi benchmark
+# Petersen benchmark scope
 
-Constructor tạo GP(n,k): u_i–u_(i+1), u_i–v_i, v_i–v_(i+k), chỉ số modulo n;
-1 ≤ k < n/2. Sweep mặc định n=7..50 có 594 cấu hình.
-GP(n,k) có **2n đỉnh**. k trong GP là bước nối vành trong, khác k của
-L(h,k). Ví dụ GP_7_1 có 14 đỉnh; cột `n` trong CSV kiểu cũ ghi 14.
-Đây là sweep L(2,1), không phải sweep tham số khoảng cách nhãn k.
-Xem [chú giải CSV lịch sử](../../results/archive/legacy/README.md).
+The constructor creates GP(n,k) with edges u_i–u_(i+1), u_i–v_i, and v_i–v_(i+k), indices modulo n, and 1 ≤ k < n/2. The default n=7..50 sweep contains 594 configurations.
+GP(n,k) has **2n vertices**. Its k is the inner-ring step, not the k in L(h,k). GP_7_1 has 14 vertices; the old CSV column `n` records 14. This is an L(2,1) sweep, not a labeling-threshold sweep. See the [historical CSV guide](../../results/archive/legacy/README.md).
 
-CSV lịch sử `results/archive/legacy/sat_petersen.csv` ghi OPT cho 594 dòng: span 5 ở 133 dòng,
-6 ở 458 dòng, 7 ở 3 dòng (GP(10,2), GP(11,2), GP(11,5)). Dữ liệu được giữ
-nguyên, chưa chạy lại bằng solver hiệu chỉnh.
+`results/archive/legacy/sat_petersen.csv` records 594 OPT rows: 133 with span 5, 458 with span 6, and three with span 7 (GP(10,2), GP(11,2), GP(11,5)). These data are preserved and have not been rerun with the revised solver.
 
-Bài Huang et al. (2012) dùng GPG(n) gồm hai chu trình n đỉnh nối bởi matching
-tùy ý. Quét tham số k không liệt kê họ matching này. Khi gcd(n,k)>1, phần
-bên trong của biểu diễn GP(n,k) tự nhiên còn tách thành nhiều chu trình.
-Vì thế không mô tả sweep hiện tại là kiểm chứng toàn bộ Georges–Mauro.
+Huang et al. (2012) use GPG(n), consisting of two n-cycles joined by an arbitrary matching. Sweeping k does not enumerate those matchings. When gcd(n,k)>1, the natural GP(n,k) inner ring splits into multiple cycles. Do not describe the present sweep as verification of the full Georges–Mauro conjecture.
 
-Incumbent >7 chưa phải phản ví dụ: cần cận dưới đã chứng minh >7 và instance
-thuộc đúng họ. Runner mới phân biệt hai trường hợp này, không in cảnh báo
-phản ví dụ chỉ dựa vào một nghiệm khả thi.
+An incumbent greater than 7 is not a counterexample: a proved lower bound greater than 7 and membership in the correct graph class are required. The revised runner distinguishes these cases and does not flag a counterexample solely from a feasible labeling.
 
-Chạy: `python -m benchmarks.benchmark_petersen --first 7 --last 50`.
-Đầu ra mặc định là một file mới trong `results/runs/`, kèm metadata và witness.
+Run `python -m benchmarks.benchmark_petersen --first 7 --last 50`. The default output is a fresh file under `results/runs/`, with metadata and witnesses.
