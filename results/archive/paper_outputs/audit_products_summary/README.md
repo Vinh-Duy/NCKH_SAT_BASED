@@ -1,14 +1,7 @@
-# Cách đọc bảng tổng hợp theo họ
+# Reading family summaries
 
-Một dòng summary.csv là một họ đồ thị, không phải một lần gọi solver.
-Rows đếm dòng đầu vào; Paired_OPT đếm cặp hai bên cùng tối ưu; Unresolved_Pairs
-là số cặp còn lại. Paired_Time_Base/Sym là tổng giây trên cặp cùng OPT.
-Median_Paired_Speedup là trung vị từng tỷ số Base/Sym (>1 có lợi cho Sym).
-Median_Paired_Clause_Reduction_Pct là trung vị phần trăm giảm clause.
-Rule none nghĩa cùng mô hình chạy lại; một đợt không kiểm định độ ổn định.
+Each summary.csv row is a graph family, not a solver call. Rows counts input rows; Paired_OPT counts jointly optimal pairs; Unresolved_Pairs counts the remainder. Paired_Time_Base/Sym sums seconds on jointly OPT pairs. Median_Paired_Speedup is the median pairwise Base/Sym ratio (>1 favors Sym). Median_Paired_Clause_Reduction_Pct is the median percentage clause reduction. Rule none repeats the same model; a single experiment does not establish stability.
 
-[Giải nghĩa đầy đủ 12 cột](../../../../docs/data_dictionary.md) · [Mục lục nguồn](../../../../docs/results_catalog.md)
+[Definitions of all 12 columns](../../../../docs/data_dictionary.md) · [Source catalog](../../../../docs/results_catalog.md)
 
-source.json lưu input và hash tại thời điểm xuất. Đường dẫn tuyệt đối cũ
-có thể đã đổi khi sắp xếp thư mục; tra docs/layout_migration.json. Không
-sửa source.json hoặc xem bảng tổng hợp như dữ liệu độc lập với CSV gốc.
+source.json records inputs and hashes at export time. Historical absolute paths may have changed during reorganization. Do not edit source.json or treat summaries as data independent of the source CSV.

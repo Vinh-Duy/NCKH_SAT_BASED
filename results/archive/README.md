@@ -1,5 +1,5 @@
-# Dữ liệu và hình lưu trữ
+# Archived data and figures
 
-legacy: CSV cũ thiếu provenance; audits: các lần rà symmetry; pilots: smoke và thử kích thước; pilot_plots: hình pilot; paper_outputs: bảng/hình báo cáo cũ; legacy_plots: ảnh lịch sử. Mỗi nhóm có README giải thích. Không coi archive nghĩa là mọi kết quả sai.
+legacy: older CSVs with incomplete provenance; audits: symmetry reviews; pilots: smoke runs and size probes; pilot_plots: pilot figures; paper_outputs: superseded report tables/figures; legacy_plots: historical images. Each group has a README. Archived does not mean incorrect.
 
-[Danh mục từng CSV](../../docs/results_catalog.md) · [Từ điển dữ liệu](../../docs/data_dictionary.md)
+[CSV catalog](../../docs/results_catalog.md) · [Data dictionary](../../docs/data_dictionary.md)

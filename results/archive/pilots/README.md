@@ -1,27 +1,23 @@
-# Các lượt smoke, pilot và thử kích thước được lưu trữ
+# Archived smoke tests, pilots, and size probes
 
-| File | Cấu hình ghi nhận | Mục đích/giới hạn |
+| File | Recorded configuration | Purpose/limitations |
 |---|---|---|
-| lhk_cartesian_smoke | CxC,CxP,PxP, n=m=3; ba cặp h,k; Glucose 10s; 9 dòng | Kiểm tra chức năng, schema 19 cột ở mục 5 từ điển |
-| lhk_trees_smoke | path,star,comb,random, n=3..5; seed 0,1 chỉ lặp mẫu random; ba cặp h,k; 45 dòng | n là số lá với star, chiều dài sống lưng với comb; không phải luôn số đỉnh |
-| sat_vs_ilp_pilot | Hai lưới P2□P10 và P2□P11, L(3,2), 10s, repeats=1 | Gurobi preflight UNAVAILABLE nên 2 SKIPPED; không phải 2 timeout và không có so tốc độ hai backend hợp lệ |
-| sat_vs_ilp_verified_pilot | Cùng hai lưới, L(3,2), 10s, repeats=1 | Preflight cả hai OPT; 4 dòng OPT, chỉ là kiểm tra tích hợp nhỏ |
-| tree_l32_size_probe | n=100,200,400, seed 0,1, L(3,2), 10s, repeats=1 | 6 cây/12 dòng; tree_sizes ghi đè min/max mặc định |
+| lhk_cartesian_smoke | CxC,CxP,PxP, n=m=3; three h,k pairs; Glucose 10s; nine rows | Functional check; 19-column schema in dictionary section 5 |
+| lhk_trees_smoke | path,star,comb,random, n=3..5; seeds 0,1 only vary random samples; three h,k pairs; 45 rows | n counts leaves for stars and backbone vertices for combs, not always total vertices |
+| sat_vs_ilp_pilot | P2□P10 and P2□P11 grids, L(3,2), 10s, repeats=1 | Gurobi preflight UNAVAILABLE produces two SKIPPED rows, not timeouts; no valid paired timing comparison |
+| sat_vs_ilp_verified_pilot | Same grids, L(3,2), 10s, repeats=1 | Both backends pass preflight; four OPT rows, only a small integration check |
+| tree_l32_size_probe | n=100,200,400, seeds 0,1, L(3,2), 10s, repeats=1 | Six trees/twelve rows; tree_sizes overrides default min/max |
 
-Smoke L(h,k) dùng timer API, còn so SAT–ILP dùng deadline ngoài của worker;
-không gộp runtime. Các smoke từng chạy đồng thời không dùng làm đối chứng
-hiệu năng. verified chỉ là tên đợt xác nhận backend hoạt động, không có
-nghĩa đã xuất chứng thư UNSAT. Các đợt có budget khác phải báo tách biệt.
+L(h,k) smoke runs use API timing, whereas SAT–ILP comparisons use an external worker deadline. Do not pool runtimes. Concurrent smoke runs are not performance baselines. “verified” denotes backend availability confirmation, not exported UNSAT certificates. Different budgets require separate reporting.
 
+Read the [shared dictionary](../../../docs/data_dictionary.md) and [CSV catalog](../../../docs/results_catalog.md).
 
-Đọc [từ điển chung](../../../docs/data_dictionary.md) và [mục lục toàn bộ CSV](../../../docs/results_catalog.md).
-
-| File | Dòng dữ liệu khi rà 27/09/2026 | Metadata | Witness |
+| File | Rows at September 27, 2026 review | Metadata | Witness |
 |---|---:|---|---|
-| [lhk_cartesian_smoke.csv](lhk_cartesian_smoke.csv) | 9 | Có | Có |
-| [lhk_trees_smoke.csv](lhk_trees_smoke.csv) | 45 | Có | Có |
-| [sat_vs_ilp_pilot.csv](sat_vs_ilp_pilot.csv) | 4 | Có | Có |
-| [sat_vs_ilp_verified_pilot.csv](sat_vs_ilp_verified_pilot.csv) | 4 | Có | Có |
-| [tree_l32_size_probe.csv](tree_l32_size_probe.csv) | 12 | Có | Có |
+| [lhk_cartesian_smoke.csv](lhk_cartesian_smoke.csv) | 9 | Yes | Yes |
+| [lhk_trees_smoke.csv](lhk_trees_smoke.csv) | 45 | Yes | Yes |
+| [sat_vs_ilp_pilot.csv](sat_vs_ilp_pilot.csv) | 4 | Yes | Yes |
+| [sat_vs_ilp_verified_pilot.csv](sat_vs_ilp_verified_pilot.csv) | 4 | Yes | Yes |
+| [tree_l32_size_probe.csv](tree_l32_size_probe.csv) | 12 | Yes | Yes |
 
-Số dòng là kiểm kê, không phải xác nhận đầy đủ miền chạy hay chứng minh nghiệm.
+Row counts are an inventory, not proof of sweep completeness or solution correctness.

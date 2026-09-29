@@ -1,21 +1,14 @@
-# Bảng và hình báo cáo cũ
+# Superseded report tables and figures
 
-Các summary.csv tổng hợp theo họ từ audit, không phải lượt chạy mới. Nguồn
-ở source.json; đường dẫn có thể thuộc bố cục cũ. Tra mục 7 từ điển cho Rows,
-Paired_OPT, speedup, tỷ lệ giảm clause. Tệp .tex là đoạn bảng LaTeX cần được
-main.tex nạp, không phải tài liệu độc lập. Không đưa các snapshot này vào
-bản thảo hiện hành chỉ vì chúng có cùng tên bảng/hình.
+summary.csv files aggregate audit results by family; they are not new runs. source.json records provenance, possibly using old paths. Dictionary section 7 explains Rows, Paired_OPT, speedup, and clause reductions. .tex files are table fragments included by main.tex, not standalone documents. Matching filenames do not justify importing these snapshots into the current manuscript.
 
-`observations.txt` là ghi chú sinh từ dữ liệu, không phải chứng minh toán học.
-Hình symmetry_sizes_v3 chỉ so counts theo chính sách lịch sử; không cho
-biết thời gian hay xác nhận tối ưu. Nguồn bản thảo hiện hành ở paper/generated/.
+`observations.txt` contains data-derived notes, not mathematical proofs. symmetry_sizes_v3 figures compare counts under the historical policy and establish neither timing nor optimality. Current manuscript artifacts are in paper/generated/.
 
+Read the [shared dictionary](../../../docs/data_dictionary.md) and [CSV catalog](../../../docs/results_catalog.md).
 
-Đọc [từ điển chung](../../../docs/data_dictionary.md) và [mục lục toàn bộ CSV](../../../docs/results_catalog.md).
-
-| File | Dòng dữ liệu khi rà 27/09/2026 | Metadata | Witness |
+| File | Rows at September 27, 2026 review | Metadata | Witness |
 |---|---:|---|---|
-| [audit_cycles_summary/summary.csv](audit_cycles_summary/summary.csv) | 1 | Không | Không |
-| [audit_products_summary/summary.csv](audit_products_summary/summary.csv) | 7 | Không | Không |
+| [audit_cycles_summary/summary.csv](audit_cycles_summary/summary.csv) | 1 | No | No |
+| [audit_products_summary/summary.csv](audit_products_summary/summary.csv) | 7 | No | No |
 
-Số dòng là kiểm kê, không phải xác nhận đầy đủ miền chạy hay chứng minh nghiệm.
+Row counts are an inventory, not proof of sweep completeness or solution correctness.

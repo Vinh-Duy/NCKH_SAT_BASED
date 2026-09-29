@@ -1,6 +1,3 @@
-# Pilot thiếu đối chứng
+# Pilot without a usable comparison backend
 
-Đợt sat_vs_ilp_pilot có Gurobi không qua preflight, ghi SKIPPED. Vì vậy không
-có hình so hai solver; việc thư mục chỉ chứa coverage/README là chủ đích,
-không có nghĩa Gurobi chậm vô hạn. Xem [cấu hình pilot](../../pilots/README.md)
-và [từ điển dữ liệu](../../../../docs/data_dictionary.md).
+Gurobi failed preflight in sat_vs_ilp_pilot and was recorded as SKIPPED. No two-solver comparison figures were therefore generated. A directory containing only coverage/README is intentional and does not imply infinite Gurobi runtime. See the [pilot configuration](../../pilots/README.md) and [data dictionary](../../../../docs/data_dictionary.md).
