@@ -1,5 +1,5 @@
-# Hình khảo sát hiện hành
+# Current exploratory figures
 
-Hình phân tích các lượt đo, chưa tự động được chèn vào PDF. Đọc README của từng thư mục và coverage.json. Hình bản thảo ở paper/generated; hình lịch sử ở results/archive.
+These figures analyze recorded runs and are not automatically inserted into the manuscript. Read each directory's README and coverage.json. Manuscript figures are in paper/generated; historical figures are in results/archive.
 
-[Danh mục từng CSV](../../docs/results_catalog.md) · [Từ điển dữ liệu](../../docs/data_dictionary.md)
+[CSV catalog](../../docs/results_catalog.md) · [Data dictionary](../../docs/data_dictionary.md)
