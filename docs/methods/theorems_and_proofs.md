@@ -1,37 +1,25 @@
-# Các cận đã chứng minh
+# Proven bounds
 
-Bản LaTeX dùng trực tiếp trong bài: [theoretical_baselines.tex](../../paper/sections/theoretical_baselines.tex).
+The manuscript uses [theoretical_baselines.tex](../../paper/sections/theoretical_baselines.tex).
 
-## Lưới Cartesian
+## Cartesian grids
 
-Với tọa độ bắt đầu từ 0, đặt
+With zero-based coordinates, define
 \[
 f(i,j)=(2i+3j)\pmod 7,\qquad f(i,j)\in\{0,\ldots,6\}.
 \]
-Trên cạnh, hiệu modulo 7 thuộc \(\{\pm2,\pm3\}\), nên hiệu tuyệt đối ≥2.
-Ở khoảng cách 2, hiệu modulo 7 thuộc \(\{\pm4,\pm6,\pm1,\pm5\}\),
-không bằng 0. Vì thế \(\lambda_{2,1}(P_n\square P_m)\le6\).
+Across edges, differences modulo 7 belong to \(\{\pm2,\pm3\}\), giving absolute differences at least 2. At distance 2, differences belong to \(\{\pm4,\pm6,\pm1,\pm5\}\) and are nonzero. Hence \(\lambda_{2,1}(P_n\square P_m)\le6\).
 
-Trong labeling span ≤5, một đỉnh bậc 4 phải có nhãn 0 hoặc 5: nếu nhãn là
-1..4 thì nhãn trung tâm và hai nhãn sát nó (tổng ba giá trị) bị cấm, chỉ còn ba nhãn cho
-bốn láng giềng đôi một khác nhãn. Khi n,m≥4, ba đỉnh nội bộ (1,1),(1,2),(2,2)
-đều bậc 4. Hai nhãn 0,5 phải luân phiên trên hai cạnh, làm hai đầu cùng nhãn
-trong khi khoảng cách giữa chúng bằng 2. Mâu thuẫn. Do đó
+In a labeling of span at most 5, every degree-4 vertex must receive 0 or 5. An internal label 1..4 forbids itself and its two adjacent values, leaving only three values for four neighbors requiring distinct labels. For n,m≥4, internal vertices (1,1),(1,2),(2,2) all have degree 4. Labels 0 and 5 must alternate along the two edges, assigning equal labels to endpoints at distance 2: a contradiction. Therefore
 \[
 \lambda_{2,1}(P_n\square P_m)=6\quad(n,m\ge4).
 \]
-Đây là đối chứng có chứng minh; không tuyên bố kết quả mới. Không áp dụng
-lập luận ba đỉnh nội bộ cho các trường hợp biên thiếu cấu trúc đó.
+This is a proved validation reference, not a novelty claim. The three-internal-vertex argument does not apply to boundary cases lacking that configuration.
 
-## Corona
+## Corona products
 
-Nếu labeling dùng 0..Δ+1, đỉnh bậc Δ chỉ có thể nhận 0 hoặc Δ+1: nhãn
-nội bộ loại ba giá trị, để lại Δ−1 giá trị cho Δ láng giềng khác nhãn.
-Trong \(C_n\circ P_m\), mọi đỉnh lõi có bậc Δ=m+2. Nếu span ≤m+3,
-mọi đỉnh lõi nhận một trong hai nhãn. Ba đỉnh lõi liên tiếp cần ba nhãn
-khác nhau (mọi cặp có khoảng cách 1 hoặc 2), mâu thuẫn. Suy ra
+In an L(2,1)-labeling using 0..Δ+1, a degree-Δ vertex must receive 0 or Δ+1: an internal label excludes three values, leaving Δ−1 values for Δ neighbors requiring distinct labels. In \(C_n\circ P_m\), all core vertices have degree Δ=m+2. If the span were at most m+3, all core vertices would use only two labels. Three consecutive core vertices require three distinct labels because each pair has distance 1 or 2, a contradiction. Thus
 \[
 \lambda_{2,1}(C_n\circ P_m)\ge m+4\quad(n\ge3,m\ge1).
 \]
-Chưa chứng minh cận trên tổng quát trong lần cập nhật này; dữ liệu hữu hạn
-không đủ để điền phần chứng minh còn thiếu.
+A general upper bound attaining this value has not been proved in this update. Finite observations cannot supply the missing proof.
