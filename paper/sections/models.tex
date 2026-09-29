@@ -1,48 +1,67 @@
-\section{Các mô hình chính xác}
-\subsection{SAT với order encoding}
-Cho span ứng viên $s\geq0$. Với mỗi đỉnh $v$ và $0\leq i<s$, tạo biến
+\section{Exact formulations}
+\subsection{Model-size conventions}
+Structural SAT--ILP comparisons use the same graph, $(h,k)$, and label domain
+$[0,s]$. The principal quantities are the numbers of Boolean or integer
+variables and of CNF clauses or linear constraints. A clause and a linear
+constraint do not have the same processing cost; these counts are neither
+solution times nor measured memory usage. We distinguish model sizes before
+simplification, after encoder preprocessing, and after backend presolve.
+The formulas below count models before simplification, without symmetry
+breaking; ILP variable bounds are not counted as linear constraint rows.
+
+Encoding size and construction time also differ from the complexity of
+finding a solution or proving optimality. An expression polynomial in $s$
+does not imply a polynomial-time algorithm in the binary input length.
+Clause and variable counts are not used to compare complexity with GA,
+which does not construct the same decision model. A future GA comparison
+will assess feasible-solution quality and runtime under a common budget,
+with evidence of optimality where available.
+
+\subsection{SAT with order encoding}
+For a candidate span $s\geq0$, introduce, for each vertex $v$ and $0\leq i<s$,
 \[
  x_{v,i}\Longleftrightarrow [f(v)\leq i].
 \]
-Dùng hằng $x_{v,-1}=\bot$ và $x_{v,s}=\top$. Các mệnh đề đơn điệu là
+Use the constants $x_{v,-1}=\bot$ and $x_{v,s}=\top$. Monotonicity is encoded by
 \begin{equation}
  \neg x_{v,i}\lor x_{v,i+1},\qquad 0\leq i<s-1.
 \end{equation}
-Khi đó $f(v)=a$ tương đương $x_{v,a}\land\neg x_{v,a-1}$. Với cặp đỉnh
-cần cách biệt ít nhất $d$, loại mỗi cặp nhãn $(a,b)$ có $|a-b|<d$ bằng
+Thus $f(v)=a$ is equivalent to $x_{v,a}\land\neg x_{v,a-1}$. For a vertex pair
+requiring separation at least $d$, forbid each label pair $(a,b)$ with $|a-b|<d$ using
 \begin{equation}\label{eq:forbidden}
  \neg x_{u,a}\lor x_{u,a-1}\lor\neg x_{v,b}\lor x_{v,b-1}.
 \end{equation}
-Chọn $d=h$ cho cạnh và $d=k$ cho cặp khoảng cách hai. Các hằng tại biên được
-rút gọn. Với $s=0$, một ràng buộc cách biệt dương sinh mệnh đề rỗng, đúng với
-tính bất khả thi khi mọi đỉnh chỉ có thể nhận nhãn 0.
+Set $d=h$ for edges and $d=k$ for distance-2 pairs. Boundary constants are
+simplified. When $s=0$, a positive separation requirement produces an empty
+clause, correctly expressing infeasibility when every vertex must receive label 0.
 
 \begin{proposition}
-Nếu chưa thêm ràng buộc đối xứng, CNF ở trên khả thỏa khi và chỉ khi tồn tại
-một $L(h,k)$-labeling có span không quá $s$.
+Without symmetry-breaking constraints, the CNF above is satisfiable if and
+only if an $L(h,k)$-labeling of span at most $s$ exists.
 \end{proposition}
 \begin{proof}
-Một labeling trong $[0,s]$ xác định các biến ngưỡng, thỏa đơn điệu và không
-chọn bất kỳ cặp nhãn bị cấm nào. Ngược lại, một dãy biến ngưỡng đơn điệu xác
-định duy nhất một nhãn: chỉ số đầu tiên có giá trị đúng, hoặc $s$ nếu mọi
-biến đều sai. Nếu hai nhãn vi phạm một điều kiện cách biệt, mệnh đề
-\eqref{eq:forbidden} tương ứng sẽ sai. Do vậy mọi labeling giải mã đều hợp lệ.
-Tịnh tiến nhãn nhỏ nhất về 0 cho phép áp dụng kết luận với định nghĩa span.
+A labeling in $[0,s]$ defines threshold variables that satisfy monotonicity
+and select no forbidden label pair. Conversely, a monotone sequence of
+threshold variables determines a unique label: the first true index, or $s$
+if all variables are false. If two decoded labels violate a separation
+requirement, the corresponding clause~\eqref{eq:forbidden} is false. Hence
+every decoded labeling is valid. Translating the minimum label to 0
+establishes the statement for the span definition.
 \end{proof}
 
-Trước khi rút gọn đỉnh cố định, số biến là $|V|s$. Với $L(2,1)$, số mệnh đề
-được sinh trước khi rút gọn hoặc loại trùng là
+Before eliminating fixed vertices, there are $|V|s$ variables. For $L(2,1)$,
+the number of generated clauses before simplification or deduplication is
 \begin{equation}
  |V|\max(s-1,0)+|E|A(s)+|D_2(G)|(s+1),
  \quad A(s)=\begin{cases}1&s=0,\\3s+1&s\geq1.\end{cases}
 \end{equation}
-Các số đếm trong kết quả là số biến encoder cấp phát và số mệnh đề truyền
-cho solver, không phải số còn lại sau preprocessing nội bộ của SAT solver.
+Reported counts refer to variables allocated by the encoder and clauses
+passed to the solver, not to the formula remaining after internal SAT preprocessing.
 
-\subsection{ILP dạng assignment}
-Cho $U$ là cận trên từ một labeling tham lam hợp lệ. Để tránh trùng ngữ nghĩa
-với biến ngưỡng SAT, ký hiệu biến nhị phân ILP là $y_{v,a}$:
-$y_{v,a}=1$ khi và chỉ khi $f(v)=a$. Mô hình tổng quát là
+\subsection{Assignment ILP}
+Let $U$ be an upper bound obtained from a valid greedy labeling. To distinguish
+ILP assignment variables from SAT threshold variables, write $y_{v,a}=1$
+if and only if $f(v)=a$. The general formulation is
 \begin{align}
  \min\quad &\ell_{\max}\\
  \sum_{a=0}^{U}y_{v,a}&=1 &&\forall v\in V,\label{eq:assignment}\\
@@ -53,70 +72,75 @@ $y_{v,a}=1$ khi và chỉ khi $f(v)=a$. Mô hình tổng quát là
  \sum_{a=0}^{U}a\,y_{v,a}&\leq\ell_{\max} &&\forall v\in V,\\
  y_{v,a}&\in\{0,1\},\quad \ell_{\max}\in\{0,\ldots,U\}.
 \end{align}
-Trong hai ràng buộc cấm, $a,b\in\{0,\ldots,U\}$. Ràng buộc
-\eqref{eq:assignment} chọn đúng một nhãn. Vì mô hình không ép một đỉnh tùy ý
-về 0, tối thiểu hóa $\ell_{\max}$ đạt span tối ưu nhờ bất biến tịnh tiến.
-Triển khai sinh mọi cặp nhãn bị cấm theo $h,k$. Đặt $F(U,0)=0$;
-với $d\geq1$, đặt $t=\min(U,d-1)$ và
+In both forbidden-pair constraints, $a,b\in\{0,\ldots,U\}$.
+Constraint~\eqref{eq:assignment} selects exactly one label. The formulation
+does not force an arbitrary vertex to label 0; translation invariance
+ensures that minimizing $\ell_{\max}$ yields the minimum span.
+The implementation generates all forbidden label pairs for $h,k$.
+Define $F(U,0)=0$; for $d\geq1$, let $t=\min(U,d-1)$ and
 \[
 F(U,d)=(U+1)(2t+1)-t(t+1).
 \]
-Đây là số cặp nhãn có thứ tự $(a,b)$ với $|a-b|<d$ trong $[0,U]^2$.
-Số biến là $|V|(U+1)+1$, số ràng buộc là
+This is the number of ordered label pairs $(a,b)$ satisfying $|a-b|<d$
+in $[0,U]^2$. There are $|V|(U+1)+1$ variables and
 \[
-2|V|+F(U,h)|E|+F(U,k)|D_2(G)|.
+2|V|+F(U,h)|E|+F(U,k)|D_2(G)|
 \]
-Với $(h,k)=(2,1)$, công thức trở thành
+constraints. For $(h,k)=(2,1)$, the latter becomes
 $2|V|+(3U+1)|E|+(U+1)|D_2(G)|$.
-Tương tự, trước rút gọn CNF không có đối xứng, số mệnh đề tổng quát là
+Similarly, the general CNF clause count before simplification and without
+symmetry breaking is
 $|V|\max(s-1,0)+F(s,h)|E|+F(s,k)|D_2(G)|$.
 
-Với mỗi nhãn $a$, triển khai chỉ duyệt
-$\max(0,a-d+1)\leq b\leq\min(s,a+d-1)$ khi $d>0$.
-Chi phí liệt kê cặp nhãn trên mỗi cặp đỉnh bị ràng buộc là
-$O((s+1)\min(s+1,2d-1))$; với $d=0$ không có cặp cấm.
-Do đó bước này đã tuyến tính theo $s$ khi $h,k$ cố định, nhưng có thể
-bậc hai nếu ngưỡng tăng theo $s$. Nhận xét này chỉ xét việc liệt kê cặp
-nhãn, không khẳng định toàn bộ tìm kiếm SAT là tuyến tính.
+For each label $a$, the implementation enumerates only
+$\max(0,a-d+1)\leq b\leq\min(s,a+d-1)$ when $d>0$.
+The label-pair enumeration cost per constrained vertex pair is
+$O((s+1)\min(s+1,2d-1))$; for $d=0$, there are no forbidden pairs.
+This step is therefore linear in $s$ for fixed $h,k$, but can be quadratic
+when the thresholds grow with $s$. This statement concerns label-pair
+enumeration only, not the complexity of the complete SAT search.
 
-\begin{remark}[Quy ước nhãn bắt đầu từ 1]
-Nếu dùng miền nhãn $\{1,\ldots,U'\}$ như một số cách viết assignment, tối ưu
-của biến nhãn lớn nhất bằng $\lambda_{h,k}(G)+1$ trên đồ thị không rỗng.
-Khi chuyển sang quy ước bắt đầu từ 0 phải dùng $U=U'-1$ và báo cáo
-$\lambda=\ell_{\max}-1$. Không được đồng nhất số nhãn khả dụng với span.
+\begin{remark}[One-based label convention]
+If the label domain is $\{1,\ldots,U'\}$, as in some assignment formulations,
+the optimal maximum-label variable equals $\lambda_{h,k}(G)+1$ for a nonempty
+graph. Conversion to a zero-based domain uses $U=U'-1$; a maximum label
+reported under the one-based convention gives $\lambda=\ell_{\max}-1$.
+The number of available labels must not be confused with the span.
 \end{remark}
 
-\subsection{ILP dạng Big-M}
-Dùng biến nguyên $0\leq f_v\leq U$, $0\leq\ell_{\max}\leq U$ và
-$f_v\leq\ell_{\max}$. Với mỗi cặp cần cách biệt ít nhất $d$, thêm biến
-$z_{uv}\in\{0,1\}$ và
+\subsection{Big-M ILP}
+Use integer variables $0\leq f_v\leq U$, $0\leq\ell_{\max}\leq U$, and
+$f_v\leq\ell_{\max}$. For each pair requiring separation at least $d$,
+introduce $z_{uv}\in\{0,1\}$ and
 \begin{align}
  f_u-f_v&\geq d-Mz_{uv},\\
  f_v-f_u&\geq d-M(1-z_{uv}).
 \end{align}
-Chọn $M=U+\max(h,k)$ đủ để vô hiệu hóa bất đẳng thức không được chọn vì
-$-U\leq f_u-f_v\leq U$. Mục tiêu vẫn là $\min\ell_{\max}$.
-Triển khai $L(2,1)$ dùng $M=U+2$. Số biến là
-$|V|+1+|E|+|D_2(G)|$; số ràng buộc là
-$|V|+2|E|+2|D_2(G)|$.
+The choice $M=U+\max(h,k)$ deactivates the unselected inequality because
+$-U\leq f_u-f_v\leq U$. The objective remains $\min\ell_{\max}$.
+The $L(2,1)$ implementation uses $M=U+2$. There are
+$|V|+1+|E|+|D_2(G)|$ variables and
+$|V|+2|E|+2|D_2(G)|$ constraints.
 
-Cả hai mô hình dùng nghiệm tham lam làm MIP start. Assignment loại cặp nhãn
-trực tiếp nhưng kích thước tăng theo $U$; Big-M thường gọn hơn nhưng có hệ số
-phụ thuộc cận trên. Đây là lý do cần thực nghiệm đối chứng, chưa phải kết luận
-một mô hình luôn nhanh hơn mô hình còn lại.
+Both formulations use a greedy labeling as a MIP start. Assignment explicitly
+forbids label pairs, but its size grows with $U$. Big-M is often more compact,
+but its coefficients depend on the upper bound. These differences motivate
+an experimental comparison; they do not establish that either formulation
+is always faster.
 
-
-\subsection{Đối chiếu kích thước với direct encoding}
-Đặt $B=|E|F(s,h)+|D_2(G)|F(s,k)$. Với direct encoding dùng exactly-one
-và at-most-one dạng pairwise, chưa phá đối xứng hay rút gọn, có:
+\subsection{Size comparison with direct encoding}
+Let $B=|E|F(s,h)+|D_2(G)|F(s,k)$. For direct encoding with an exactly-one
+constraint implemented using pairwise at-most-one clauses, before symmetry
+breaking or simplification, the counts are
 \[
 \begin{array}{c|c|c}
-\text{Encoding}&\text{Biến}&\text{Mệnh đề}\\\hline
+\text{Encoding}&\text{Variables}&\text{Clauses}\\\hline
 \text{Direct (pairwise AMO)}&|V|(s+1)&|V|\left(1+\binom{s+1}{2}\right)+B\\
 \text{Order}&|V|s&|V|\max(s-1,0)+B
 \end{array}
 \]
-Cùng một cặp nhãn bị cấm, direct dùng clause hai literal, còn order dùng
-tối đa bốn literal. Mã hóa AMO khác có thể giảm số clause của direct bằng
-biến phụ. Bảng này là đếm ký hiệu, chưa phải ablation thực nghiệm và không
-chứng minh order encoding luôn chạy nhanh hơn.
+For the same forbidden label pair, direct encoding uses a two-literal clause,
+whereas order encoding uses at most four literals. Other AMO encodings may
+reduce the direct-encoding clause count by introducing auxiliary variables.
+This symbolic comparison is not an experimental ablation and does not prove
+that order encoding always solves faster.

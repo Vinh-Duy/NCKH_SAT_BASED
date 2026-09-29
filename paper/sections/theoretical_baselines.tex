@@ -1,71 +1,77 @@
-\section{Các cận đối chứng có chứng minh}
-Các kết quả sau phục vụ kiểm tra mô hình, không được tuyên bố là đóng góp
-mới về phân loại đồ thị. Đặc biệt, tài liệu đã nghiên cứu labeling trên các
-lớp tích Cartesian \cite{calamoneri}. Chứng minh dưới đây được trình bày
-đầy đủ để không suy công thức vô hạn chỉ từ dữ liệu hữu hạn.
+\section{Proven reference bounds}
+The following results validate the formulations and are not claimed as new
+contributions to graph classification. Labeling of Cartesian-product classes
+has already been studied \cite{calamoneri}. Complete proofs are included
+to avoid inferring formulas over infinite families from finite observations.
 
 \begin{proposition}\label{prop:equal-tree}
-Với cây không rỗng $T$ và số nguyên $h=k\geq1$,
+For a nonempty tree $T$ and integer $h=k\geq1$,
 $\lambda_{h,h}(T)=h\Delta(T)$.
 \end{proposition}
 \begin{proof}
-Lân cận đóng của đỉnh bậc $\Delta$ có $\Delta+1$ đỉnh đôi một cách nhau
-không quá 2, nên nhãn cần span ít nhất $h\Delta$. Để có cận trên, gốc hóa
-cây và tô màu bình phương cây bằng $\Delta+1$ màu, theo thứ tự các mức.
-Tô các con của mỗi đỉnh bằng các màu phân biệt, khác màu đỉnh đó và cha
-của nó nếu có. Với đỉnh không phải gốc có nhiều nhất $\Delta-1$ con, còn
-ít nhất $\Delta-1$ màu; gốc có nhiều nhất $\Delta$ con và $\Delta$ màu
-khả dụng. Những cặp ở khoảng cách 1 hoặc 2 là cha--con, ông--cháu hoặc
-anh em, nên cách tô hợp lệ. Nhân các màu $0,\ldots,\Delta$ với $h$ cho
-labeling đạt cận. Cây một đỉnh có span 0, cũng thỏa công thức.
+The closed neighborhood of a degree-$\Delta$ vertex contains $\Delta+1$
+vertices at pairwise distance at most 2, requiring span at least $h\Delta$.
+For the upper bound, root the tree and color its square with $\Delta+1$
+colors, level by level. Assign distinct colors to the children of each
+vertex, excluding the colors of that vertex and its parent, if present.
+A non-root vertex has at most $\Delta-1$ children and at least $\Delta-1$
+available colors; the root has at most $\Delta$ children and $\Delta$
+available colors. Distance-1 or distance-2 pairs are parent--child,
+grandparent--grandchild, or sibling pairs, so this coloring is valid.
+Multiplying colors $0,\ldots,\Delta$ by $h$ gives a labeling attaining
+the bound. A one-vertex tree has span 0 and also satisfies the formula.
 \end{proof}
 
-Trên đồ thị $n$ đỉnh bất kỳ, gán các nhãn khác nhau
-$0,q,\ldots,(n-1)q$, $q=\max(h,k)$, cho cận trên cơ bản
-$\lambda_{h,k}\leq(n-1)q$. Cận này có thể rất lỏng; nó khác cận trên
-thu được từ một nghiệm heuristic cụ thể. Trong phần đối chiếu, cận bậc
-$h+(\Delta-1)\min(h,k)$ cũng được ghi riêng với cận cuối solver.
+For any graph with $n\geq1$ vertices, assigning distinct labels
+$0,q,\ldots,(n-1)q$, where $q=\max(h,k)$, gives the elementary upper bound
+$\lambda_{h,k}\leq(n-1)q$. This bound can be loose and differs from the
+upper bound supplied by a specific heuristic labeling. In the comparisons,
+the degree bound $h+(\Delta-1)\min(h,k)$ is also recorded separately
+from final solver bounds.
 
 \begin{proposition}\label{prop:extreme}
-Trong một $L(2,1)$-labeling dùng nhãn $0,\ldots,\Delta+1$, mọi đỉnh bậc
-$\Delta$ phải có nhãn 0 hoặc $\Delta+1$.
+In an $L(2,1)$-labeling using labels $0,\ldots,\Delta+1$, every vertex
+of degree $\Delta$ must receive label 0 or $\Delta+1$.
 \end{proposition}
 \begin{proof}
-Các lân cận của đỉnh đó phải nhận $\Delta$ nhãn phân biệt: mỗi cặp kề nhau
-hoặc có khoảng cách 2. Nếu nhãn trung tâm là $a\in\{1,\ldots,\Delta\}$,
-ba nhãn $a-1,a,a+1$ đều bị cấm trên lân cận. Chỉ còn $\Delta-1$ nhãn,
-không đủ. Do đó nhãn trung tâm phải là một trong hai đầu miền.
+Its neighbors require $\Delta$ distinct labels because each pair is adjacent
+or at distance 2. If the central label is $a\in\{1,\ldots,\Delta\}$,
+labels $a-1,a,a+1$ are forbidden on its neighbors. Only $\Delta-1$ labels
+remain, which is insufficient. The central label must therefore be a domain endpoint.
 \end{proof}
 
 \begin{proposition}\label{prop:grid}
-Với $n,m\geq4$, $\lambda_{2,1}(P_n\square P_m)=6$.
+For $n,m\geq4$, $\lambda_{2,1}(P_n\square P_m)=6$.
 \end{proposition}
 \begin{proof}
-Đánh số tọa độ từ 0 và đặt $f(i,j)=(2i+3j)\bmod7$, lấy đại diện trong
-$\{0,\ldots,6\}$. Trên cạnh, hiệu nhãn modulo 7 là $\pm2$ hoặc $\pm3$,
-nên hiệu tuyệt đối của hai đại diện ít nhất 2. Ở khoảng cách 2, độ dịch
-tọa độ là $(\pm2,0),(0,\pm2),(\pm1,\pm1)$; hiệu modulo 7 thuộc
-$\{\pm4,\pm6,\pm1,\pm5\}$, đều khác 0. Vậy labeling hợp lệ và span
-không quá 6.
+Index coordinates from 0 and define $f(i,j)=(2i+3j)\bmod7$, with
+representatives in $\{0,\ldots,6\}$. Across an edge, the label difference
+modulo 7 is $\pm2$ or $\pm3$, so the absolute difference between
+representatives is at least 2. At distance 2, coordinate displacements are
+$(\pm2,0),(0,\pm2),(\pm1,\pm1)$; the differences modulo 7 belong to
+$\{\pm4,\pm6,\pm1,\pm5\}$ and are nonzero. This gives a valid labeling
+of span at most 6.
 
-Giả sử có labeling với span không quá 5; tịnh tiến về miền $0,\ldots,5$.
-Trong lưới có ba đỉnh nội bộ $(1,1),(1,2),(2,2)$, đều bậc 4. Theo
-Mệnh đề~\ref{prop:extreme}, chúng chỉ có thể mang nhãn 0 hoặc 5.
-Hai cạnh liên tiếp buộc hai nhãn luân phiên, nên hai đầu bằng nhãn.
-Nhưng hai đầu có khoảng cách 2, mâu thuẫn. Suy ra span ít nhất 6.
+Suppose a labeling has span at most 5 and translate it into $0,\ldots,5$.
+The three internal vertices $(1,1),(1,2),(2,2)$ all have degree 4.
+Proposition~\ref{prop:extreme} restricts them to labels 0 and 5. The two
+successive edges force alternating labels, giving equal labels to the
+endpoints. Their distance is 2, a contradiction. Thus the span is at least 6.
 \end{proof}
-Cận $\Delta+1=5$ riêng lẻ không đủ cho kết luận này; cần cấu trúc ba đỉnh
-bậc cực đại nói trên. Chứng minh này không phát biểu trường hợp $n<4$ hoặc
-$m<4$, dù công thức construction vẫn cho một cận trên hợp lệ.
+The bound $\Delta+1=5$ alone is insufficient; the configuration of three
+maximum-degree vertices is essential. This proof makes no equality claim
+for $n<4$ or $m<4$, although the construction still provides a valid upper bound.
 
 \begin{proposition}\label{prop:corona-lower}
-Với $n\geq3,m\geq1$, $\lambda_{2,1}(C_n\circ P_m)\geq m+4$.
+For $n\geq3,m\geq1$, $\lambda_{2,1}(C_n\circ P_m)\geq m+4$.
 \end{proposition}
 \begin{proof}
-Mỗi đỉnh lõi có bậc $\Delta=m+2$. Cận bậc cho span ít nhất $m+3$.
-Nếu span không quá $m+3$, Mệnh đề~\ref{prop:extreme} buộc mọi đỉnh lõi
-có nhãn 0 hoặc $m+3$. Chọn ba đỉnh lõi liên tiếp: mọi cặp trong bộ ba
-kề nhau hoặc cách nhau đúng 2. Chúng phải mang ba nhãn phân biệt, mâu thuẫn.
+Every core vertex has degree $\Delta=m+2$, giving the degree lower bound
+$m+3$. If the span were at most $m+3$, Proposition~\ref{prop:extreme}
+would restrict all core vertices to labels 0 and $m+3$. Three consecutive
+core vertices are pairwise adjacent or at distance exactly 2 and therefore
+require three distinct labels, a contradiction.
 \end{proof}
-Đây mới là cận dưới. Quan sát $m+4$ trên miền quét không thay thế construction
-cận trên cho mọi $n,m$, và không đủ để công bố đẳng thức tổng quát.
+This establishes only a lower bound. Observing $m+4$ over a finite sweep
+does not replace an upper-bound construction for all $n,m$ and is
+insufficient to establish general equality.
