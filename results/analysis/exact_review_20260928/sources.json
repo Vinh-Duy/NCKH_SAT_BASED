@@ -1,0 +1,34 @@
+{
+  "inputs_sha256": {
+    "results/runs/general_pilot_v1.csv": "f1f762c299d78aa0690a1837aaa56614c3dfa7bea4e8061314cee60693d1aea7",
+    "results/runs/general_pilot_v1.metadata.json": "3b0624835e9d74667863b0c09109275718b10e05d4c7bce2e0c4c5435c6e0b50",
+    "results/runs/general_pilot_v1.witnesses.jsonl": "928978d99fb8f2d71c552e90e7bd9a710138f7218974f590573c19d5c06b9712",
+    "results/runs/tree_l32_compare_r1.csv": "30421766147183cab5a7491c7647ec4ce04966a637c75d2862a9b9017faf895a",
+    "results/runs/tree_l32_compare_r1.metadata.json": "d213935968a2e3c9b8db1d50474d80ed93974ea6995c9ae4b6f16e3bdf57d852",
+    "results/runs/tree_l32_compare_r1.witnesses.jsonl": "1ccb11581beba9dbaa36abd3fce94ae553335bb232323e35931112d02a5adeb2",
+    "results/runs/tree_l32_screen_v2.csv": "910bced0d2f544ebc490e9ab8b790488a4268686ba16801313c2fb02e7b034b6",
+    "results/runs/tree_l32_screen_v2.metadata.json": "6e8933a2f3127ccf516442f8019eb82cc7dced1d23172a67a564b2eb4c35ed55",
+    "results/runs/tree_l32_screen_v2.witnesses.jsonl": "692bb85283c831f5dc7f9fe0c61f8b0be0bacda10fd3afc72488cdfcc5f852a0",
+    "results/runs/cycles_main_r1.csv": "e5bced936b8f4289f3af628b2994e28daf7a79e896e7d76f51376fb67c32d4b8",
+    "results/runs/cycles_main_r1.metadata.json": "0aa43558bf1ed574b4472f9bfb1f33db1f559791c6b45e73a274f80528070ce0",
+    "results/runs/cycles_main_r1.witnesses.jsonl": "dcd76776c4af30b2fccb63aded52def38908b80629f56b0f107d953418fc0144",
+    "results/runs/products_main_r1.csv": "acc761feabfbf3b70350bb15bda2541fa988e43020b3bb9407c8ce2a0f71c0d4",
+    "results/runs/products_main_r1.metadata.json": "5463edfdb58bc417fcb08a7e05db03151ec2946324c7308cff55032ccc21f9b1",
+    "results/runs/products_main_r1.witnesses.jsonl": "6fa3d51ce03c49fb93070f0b514dbd2b0fcd314f7dcedeeede5d401007ee4793"
+  },
+  "review_sources_sha256": {
+    "scripts/review_exact_results.py": "8172ff44f8549b0666f6aaf477ff747fbd14ffd9546daef59e72f18de8b0b59d",
+    "scripts/audit_general_pilot.py": "b9f0cb25288c3e7c0465eb08317f9f5d4c55fc32199d0a2f7e15577010382059",
+    "scripts/export_paper_tables.py": "55009879a9f9bf00b4490ae2bb8af7ca7d9d2feb599b0ca8a3beed850e92a87d",
+    "benchmarks/benchmark_sat_vs_ilp.py": "38ceedbaa3a77ae75b75bd24a983ff8bb4988edc5fa42e515e9495f5da1a90d0",
+    "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+    "benchmarks/families.py": "ecb2b0fee4921aab4c342ee9cfc2f39e462ba0662a0fbb018db7803ff13b83ea",
+    "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+    "src/models/sat_encoding.py": "cdd2bf7d3730d58e120f1af897523fcda60d39f0117cd335e5dc154142083c81",
+    "src/models/ilp_assignment.py": "c839f2aa5b84ee2167a233ea28d62fe3f67523724e20517c03129b1c8e9a7475",
+    "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+  },
+  "networkx": "3.6.1",
+  "total_current_witnesses": 1344,
+  "scope": "Current witnesses checked; other CSVs inventoried only. Common-bound counts are new raw model measurements, not solver runtime or historical CNF recounts."
+}

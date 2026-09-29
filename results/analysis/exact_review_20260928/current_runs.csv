@@ -1,0 +1,6 @@
+Run,Rows,Witnesses,OPT,FEASIBLE,Scope
+general_pilot_v1,234,234,176,58,fixed cohort/independent BFS/witness/reference bounds; no UNSAT certificate
+tree_l32_compare_r1,18,18,18,0,regenerated trees/independent BFS/witness/status/repeat consistency; no UNSAT certificate
+tree_l32_screen_v2,100,100,100,0,regenerated trees/independent BFS/witness/status/repeat consistency; no UNSAT certificate
+cycles_main_r1,48,96,96,0,witness/status/paired bounds; historical CNF counts and times not reproduced
+products_main_r1,448,896,892,4,witness/status/paired bounds; historical CNF counts and times not reproduced
