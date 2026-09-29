@@ -1,144 +1,84 @@
-# SAT và ILP cho bài toán L(2,1)-labeling
+# SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-Project nghiên cứu span nhỏ nhất của nhãn đồ thị: hai đỉnh kề nhau lệch ít nhất
-2, hai đỉnh cách nhau đúng 2 bước lệch ít nhất 1. Nhãn bắt đầu từ 0; span `s`
-cho phép `s + 1` giá trị nhãn. Encoder có tham số `h,k`, nhưng solver tối ưu
-và các benchmark hiện dành cho **L(2,1)**.
+**The confirmation benchmark is complete:** run `make confirmation` to validate 702 witnesses, generate tables/figures for three repetitions, and build the PDF.
 
-SAT dùng order encoding và tìm kiếm linear/hybrid với Glucose hoặc CaDiCaL.
-ILP có assignment và Big-M với Gurobi hoặc CPLEX. Các nghiệm được kiểm tra
-độc lập; `OPT` chỉ được kết luận khi đã có cơ sở tối ưu.
+This project studies SAT-based minimum-span labeling of simple undirected graphs. Adjacent vertices require label difference at least h; vertices at distance **exactly 2** require difference at least k. The primary research domain is h≥k≥1, with default (2,1). Labels start at 0; span s permits s+1 label values. Disconnected graphs are supported.
 
-## Cài đặt
+SAT uses order encoding; assignment ILP is the baseline. `hybrid` search selects the midpoint and creates a fresh solver at each span: **it is not incremental SAT**. Trees are one experimental group within the General Graphs study.
 
-Python **3.11+**; NetworkX 3.6+ cung cấp constructor Petersen đang dùng.
+**Start here:** [overview](docs/project_overview.md), [current PDF](build/main.pdf), [literature review](docs/literature_review.md).
+
+September 28 update: [audit of five current runs and common-span model counts](results/analysis/exact_review_20260928/README.md). The supervisor-aligned priority is to complete SAT–ILP evaluation before a GA comparison.
+
+**Reading the data:** [symbols, columns, and plots](docs/data_dictionary.md), [CSV catalog and companion READMEs](docs/results_catalog.md).
+
+## Current status
+
+- Completed 50 L(3,2) trees with 100–1600 vertices and 100 CaDiCaL/Gurobi runs: both backends report OPT on every tree; all 100 labelings are valid; 48 trees attain the degree bound.
+- Archived L(2,1) symmetry experiments cover 48 cycles and 448 product samples, with two product pairs unresolved. These appear in the PDF appendix.
+- The multi-family pilot has 39 samples × 3 h,k pairs × 2 backends = 234 runs. All **234 witnesses** were validated: SAT solves 79/117 instances to optimality and Gurobi 97/117; the 78 common OPT values agree, as do both backends on all 12 instances with exact reference formulas.
+- The confirmation has 702 runs on the same 117 instances with three repetitions per backend: 77 instances are OPT in all three SAT runs, 94 in all three ILP runs, and 76 for both. These results do not establish general SAT superiority or algorithmic novelty.
+
+## Installation
+
+Python 3.11+, NetworkX 3.6+. The current machine uses `.venv-1`.
 
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -e '.[analysis]'
-# Nếu cần ILP (runtime/license CPLEX cài riêng):
 .venv/bin/python -m pip install -e '.[ilp]'
 ```
 
-Máy hiện tại có môi trường `.venv-1`; các lệnh dưới dùng môi trường đó.
-Dependency declaration ở `pyproject.toml` là khoảng tương thích; phiên bản
-thực tế của mỗi lượt chạy được lưu trong manifest, không coi đây là lockfile.
+Commercial backends require separate runtimes/licenses. Actual versions are recorded in each run's metadata; `pyproject.toml` is not a lockfile. Check the code with:
 
-## Cấu trúc
+```bash
+make test
+```
 
-| Thư mục/file | Vai trò |
+## Building the manuscript
+
+```bash
+make manuscript
+```
+
+This revalidates the tree screen, generates tables and figures, processes the confirmation, and compiles `main.tex` to `build/main.pdf`. `make pdf` compiles existing artifacts only. `main.tex` remains at the repository root; the old PDF is preserved under `archive/reports/legacy_root/`.
+
+`make report`/`make tables` reconstruct historical main_r1 CNFs. Following source changes, hashes differ from the manifests and the exporter intentionally refuses reconstruction. Use a separate checkout of the matching historical source to recount; do not alter old hashes. The current manuscript uses saved main_r1 tables and validated tree/confirmation tables. English presentation copies preserve historical numerical contents and provenance records.
+
+**□ denotes a Cartesian product** and **◦ a corona product**; these are not missing-glyph boxes. Manuscript figures are in `paper/generated/`; exploratory figures are in `results/plots/`.
+
+## Layout
+
+| Path | Role |
 |---|---|
-| `src/core/` | Sinh graph, khoảng cách 2, cận, validator và ghi thí nghiệm |
-| `src/models/` | CNF order encoding và dữ liệu assignment |
-| `src/solvers/` | Tìm kiếm SAT, backend ILP |
-| `benchmarks/` | CLI và một định nghĩa dùng chung cho các họ đồ thị tích |
-| `tests/` | Oracle vét cạn, hồi quy mô hình, timeout và ghi/resume |
-| `results/` | Dữ liệu/ảnh thực nghiệm đã lưu, được bảo toàn |
-| `results/runs/` | Đầu ra mặc định của các lượt chạy mới |
-| `paper/sections/` | Các phần báo cáo LaTeX |
-| `paper/generated/` | Bảng được sinh lại từ CSV và hash nguồn |
-| `scripts/` | Phân tích dữ liệu, xuất bảng và vẽ hình |
-| `archive/code/` | Các phiên bản lịch sử, không phải API hiện hành |
-| `main.tex` | Điểm vào báo cáo; PDF mới ở `build/main.pdf` |
+| `src/core/` | Graphs, bounds, greedy labeling, validation, data writing, and provenance |
+| `src/models/`, `src/solvers/` | Order SAT, assignment/Big-M ILP, and span optimization |
+| `benchmarks/` | Runners; `general_suite.py` defines the fixed multi-family cohort |
+| `tests/` | Exhaustive oracles, formulations, symmetry, timeouts, cohorts, and exporters |
+| `scripts/` | Auditing, table export, analysis, and plotting |
+| `results/runs/`, `results/plots/` | Current runs and corresponding figures |
+| `results/archive/` | Historical CSVs, audits, and pilots; [index](results/README.md) |
+| `docs/` | Overview, methods, and guides; [index](docs/README.md) |
+| `paper/sections/` | Main LaTeX sections and appendices |
+| `paper/generated/` | Generated tables, source hashes, and manuscript figures |
+| `main.tex`, `build/main.pdf` | Main source and current PDF |
+| `archive/` | Historical code/PDFs retained for provenance |
 
-## Chạy thực nghiệm
-
-```bash
-.venv-1/bin/python -m benchmarks.run_sat \
-  --family C --first 3 --last 20 --solver glucose --strategy hybrid --timeout 60
-
-.venv-1/bin/python -m benchmarks.run_ilp \
-  --family C --first 3 --last 10 --solver gurobi --formulation both --timeout 60
-
-.venv-1/bin/python -m benchmarks.benchmark_petersen --first 7 --last 50
-
-.venv-1/bin/python -m benchmarks.benchmark_products --first 3 --last 10
-
-.venv-1/bin/python -m benchmarks.benchmark_symmetry_comparison --first 3 --last 10
-
-.venv-1/bin/python -m benchmarks.benchmark_symmetry_comparison --family C --first 3 --last 50
-```
-
-Chạy mới mặc định tạo file có timestamp, không ghi đè CSV gốc. Có thể đặt
-`--output results/runs/my_run.csv`; nếu file đã tồn tại, runner từ chối ghi đè.
-Resume cần cùng cấu hình, mã nguồn, môi trường và schema:
+## Additional runners
 
 ```bash
-.venv-1/bin/python -m benchmarks.benchmark_products \
-  --first 3 --last 4 --timeout 30 --output results/runs/products_small.csv
-.venv-1/bin/python -m benchmarks.benchmark_products \
-  --first 3 --last 4 --timeout 30 --output results/runs/products_small.csv --resume
+# Cartesian parameter check: 36 instances in this domain.
+.venv-1/bin/python benchmarks/benchmark_lhk_general.py --first 3 --last 4
+
+# Paths, stars, combs, and random trees.
+.venv-1/bin/python benchmarks/benchmark_lhk_general.py \
+  --family trees --first 3 --last 10 --seeds 0 1 2
+
+# A new L(2,1) cycle symmetry experiment.
+.venv-1/bin/python -m benchmarks.benchmark_symmetry_comparison \
+  --family C --first 3 --last 50
 ```
 
-Resume bỏ qua các dòng đã có, kể cả FEASIBLE. Để tăng timeout hoặc thay solver,
-tạo lượt chạy mới. Không resume CSV lịch sử thiếu manifest. Không chạy đồng
-thời hai writer lên cùng một file.
+The API accepts nonnegative integer h,k, including h<k; zero thresholds disable strict symmetry orders. Root fixing is applied only to Cn. Read [L(h,k) details](docs/methods/lhk_general.md) and [data provenance](docs/data_provenance.md) before pooling results. A valid labeling is not an UNSAT certificate. SAT/ILP counts may use different Model_Span values; size ratios are not directly comparable when spans differ.
 
-Mỗi lượt có CSV, `.metadata.json`, `.witnesses.jsonl` và `.log`. Bản ghi witness
-chứa nhãn khả thi và lịch sử tìm kiếm; không phải chứng thư UNSAT DRAT/LRAT.
-So sánh đối xứng lưu **cả hai span**, kiểm tra chúng khi cả hai đạt OPT và
-luân phiên thứ tự chạy. Nhãn đỉnh trong witness được lưu bằng biểu diễn `repr`.
-
-CSV so sánh hiện đếm lại cả hai CNF tại cùng `Count_Span`, tách
-`Clause_Raw_*` (trước rút gọn) và `Clause_*` (sau rút gọn chung).
-`Symmetry_Rule=none` nghĩa là chưa áp dụng đối xứng riêng cho họ đó.
-Biểu đồ và bảng thời gian tách từng họ, không gộp mọi Cartesian/Corona.
-Theo phạm vi thí nghiệm đã thống nhất, **chỉ chu trình C_n tự động cố định
-f(0)=0**; các họ khác không cố định gốc, kể cả C×C, K và Q. Xem
-[quy ước mã hóa SAT](docs/methods/sat_encoding.md).
-
-## API và trạng thái
-
-```python
-from src.core.graph_utils import get_corona_graph
-from src.solvers.sat_solver import solve_graph
-
-if __name__ == '__main__':
-    graph = get_corona_graph('cycle', 'path', 4, 3)
-    result = solve_graph(graph, timeout_sec=30)
-    print(result.status, result.span, result.proven_lower_bound, result.labels)
-```
-
-SAT có deadline dùng tiến trình con (`spawn`), nên script gọi API cần guard
-`__main__`. `timeout_sec=None` chạy trực tiếp không giới hạn. Runtime bao gồm
-preprocessing/startup/search/validation; preprocessing ở cha và cleanup có
-thể làm vượt ngưỡng danh nghĩa. ILP dùng time limit native cho giai đoạn tối ưu,
-và báo cáo runtime toàn wrapper. Không đồng nhất hai loại budget này.
-
-- `OPT`: cận dưới được chứng minh gặp một nghiệm hợp lệ (SAT), hoặc backend
-  ILP trả optimal với MIP gap bằng 0 và nghiệm qua validator.
-- `FEASIBLE`: có nhãn hợp lệ, chưa chứng minh tối ưu.
-- `TIMEOUT`: ILP hết thời gian mà chưa có nghiệm; SAT thường giữ được greedy incumbent.
-- `UNAVAILABLE`: thiếu package hoặc runtime backend được phát hiện.
-- `INVALID`, `INFEASIBLE`, `ERROR`: cần điều tra; không tự đổi thành timeout
-  hay một kết luận toán học. Lỗi backend/license có thể được ném ra thay vì che giấu.
-
-`UB` trong CSV chuẩn là cận trên tham lam ban đầu. Số biến/mệnh đề SAT thuộc
-CNF cung cấp incumbent (`model_span` trong witness), không phải tổng qua các
-lần gọi; để trống nếu incumbent vẫn là nghiệm tham lam. Riêng CSV comparison
-đếm tại `Count_Span` chung như mô tả trên, kể cả khi incumbent là greedy.
-
-## Kiểm thử và báo cáo
-
-```bash
-.venv-1/bin/python -m unittest discover -s tests -v
-make report
-```
-
-`make report` hiện dùng **`results/runs/cycles_main_r1.csv` và
-`results/runs/products_main_r1.csv`**. Lệnh kiểm tra đủ miền quét, manifest,
-nhãn nghiệm và counts CNF, sinh lại bảng/hình rồi biên dịch bằng latexmk/BibTeX.
-Không chạy lại tìm kiếm SAT và không trộn dữ liệu lịch sử vào kết quả mới.
-Có thể đổi `PYTHON` và `LATEXMK`, ví dụ:
-`make report PYTHON=.venv/bin/python LATEXMK=latexmk`.
-Các số liệu cũ được giữ nguyên; bảng mới phản ánh CSV thực có, không hardcode
-số lượng 434 hay phần trăm của một phiên bản cũ.
-
-Phần phương pháp gồm mô hình L(h,k), chứng minh tương đương CNF, assignment,
-Big-M, quy ước 0/1, cận, bất biến tìm kiếm và điều kiện sound của đối xứng.
-Báo cáo trình bày lượt main_r1: 48 chu trình, 448 product, trong đó hai cặp
-product còn FEASIBLE. ILP/Petersen lịch sử không được đưa vào kết quả chính. Xem
-[nguồn gốc dữ liệu](docs/data_provenance.md) và [báo cáo](docs/guides/REPORT.md).
-
-Các file PDF tham khảo người dùng cung cấp nằm ngoài repository; bibliography
-ở `paper/references.bib`. Project chưa có giấy phép phân phối.
+User-supplied references remain outside the repository; the bibliography is `paper/references.bib`. Authors, affiliations, and a submission venue have not been invented. A distribution license has not yet been confirmed.
