@@ -1,28 +1,13 @@
-# Tìm kiếm span
+# Span search
 
-SAT giải L(h,k) với cận dưới h+(Δ−1)min(h,k) khi có cạnh, hoặc 0 khi
-không có cạnh. Với mặc định L(2,1), công thức trở thành Δ+1. Δ là bậc
-lớn nhất; đây là cận đầu vào, không nhất thiết bằng LB được ghi sau tìm kiếm.
-Cận trên là span của labeling tham lam đã được validator kiểm tra.
+SAT solves L(h,k) using lower bound h+(Δ−1)min(h,k) when the graph has an edge, or 0 otherwise. For the default L(2,1), this is Δ+1. Δ is the maximum degree; this initial bound need not equal the recorded final LB. The upper bound is the span of a validated greedy labeling.
 
-Giữ bất biến `lower <= optimum <= best.span`. Linear thử `best.span - 1`;
-hybrid thử trung điểm. SAT hạ cận trên bằng span thực của nhãn giải mã;
-UNSAT ở s nâng cận dưới lên s+1. Hai cận gặp nhau mới ghi OPT. Không cần gọi
-lại s-1 nếu các lần thử trước đã đủ chứng minh. Không có SAT gia tăng: mỗi
-span tạo CNF/solver mới.
+The invariant is `lower <= optimum <= best.span`. Linear search tests `best.span - 1`; hybrid search tests the midpoint. SAT decreases the upper bound to the decoded labeling's actual span; UNSAT at s raises the lower bound to s+1. OPT is recorded only when the bounds meet. There is no need to repeat s-1 if previous trials already establish optimality. This is not incremental SAT: each span creates a fresh CNF/solver.
 
-Finite timeout dùng tiến trình con cho toàn bộ pha tìm kiếm, gửi incumbent
-và cận về cha sau từng lần gọi. Hết deadline giữ incumbent gần nhất, không
-coi việc dừng là UNSAT. Preprocessing ở cha và cleanup có thể vượt ngưỡng.
-`timeout_sec=None` chạy trực tiếp, không tạo tiến trình.
+A finite timeout runs the entire search phase in a child process, sending the incumbent and bounds to the parent after each call. At the deadline, the latest received incumbent is retained; interruption is not UNSAT. Parent preprocessing and cleanup can exceed the threshold. `timeout_sec=None` runs directly without a child process.
 
-Riêng `benchmark_sat_vs_ilp.py` bọc toàn bộ mỗi lượt trong worker với
-deadline ngoài và đo `Wall_Time`; không áp mô tả timeout API này thay cho
-protocol so sánh đó. Xem [đánh giá solver](../experiments/solver_evaluation.md).
+`benchmark_sat_vs_ilp.py` instead wraps each entire run in a worker with an external deadline and records `Wall_Time`; do not substitute the API timeout description for that comparison protocol. See [solver evaluation](../experiments/solver_evaluation.md).
 
-`runtime` đo wall-clock toàn API. `upper_bound` là greedy bound ban đầu;
-`proven_lower_bound` là cận cuối; `model_span` chỉ span đã dùng để tạo CNF
-của nghiệm lưu. Counts để trống nếu chưa thay greedy incumbent bằng SAT.
+`runtime` measures wall-clock API time. `upper_bound` is the initial greedy bound; `proven_lower_bound` is the final bound; `model_span` is the span used to construct the CNF that produced the saved solution. Counts are absent if SAT has not replaced the greedy incumbent.
 
-Lịch sử SAT/UNSAT là nhật ký quyết định của solver, không phải proof trace
-độc lập. Chưa xuất DRAT/LRAT.
+SAT/UNSAT history records solver decisions, not an independently checkable proof trace. DRAT/LRAT proofs are not exported.

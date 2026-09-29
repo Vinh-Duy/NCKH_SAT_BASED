@@ -1,41 +1,21 @@
 # SAT order encoding
 
-Với span s, x[v,i] biểu diễn f(v) ≤ i, 0 ≤ i < s. Các hằng biên là x[v,-1]
-= false và x[v,s] = true. Dãy ngưỡng đơn điệu dùng clause `-x[v,i] or x[v,i+1]`.
+For span s, x[v,i] represents f(v) ≤ i, for 0 ≤ i < s. Boundary constants are x[v,-1] = false and x[v,s] = true. Monotonicity uses clauses `-x[v,i] or x[v,i+1]`.
 
-Phủ định f(v)=a là `-x[v,a] or x[v,a-1]`. Với cặp nhãn bị cấm |a-b| < d,
-ghép hai phủ định bằng OR. Dùng d=h cho cạnh, d=k cho khoảng cách đúng 2;
-mặc định (h,k)=(2,1). API dùng h,k nguyên không âm; miền nghiên cứu chính
-h≥k≥1. Đây là ngưỡng trên hiệu nhãn, không phải khoảng cách đồ thị.
-Span 0 và mệnh đề rỗng được xử lý rõ ràng.
+The negation of f(v)=a is `-x[v,a] or x[v,a-1]`. For a forbidden pair |a-b| < d, combine the two negations with OR. Use d=h for edges and d=k for distance exactly 2; the default is (h,k)=(2,1). The API accepts nonnegative integer h,k; the primary research domain is h≥k≥1. These are label-difference thresholds, not graph distances. Span 0 and empty clauses are handled explicitly.
 
-Đỉnh được cố định hợp lệ không cấp phát biến; decoder phục hồi nhãn đó.
-Mỗi phép gán SAT giải mã thành labeling và qua validator gồm đủ tập đỉnh.
-Tính đầy đủ và tính đúng của CNF được chứng minh trong
-[models.tex](../../paper/sections/models.tex).
+No variables are allocated for a validly fixed vertex; the decoder restores its label. Each SAT assignment is decoded and checked by a validator that covers the complete vertex set. CNF soundness and completeness are proved in [models.tex](../../paper/sections/models.tex).
 
-Phá đối xứng:
+Symmetry breaking:
 
-- Chỉ C_n được tự động cố định gốc về 0, theo phạm vi thí nghiệm đã thống nhất.
-- K, Q: giữ các thứ tự tương ứng, không cố định gốc.
-- C×C, C×P, GP(n,k), C∘H: chỉ sắp thứ tự cặp lân cận đổi chỗ được bởi phản xạ.
-- P×P và P∘H: chưa dùng ràng buộc riêng.
-- Không ép tùy ý gốc Corona hoặc Petersen về 0; không ép nghiêm ngặt hai
-  đầu một đường đi khi chưa bảo đảm chúng khác nhãn.
+- Only C_n automatically fixes the root to 0, following the agreed experimental scope.
+- K, Q retain their respective ordering constraints without root fixing.
+- C×C, C×P, GP(n,k), and C∘H order only neighbor pairs exchangeable by reflection.
+- P×P and P∘H currently use no family-specific constraints.
+- No arbitrary Corona or Petersen root is forced to 0. A strict order between path endpoints is not imposed without establishing that their labels must differ.
 
-API thấp `build_cnf` giả định người gọi chứng minh được các đối xứng truyền
-vào. API `solve_graph` kiểm tra cấu trúc canonical/metadata trước khi dùng.
-Không có cơ chế tự tính toàn bộ nhóm tự đẳng cấu.
-Khi h hoặc k bằng 0, solver tắt các thứ tự nghiêm ngặt có thể không còn
-hợp lệ. Chi tiết tổng quát ở [L(h,k)](lhk_general.md); giải nghĩa CNF,
-clause, raw, unit và counts ở [từ điển dữ liệu](../data_dictionary.md).
+The low-level `build_cnf` API assumes that callers justify the supplied symmetries. `solve_graph` checks canonical structure/metadata before using them. It does not compute the full automorphism group. When h or k is 0, the solver disables strict orders that may no longer be valid. See [L(h,k)](lhk_general.md) and the [data dictionary](../data_dictionary.md) for CNF, clause, raw, unit, and count terminology.
 
-Tiền xử lý chung cho cả hai cấu hình: bỏ clause hằng đúng/trùng, lan truyền
-đơn vị đến điểm cố định, rồi loại bản sao sinh ra do rút gọn. Các unit được
-giữ lại để decoder nhận đúng phép gán; công thức giữ tương đương logic trên
-các biến ban đầu. `build_cnf(..., simplify=False)` cho CNF trước bước này.
-`OrderVars.raw_clause_count` đếm trước tiền xử lý, sau thay hằng đỉnh cố định.
+Both configurations share preprocessing: tautology/duplicate removal, unit propagation to a fixed point, and removal of duplicates created by simplification. Units are retained for correct decoding; the formula remains logically equivalent over the original variables. `build_cnf(..., simplify=False)` returns the formula before this step. `OrderVars.raw_clause_count` counts clauses before preprocessing but after fixed-vertex constant substitution.
 
-Thêm thứ tự có thể tăng clause thô; rút gọn khai thác cận suy ra từ thứ tự và
-nhãn cố định. Không có bảo đảm giảm 50% clause hay giảm runtime 50%.
-Giảm một nửa số nghiệm dưới phản xạ là phát biểu khác với giảm số mệnh đề.
+Ordering can increase raw clause counts; simplification exploits bounds implied by ordering and fixed labels. Neither a 50% clause reduction nor a 50% runtime reduction is guaranteed. Halving reflection-equivalent solutions is different from halving clauses.
