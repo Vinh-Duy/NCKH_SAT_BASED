@@ -1,0 +1,32 @@
+[
+  {
+    "source": "archive/code/visual.py",
+    "source_sha256": "b1ccfd4118073a2d0faa3dd2725346b716dbc26db58768df94afe01cb490beb6",
+    "translation": "archive/translations/code/visual.py.md",
+    "translation_sha256": "164b20b4c30342c24a1559cb282267600befaa9a6830faa8bb78543b35c42d7a"
+  },
+  {
+    "source": "archive/code/benchmark.py",
+    "source_sha256": "fcee2bdaa9df2f26cb99d98ea6d0565a470c1ee6c2b2a368868900b722669174",
+    "translation": "archive/translations/code/benchmark.py.md",
+    "translation_sha256": "17f8bb30c62efafbc54b22153c62b09db29f791c6a9ade5c7181180f62ae86bc"
+  },
+  {
+    "source": "archive/code/benchmark_cadical195.py",
+    "source_sha256": "5a85146b525c93e7bd6a6dce29654f1deaf92fed0c2d6652a60e4f19641a64c9",
+    "translation": "archive/translations/code/benchmark_cadical195.py.md",
+    "translation_sha256": "c6296783597166b3006176337bc21cdf09828f98065ba02fb8e051277b2e1187"
+  },
+  {
+    "source": "archive/code/bai_tap_L21.py",
+    "source_sha256": "2350a8a9c46d9ae202ff395a2031f196d946ef71b906d4d6c231acbe2e58a45c",
+    "translation": "archive/translations/code/bai_tap_L21.py.md",
+    "translation_sha256": "22887acc2b0f692f051eb9ac41c7973af0f22c0078c8207967c596e0b952ab3d"
+  },
+  {
+    "source": "archive/code/benchmark_milp.py",
+    "source_sha256": "305e7d35b523675af718aa014d37373349375178baf2b084e3c1e525fce4801f",
+    "translation": "archive/translations/code/benchmark_milp.py.md",
+    "translation_sha256": "e93f9618f0178cae17326b626aee50c6d74c3af64a37875ea0b0a4c612325fd7"
+  }
+]

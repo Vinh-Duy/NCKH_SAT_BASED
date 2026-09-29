@@ -1,8 +1,7 @@
-# Mã lịch sử
+# Historical source code
 
-Các script ở đây ghi lại các hướng thử nghiệm trước khi chuẩn hóa package.
-Không dùng chúng để tái tạo benchmark của phiên bản hiện hành: chúng có thể
-ghi đè dữ liệu, phụ thuộc module cũ hoặc dùng ước lượng thay cho lời giải SAT.
-Các file gốc `validation.py`, `visual.py`, `plot_results.py` cũng là công cụ
-lịch sử, được giữ để tránh phá các import cũ. API được duy trì nằm trong `src/`,
-CLI ở `benchmarks/`, và công cụ phân tích hiện hành ở `scripts/`.
+These scripts preserve experiments predating package standardization. Do not use them to reproduce current benchmarks: they may overwrite outputs, depend on old modules, or use estimates instead of SAT solutions. The former root scripts `validation.py`, `visual.py`, and `plot_results.py` are also historical and remain together to preserve old imports. Maintained APIs are in `src/`, CLIs in `benchmarks/`, and analysis tools in `scripts/`.
+
+Original historical executable files retain their bytes and original comments/messages for provenance. The English documentation describes their role and limitations; their presence does not make them part of the maintained pipeline.
+
+[English reading copies](../translations/README.md) translate the historical comments, docstrings, and displayed messages without altering the originals.
