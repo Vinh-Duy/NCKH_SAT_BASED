@@ -1,221 +1,168 @@
-# Ký hiệu, dữ liệu và cách đọc kết quả
+# Notation, data, and interpretation
 
-Tài liệu chung cho các bộ kết quả hiện hành và lịch sử. Tra
-[mục lục từng CSV](results_catalog.md) để biết file thuộc schema nào và có
-metadata/witness hay không. Các chú giải không chứng nhận lại kết quả cũ.
+This dictionary covers current and historical datasets. Use the [CSV catalog](results_catalog.md) to identify each schema and the availability of metadata/witnesses. Documentation does not recertify historical results.
 
-## 1. Các khái niệm trước khi đọc CSV
+## 1. Concepts to understand before reading CSVs
 
-| Từ/ký hiệu | Ý nghĩa |
+| Term/symbol | Meaning |
 |---|---|
-| Graph/đồ thị | Tập đỉnh và tập cạnh, không phải biểu đồ thống kê |
-| Plot | Biểu đồ vẽ từ dữ liệu |
-| Pilot | Đợt khảo sát thăm dò để chọn thiết kế thực nghiệm tiếp theo |
-| Smoke | Lượt rất nhỏ kiểm tra pipeline hoạt động, chưa đánh giá hiệu năng rộng |
-| Screen/probe | Khảo sát ban đầu/thử kích thước; không tự bảo đảm đủ khó hay đại diện |
-| Audit | Kiểm tra lại một phạm vi xác định (nhãn, counts, miền mẫu…); phải nêu phạm vi |
-| Instance/bài toán | Khi giải, phải xác định cả đồ thị và h,k; cùng đồ thị với h,k khác là bài toán khác |
-| Cohort | Tập đầu vào đã chốt cho một đợt thử nghiệm |
-| Backend/solver | Bộ giải như Glucose, CaDiCaL (SAT), Gurobi, CPLEX (ILP) |
-| SAT / UNSAT | Có / không có phép gán thỏa CNF tại một span đang thử; SAT chưa đồng nghĩa tối ưu |
-| CNF, clause, variable | Công thức hội các mệnh đề, mệnh đề, biến Boolean |
-| Unit clause / propagation | Mệnh đề chỉ có một literal / suy ra phép gán từ các mệnh đề; có thể làm CNF nhỏ đi |
-| Literal | Một biến Boolean hoặc phủ định của biến đó |
-| CDCL | Cách giải SAT học clause từ xung đột; clause học nội bộ khác clause đầu vào được đếm |
-| ILP / MILP | Quy hoạch tuyến tính nguyên / nguyên hỗn hợp; tài liệu có thể gọi chung bộ giải MIP |
-| Order Encoding | Biến ngưỡng biểu diễn f(v) ≤ i; khác thứ tự chạy solver |
-| Greedy / incumbent | Cách tìm nghiệm tham lam / nghiệm tốt nhất đang giữ |
-| LB, UB | Cận dưới, cận trên cho giá trị tối ưu; khác số lần thử và khác miền đếm mô hình |
-| Δ (Delta) | Bậc lớn nhất của đồ thị, không phải mức cải thiện thời gian |
-| λ hoặc lambda | Giá trị tối ưu trong phát biểu toán; cột CSV cùng tên có thể chỉ chứa nghiệm khả thi, phải đọc status |
-| Span s | Độ rộng nhãn max−min; sau chuẩn hóa min=0 thì max=s; miền 0..s có s+1 giá trị, không nhất thiết dùng hết |
-| D2 | Các cặp đỉnh có khoảng cách ngắn nhất đúng bằng 2 trong pipeline này |
-| Seed | Số khởi tạo sinh đồ thị; đổi seed lấy mẫu đầu vào khác, không phải chạy lặp solver |
-| r0, r1, r2 trong ID | Lần đo thứ 1, 2, 3 trên cùng đầu vào; Repeat đếm từ 0 |
-| main_r1, v2, v3 trong tên file | Tên đợt/phiên bản; không suy số lần lặp hay chất lượng từ hậu tố |
-| Metadata/manifest | Cấu hình, phiên bản môi trường và mã nhận diện nguồn của lượt chạy |
-| Witness | Nhãn nghiệm được lưu, cùng đồ thị ở các runner mới; không phải chứng thư UNSAT |
-| SHA-256 | Dấu vân tay nội dung để phát hiện thay đổi; không chứng minh thuật toán đúng |
+| Graph | A vertex set and edge set, not a statistical plot |
+| Plot | A visualization generated from data |
+| Pilot | An exploratory study informing subsequent experimental design |
+| Smoke | A small pipeline functionality check, not a broad performance evaluation |
+| Screen/probe | An initial study or size probe; not automatically representative or difficult |
+| Audit | Checks within an explicitly stated scope: labelings, counts, sample domains, etc. |
+| Instance | A graph together with h,k; changing h,k changes the labeling instance |
+| Cohort | The input set fixed for an experiment |
+| Backend/solver | Glucose or CaDiCaL (SAT), Gurobi or CPLEX (ILP), for example |
+| SAT / UNSAT | A satisfying assignment exists / does not exist for the CNF at a tested span; SAT alone is not optimality |
+| CNF, clause, variable | Conjunctive normal form, a disjunction of literals, a Boolean variable |
+| Unit clause / propagation | A single-literal clause / deductions from clauses that may simplify the CNF |
+| Literal | A Boolean variable or its negation |
+| CDCL | Conflict-driven clause learning; internally learned clauses differ from counted input clauses |
+| ILP / MILP | Integer / mixed-integer linear programming; solvers may be referred to as MIP solvers |
+| Order encoding | Threshold variables representing f(v) ≤ i, not solver execution order |
+| Greedy / incumbent | A constructive heuristic / the best solution currently retained |
+| LB, UB | Lower and upper bounds on the optimum, not trial counts or model-count domains |
+| Δ (Delta) | Maximum vertex degree, not runtime improvement |
+| λ or lambda | The mathematical optimum; a similarly named CSV field may contain only a feasible value, depending on status |
+| Span s | max−min label width; after normalization min=0 and max=s; 0..s permits s+1 values, not necessarily all used |
+| D2 | Vertex pairs at shortest-path distance exactly 2 in this pipeline |
+| Seed | Graph-generation seed; a different seed samples an input rather than repeats a solver run |
+| r0, r1, r2 in IDs | First, second, and third measurements on the same input; Repeat is zero-based |
+| main_r1, v2, v3 in filenames | Run/version names; do not infer repetition counts or quality from suffixes |
+| Metadata/manifest | Run configuration, environment versions, and source identifiers |
+| Witness | A stored labeling, accompanied by the graph in new runners; not an UNSAT certificate |
+| SHA-256 | A content fingerprint detecting changes, not a proof of algorithmic correctness |
 
-## 2. Họ đồ thị và cách đọc tên
+## 2. Graph families and names
 
-| Tên | Cấu trúc và số đỉnh |
+| Name | Structure and vertex count |
 |---|---|
-| P_n / path_n | Đường đi n đỉnh |
-| C_n | Chu trình n đỉnh |
-| K_n | Đồ thị đầy đủ n đỉnh, mọi cặp đỉnh khác nhau đều có cạnh |
-| Q_d | Siêu lập phương chiều d, có 2^d đỉnh; Q_5 có 32 đỉnh, không phải 5 |
-| GP(n,k), GP_n_k | Petersen tổng quát, có 2n đỉnh; k là bước nối vành trong, **khác tham số k của L(h,k)** |
-| CxC, CxP, PxP | Tích Cartesian C_n □ C_m, C_n □ P_m, P_n □ P_m; có nm đỉnh |
-| CoC, CoP, PoC, PoP | Corona C_n ◦ C_m, C_n ◦ P_m, P_n ◦ C_m, P_n ◦ P_m; có n(m+1) đỉnh |
-| tree_n_seedj, random_n_seedj | Cây ngẫu nhiên có nhãn n đỉnh, seed j |
-| star_n | Trong runner L(h,k): n lá và một tâm, có n+1 đỉnh |
-| comb_n | Trong runner L(h,k): đường sống lưng n đỉnh, mỗi đỉnh gắn thêm một lá, tổng 2n đỉnh |
-| ER_n_pp_seedj | Erdős–Rényi G(n,p): mỗi cặp đỉnh có cạnh độc lập với xác suất p; p không phải số cạnh chính xác |
-| BA_n_m2_seedj | Barabási–Albert n đỉnh, mỗi đỉnh mới nối tới 2 đỉnh trước đó với ưu tiên theo bậc; không có nghĩa mọi đỉnh bậc 2 |
+| P_n / path_n | Path with n vertices |
+| C_n | Cycle with n vertices |
+| K_n | Complete graph with n vertices; every distinct pair is adjacent |
+| Q_d | d-dimensional hypercube with 2^d vertices; Q_5 has 32 vertices, not 5 |
+| GP(n,k), GP_n_k | Generalized Petersen graph with 2n vertices; k is the inner-ring step, **not the k of L(h,k)** |
+| CxC, CxP, PxP | Cartesian C_n □ C_m, C_n □ P_m, P_n □ P_m, each with nm vertices |
+| CoC, CoP, PoC, PoP | Corona C_n ◦ C_m, C_n ◦ P_m, P_n ◦ C_m, P_n ◦ P_m, with n(m+1) vertices |
+| tree_n_seedj, random_n_seedj | Random labeled tree with n vertices and seed j |
+| star_n | L(h,k) runner: n leaves and one center, n+1 vertices |
+| comb_n | L(h,k) runner: n-vertex backbone with one additional leaf per vertex, 2n vertices |
+| ER_n_pp_seedj | Erdős–Rényi G(n,p): each pair independently forms an edge with probability p; p is not an exact edge count |
+| BA_n_m2_seedj | Barabási–Albert graph with n vertices; each new vertex attaches to two existing vertices with degree-based preference; not every degree is 2 |
 
-Trong tích Cartesian, (u,v) kề (u',v') khi một tọa độ bằng nhau và tọa độ
-còn lại kề nhau trong đồ thị thành phần. Trong Corona G◦H, mỗi đỉnh G được
-gắn một bản sao H và nối tới mọi đỉnh trong bản sao đó. Corona có thứ tự:
-G◦H không được mặc nhiên đổi thành H◦G.
+In a Cartesian product, (u,v) and (u',v') are adjacent when one coordinate agrees and the other forms an edge in its factor. In G◦H, each G vertex has its own H copy and is adjacent to every vertex of that copy. Corona is ordered: G◦H cannot automatically be replaced by H◦G.
 
-`C_4xP_5` có 20 đỉnh; `C_4oP_5` có 24 đỉnh. `x` và `o` là cách viết tên
-file cho □ và ◦; ô vuông □ trong công thức là ký hiệu tích, không phải lỗi font.
-`CxC_3_4` trong smoke L(h,k) là cùng kiểu họ như `C_3xC_4`, khác quy ước đặt tên.
+`C_4xP_5` has 20 vertices; `C_4oP_5` has 24. Filename symbols `x` and `o` represent □ and ◦. The square □ in formulas is a product symbol, not a font error. `CxC_3_4` in an L(h,k) smoke run represents the same family as `C_3xC_4`, under a different naming convention.
 
-Ví dụ `tree_20_seed0__h3_k2__r1__gurobi`: cây 20 đỉnh seed 0, L(3,2), lần
-đo thứ hai, Gurobi. Seed 0,1,2 là ba mẫu sinh ra; r0,1,2 là ba lần đo cùng
-mẫu. Cùng seed ở hai kích thước/họ khác nhau không tạo cùng đồ thị.
+`tree_20_seed0__h3_k2__r1__gurobi` denotes a 20-vertex tree generated with seed 0, L(3,2), the second measurement, and Gurobi. Seeds 0,1,2 select three generated inputs; r0,1,2 are measurements on one input. The same seed across different sizes/families does not produce the same graph.
 
-## 3. CSV so sánh SAT–ILP
+## 3. SAT–ILP comparison CSVs
 
-Áp dụng cho `tree_l32_compare_r1`, `tree_l32_screen_v2`, `general_pilot_v1`
-và các file `sat_vs_ilp_*`, `tree_l32_size_probe`. Một dòng = một lượt solver.
+Applies to `tree_l32_compare_r1`, `tree_l32_screen_v2`, `general_pilot_v1`, `general_confirm_r1`, `sat_vs_ilp_*`, and `tree_l32_size_probe`. One row is one solver run.
 
-[Từ điển 29 cột và cách đọc biểu đồ](../results/runs/general_pilot_v1.README.md)
-giải thích Graph, Instance, Family, h,k, Repeat, Position, Method, V,E,Delta,
-Diameter, Limit, Status, Termination, Span, LB, Wall_Time, Peak_RSS_MB,
-Memory_Scope, Variables, Constraints, Model_Span, Count_Scope, Decisions,
-Conflicts, Stats_Complete, Error. Schema cũ có thể không có Delta/Diameter.
-**Chỉ dùng định nghĩa cột chung; không lấy cấu hình 30 giây/39 đồ thị của
-general_pilot áp cho các file khác.** Xem README và metadata riêng từng file.
+The [29-column dictionary and plot guide](../results/runs/general_pilot_v1.README.md) covers Graph, Instance, Family, h,k, Repeat, Position, Method, V,E,Delta, Diameter, Limit, Status, Termination, Span, LB, Wall_Time, Peak_RSS_MB, Memory_Scope, Variables, Constraints, Model_Span, Count_Scope, Decisions, Conflicts, Stats_Complete, and Error. Older schemas may omit Delta/Diameter. **Reuse column definitions, not the pilot's 30-second/39-graph configuration for unrelated runs.** Consult each run's README and metadata.
 
-Runtime đo toàn lượt worker, khác runtime của runner/API cũ. Hai solver
-chạy ở process riêng, có deadline ngoài; symmetry tắt trong các lượt này.
-Nếu dừng trước khi worker gửi kết quả cuối, có thể chỉ giữ greedy incumbent,
-thiếu counts, bộ nhớ và thống kê tìm kiếm; ô trống không phải số 0.
+Runtime measures the entire worker run, unlike historical API/runner timers. Solvers use separate processes and external deadlines; symmetry is disabled in these runs. If interrupted before the final report, only the greedy incumbent may be retained, without counts, memory, or search statistics. Blank is not zero.
 
-## 4. CSV đối xứng và đếm kích thước
+## 4. Symmetry and size-only CSVs
 
-Áp dụng cho `cycles_main_r1`, `products_main_r1`, các audit symmetry và
-`symmetry_sizes_*`. Một dòng so sánh = một đồ thị với hai cấu hình Base/Sym;
-file sizes-only chỉ đếm hai CNF, **không chạy solver và không đo thời gian**.
-Các đợt này là L(2,1), không phải sweep h,k tổng quát.
+Applies to `cycles_main_r1`, `products_main_r1`, symmetry audits, and `symmetry_sizes_*`. One comparison row contains a graph and Base/Sym configurations. Size-only files count two CNFs: **they do not run solvers or measure solving time**. These are L(2,1) experiments, not general h,k sweeps.
 
-| Cột | Ý nghĩa |
+| Column | Meaning |
 |---|---|
-| `Graph`, `Family`, `V`, `E` | Tên đồ thị, họ, số đỉnh, số cạnh |
-| `lambda_Base`, `lambda_Sym` | Giá trị trả về khi tắt/bật symmetry; xem trạng thái tương ứng |
-| `Status_Base`, `Status_Sym` | OPT = đã xác định tối ưu; FEASIBLE = mới có nghiệm |
-| `Time_Base`, `Time_Sym` | Runtime API SAT của từng cấu hình (giây); đếm lại CNF tại Count_Span nằm ngoài thời gian này |
-| `Count_Span` | Cùng mốc span dùng để dựng lại và đếm hai mô hình |
-| `Count_Span_Kind` | OPT nếu hai bên cùng tối ưu, cùng span; FEASIBLE_UB nếu chỉ dùng max của hai incumbent làm cận trên chung |
-| `Symmetry_Rule` | root=0: cố định nhãn gốc; order: thêm thứ tự nhãn; root=0+order: cả hai; none: không có ràng buộc đối xứng riêng |
-| `Var_Base`, `Var_Sym` | Biến được cấp phát ở hai mô hình; có thể gồm biến được xác định qua lan truyền đơn vị |
-| `Clause_Raw_Base`, `Clause_Raw_Sym` | Clause trước tiền xử lý chung nhưng đã thay hằng/nhãn cố định |
-| `Clause_Base`, `Clause_Sym` | Clause sau tiền xử lý, gồm unit giữ để giải mã; không phải số clause học trong CDCL |
-| `Var_Reduce_Pct`, `Clause_Reduce_Pct` | 100 × (Base−Sym)/Base; âm nghĩa là tăng, trống nếu mẫu số 0 |
-| `Order` | Thứ tự thực thi Base,Sym hoặc Sym,Base; không phải loại mã hóa |
-| `Consistent` | YES: hai kết quả cùng OPT, cùng span; NO: hai kết quả OPT mâu thuẫn, phải điều tra; UNPROVEN: chưa đủ căn cứ; không coi hai incumbent trùng nhau là chứng minh tối ưu |
-| `Completed_Attempts_Base`, `Completed_Attempts_Sym` | Số lượt kiểm tra span đã hoàn tất trong tìm kiếm |
-| `Conflicts_Base`, `Conflicts_Sym` | Tổng xung đột SAT ghi được |
-| `Decisions_Base`, `Decisions_Sym` | Tổng quyết định SAT ghi được |
-| `Propagations_Base`, `Propagations_Sym` | Tổng phép lan truyền SAT ghi được |
-| `Encoding_Time_Base`, `Encoding_Time_Sym` | Tổng thời gian mã hóa được ghi (giây) |
-| `SAT_Solve_Time_Base`, `SAT_Solve_Time_Sym` | Tổng thời gian các lần gọi SAT được ghi (giây), không phải toàn runtime |
-| `Stats_Complete_Base`, `Stats_Complete_Sym` | Thống kê hoàn tất hay bị thiếu do lượt chưa kết thúc; không suy missing = 0 |
+| `Graph`, `Family`, `V`, `E` | Graph name, family, vertex count, edge count |
+| `lambda_Base`, `lambda_Sym` | Returned values with symmetry off/on; interpret with the corresponding status |
+| `Status_Base`, `Status_Sym` | OPT establishes optimality; FEASIBLE supplies a solution only |
+| `Time_Base`, `Time_Sym` | SAT API runtime per configuration, in seconds; Count_Span reconstruction is excluded |
+| `Count_Span` | Shared span used to rebuild and count both models |
+| `Count_Span_Kind` | OPT if both establish the same optimum; otherwise FEASIBLE_UB uses the larger incumbent as a common upper bound |
+| `Symmetry_Rule` | root=0: fix the root label; order: add label orders; root=0+order: both; none: no family-specific symmetry constraints |
+| `Var_Base`, `Var_Sym` | Allocated variables, potentially including variables assigned by unit propagation |
+| `Clause_Raw_Base`, `Clause_Raw_Sym` | Clauses before common preprocessing, after constant/fixed-label substitution |
+| `Clause_Base`, `Clause_Sym` | Clauses after preprocessing, including units retained for decoding; not CDCL learned clauses |
+| `Var_Reduce_Pct`, `Clause_Reduce_Pct` | 100 × (Base−Sym)/Base; negative means an increase; blank if denominator is zero |
+| `Order` | Base,Sym or Sym,Base execution order, not the encoding type |
+| `Consistent` | YES: both OPT with equal spans; NO: conflicting OPT results requiring investigation; UNPROVEN: insufficient evidence. Equal incumbents do not prove optimality |
+| `Completed_Attempts_Base`, `Completed_Attempts_Sym` | Completed span-decision trials during search |
+| `Conflicts_Base`, `Conflicts_Sym` | Total recorded SAT conflicts |
+| `Decisions_Base`, `Decisions_Sym` | Total recorded SAT decisions |
+| `Propagations_Base`, `Propagations_Sym` | Total recorded SAT propagations |
+| `Encoding_Time_Base`, `Encoding_Time_Sym` | Total recorded encoding time in seconds |
+| `SAT_Solve_Time_Base`, `SAT_Solve_Time_Sym` | Total recorded SAT-call time in seconds, not whole-run runtime |
+| `Stats_Complete_Base`, `Stats_Complete_Sym` | Whether statistics are complete or missing due to unfinished trials; missing is not zero |
 
-Với schema cũ thiếu Count_Span/Clause_Raw hoặc chỉ có một `lambda`, không
-thể khôi phục định nghĩa đo mới chỉ bằng cách đổi tên cột. Phiên bản v3 có
-chính sách cố định gốc rộng hơn; cycle_root_only và main_r1 là chính sách
-sau đó chỉ cố định gốc tự động cho C_n. Không trộn các phiên bản khi so hiệu năng.
+Older schemas lacking Count_Span/Clause_Raw or storing only one `lambda` cannot recover the new measurement definitions by renaming columns. v3 used broader root fixing; cycle_root_only and main_r1 subsequently restricted automatic root fixing to C_n. Do not pool these versions for performance comparisons.
 
-Phá đối xứng loại các nghiệm tương đương, không bảo đảm giảm clause hay
-runtime. Thêm ràng buộc có thể tăng clause thô; tiền xử lý có thể rút gọn.
-`none` là chạy lại cùng mô hình: chênh lệch thời gian không chứng minh hiệu
-quả phá đối xứng. Counts và số trạng thái tìm kiếm là hai đại lượng khác nhau.
+Symmetry breaking excludes equivalent solutions but does not guarantee fewer clauses or shorter runtimes. Added constraints can increase raw clauses, while preprocessing may simplify them. `none` repeats the same model, so timing variation does not demonstrate a symmetry benefit. Model counts and search-state counts are distinct.
 
-## 5. CSV smoke L(h,k) một backend
+## 5. Single-backend L(h,k) smoke CSVs
 
-Áp dụng cho `lhk_cartesian_smoke` và `lhk_trees_smoke`, 19 cột:
+Applies to `lhk_cartesian_smoke` and `lhk_trees_smoke`, with 19 columns:
 
-| Cột | Ý nghĩa |
+| Column | Meaning |
 |---|---|
-| `Graph`, `Graph_Name`, `Family` | ID gồm h,k; tên đồ thị chưa kèm h,k; họ đồ thị |
-| `h`, `k`, `V`, `E`, `Delta` | Tham số nhãn, số đỉnh/cạnh, bậc lớn nhất |
-| `Solver`, `Formulation` | Backend thực chạy; order (SAT), assignment hoặc big-m (ILP) |
-| `lambda`, `LB`, `status` | Giá trị nghiệm, cận dưới ghi nhận, trạng thái; lambda khi FEASIBLE chỉ là cận trên |
-| `time` | Runtime API giây; không cùng định nghĩa hard deadline của runner SAT–ILP |
-| `variables`, `constraints`, `Model_Span` | Biến, clause/ràng buộc và miền mô hình được đếm; có thể trống nếu chỉ dùng greedy hoặc không ghi được |
-| `Baseline` | Công thức đối chứng áp dụng được, không phải cấu hình Base trong thí nghiệm symmetry |
-| `Baseline_Check` | PASS: OPT khớp đối chứng; FAIL: mâu thuẫn; UNPROVEN: chưa OPT; NA: không có công thức áp dụng |
+| `Graph`, `Graph_Name`, `Family` | ID including h,k; graph name without h,k; graph family |
+| `h`, `k`, `V`, `E`, `Delta` | Label parameters, vertex/edge counts, maximum degree |
+| `Solver`, `Formulation` | Actual backend; order (SAT), assignment or big-m (ILP) |
+| `lambda`, `LB`, `status` | Solution value, recorded lower bound, status; FEASIBLE lambda is an upper bound only |
+| `time` | API runtime in seconds, not the SAT–ILP runner's external-deadline measurement |
+| `variables`, `constraints`, `Model_Span` | Model variables, clauses/constraints, and counting domain; may be absent when only greedy is used or not reported |
+| `Baseline` | Applicable reference formula, not the symmetry experiment's Base configuration |
+| `Baseline_Check` | PASS: OPT matches reference; FAIL: contradiction; UNPROVEN: not OPT; NA: no applicable formula |
 
-Metadata có thể ghi `formulation=assignment` từ mặc định CLI ngay cả khi
-solver là Glucose; cột Formulation của dòng ghi `order` mới là mã hóa SAT
-đã dùng. Tham số formulation là tùy chọn cho ILP. Các smoke kiểm tra chức
-năng này không dùng làm đối chứng thời gian, nhất là khi chạy đồng thời.
+Metadata may retain CLI default `formulation=assignment` even for Glucose; the row's `Formulation=order` records the actual SAT encoding. The formulation option selects ILP formulations. These functional smoke runs are not timing baselines, especially if run concurrently.
 
-## 6. CSV lịch sử đơn lẻ
+## 6. Historical single-configuration CSVs
 
-Áp dụng cho `results/archive/legacy/` và audit Petersen có schema tương tự.
+Applies to `results/archive/legacy/` and similarly structured Petersen audits.
 
-| Cột | Cách đọc và giới hạn |
+| Column | Interpretation and limits |
 |---|---|
-| `Graph` | Tên đồ thị |
-| `n` | Số đỉnh thực trong schema CSV này; với GP_7_1 thì n=14, không phải tham số 7 trong tên |
-| `V`, `E` | Số đỉnh/cạnh nếu schema có |
-| `var` | Số biến được code tại thời điểm chạy báo cáo |
-| `clause`, `constr`, `clause/constr` | Clause SAT hoặc ràng buộc ILP; dấu / là tên cột dùng chung, không phải phép chia |
-| `time` | Giây theo timer của script lịch sử; thiếu manifest thì không xác nhận phạm vi đo giống runner mới |
-| `lambda` | Giá trị ghi trong file, cần đọc status trước khi gọi là tối ưu |
-| `UB` | Có thể là một cận trên số hoặc cả chuỗi lịch sử span đã thử; không luôn là UB cuối |
-| `status` | OPT/FEASIBLE/TIMEOUT và các trạng thái lịch sử như GREEDY, FEASIBLE_ESTIMATE |
+| `Graph` | Graph name |
+| `n` | Actual vertex count in this schema; GP_7_1 has n=14, not the naming parameter 7 |
+| `V`, `E` | Vertex/edge counts where present |
+| `var` | Variable count reported by the historical code |
+| `clause`, `constr`, `clause/constr` | SAT clauses or ILP constraints; the slash is part of a shared column name, not division |
+| `time` | Seconds under the historical script's timer; without a manifest, equivalence to current timing cannot be established |
+| `lambda` | Recorded value; check status before describing it as optimal |
+| `UB` | May be a numeric upper bound or a complete span-search history string; not always the final UB |
+| `status` | OPT/FEASIBLE/TIMEOUT or historical states such as GREEDY and FEASIBLE_ESTIMATE |
 
-Ví dụ `UB = B3:UNSAT -> B4:SAT -> S3:UNSAT` là lịch sử tìm kiếm trong code
-hybrid cũ: B chỉ pha tìm nhị phân, S chỉ lần kiểm tra span nhỏ hơn sau đó.
-Chuỗi `4 -> 3` không khẳng định 3 khả thi. `E...:ESTIMATE` là ước lượng,
-không phải chứng nhận tối ưu hay bằng chứng có witness hợp lệ đã lưu.
-GREEDY chỉ ghi nhận cách xây nghiệm; chưa xác minh lại witness thì không
-gán cho dữ liệu đó chứng nhận của pipeline mới.
+`UB = B3:UNSAT -> B4:SAT -> S3:UNSAT` records old hybrid search: B denotes binary-search trials and S a subsequent smaller-span check. `4 -> 3` does not assert feasibility at 3. `E...:ESTIMATE` is an estimate, not optimality certification or evidence of a stored valid witness. GREEDY records the construction method; without witness revalidation, historical data must not inherit certification from the new pipeline.
 
-Không suy backend, timeout, h,k, symmetry hoặc phần cứng chỉ từ tên file
-khi không có metadata xác nhận. Không tự điền các trường thiếu để ghép
-với benchmark mới. Những kết quả này không bị xóa; giới hạn truy nguyên
-được ghi rõ thay vì tuyên bố tất cả đúng hoặc tất cả sai.
+Do not infer backend, timeout, h,k, symmetry, or hardware from filenames without confirming metadata. Do not invent missing fields to combine old and new benchmarks. These results are retained with explicit provenance limits, rather than declared universally correct or incorrect.
 
-## 7. Bảng tổng hợp và biểu đồ
+## 7. Summary tables and plots
 
-Các `summary.csv` symmetry là đầu ra tổng hợp theo họ, không phải lượt solver mới.
-**Riêng audit pilot SAT–ILP** có schema khác cho `observations.csv` và
-`summary.csv`: [giải nghĩa cột đối chiếu](../results/analysis/general_pilot_v1/README.md).
-Bảng dưới áp dụng cho summary Base/Sym:
+Symmetry `summary.csv` files aggregate by family and are not new solver runs. The **SAT–ILP pilot audit** has separate observation/summary schemas; see its [column guide](../results/analysis/general_pilot_v1/README.md). The following applies to Base/Sym summaries:
 
-| Cột | Ý nghĩa |
+| Column | Meaning |
 |---|---|
-| `Family`, `Rows` | Họ và số dòng so sánh đầu vào |
-| `Paired_OPT` | Số cặp có cả hai OPT cùng span |
-| `Unresolved_Pairs` | Số cặp còn lại |
-| `Base_FEASIBLE`, `Sym_FEASIBLE` | Số lượt FEASIBLE ở mỗi cấu hình |
-| `Symmetry_Rules` | Các quy tắc xuất hiện trong họ |
-| `Paired_Time_Base`, `Paired_Time_Sym` | Tổng runtime trên các cặp cùng OPT, đơn vị giây |
-| `Median_Paired_Speedup` | Trung vị từng tỷ số Time_Base/Time_Sym; >1 có lợi cho Sym, <1 có lợi cho Base |
-| `Median_Paired_Clause_Reduction_Pct` | Trung vị phần trăm giảm clause trên các cặp cùng OPT |
+| `Family`, `Rows` | Family and number of input comparison rows |
+| `Paired_OPT` | Pairs with both OPT and matching spans |
+| `Unresolved_Pairs` | Remaining pairs |
+| `Base_FEASIBLE`, `Sym_FEASIBLE` | FEASIBLE observations by configuration |
+| `Symmetry_Rules` | Rules present in the family |
+| `Paired_Time_Base`, `Paired_Time_Sym` | Total runtime in seconds over jointly OPT pairs |
+| `Median_Paired_Speedup` | Median of Time_Base/Time_Sym; >1 favors Sym, <1 favors Base |
+| `Median_Paired_Clause_Reduction_Pct` | Median percentage clause reduction on jointly OPT pairs |
 
-Trung vị tỷ số, tỷ số tổng thời gian và trung bình phần trăm giảm không
-phải cùng thống kê. Speedup 2 nghĩa là nhanh gấp đôi, tương ứng thời gian
-giảm 50%, không phải giảm 200%.
+The median of ratios, ratio of totals, and mean percentage reduction differ. A speedup of 2 means twice as fast, corresponding to a 50% time reduction, not 200%.
 
-- `delta_runtime_*`, `delta_clauses_*` do script symmetry hiện hành tạo:
-  trục x là số đỉnh; y là **Base−Sym**, lấy trung bình các mẫu cùng số đỉnh
-  trong mỗi họ. Dương có lợi cho Sym, âm là tăng; đơn vị giây/clause, không
-  phải %. Runtime chỉ lấy cặp cùng OPT; file chỉ counts không có runtime.
-- Cactus SAT–ILP: x là ngưỡng giây, y là số lượt OPT trong ngưỡng; không phải
-  tổng thời gian cộng dồn. Nếu có nhiều repeat, y đếm lượt, không đếm đồ thị độc lập.
-- Runtime SAT–ILP: trung vị theo số đỉnh của các cặp cả hai OPT trong budget,
-  y log; xem coverage để biết số mẫu còn lại. ER hiện gộp hai p.
-- Hình cây trong manuscript: dải 25–75% giữa các mẫu seed, không phải khoảng
-  tin cậy hay độ dao động của nhiều lần chạy cùng một cây.
-- Hình gán nhãn/pipeline là minh họa, không phải bằng chứng thống kê. Hình
-  lịch sử thiếu nguồn đầy đủ phải đọc ghi chú tại thư mục, không áp định nghĩa
-  biểu đồ mới hồi tố chỉ vì tên gần giống.
+- Current symmetry `delta_runtime_*` and `delta_clauses_*`: x is vertex count; y is **Base−Sym**, averaged over samples of the same size within each family. Positive favors Sym, negative indicates an increase; units are seconds/clauses, not percentages. Runtime uses jointly OPT pairs; size-only files have no runtime.
+- SAT–ILP cactus plots: x is a time threshold, y is OPT observations within it, not cumulative summed time. With repetitions, y counts runs, not independent graphs.
+- SAT–ILP runtime plots: medians by vertex count over pairs where both are OPT within budget, on a log y-axis. Read coverage to assess exclusions. The original ER pilot plot pools two p values; the confirmation separates them.
+- Manuscript tree figures: 25–75% bands across graph seeds, not confidence intervals or repeated-run variability on one tree.
+- Labeling and pipeline diagrams are illustrations, not statistical evidence. Historical figures with incomplete provenance require their directory notes; similar filenames do not justify applying current plot definitions retrospectively.
 
-## 8. Gửi và tái lập dữ liệu
+## 8. Sharing and reproducing data
 
-Gửi CSV **cùng README của lượt đó**; có thể gửi thêm tài liệu này và PDF.
-Để tái lập, giữ metadata, witness, log, phiên bản code và môi trường. Có
-metadata/witness không tự động nghĩa là đã audit; nhãn hợp lệ chỉ chứng minh
-tính khả thi, còn tối ưu cần cận dưới/UNSAT hoặc chứng minh phù hợp.
+Share each CSV **with its companion README**, optionally with this dictionary and the PDF. Preserve metadata, witnesses, logs, code versions, and environment information for reproduction. Metadata/witness availability does not automatically mean a run has been audited. Valid labels establish feasibility; optimality additionally requires matching bounds, UNSAT evidence, or an applicable proof.
 
-Không sửa CSV hay hash lịch sử để làm chúng khớp source mới. Hướng dẫn
-chạy hiện hành ở [research_next_steps.md](guides/research_next_steps.md);
-các Word/Markdown trong `docs/archive/` chỉ phản ánh thời điểm viết.
+Do not modify historical CSVs or hashes to match new source.
+
+## Common-domain analysis — September 28, 2026
+
+`common_bound_models.csv` uses the same graph/h/k/Model_Span for SAT and ILP, unlike historical counts at differing spans. `SAT_Raw_Clauses` precedes simplification; `ILP_Binary` excludes the additional integer lmax; `ILP_Constraints` excludes variable-domain declarations. These are structural counts, not runtimes or solution-complexity bounds. [Complete column definitions](../results/analysis/exact_review_20260928/README.md).

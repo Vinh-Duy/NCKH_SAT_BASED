@@ -1,80 +1,44 @@
-# Nguồn gốc và phạm vi dữ liệu
+# Data provenance and scope
 
-## Thí nghiệm đối xứng L(2,1) ở phụ lục
+September 28, 2026 update: [audit of five current runs and common-span model counts](../results/analysis/exact_review_20260928/README.md). It checked 1,344 witnesses; the 117 model comparisons are new analyses, not remeasured runtimes. Consolidate SAT–ILP before GA; no GA results exist yet.
 
-| Nguồn | Số cặp | Kết quả |
+## Supplementary L(2,1) symmetry experiments
+
+| Source | Pairs | Recorded results |
 |---|---:|---|
-| results/runs/cycles_main_r1.csv | 48 | 48 OPT/OPT, cùng span |
-| results/runs/products_main_r1.csv | 448 | 446 OPT/OPT, cùng span; 2 FEASIBLE/FEASIBLE |
+| results/runs/cycles_main_r1.csv | 48 | 48 OPT/OPT with matching spans |
+| results/runs/products_main_r1.csv | 448 | 446 OPT/OPT with matching spans; two FEASIBLE/FEASIBLE |
 
-Hai manifest ghi cùng mã nguồn, Python, package và nền tảng; Glucose,
-search `hybrid` (chọn trung điểm), order_offset=0. Budget mỗi cấu hình:
-60 giây cho chu trình, 180 giây cho product. Hai lượt này không chứa đối chứng ILP hoặc sweep Petersen.
-Đối chứng cây SAT–ILP được ghi riêng bên dưới.
+Both manifests record the same source, Python, packages, and platform; Glucose, `hybrid` midpoint search, order_offset=0. Budgets per configuration are 60 seconds for cycles and 180 for products. These runs include neither ILP comparisons nor Petersen sweeps; tree SAT–ILP is documented separately below.
 
-Exporter kiểm tra đủ miền quét, không trùng dòng, tất cả 992 witness khớp
-CSV và thỏa điều kiện nhãn, cận không mâu thuẫn, bộ đếm và thời gian khớp
-witness; dựng lại hai CNF ở cùng Count_Span để kiểm tra counts. Validator
-nhãn duyệt cạnh và đường đi hai bước riêng, không lấy cặp khoảng cách từ
-encoder. Kiểm tra này không phải chứng thư UNSAT độc lập.
+Under the matching historical source, the exporter checks complete sweep domains, duplicate absence, all 992 witnesses against CSVs and labeling constraints, noncontradictory bounds, and counter/timing consistency; both CNFs are rebuilt at Count_Span for count checks. Label validation traverses edges and two-step paths independently of encoder distance pairs. This is not independent UNSAT certification.
 
-`paper/generated/sources.json` lưu hash của CSV, manifest và witness của cả
-hai lượt, thông tin manifest, số witness đã kiểm tra và hash exporter.
-CSV đầu vào không bị chỉnh sửa. `make report` chỉ tái sinh được các bảng
-khi source khớp manifest. Sau nâng cấp, dùng snapshot bảng đã lưu;
-`make manuscript` kiểm tra/xuất bảng cây và biên dịch cùng snapshot này.
+`paper/generated/sources.json` records CSV/manifest/witness hashes, manifest details, validated-witness counts, and the exporter hash. Inputs are unchanged. `make report` regenerates these tables only with matching source. After source extension, stored snapshots are used; `make manuscript` validates/exports trees and confirmation and compiles them alongside the historical tables. English presentation copies translate table labels without changing the original snapshots or their provenance records.
 
-Kết quả thời gian chỉ là một lượt mỗi cấu hình. Các bảng so tốc độ dùng
-cặp cùng OPT và báo riêng các cặp chưa tối ưu; không coi đây là bằng chứng
-về độ ổn định qua nhiều lượt hoặc về toàn bộ các instance timeout.
+Timing has one measurement per configuration. Speed tables use jointly OPT pairs and report unresolved pairs separately; they establish neither repeated-run stability nor performance over all timeout instances.
 
-## Đối chứng cây L(3,2) trong phần chính
+## Main L(3,2) tree comparison
 
-`results/runs/tree_l32_screen_v2.csv` có 50 cây: n=100,200,400,800,1600,
-seed 0–9, một lần/backend, CaDiCaL và Gurobi assignment một thread,
-timeout ngoài 60s. Đủ 100 dòng OPT, cùng span từng graph, 100 witness hợp lệ.
+`results/runs/tree_l32_screen_v2.csv` has 50 trees: n=100,200,400,800,1600, seeds 0–9, one repetition/backend, CaDiCaL and one-thread Gurobi assignment, 60-second external limit. All 100 rows are OPT, with matching spans per graph and 100 valid witnesses.
 
-`export_tree_screen.py` sinh lại đồ thị từ seed, đối chiếu cạnh/đỉnh đã lưu,
-kiểm tra nhãn qua BFS khoảng cách 2 độc lập với encoder, đối chiếu CSV và
-witness, kiểm tra đủ miền quét. 48 cây đạt cận bậc 2Δ+1; hai cây cần thêm 1.
-Mã audit mới không được giả làm mã solver đã chạy: manifest giữ nguyên
-source_sha256 cũ, còn hash mã audit được ghi riêng trong
-`paper/generated/tree_screen_sources.json`. Không tái đếm CNF hoặc tái tạo
-phép đo thời gian bằng source mới. Sự đồng thuận OPT không phải chứng thư UNSAT.
+`export_tree_screen.py` regenerates seeded graphs, compares saved vertices/edges, validates labels using encoder-independent distance-2 BFS, cross-checks CSV/witnesses, and verifies sweep completeness. 48 trees attain 2Δ+1; two require one more. Audit code is not represented as the source used for the historical solver run: original source_sha256 remains unchanged, while the audit hash is recorded in `paper/generated/tree_screen_sources.json`. The audit neither recounts historical CNFs nor reproduces runtimes. OPT agreement is not an UNSAT certificate.
 
-`tree_l32_compare_r1` là pilot 3 cây, 3 lần/backend, 18 lượt. Không gộp các
-lần lặp này vào screen 50 cây như cùng protocol/budget. Các probe trong
-archive vẫn giữ nguyên nguồn. Cohort `general-pilot-v1` được audit riêng
-bằng `scripts/audit_general_pilot.py`: đủ 234 dòng/witness, graph khớp seed,
-nhãn hợp lệ theo BFS độc lập, cận/trạng thái không mâu thuẫn. 176 lượt OPT,
-58 FEASIBLE; 78 bài hai bên OPT cùng giá trị, 19 chỉ Gurobi OPT, 1 chỉ SAT
-OPT, 19 cả hai FEASIBLE. 12 bài có công thức exact đều khớp ở hai backend.
-Nguồn và hash ở `results/analysis/general_pilot_v1/sources.json`; không gán
-chứng nhận UNSAT hoặc tái dựng timer/CNF cho bước audit này.
+`tree_l32_compare_r1` is a three-tree, three-repetition/backend pilot with 18 observations. Do not pool its repetitions with the 50-tree screen under a common protocol/budget. Archived probes retain original provenance.
 
-Tra [mục lục tất cả CSV](results_catalog.md) và [từ điển dữ liệu](data_dictionary.md)
-để phân biệt một dòng solver, một cặp Base/Sym và một dòng tổng hợp theo họ.
+`general-pilot-v1` is separately audited by `scripts/audit_general_pilot.py`: all 234 rows/witnesses, seeded graph consistency, independent BFS feasibility, and noncontradictory statuses/bounds. There are 176 OPT and 58 FEASIBLE observations: 78 instances jointly OPT with equal values, 19 only Gurobi OPT, one only SAT OPT, and 19 both FEASIBLE. Both backends match all 12 applicable exact-formula references. Sources/hashes are in `results/analysis/general_pilot_v1/sources.json`; this audit does not certify UNSAT or reconstruct timers/CNFs.
 
-## Dữ liệu lịch sử được giữ nguyên
+See the [CSV catalog](results_catalog.md) and [data dictionary](data_dictionary.md) to distinguish solver observations, Base/Sym pairs, and family summaries. The later three-repetition confirmation has its own versioned audit under results/analysis/general_confirm_r1 and is not pooled with the pilot.
 
-| Nguồn | Số dòng | Trạng thái đã ghi |
+## Preserved historical data
+
+| Source | Rows | Recorded statuses |
 |---|---:|---|
-| products_benchmark.csv | 448 | 446 OPT, 2 FEASIBLE |
+| products_benchmark.csv | 448 | 446 OPT, two FEASIBLE |
 | symmetry_comparison_benchmark.csv | 448 | Baseline: 445 OPT; Symmetry: 448 OPT |
 | sat_petersen.csv | 594 | 594 OPT |
 
-Ba CSV này không còn là đầu vào của báo cáo hiện tại. Chúng được giữ để
-đối chiếu; không xóa hoặc ghi đè khi chuyển sang main_r1. Các file này
-không đủ manifest/witness để khôi phục đầy đủ từng thí nghiệm. CSV symmetry
-lịch sử chỉ lưu một span chung, nên không kiểm tra hồi tố được hai span.
-Không kết luận dữ liệu sai chỉ từ việc sửa code, cũng không gán chứng nhận
-của các kiểm thử mới cho kết quả lịch sử.
+These CSVs are no longer current-report inputs. They remain available for comparison and were neither removed nor overwritten during migration to main_r1. They lack sufficient manifests/witnesses to reconstruct every experiment. Historical symmetry stores one shared span, preventing retrospective comparison of two independently recorded spans. Code changes alone do not refute old values, and new tests do not retroactively certify them.
 
-Các file v2/v3, cycle_root_only và audit chuyển vào `results/archive/audits/`, giữ nguyên nội dung
-với manifest của từng phiên bản. Không ghép các phiên bản thành một mẫu
-đo thời gian đồng nhất, không resume một lượt bằng source khác manifest.
+v2/v3, cycle_root_only, and audit files moved to `results/archive/audits/` with contents and version manifests preserved. Do not pool source versions into homogeneous timing samples or resume with a source differing from the manifest.
 
-Các CSV lịch sử trong bảng trên hiện nằm ở `results/archive/legacy/`.
-CSV, manifest, witness và log được chuyển cùng nhau, không sửa các hash/đường
-dẫn ghi bên trong manifest lịch sử. Xem `docs/layout_migration.json` để tra
-đường dẫn cũ → mới và đối chiếu SHA-256.
+The historical CSVs listed above now reside in `results/archive/legacy/`. CSVs, manifests, witnesses, and logs moved together without changing embedded hashes or historical paths. Later English documentation edits do not alter the original experimental records.
