@@ -1,0 +1,73 @@
+\subsection{Unresolved intervals and incumbent quality}
+\label{sec:optimality-gaps}
+The OPT/FEASIBLE distinction describes the outcome of a particular run;
+it does not, by itself, determine the quality of a FEASIBLE incumbent.
+We therefore conduct a separate post-hoc analysis of all
+\GapObservations{} confirmation observations. For instance $i$, let
+$\ell_i^{\mathrm{th}}$ be its applicable theoretical lower bound,
+$\ell_{ir}$ the recorded lower bound in observation $r$, and $u_{ir}$
+the independently validated span of that observation's labeling. Combining
+the six observations gives
+\[
+ L_i=\max\bigl\{\ell_i^{\mathrm{th}},\max_r\ell_{ir}\bigr\},
+ \qquad U_i=\min_r u_{ir},
+ \qquad L_i\leq\lambda_{h,k}(G_i)\leq U_i.
+\]
+The lower-bound inequality relies on the recorded solver bounds where
+they exceed the theoretical bound; this analysis does not independently
+verify UNSAT or MILP optimality certificates. The interval combines
+evidence across backends and repetitions and is not attributed to a single
+30-second run. The original statuses and timed coverage are unchanged.
+
+Of the \GapInstances{} instances, \GapClosed{} have closed intervals:
+\GapTheory{} attain the applicable theoretical lower bound, and
+\GapRecorded{} additional instances have a recorded OPT result.
+No additional interval closes solely by combining bounds from FEASIBLE
+runs. The remaining \GapOpen{} instances all belong to the sampled ER
+groups; their interval widths range from \GapOpenMin{} to \GapOpenMax{}
+label units. This identifies unresolved cases in this cohort, not a general
+hardness ranking of graph families. A wide interval may reflect weak
+lower bounds, poor incumbents, or both.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Post-hoc interval classification on the full confirmation cohort.
+Theory denotes attainment of an applicable theoretical lower bound;
+Other closed denotes additional closed intervals. These columns and Open
+partition Cases. They do not count successes by either backend within
+one run.}
+\label{tab:gap-coverage}
+\input{\GapReportDir/summary.tex}
+\end{table}
+
+For any stored witness of span $u$, the remaining suboptimality satisfies
+\[
+ u-U_i\leq u-\lambda_{h,k}(G_i)\leq u-L_i.
+\]
+If $L_i=U_i=u$, the witness is retrospectively known to be optimal even
+when its original run returned FEASIBLE. If $u>U_i$, a strictly better
+validated labeling exists, so the witness is known to be suboptimal even
+if the optimum remains unresolved. Otherwise its optimality is unknown.
+These are absolute bounds in label units, not confidence intervals or
+the relative MIP gaps reported by a commercial solver.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Retrospective quality of observations originally reported as
+FEASIBLE. Optimal witness attains a closed combined interval; Worse witness
+has a strictly better stored witness; Unresolved means neither conclusion
+is established. Repetitions are observations of the same instances.}
+\label{tab:feasible-quality}
+\input{\GapReportDir/quality.tex}
+\end{table}
+
+In particular, \GapSATFeasibleOptimal{} SAT FEASIBLE observations contain
+optimal witnesses according to the combined evidence. They remain FEASIBLE
+in every original coverage and runtime table: finding an optimal labeling
+and proving its optimality within a run are distinct outcomes. The analysis
+does not establish why a run failed to prove optimality or isolate the cost
+of proving lower bounds. Such causal conclusions require further controlled
+experiments. All unresolved instances, bound sources, and observation-level
+classifications are exported with source hashes under
+\path{results/analysis/confirmation_gaps/}.
+\FloatBarrier
