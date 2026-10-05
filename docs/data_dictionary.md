@@ -2,6 +2,13 @@
 
 This dictionary covers current and historical datasets. Use the [CSV catalog](results_catalog.md) to identify each schema and the availability of metadata/witnesses. Documentation does not recertify historical results.
 
+The [optimality-interval analysis](methods/optimality_intervals.md) adds a separate
+post-hoc schema for confirmation evidence. Its version-specific README under
+[confirmation_gaps](../results/analysis/confirmation_gaps/README.md) defines
+combined lower/upper bounds, interval widths, bound-source IDs, and retrospective
+witness quality. These columns never replace the original solver statuses or
+single-run coverage.
+
 ## 1. Concepts to understand before reading CSVs
 
 | Term/symbol | Meaning |
