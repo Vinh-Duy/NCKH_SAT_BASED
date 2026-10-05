@@ -1,0 +1,703 @@
+Graph,Instance,Group,h,k,Method,Repeat,Status,Within_Budget,Recorded_LB,Witness_Span,Combined_LB,Best_Witness_UB,Quality,Excess_Lower,Excess_Upper
+BA_20_m2_seed0__h1_k1__r0__cadical,BA_20_m2_seed0,BA,1,1,cadical,0,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h1_k1__r1__cadical,BA_20_m2_seed0,BA,1,1,cadical,1,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h1_k1__r2__cadical,BA_20_m2_seed0,BA,1,1,cadical,2,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h1_k1__r0__gurobi,BA_20_m2_seed0,BA,1,1,gurobi,0,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h1_k1__r1__gurobi,BA_20_m2_seed0,BA,1,1,gurobi,1,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h1_k1__r2__gurobi,BA_20_m2_seed0,BA,1,1,gurobi,2,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r0__cadical,BA_20_m2_seed0,BA,2,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r1__cadical,BA_20_m2_seed0,BA,2,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r2__cadical,BA_20_m2_seed0,BA,2,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r0__gurobi,BA_20_m2_seed0,BA,2,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r1__gurobi,BA_20_m2_seed0,BA,2,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h2_k1__r2__gurobi,BA_20_m2_seed0,BA,2,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r0__cadical,BA_20_m2_seed0,BA,3,2,cadical,0,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r1__cadical,BA_20_m2_seed0,BA,3,2,cadical,1,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r2__cadical,BA_20_m2_seed0,BA,3,2,cadical,2,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r0__gurobi,BA_20_m2_seed0,BA,3,2,gurobi,0,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r1__gurobi,BA_20_m2_seed0,BA,3,2,gurobi,1,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed0__h3_k2__r2__gurobi,BA_20_m2_seed0,BA,3,2,gurobi,2,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r0__cadical,BA_20_m2_seed1,BA,1,1,cadical,0,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r1__cadical,BA_20_m2_seed1,BA,1,1,cadical,1,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r2__cadical,BA_20_m2_seed1,BA,1,1,cadical,2,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r0__gurobi,BA_20_m2_seed1,BA,1,1,gurobi,0,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r1__gurobi,BA_20_m2_seed1,BA,1,1,gurobi,1,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h1_k1__r2__gurobi,BA_20_m2_seed1,BA,1,1,gurobi,2,OPT,True,12,12,12,12,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r0__cadical,BA_20_m2_seed1,BA,2,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r1__cadical,BA_20_m2_seed1,BA,2,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r2__cadical,BA_20_m2_seed1,BA,2,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r0__gurobi,BA_20_m2_seed1,BA,2,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r1__gurobi,BA_20_m2_seed1,BA,2,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h2_k1__r2__gurobi,BA_20_m2_seed1,BA,2,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r0__cadical,BA_20_m2_seed1,BA,3,2,cadical,0,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r1__cadical,BA_20_m2_seed1,BA,3,2,cadical,1,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r2__cadical,BA_20_m2_seed1,BA,3,2,cadical,2,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r0__gurobi,BA_20_m2_seed1,BA,3,2,gurobi,0,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r1__gurobi,BA_20_m2_seed1,BA,3,2,gurobi,1,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed1__h3_k2__r2__gurobi,BA_20_m2_seed1,BA,3,2,gurobi,2,OPT,True,25,25,25,25,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r0__cadical,BA_20_m2_seed2,BA,1,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r1__cadical,BA_20_m2_seed2,BA,1,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r2__cadical,BA_20_m2_seed2,BA,1,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r0__gurobi,BA_20_m2_seed2,BA,1,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r1__gurobi,BA_20_m2_seed2,BA,1,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h1_k1__r2__gurobi,BA_20_m2_seed2,BA,1,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r0__cadical,BA_20_m2_seed2,BA,2,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r1__cadical,BA_20_m2_seed2,BA,2,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r2__cadical,BA_20_m2_seed2,BA,2,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r0__gurobi,BA_20_m2_seed2,BA,2,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r1__gurobi,BA_20_m2_seed2,BA,2,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h2_k1__r2__gurobi,BA_20_m2_seed2,BA,2,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h3_k2__r0__cadical,BA_20_m2_seed2,BA,3,2,cadical,0,FEASIBLE,False,25,30,26,26,KNOWN_SUBOPTIMAL,4,4
+BA_20_m2_seed2__h3_k2__r1__cadical,BA_20_m2_seed2,BA,3,2,cadical,1,FEASIBLE,False,25,30,26,26,KNOWN_SUBOPTIMAL,4,4
+BA_20_m2_seed2__h3_k2__r2__cadical,BA_20_m2_seed2,BA,3,2,cadical,2,FEASIBLE,False,25,30,26,26,KNOWN_SUBOPTIMAL,4,4
+BA_20_m2_seed2__h3_k2__r0__gurobi,BA_20_m2_seed2,BA,3,2,gurobi,0,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h3_k2__r1__gurobi,BA_20_m2_seed2,BA,3,2,gurobi,1,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+BA_20_m2_seed2__h3_k2__r2__gurobi,BA_20_m2_seed2,BA,3,2,gurobi,2,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r0__cadical,BA_40_m2_seed0,BA,1,1,cadical,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r1__cadical,BA_40_m2_seed0,BA,1,1,cadical,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r2__cadical,BA_40_m2_seed0,BA,1,1,cadical,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r0__gurobi,BA_40_m2_seed0,BA,1,1,gurobi,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r1__gurobi,BA_40_m2_seed0,BA,1,1,gurobi,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h1_k1__r2__gurobi,BA_40_m2_seed0,BA,1,1,gurobi,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r0__cadical,BA_40_m2_seed0,BA,2,1,cadical,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r1__cadical,BA_40_m2_seed0,BA,2,1,cadical,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r2__cadical,BA_40_m2_seed0,BA,2,1,cadical,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r0__gurobi,BA_40_m2_seed0,BA,2,1,gurobi,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r1__gurobi,BA_40_m2_seed0,BA,2,1,gurobi,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h2_k1__r2__gurobi,BA_40_m2_seed0,BA,2,1,gurobi,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r0__cadical,BA_40_m2_seed0,BA,3,2,cadical,0,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r1__cadical,BA_40_m2_seed0,BA,3,2,cadical,1,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r2__cadical,BA_40_m2_seed0,BA,3,2,cadical,2,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r0__gurobi,BA_40_m2_seed0,BA,3,2,gurobi,0,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r1__gurobi,BA_40_m2_seed0,BA,3,2,gurobi,1,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed0__h3_k2__r2__gurobi,BA_40_m2_seed0,BA,3,2,gurobi,2,OPT,True,31,31,31,31,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r0__cadical,BA_40_m2_seed1,BA,1,1,cadical,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r1__cadical,BA_40_m2_seed1,BA,1,1,cadical,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r2__cadical,BA_40_m2_seed1,BA,1,1,cadical,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r0__gurobi,BA_40_m2_seed1,BA,1,1,gurobi,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r1__gurobi,BA_40_m2_seed1,BA,1,1,gurobi,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h1_k1__r2__gurobi,BA_40_m2_seed1,BA,1,1,gurobi,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r0__cadical,BA_40_m2_seed1,BA,2,1,cadical,0,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r1__cadical,BA_40_m2_seed1,BA,2,1,cadical,1,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r2__cadical,BA_40_m2_seed1,BA,2,1,cadical,2,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r0__gurobi,BA_40_m2_seed1,BA,2,1,gurobi,0,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r1__gurobi,BA_40_m2_seed1,BA,2,1,gurobi,1,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h2_k1__r2__gurobi,BA_40_m2_seed1,BA,2,1,gurobi,2,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r0__cadical,BA_40_m2_seed1,BA,3,2,cadical,0,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r1__cadical,BA_40_m2_seed1,BA,3,2,cadical,1,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r2__cadical,BA_40_m2_seed1,BA,3,2,cadical,2,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r0__gurobi,BA_40_m2_seed1,BA,3,2,gurobi,0,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r1__gurobi,BA_40_m2_seed1,BA,3,2,gurobi,1,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed1__h3_k2__r2__gurobi,BA_40_m2_seed1,BA,3,2,gurobi,2,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r0__cadical,BA_40_m2_seed2,BA,1,1,cadical,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r1__cadical,BA_40_m2_seed2,BA,1,1,cadical,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r2__cadical,BA_40_m2_seed2,BA,1,1,cadical,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r0__gurobi,BA_40_m2_seed2,BA,1,1,gurobi,0,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r1__gurobi,BA_40_m2_seed2,BA,1,1,gurobi,1,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h1_k1__r2__gurobi,BA_40_m2_seed2,BA,1,1,gurobi,2,OPT,True,16,16,16,16,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r0__cadical,BA_40_m2_seed2,BA,2,1,cadical,0,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r1__cadical,BA_40_m2_seed2,BA,2,1,cadical,1,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r2__cadical,BA_40_m2_seed2,BA,2,1,cadical,2,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r0__gurobi,BA_40_m2_seed2,BA,2,1,gurobi,0,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r1__gurobi,BA_40_m2_seed2,BA,2,1,gurobi,1,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h2_k1__r2__gurobi,BA_40_m2_seed2,BA,2,1,gurobi,2,OPT,True,17,17,17,17,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r0__cadical,BA_40_m2_seed2,BA,3,2,cadical,0,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r1__cadical,BA_40_m2_seed2,BA,3,2,cadical,1,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r2__cadical,BA_40_m2_seed2,BA,3,2,cadical,2,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r0__gurobi,BA_40_m2_seed2,BA,3,2,gurobi,0,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r1__gurobi,BA_40_m2_seed2,BA,3,2,gurobi,1,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_40_m2_seed2__h3_k2__r2__gurobi,BA_40_m2_seed2,BA,3,2,gurobi,2,OPT,True,33,33,33,33,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r0__cadical,BA_60_m2_seed0,BA,1,1,cadical,0,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r1__cadical,BA_60_m2_seed0,BA,1,1,cadical,1,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r2__cadical,BA_60_m2_seed0,BA,1,1,cadical,2,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r0__gurobi,BA_60_m2_seed0,BA,1,1,gurobi,0,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r1__gurobi,BA_60_m2_seed0,BA,1,1,gurobi,1,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h1_k1__r2__gurobi,BA_60_m2_seed0,BA,1,1,gurobi,2,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r0__cadical,BA_60_m2_seed0,BA,2,1,cadical,0,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r1__cadical,BA_60_m2_seed0,BA,2,1,cadical,1,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r2__cadical,BA_60_m2_seed0,BA,2,1,cadical,2,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r0__gurobi,BA_60_m2_seed0,BA,2,1,gurobi,0,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r1__gurobi,BA_60_m2_seed0,BA,2,1,gurobi,1,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h2_k1__r2__gurobi,BA_60_m2_seed0,BA,2,1,gurobi,2,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r0__cadical,BA_60_m2_seed0,BA,3,2,cadical,0,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r1__cadical,BA_60_m2_seed0,BA,3,2,cadical,1,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r2__cadical,BA_60_m2_seed0,BA,3,2,cadical,2,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r0__gurobi,BA_60_m2_seed0,BA,3,2,gurobi,0,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r1__gurobi,BA_60_m2_seed0,BA,3,2,gurobi,1,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed0__h3_k2__r2__gurobi,BA_60_m2_seed0,BA,3,2,gurobi,2,OPT,True,39,39,39,39,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r0__cadical,BA_60_m2_seed1,BA,1,1,cadical,0,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r1__cadical,BA_60_m2_seed1,BA,1,1,cadical,1,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r2__cadical,BA_60_m2_seed1,BA,1,1,cadical,2,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r0__gurobi,BA_60_m2_seed1,BA,1,1,gurobi,0,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r1__gurobi,BA_60_m2_seed1,BA,1,1,gurobi,1,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h1_k1__r2__gurobi,BA_60_m2_seed1,BA,1,1,gurobi,2,OPT,True,18,18,18,18,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r0__cadical,BA_60_m2_seed1,BA,2,1,cadical,0,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r1__cadical,BA_60_m2_seed1,BA,2,1,cadical,1,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r2__cadical,BA_60_m2_seed1,BA,2,1,cadical,2,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r0__gurobi,BA_60_m2_seed1,BA,2,1,gurobi,0,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r1__gurobi,BA_60_m2_seed1,BA,2,1,gurobi,1,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h2_k1__r2__gurobi,BA_60_m2_seed1,BA,2,1,gurobi,2,OPT,True,19,19,19,19,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r0__cadical,BA_60_m2_seed1,BA,3,2,cadical,0,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r1__cadical,BA_60_m2_seed1,BA,3,2,cadical,1,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r2__cadical,BA_60_m2_seed1,BA,3,2,cadical,2,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r0__gurobi,BA_60_m2_seed1,BA,3,2,gurobi,0,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r1__gurobi,BA_60_m2_seed1,BA,3,2,gurobi,1,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed1__h3_k2__r2__gurobi,BA_60_m2_seed1,BA,3,2,gurobi,2,OPT,True,37,37,37,37,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r0__cadical,BA_60_m2_seed2,BA,1,1,cadical,0,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r1__cadical,BA_60_m2_seed2,BA,1,1,cadical,1,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r2__cadical,BA_60_m2_seed2,BA,1,1,cadical,2,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r0__gurobi,BA_60_m2_seed2,BA,1,1,gurobi,0,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r1__gurobi,BA_60_m2_seed2,BA,1,1,gurobi,1,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h1_k1__r2__gurobi,BA_60_m2_seed2,BA,1,1,gurobi,2,OPT,True,20,20,20,20,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r0__cadical,BA_60_m2_seed2,BA,2,1,cadical,0,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r1__cadical,BA_60_m2_seed2,BA,2,1,cadical,1,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r2__cadical,BA_60_m2_seed2,BA,2,1,cadical,2,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r0__gurobi,BA_60_m2_seed2,BA,2,1,gurobi,0,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r1__gurobi,BA_60_m2_seed2,BA,2,1,gurobi,1,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h2_k1__r2__gurobi,BA_60_m2_seed2,BA,2,1,gurobi,2,OPT,True,21,21,21,21,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r0__cadical,BA_60_m2_seed2,BA,3,2,cadical,0,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r1__cadical,BA_60_m2_seed2,BA,3,2,cadical,1,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r2__cadical,BA_60_m2_seed2,BA,3,2,cadical,2,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r0__gurobi,BA_60_m2_seed2,BA,3,2,gurobi,0,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r1__gurobi,BA_60_m2_seed2,BA,3,2,gurobi,1,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+BA_60_m2_seed2__h3_k2__r2__gurobi,BA_60_m2_seed2,BA,3,2,gurobi,2,OPT,True,41,41,41,41,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r0__cadical,ER_20_p0.15_seed0,ER p=0.15,1,1,cadical,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r1__cadical,ER_20_p0.15_seed0,ER p=0.15,1,1,cadical,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r2__cadical,ER_20_p0.15_seed0,ER p=0.15,1,1,cadical,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r0__gurobi,ER_20_p0.15_seed0,ER p=0.15,1,1,gurobi,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r1__gurobi,ER_20_p0.15_seed0,ER p=0.15,1,1,gurobi,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h1_k1__r2__gurobi,ER_20_p0.15_seed0,ER p=0.15,1,1,gurobi,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r0__cadical,ER_20_p0.15_seed0,ER p=0.15,2,1,cadical,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r1__cadical,ER_20_p0.15_seed0,ER p=0.15,2,1,cadical,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r2__cadical,ER_20_p0.15_seed0,ER p=0.15,2,1,cadical,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r0__gurobi,ER_20_p0.15_seed0,ER p=0.15,2,1,gurobi,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r1__gurobi,ER_20_p0.15_seed0,ER p=0.15,2,1,gurobi,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h2_k1__r2__gurobi,ER_20_p0.15_seed0,ER p=0.15,2,1,gurobi,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r0__cadical,ER_20_p0.15_seed0,ER p=0.15,3,2,cadical,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r1__cadical,ER_20_p0.15_seed0,ER p=0.15,3,2,cadical,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r2__cadical,ER_20_p0.15_seed0,ER p=0.15,3,2,cadical,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r0__gurobi,ER_20_p0.15_seed0,ER p=0.15,3,2,gurobi,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r1__gurobi,ER_20_p0.15_seed0,ER p=0.15,3,2,gurobi,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed0__h3_k2__r2__gurobi,ER_20_p0.15_seed0,ER p=0.15,3,2,gurobi,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r0__cadical,ER_20_p0.15_seed1,ER p=0.15,1,1,cadical,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r1__cadical,ER_20_p0.15_seed1,ER p=0.15,1,1,cadical,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r2__cadical,ER_20_p0.15_seed1,ER p=0.15,1,1,cadical,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r0__gurobi,ER_20_p0.15_seed1,ER p=0.15,1,1,gurobi,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r1__gurobi,ER_20_p0.15_seed1,ER p=0.15,1,1,gurobi,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h1_k1__r2__gurobi,ER_20_p0.15_seed1,ER p=0.15,1,1,gurobi,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r0__cadical,ER_20_p0.15_seed1,ER p=0.15,2,1,cadical,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r1__cadical,ER_20_p0.15_seed1,ER p=0.15,2,1,cadical,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r2__cadical,ER_20_p0.15_seed1,ER p=0.15,2,1,cadical,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r0__gurobi,ER_20_p0.15_seed1,ER p=0.15,2,1,gurobi,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r1__gurobi,ER_20_p0.15_seed1,ER p=0.15,2,1,gurobi,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h2_k1__r2__gurobi,ER_20_p0.15_seed1,ER p=0.15,2,1,gurobi,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r0__cadical,ER_20_p0.15_seed1,ER p=0.15,3,2,cadical,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r1__cadical,ER_20_p0.15_seed1,ER p=0.15,3,2,cadical,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r2__cadical,ER_20_p0.15_seed1,ER p=0.15,3,2,cadical,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r0__gurobi,ER_20_p0.15_seed1,ER p=0.15,3,2,gurobi,0,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r1__gurobi,ER_20_p0.15_seed1,ER p=0.15,3,2,gurobi,1,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed1__h3_k2__r2__gurobi,ER_20_p0.15_seed1,ER p=0.15,3,2,gurobi,2,OPT,True,15,15,15,15,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r0__cadical,ER_20_p0.15_seed2,ER p=0.15,1,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r1__cadical,ER_20_p0.15_seed2,ER p=0.15,1,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r2__cadical,ER_20_p0.15_seed2,ER p=0.15,1,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r0__gurobi,ER_20_p0.15_seed2,ER p=0.15,1,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r1__gurobi,ER_20_p0.15_seed2,ER p=0.15,1,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h1_k1__r2__gurobi,ER_20_p0.15_seed2,ER p=0.15,1,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r0__cadical,ER_20_p0.15_seed2,ER p=0.15,2,1,cadical,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r1__cadical,ER_20_p0.15_seed2,ER p=0.15,2,1,cadical,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r2__cadical,ER_20_p0.15_seed2,ER p=0.15,2,1,cadical,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r0__gurobi,ER_20_p0.15_seed2,ER p=0.15,2,1,gurobi,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r1__gurobi,ER_20_p0.15_seed2,ER p=0.15,2,1,gurobi,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h2_k1__r2__gurobi,ER_20_p0.15_seed2,ER p=0.15,2,1,gurobi,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r0__cadical,ER_20_p0.15_seed2,ER p=0.15,3,2,cadical,0,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r1__cadical,ER_20_p0.15_seed2,ER p=0.15,3,2,cadical,1,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r2__cadical,ER_20_p0.15_seed2,ER p=0.15,3,2,cadical,2,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r0__gurobi,ER_20_p0.15_seed2,ER p=0.15,3,2,gurobi,0,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r1__gurobi,ER_20_p0.15_seed2,ER p=0.15,3,2,gurobi,1,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.15_seed2__h3_k2__r2__gurobi,ER_20_p0.15_seed2,ER p=0.15,3,2,gurobi,2,OPT,True,14,14,14,14,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r0__cadical,ER_20_p0.30_seed0,ER p=0.30,1,1,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r1__cadical,ER_20_p0.30_seed0,ER p=0.30,1,1,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r2__cadical,ER_20_p0.30_seed0,ER p=0.30,1,1,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r0__gurobi,ER_20_p0.30_seed0,ER p=0.30,1,1,gurobi,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r1__gurobi,ER_20_p0.30_seed0,ER p=0.30,1,1,gurobi,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h1_k1__r2__gurobi,ER_20_p0.30_seed0,ER p=0.30,1,1,gurobi,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r0__cadical,ER_20_p0.30_seed0,ER p=0.30,2,1,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r1__cadical,ER_20_p0.30_seed0,ER p=0.30,2,1,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r2__cadical,ER_20_p0.30_seed0,ER p=0.30,2,1,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r0__gurobi,ER_20_p0.30_seed0,ER p=0.30,2,1,gurobi,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r1__gurobi,ER_20_p0.30_seed0,ER p=0.30,2,1,gurobi,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h2_k1__r2__gurobi,ER_20_p0.30_seed0,ER p=0.30,2,1,gurobi,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r0__cadical,ER_20_p0.30_seed0,ER p=0.30,3,2,cadical,0,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r1__cadical,ER_20_p0.30_seed0,ER p=0.30,3,2,cadical,1,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r2__cadical,ER_20_p0.30_seed0,ER p=0.30,3,2,cadical,2,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r0__gurobi,ER_20_p0.30_seed0,ER p=0.30,3,2,gurobi,0,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r1__gurobi,ER_20_p0.30_seed0,ER p=0.30,3,2,gurobi,1,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed0__h3_k2__r2__gurobi,ER_20_p0.30_seed0,ER p=0.30,3,2,gurobi,2,OPT,True,22,22,22,22,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h1_k1__r0__cadical,ER_20_p0.30_seed1,ER p=0.30,1,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h1_k1__r1__cadical,ER_20_p0.30_seed1,ER p=0.30,1,1,cadical,1,FEASIBLE,False,11,14,13,13,KNOWN_SUBOPTIMAL,1,1
+ER_20_p0.30_seed1__h1_k1__r2__cadical,ER_20_p0.30_seed1,ER p=0.30,1,1,cadical,2,FEASIBLE,False,11,14,13,13,KNOWN_SUBOPTIMAL,1,1
+ER_20_p0.30_seed1__h1_k1__r0__gurobi,ER_20_p0.30_seed1,ER p=0.30,1,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h1_k1__r1__gurobi,ER_20_p0.30_seed1,ER p=0.30,1,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h1_k1__r2__gurobi,ER_20_p0.30_seed1,ER p=0.30,1,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r0__cadical,ER_20_p0.30_seed1,ER p=0.30,2,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r1__cadical,ER_20_p0.30_seed1,ER p=0.30,2,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r2__cadical,ER_20_p0.30_seed1,ER p=0.30,2,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r0__gurobi,ER_20_p0.30_seed1,ER p=0.30,2,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r1__gurobi,ER_20_p0.30_seed1,ER p=0.30,2,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h2_k1__r2__gurobi,ER_20_p0.30_seed1,ER p=0.30,2,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h3_k2__r0__cadical,ER_20_p0.30_seed1,ER p=0.30,3,2,cadical,0,FEASIBLE,False,23,35,26,26,KNOWN_SUBOPTIMAL,9,9
+ER_20_p0.30_seed1__h3_k2__r1__cadical,ER_20_p0.30_seed1,ER p=0.30,3,2,cadical,1,FEASIBLE,False,23,35,26,26,KNOWN_SUBOPTIMAL,9,9
+ER_20_p0.30_seed1__h3_k2__r2__cadical,ER_20_p0.30_seed1,ER p=0.30,3,2,cadical,2,FEASIBLE,False,23,35,26,26,KNOWN_SUBOPTIMAL,9,9
+ER_20_p0.30_seed1__h3_k2__r0__gurobi,ER_20_p0.30_seed1,ER p=0.30,3,2,gurobi,0,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h3_k2__r1__gurobi,ER_20_p0.30_seed1,ER p=0.30,3,2,gurobi,1,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed1__h3_k2__r2__gurobi,ER_20_p0.30_seed1,ER p=0.30,3,2,gurobi,2,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r0__cadical,ER_20_p0.30_seed2,ER p=0.30,1,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r1__cadical,ER_20_p0.30_seed2,ER p=0.30,1,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r2__cadical,ER_20_p0.30_seed2,ER p=0.30,1,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r0__gurobi,ER_20_p0.30_seed2,ER p=0.30,1,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r1__gurobi,ER_20_p0.30_seed2,ER p=0.30,1,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h1_k1__r2__gurobi,ER_20_p0.30_seed2,ER p=0.30,1,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r0__cadical,ER_20_p0.30_seed2,ER p=0.30,2,1,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r1__cadical,ER_20_p0.30_seed2,ER p=0.30,2,1,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r2__cadical,ER_20_p0.30_seed2,ER p=0.30,2,1,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r0__gurobi,ER_20_p0.30_seed2,ER p=0.30,2,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r1__gurobi,ER_20_p0.30_seed2,ER p=0.30,2,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h2_k1__r2__gurobi,ER_20_p0.30_seed2,ER p=0.30,2,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h3_k2__r0__cadical,ER_20_p0.30_seed2,ER p=0.30,3,2,cadical,0,FEASIBLE,False,21,34,26,26,KNOWN_SUBOPTIMAL,8,8
+ER_20_p0.30_seed2__h3_k2__r1__cadical,ER_20_p0.30_seed2,ER p=0.30,3,2,cadical,1,FEASIBLE,False,21,34,26,26,KNOWN_SUBOPTIMAL,8,8
+ER_20_p0.30_seed2__h3_k2__r2__cadical,ER_20_p0.30_seed2,ER p=0.30,3,2,cadical,2,FEASIBLE,False,21,34,26,26,KNOWN_SUBOPTIMAL,8,8
+ER_20_p0.30_seed2__h3_k2__r0__gurobi,ER_20_p0.30_seed2,ER p=0.30,3,2,gurobi,0,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h3_k2__r1__gurobi,ER_20_p0.30_seed2,ER p=0.30,3,2,gurobi,1,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_20_p0.30_seed2__h3_k2__r2__gurobi,ER_20_p0.30_seed2,ER p=0.30,3,2,gurobi,2,OPT,True,26,26,26,26,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed0__h1_k1__r0__cadical,ER_40_p0.15_seed0,ER p=0.15,1,1,cadical,0,FEASIBLE,False,12,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed0__h1_k1__r1__cadical,ER_40_p0.15_seed0,ER p=0.15,1,1,cadical,1,FEASIBLE,False,12,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed0__h1_k1__r2__cadical,ER_40_p0.15_seed0,ER p=0.15,1,1,cadical,2,FEASIBLE,False,12,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed0__h1_k1__r0__gurobi,ER_40_p0.15_seed0,ER p=0.15,1,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed0__h1_k1__r1__gurobi,ER_40_p0.15_seed0,ER p=0.15,1,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed0__h1_k1__r2__gurobi,ER_40_p0.15_seed0,ER p=0.15,1,1,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed0__h2_k1__r0__cadical,ER_40_p0.15_seed0,ER p=0.15,2,1,cadical,0,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h2_k1__r1__cadical,ER_40_p0.15_seed0,ER p=0.15,2,1,cadical,1,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h2_k1__r2__cadical,ER_40_p0.15_seed0,ER p=0.15,2,1,cadical,2,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h2_k1__r0__gurobi,ER_40_p0.15_seed0,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h2_k1__r1__gurobi,ER_40_p0.15_seed0,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h2_k1__r2__gurobi,ER_40_p0.15_seed0,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,13,21,13,21,UNRESOLVED,0,8
+ER_40_p0.15_seed0__h3_k2__r0__cadical,ER_40_p0.15_seed0,ER p=0.15,3,2,cadical,0,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed0__h3_k2__r1__cadical,ER_40_p0.15_seed0,ER p=0.15,3,2,cadical,1,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed0__h3_k2__r2__cadical,ER_40_p0.15_seed0,ER p=0.15,3,2,cadical,2,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed0__h3_k2__r0__gurobi,ER_40_p0.15_seed0,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed0__h3_k2__r1__gurobi,ER_40_p0.15_seed0,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed0__h3_k2__r2__gurobi,ER_40_p0.15_seed0,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,25,44,25,44,UNRESOLVED,0,19
+ER_40_p0.15_seed1__h1_k1__r0__cadical,ER_40_p0.15_seed1,ER p=0.15,1,1,cadical,0,FEASIBLE,False,10,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed1__h1_k1__r1__cadical,ER_40_p0.15_seed1,ER p=0.15,1,1,cadical,1,FEASIBLE,False,10,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed1__h1_k1__r2__cadical,ER_40_p0.15_seed1,ER p=0.15,1,1,cadical,2,FEASIBLE,False,10,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed1__h1_k1__r0__gurobi,ER_40_p0.15_seed1,ER p=0.15,1,1,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed1__h1_k1__r1__gurobi,ER_40_p0.15_seed1,ER p=0.15,1,1,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+ER_40_p0.15_seed1__h1_k1__r2__gurobi,ER_40_p0.15_seed1,ER p=0.15,1,1,gurobi,2,FEASIBLE,False,10,17,13,13,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.15_seed1__h2_k1__r0__cadical,ER_40_p0.15_seed1,ER p=0.15,2,1,cadical,0,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h2_k1__r1__cadical,ER_40_p0.15_seed1,ER p=0.15,2,1,cadical,1,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h2_k1__r2__cadical,ER_40_p0.15_seed1,ER p=0.15,2,1,cadical,2,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h2_k1__r0__gurobi,ER_40_p0.15_seed1,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h2_k1__r1__gurobi,ER_40_p0.15_seed1,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h2_k1__r2__gurobi,ER_40_p0.15_seed1,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,11,20,11,20,UNRESOLVED,0,9
+ER_40_p0.15_seed1__h3_k2__r0__cadical,ER_40_p0.15_seed1,ER p=0.15,3,2,cadical,0,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed1__h3_k2__r1__cadical,ER_40_p0.15_seed1,ER p=0.15,3,2,cadical,1,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed1__h3_k2__r2__cadical,ER_40_p0.15_seed1,ER p=0.15,3,2,cadical,2,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed1__h3_k2__r0__gurobi,ER_40_p0.15_seed1,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed1__h3_k2__r1__gurobi,ER_40_p0.15_seed1,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed1__h3_k2__r2__gurobi,ER_40_p0.15_seed1,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,21,43,21,43,UNRESOLVED,0,22
+ER_40_p0.15_seed2__h1_k1__r0__cadical,ER_40_p0.15_seed2,ER p=0.15,1,1,cadical,0,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h1_k1__r1__cadical,ER_40_p0.15_seed2,ER p=0.15,1,1,cadical,1,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h1_k1__r2__cadical,ER_40_p0.15_seed2,ER p=0.15,1,1,cadical,2,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h1_k1__r0__gurobi,ER_40_p0.15_seed2,ER p=0.15,1,1,gurobi,0,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h1_k1__r1__gurobi,ER_40_p0.15_seed2,ER p=0.15,1,1,gurobi,1,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h1_k1__r2__gurobi,ER_40_p0.15_seed2,ER p=0.15,1,1,gurobi,2,FEASIBLE,False,12,16,12,16,UNRESOLVED,0,4
+ER_40_p0.15_seed2__h2_k1__r0__cadical,ER_40_p0.15_seed2,ER p=0.15,2,1,cadical,0,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h2_k1__r1__cadical,ER_40_p0.15_seed2,ER p=0.15,2,1,cadical,1,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h2_k1__r2__cadical,ER_40_p0.15_seed2,ER p=0.15,2,1,cadical,2,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h2_k1__r0__gurobi,ER_40_p0.15_seed2,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h2_k1__r1__gurobi,ER_40_p0.15_seed2,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h2_k1__r2__gurobi,ER_40_p0.15_seed2,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,13,20,13,20,UNRESOLVED,0,7
+ER_40_p0.15_seed2__h3_k2__r0__cadical,ER_40_p0.15_seed2,ER p=0.15,3,2,cadical,0,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.15_seed2__h3_k2__r1__cadical,ER_40_p0.15_seed2,ER p=0.15,3,2,cadical,1,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.15_seed2__h3_k2__r2__cadical,ER_40_p0.15_seed2,ER p=0.15,3,2,cadical,2,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.15_seed2__h3_k2__r0__gurobi,ER_40_p0.15_seed2,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.15_seed2__h3_k2__r1__gurobi,ER_40_p0.15_seed2,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.15_seed2__h3_k2__r2__gurobi,ER_40_p0.15_seed2,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,25,39,25,39,UNRESOLVED,0,14
+ER_40_p0.30_seed0__h1_k1__r0__cadical,ER_40_p0.30_seed0,ER p=0.30,1,1,cadical,0,FEASIBLE,False,17,35,32,32,KNOWN_SUBOPTIMAL,3,3
+ER_40_p0.30_seed0__h1_k1__r1__cadical,ER_40_p0.30_seed0,ER p=0.30,1,1,cadical,1,FEASIBLE,False,17,35,32,32,KNOWN_SUBOPTIMAL,3,3
+ER_40_p0.30_seed0__h1_k1__r2__cadical,ER_40_p0.30_seed0,ER p=0.30,1,1,cadical,2,FEASIBLE,False,17,35,32,32,KNOWN_SUBOPTIMAL,3,3
+ER_40_p0.30_seed0__h1_k1__r0__gurobi,ER_40_p0.30_seed0,ER p=0.30,1,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h1_k1__r1__gurobi,ER_40_p0.30_seed0,ER p=0.30,1,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h1_k1__r2__gurobi,ER_40_p0.30_seed0,ER p=0.30,1,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h2_k1__r0__cadical,ER_40_p0.30_seed0,ER p=0.30,2,1,cadical,0,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed0__h2_k1__r1__cadical,ER_40_p0.30_seed0,ER p=0.30,2,1,cadical,1,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed0__h2_k1__r2__cadical,ER_40_p0.30_seed0,ER p=0.30,2,1,cadical,2,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed0__h2_k1__r0__gurobi,ER_40_p0.30_seed0,ER p=0.30,2,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h2_k1__r1__gurobi,ER_40_p0.30_seed0,ER p=0.30,2,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h2_k1__r2__gurobi,ER_40_p0.30_seed0,ER p=0.30,2,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed0__h3_k2__r0__cadical,ER_40_p0.30_seed0,ER p=0.30,3,2,cadical,0,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed0__h3_k2__r1__cadical,ER_40_p0.30_seed0,ER p=0.30,3,2,cadical,1,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed0__h3_k2__r2__cadical,ER_40_p0.30_seed0,ER p=0.30,3,2,cadical,2,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed0__h3_k2__r0__gurobi,ER_40_p0.30_seed0,ER p=0.30,3,2,gurobi,0,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed0__h3_k2__r1__gurobi,ER_40_p0.30_seed0,ER p=0.30,3,2,gurobi,1,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed0__h3_k2__r2__gurobi,ER_40_p0.30_seed0,ER p=0.30,3,2,gurobi,2,FEASIBLE,False,35,77,35,77,UNRESOLVED,0,42
+ER_40_p0.30_seed1__h1_k1__r0__cadical,ER_40_p0.30_seed1,ER p=0.30,1,1,cadical,0,FEASIBLE,False,17,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h1_k1__r1__cadical,ER_40_p0.30_seed1,ER p=0.30,1,1,cadical,1,FEASIBLE,False,17,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h1_k1__r2__cadical,ER_40_p0.30_seed1,ER p=0.30,1,1,cadical,2,FEASIBLE,False,17,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h1_k1__r0__gurobi,ER_40_p0.30_seed1,ER p=0.30,1,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h1_k1__r1__gurobi,ER_40_p0.30_seed1,ER p=0.30,1,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h1_k1__r2__gurobi,ER_40_p0.30_seed1,ER p=0.30,1,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h2_k1__r0__cadical,ER_40_p0.30_seed1,ER p=0.30,2,1,cadical,0,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed1__h2_k1__r1__cadical,ER_40_p0.30_seed1,ER p=0.30,2,1,cadical,1,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed1__h2_k1__r2__cadical,ER_40_p0.30_seed1,ER p=0.30,2,1,cadical,2,FEASIBLE,False,18,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed1__h2_k1__r0__gurobi,ER_40_p0.30_seed1,ER p=0.30,2,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h2_k1__r1__gurobi,ER_40_p0.30_seed1,ER p=0.30,2,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h2_k1__r2__gurobi,ER_40_p0.30_seed1,ER p=0.30,2,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed1__h3_k2__r0__cadical,ER_40_p0.30_seed1,ER p=0.30,3,2,cadical,0,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed1__h3_k2__r1__cadical,ER_40_p0.30_seed1,ER p=0.30,3,2,cadical,1,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed1__h3_k2__r2__cadical,ER_40_p0.30_seed1,ER p=0.30,3,2,cadical,2,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed1__h3_k2__r0__gurobi,ER_40_p0.30_seed1,ER p=0.30,3,2,gurobi,0,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed1__h3_k2__r1__gurobi,ER_40_p0.30_seed1,ER p=0.30,3,2,gurobi,1,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed1__h3_k2__r2__gurobi,ER_40_p0.30_seed1,ER p=0.30,3,2,gurobi,2,FEASIBLE,False,35,78,35,78,UNRESOLVED,0,43
+ER_40_p0.30_seed2__h1_k1__r0__cadical,ER_40_p0.30_seed2,ER p=0.30,1,1,cadical,0,FEASIBLE,False,18,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h1_k1__r1__cadical,ER_40_p0.30_seed2,ER p=0.30,1,1,cadical,1,FEASIBLE,False,18,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h1_k1__r2__cadical,ER_40_p0.30_seed2,ER p=0.30,1,1,cadical,2,FEASIBLE,False,18,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h1_k1__r0__gurobi,ER_40_p0.30_seed2,ER p=0.30,1,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h1_k1__r1__gurobi,ER_40_p0.30_seed2,ER p=0.30,1,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h1_k1__r2__gurobi,ER_40_p0.30_seed2,ER p=0.30,1,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h2_k1__r0__cadical,ER_40_p0.30_seed2,ER p=0.30,2,1,cadical,0,FEASIBLE,False,19,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed2__h2_k1__r1__cadical,ER_40_p0.30_seed2,ER p=0.30,2,1,cadical,1,FEASIBLE,False,19,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed2__h2_k1__r2__cadical,ER_40_p0.30_seed2,ER p=0.30,2,1,cadical,2,FEASIBLE,False,19,36,32,32,KNOWN_SUBOPTIMAL,4,4
+ER_40_p0.30_seed2__h2_k1__r0__gurobi,ER_40_p0.30_seed2,ER p=0.30,2,1,gurobi,0,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h2_k1__r1__gurobi,ER_40_p0.30_seed2,ER p=0.30,2,1,gurobi,1,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h2_k1__r2__gurobi,ER_40_p0.30_seed2,ER p=0.30,2,1,gurobi,2,OPT,True,32,32,32,32,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h3_k2__r0__cadical,ER_40_p0.30_seed2,ER p=0.30,3,2,cadical,0,FEASIBLE,False,37,74,64,64,KNOWN_SUBOPTIMAL,10,10
+ER_40_p0.30_seed2__h3_k2__r1__cadical,ER_40_p0.30_seed2,ER p=0.30,3,2,cadical,1,FEASIBLE,False,37,74,64,64,KNOWN_SUBOPTIMAL,10,10
+ER_40_p0.30_seed2__h3_k2__r2__cadical,ER_40_p0.30_seed2,ER p=0.30,3,2,cadical,2,FEASIBLE,False,37,74,64,64,KNOWN_SUBOPTIMAL,10,10
+ER_40_p0.30_seed2__h3_k2__r0__gurobi,ER_40_p0.30_seed2,ER p=0.30,3,2,gurobi,0,OPT,True,64,64,64,64,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h3_k2__r1__gurobi,ER_40_p0.30_seed2,ER p=0.30,3,2,gurobi,1,OPT,True,64,64,64,64,KNOWN_OPTIMAL,0,0
+ER_40_p0.30_seed2__h3_k2__r2__gurobi,ER_40_p0.30_seed2,ER p=0.30,3,2,gurobi,2,OPT,True,64,64,64,64,KNOWN_OPTIMAL,0,0
+ER_60_p0.15_seed0__h1_k1__r0__cadical,ER_60_p0.15_seed0,ER p=0.15,1,1,cadical,0,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h1_k1__r1__cadical,ER_60_p0.15_seed0,ER p=0.15,1,1,cadical,1,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h1_k1__r2__cadical,ER_60_p0.15_seed0,ER p=0.15,1,1,cadical,2,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h1_k1__r0__gurobi,ER_60_p0.15_seed0,ER p=0.15,1,1,gurobi,0,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h1_k1__r1__gurobi,ER_60_p0.15_seed0,ER p=0.15,1,1,gurobi,1,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h1_k1__r2__gurobi,ER_60_p0.15_seed0,ER p=0.15,1,1,gurobi,2,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed0__h2_k1__r0__cadical,ER_60_p0.15_seed0,ER p=0.15,2,1,cadical,0,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h2_k1__r1__cadical,ER_60_p0.15_seed0,ER p=0.15,2,1,cadical,1,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h2_k1__r2__cadical,ER_60_p0.15_seed0,ER p=0.15,2,1,cadical,2,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h2_k1__r0__gurobi,ER_60_p0.15_seed0,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h2_k1__r1__gurobi,ER_60_p0.15_seed0,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h2_k1__r2__gurobi,ER_60_p0.15_seed0,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed0__h3_k2__r0__cadical,ER_60_p0.15_seed0,ER p=0.15,3,2,cadical,0,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed0__h3_k2__r1__cadical,ER_60_p0.15_seed0,ER p=0.15,3,2,cadical,1,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed0__h3_k2__r2__cadical,ER_60_p0.15_seed0,ER p=0.15,3,2,cadical,2,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed0__h3_k2__r0__gurobi,ER_60_p0.15_seed0,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed0__h3_k2__r1__gurobi,ER_60_p0.15_seed0,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed0__h3_k2__r2__gurobi,ER_60_p0.15_seed0,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,35,66,35,66,UNRESOLVED,0,31
+ER_60_p0.15_seed1__h1_k1__r0__cadical,ER_60_p0.15_seed1,ER p=0.15,1,1,cadical,0,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h1_k1__r1__cadical,ER_60_p0.15_seed1,ER p=0.15,1,1,cadical,1,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h1_k1__r2__cadical,ER_60_p0.15_seed1,ER p=0.15,1,1,cadical,2,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h1_k1__r0__gurobi,ER_60_p0.15_seed1,ER p=0.15,1,1,gurobi,0,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h1_k1__r1__gurobi,ER_60_p0.15_seed1,ER p=0.15,1,1,gurobi,1,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h1_k1__r2__gurobi,ER_60_p0.15_seed1,ER p=0.15,1,1,gurobi,2,FEASIBLE,False,17,27,17,27,UNRESOLVED,0,10
+ER_60_p0.15_seed1__h2_k1__r0__cadical,ER_60_p0.15_seed1,ER p=0.15,2,1,cadical,0,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h2_k1__r1__cadical,ER_60_p0.15_seed1,ER p=0.15,2,1,cadical,1,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h2_k1__r2__cadical,ER_60_p0.15_seed1,ER p=0.15,2,1,cadical,2,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h2_k1__r0__gurobi,ER_60_p0.15_seed1,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h2_k1__r1__gurobi,ER_60_p0.15_seed1,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h2_k1__r2__gurobi,ER_60_p0.15_seed1,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,18,31,18,31,UNRESOLVED,0,13
+ER_60_p0.15_seed1__h3_k2__r0__cadical,ER_60_p0.15_seed1,ER p=0.15,3,2,cadical,0,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed1__h3_k2__r1__cadical,ER_60_p0.15_seed1,ER p=0.15,3,2,cadical,1,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed1__h3_k2__r2__cadical,ER_60_p0.15_seed1,ER p=0.15,3,2,cadical,2,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed1__h3_k2__r0__gurobi,ER_60_p0.15_seed1,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed1__h3_k2__r1__gurobi,ER_60_p0.15_seed1,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed1__h3_k2__r2__gurobi,ER_60_p0.15_seed1,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,35,64,35,64,UNRESOLVED,0,29
+ER_60_p0.15_seed2__h1_k1__r0__cadical,ER_60_p0.15_seed2,ER p=0.15,1,1,cadical,0,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h1_k1__r1__cadical,ER_60_p0.15_seed2,ER p=0.15,1,1,cadical,1,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h1_k1__r2__cadical,ER_60_p0.15_seed2,ER p=0.15,1,1,cadical,2,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h1_k1__r0__gurobi,ER_60_p0.15_seed2,ER p=0.15,1,1,gurobi,0,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h1_k1__r1__gurobi,ER_60_p0.15_seed2,ER p=0.15,1,1,gurobi,1,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h1_k1__r2__gurobi,ER_60_p0.15_seed2,ER p=0.15,1,1,gurobi,2,FEASIBLE,False,14,25,14,25,UNRESOLVED,0,11
+ER_60_p0.15_seed2__h2_k1__r0__cadical,ER_60_p0.15_seed2,ER p=0.15,2,1,cadical,0,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h2_k1__r1__cadical,ER_60_p0.15_seed2,ER p=0.15,2,1,cadical,1,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h2_k1__r2__cadical,ER_60_p0.15_seed2,ER p=0.15,2,1,cadical,2,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h2_k1__r0__gurobi,ER_60_p0.15_seed2,ER p=0.15,2,1,gurobi,0,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h2_k1__r1__gurobi,ER_60_p0.15_seed2,ER p=0.15,2,1,gurobi,1,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h2_k1__r2__gurobi,ER_60_p0.15_seed2,ER p=0.15,2,1,gurobi,2,FEASIBLE,False,15,28,15,28,UNRESOLVED,0,13
+ER_60_p0.15_seed2__h3_k2__r0__cadical,ER_60_p0.15_seed2,ER p=0.15,3,2,cadical,0,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.15_seed2__h3_k2__r1__cadical,ER_60_p0.15_seed2,ER p=0.15,3,2,cadical,1,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.15_seed2__h3_k2__r2__cadical,ER_60_p0.15_seed2,ER p=0.15,3,2,cadical,2,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.15_seed2__h3_k2__r0__gurobi,ER_60_p0.15_seed2,ER p=0.15,3,2,gurobi,0,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.15_seed2__h3_k2__r1__gurobi,ER_60_p0.15_seed2,ER p=0.15,3,2,gurobi,1,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.15_seed2__h3_k2__r2__gurobi,ER_60_p0.15_seed2,ER p=0.15,3,2,gurobi,2,FEASIBLE,False,29,63,29,63,UNRESOLVED,0,34
+ER_60_p0.30_seed0__h1_k1__r0__cadical,ER_60_p0.30_seed0,ER p=0.30,1,1,cadical,0,FEASIBLE,False,24,56,55,55,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed0__h1_k1__r1__cadical,ER_60_p0.30_seed0,ER p=0.30,1,1,cadical,1,FEASIBLE,False,24,56,55,55,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed0__h1_k1__r2__cadical,ER_60_p0.30_seed0,ER p=0.30,1,1,cadical,2,FEASIBLE,False,24,56,55,55,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed0__h1_k1__r0__gurobi,ER_60_p0.30_seed0,ER p=0.30,1,1,gurobi,0,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h1_k1__r1__gurobi,ER_60_p0.30_seed0,ER p=0.30,1,1,gurobi,1,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h1_k1__r2__gurobi,ER_60_p0.30_seed0,ER p=0.30,1,1,gurobi,2,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h2_k1__r0__cadical,ER_60_p0.30_seed0,ER p=0.30,2,1,cadical,0,FEASIBLE,False,25,57,55,55,KNOWN_SUBOPTIMAL,2,2
+ER_60_p0.30_seed0__h2_k1__r1__cadical,ER_60_p0.30_seed0,ER p=0.30,2,1,cadical,1,FEASIBLE,False,25,57,55,55,KNOWN_SUBOPTIMAL,2,2
+ER_60_p0.30_seed0__h2_k1__r2__cadical,ER_60_p0.30_seed0,ER p=0.30,2,1,cadical,2,FEASIBLE,False,25,57,55,55,KNOWN_SUBOPTIMAL,2,2
+ER_60_p0.30_seed0__h2_k1__r0__gurobi,ER_60_p0.30_seed0,ER p=0.30,2,1,gurobi,0,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h2_k1__r1__gurobi,ER_60_p0.30_seed0,ER p=0.30,2,1,gurobi,1,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h2_k1__r2__gurobi,ER_60_p0.30_seed0,ER p=0.30,2,1,gurobi,2,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed0__h3_k2__r0__cadical,ER_60_p0.30_seed0,ER p=0.30,3,2,cadical,0,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed0__h3_k2__r1__cadical,ER_60_p0.30_seed0,ER p=0.30,3,2,cadical,1,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed0__h3_k2__r2__cadical,ER_60_p0.30_seed0,ER p=0.30,3,2,cadical,2,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed0__h3_k2__r0__gurobi,ER_60_p0.30_seed0,ER p=0.30,3,2,gurobi,0,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed0__h3_k2__r1__gurobi,ER_60_p0.30_seed0,ER p=0.30,3,2,gurobi,1,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed0__h3_k2__r2__gurobi,ER_60_p0.30_seed0,ER p=0.30,3,2,gurobi,2,FEASIBLE,False,49,125,49,125,UNRESOLVED,0,76
+ER_60_p0.30_seed1__h1_k1__r0__cadical,ER_60_p0.30_seed1,ER p=0.30,1,1,cadical,0,FEASIBLE,False,28,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h1_k1__r1__cadical,ER_60_p0.30_seed1,ER p=0.30,1,1,cadical,1,FEASIBLE,False,28,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h1_k1__r2__cadical,ER_60_p0.30_seed1,ER p=0.30,1,1,cadical,2,FEASIBLE,False,28,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h1_k1__r0__gurobi,ER_60_p0.30_seed1,ER p=0.30,1,1,gurobi,0,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h1_k1__r1__gurobi,ER_60_p0.30_seed1,ER p=0.30,1,1,gurobi,1,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h1_k1__r2__gurobi,ER_60_p0.30_seed1,ER p=0.30,1,1,gurobi,2,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h2_k1__r0__cadical,ER_60_p0.30_seed1,ER p=0.30,2,1,cadical,0,FEASIBLE,False,29,58,55,55,KNOWN_SUBOPTIMAL,3,3
+ER_60_p0.30_seed1__h2_k1__r1__cadical,ER_60_p0.30_seed1,ER p=0.30,2,1,cadical,1,FEASIBLE,False,29,58,55,55,KNOWN_SUBOPTIMAL,3,3
+ER_60_p0.30_seed1__h2_k1__r2__cadical,ER_60_p0.30_seed1,ER p=0.30,2,1,cadical,2,FEASIBLE,False,29,58,55,55,KNOWN_SUBOPTIMAL,3,3
+ER_60_p0.30_seed1__h2_k1__r0__gurobi,ER_60_p0.30_seed1,ER p=0.30,2,1,gurobi,0,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h2_k1__r1__gurobi,ER_60_p0.30_seed1,ER p=0.30,2,1,gurobi,1,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h2_k1__r2__gurobi,ER_60_p0.30_seed1,ER p=0.30,2,1,gurobi,2,OPT,True,55,55,55,55,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed1__h3_k2__r0__cadical,ER_60_p0.30_seed1,ER p=0.30,3,2,cadical,0,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed1__h3_k2__r1__cadical,ER_60_p0.30_seed1,ER p=0.30,3,2,cadical,1,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed1__h3_k2__r2__cadical,ER_60_p0.30_seed1,ER p=0.30,3,2,cadical,2,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed1__h3_k2__r0__gurobi,ER_60_p0.30_seed1,ER p=0.30,3,2,gurobi,0,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed1__h3_k2__r1__gurobi,ER_60_p0.30_seed1,ER p=0.30,3,2,gurobi,1,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed1__h3_k2__r2__gurobi,ER_60_p0.30_seed1,ER p=0.30,3,2,gurobi,2,FEASIBLE,False,57,131,57,131,UNRESOLVED,0,74
+ER_60_p0.30_seed2__h1_k1__r0__cadical,ER_60_p0.30_seed2,ER p=0.30,1,1,cadical,0,FEASIBLE,False,24,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h1_k1__r1__cadical,ER_60_p0.30_seed2,ER p=0.30,1,1,cadical,1,FEASIBLE,False,24,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h1_k1__r2__cadical,ER_60_p0.30_seed2,ER p=0.30,1,1,cadical,2,FEASIBLE,False,24,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h1_k1__r0__gurobi,ER_60_p0.30_seed2,ER p=0.30,1,1,gurobi,0,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h1_k1__r1__gurobi,ER_60_p0.30_seed2,ER p=0.30,1,1,gurobi,1,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h1_k1__r2__gurobi,ER_60_p0.30_seed2,ER p=0.30,1,1,gurobi,2,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h2_k1__r0__cadical,ER_60_p0.30_seed2,ER p=0.30,2,1,cadical,0,FEASIBLE,False,25,57,56,56,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed2__h2_k1__r1__cadical,ER_60_p0.30_seed2,ER p=0.30,2,1,cadical,1,FEASIBLE,False,25,57,56,56,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed2__h2_k1__r2__cadical,ER_60_p0.30_seed2,ER p=0.30,2,1,cadical,2,FEASIBLE,False,25,57,56,56,KNOWN_SUBOPTIMAL,1,1
+ER_60_p0.30_seed2__h2_k1__r0__gurobi,ER_60_p0.30_seed2,ER p=0.30,2,1,gurobi,0,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h2_k1__r1__gurobi,ER_60_p0.30_seed2,ER p=0.30,2,1,gurobi,1,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h2_k1__r2__gurobi,ER_60_p0.30_seed2,ER p=0.30,2,1,gurobi,2,OPT,True,56,56,56,56,KNOWN_OPTIMAL,0,0
+ER_60_p0.30_seed2__h3_k2__r0__cadical,ER_60_p0.30_seed2,ER p=0.30,3,2,cadical,0,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+ER_60_p0.30_seed2__h3_k2__r1__cadical,ER_60_p0.30_seed2,ER p=0.30,3,2,cadical,1,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+ER_60_p0.30_seed2__h3_k2__r2__cadical,ER_60_p0.30_seed2,ER p=0.30,3,2,cadical,2,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+ER_60_p0.30_seed2__h3_k2__r0__gurobi,ER_60_p0.30_seed2,ER p=0.30,3,2,gurobi,0,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+ER_60_p0.30_seed2__h3_k2__r1__gurobi,ER_60_p0.30_seed2,ER p=0.30,3,2,gurobi,1,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+ER_60_p0.30_seed2__h3_k2__r2__gurobi,ER_60_p0.30_seed2,ER p=0.30,3,2,gurobi,2,FEASIBLE,False,49,132,49,132,UNRESOLVED,0,83
+P_4xP_5__h1_k1__r0__cadical,P_4xP_5,PxP,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h1_k1__r1__cadical,P_4xP_5,PxP,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h1_k1__r2__cadical,P_4xP_5,PxP,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h1_k1__r0__gurobi,P_4xP_5,PxP,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h1_k1__r1__gurobi,P_4xP_5,PxP,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h1_k1__r2__gurobi,P_4xP_5,PxP,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r0__cadical,P_4xP_5,PxP,2,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r1__cadical,P_4xP_5,PxP,2,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r2__cadical,P_4xP_5,PxP,2,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r0__gurobi,P_4xP_5,PxP,2,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r1__gurobi,P_4xP_5,PxP,2,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h2_k1__r2__gurobi,P_4xP_5,PxP,2,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r0__cadical,P_4xP_5,PxP,3,2,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r1__cadical,P_4xP_5,PxP,3,2,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r2__cadical,P_4xP_5,PxP,3,2,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r0__gurobi,P_4xP_5,PxP,3,2,gurobi,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r1__gurobi,P_4xP_5,PxP,3,2,gurobi,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_4xP_5__h3_k2__r2__gurobi,P_4xP_5,PxP,3,2,gurobi,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r0__cadical,P_5xP_8,PxP,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r1__cadical,P_5xP_8,PxP,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r2__cadical,P_5xP_8,PxP,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r0__gurobi,P_5xP_8,PxP,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r1__gurobi,P_5xP_8,PxP,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h1_k1__r2__gurobi,P_5xP_8,PxP,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r0__cadical,P_5xP_8,PxP,2,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r1__cadical,P_5xP_8,PxP,2,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r2__cadical,P_5xP_8,PxP,2,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r0__gurobi,P_5xP_8,PxP,2,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r1__gurobi,P_5xP_8,PxP,2,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h2_k1__r2__gurobi,P_5xP_8,PxP,2,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r0__cadical,P_5xP_8,PxP,3,2,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r1__cadical,P_5xP_8,PxP,3,2,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r2__cadical,P_5xP_8,PxP,3,2,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r0__gurobi,P_5xP_8,PxP,3,2,gurobi,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r1__gurobi,P_5xP_8,PxP,3,2,gurobi,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_5xP_8__h3_k2__r2__gurobi,P_5xP_8,PxP,3,2,gurobi,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r0__cadical,P_6xP_10,PxP,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r1__cadical,P_6xP_10,PxP,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r2__cadical,P_6xP_10,PxP,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r0__gurobi,P_6xP_10,PxP,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r1__gurobi,P_6xP_10,PxP,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h1_k1__r2__gurobi,P_6xP_10,PxP,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r0__cadical,P_6xP_10,PxP,2,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r1__cadical,P_6xP_10,PxP,2,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r2__cadical,P_6xP_10,PxP,2,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r0__gurobi,P_6xP_10,PxP,2,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r1__gurobi,P_6xP_10,PxP,2,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h2_k1__r2__gurobi,P_6xP_10,PxP,2,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+P_6xP_10__h3_k2__r0__cadical,P_6xP_10,PxP,3,2,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_6xP_10__h3_k2__r1__cadical,P_6xP_10,PxP,3,2,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_6xP_10__h3_k2__r2__cadical,P_6xP_10,PxP,3,2,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+P_6xP_10__h3_k2__r0__gurobi,P_6xP_10,PxP,3,2,gurobi,0,FEASIBLE,False,9,18,11,11,KNOWN_SUBOPTIMAL,7,7
+P_6xP_10__h3_k2__r1__gurobi,P_6xP_10,PxP,3,2,gurobi,1,FEASIBLE,False,9,18,11,11,KNOWN_SUBOPTIMAL,7,7
+P_6xP_10__h3_k2__r2__gurobi,P_6xP_10,PxP,3,2,gurobi,2,FEASIBLE,False,9,18,11,11,KNOWN_SUBOPTIMAL,7,7
+tree_20_seed0__h1_k1__r0__cadical,tree_20_seed0,tree,1,1,cadical,0,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h1_k1__r1__cadical,tree_20_seed0,tree,1,1,cadical,1,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h1_k1__r2__cadical,tree_20_seed0,tree,1,1,cadical,2,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h1_k1__r0__gurobi,tree_20_seed0,tree,1,1,gurobi,0,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h1_k1__r1__gurobi,tree_20_seed0,tree,1,1,gurobi,1,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h1_k1__r2__gurobi,tree_20_seed0,tree,1,1,gurobi,2,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r0__cadical,tree_20_seed0,tree,2,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r1__cadical,tree_20_seed0,tree,2,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r2__cadical,tree_20_seed0,tree,2,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r0__gurobi,tree_20_seed0,tree,2,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r1__gurobi,tree_20_seed0,tree,2,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h2_k1__r2__gurobi,tree_20_seed0,tree,2,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r0__cadical,tree_20_seed0,tree,3,2,cadical,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r1__cadical,tree_20_seed0,tree,3,2,cadical,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r2__cadical,tree_20_seed0,tree,3,2,cadical,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r0__gurobi,tree_20_seed0,tree,3,2,gurobi,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r1__gurobi,tree_20_seed0,tree,3,2,gurobi,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed0__h3_k2__r2__gurobi,tree_20_seed0,tree,3,2,gurobi,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r0__cadical,tree_20_seed1,tree,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r1__cadical,tree_20_seed1,tree,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r2__cadical,tree_20_seed1,tree,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r0__gurobi,tree_20_seed1,tree,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r1__gurobi,tree_20_seed1,tree,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h1_k1__r2__gurobi,tree_20_seed1,tree,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r0__cadical,tree_20_seed1,tree,2,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r1__cadical,tree_20_seed1,tree,2,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r2__cadical,tree_20_seed1,tree,2,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r0__gurobi,tree_20_seed1,tree,2,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r1__gurobi,tree_20_seed1,tree,2,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h2_k1__r2__gurobi,tree_20_seed1,tree,2,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r0__cadical,tree_20_seed1,tree,3,2,cadical,0,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r1__cadical,tree_20_seed1,tree,3,2,cadical,1,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r2__cadical,tree_20_seed1,tree,3,2,cadical,2,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r0__gurobi,tree_20_seed1,tree,3,2,gurobi,0,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r1__gurobi,tree_20_seed1,tree,3,2,gurobi,1,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed1__h3_k2__r2__gurobi,tree_20_seed1,tree,3,2,gurobi,2,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r0__cadical,tree_20_seed2,tree,1,1,cadical,0,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r1__cadical,tree_20_seed2,tree,1,1,cadical,1,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r2__cadical,tree_20_seed2,tree,1,1,cadical,2,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r0__gurobi,tree_20_seed2,tree,1,1,gurobi,0,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r1__gurobi,tree_20_seed2,tree,1,1,gurobi,1,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h1_k1__r2__gurobi,tree_20_seed2,tree,1,1,gurobi,2,OPT,True,3,3,3,3,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r0__cadical,tree_20_seed2,tree,2,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r1__cadical,tree_20_seed2,tree,2,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r2__cadical,tree_20_seed2,tree,2,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r0__gurobi,tree_20_seed2,tree,2,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r1__gurobi,tree_20_seed2,tree,2,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h2_k1__r2__gurobi,tree_20_seed2,tree,2,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r0__cadical,tree_20_seed2,tree,3,2,cadical,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r1__cadical,tree_20_seed2,tree,3,2,cadical,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r2__cadical,tree_20_seed2,tree,3,2,cadical,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r0__gurobi,tree_20_seed2,tree,3,2,gurobi,0,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r1__gurobi,tree_20_seed2,tree,3,2,gurobi,1,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_20_seed2__h3_k2__r2__gurobi,tree_20_seed2,tree,3,2,gurobi,2,OPT,True,8,8,8,8,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r0__cadical,tree_40_seed0,tree,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r1__cadical,tree_40_seed0,tree,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r2__cadical,tree_40_seed0,tree,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r0__gurobi,tree_40_seed0,tree,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r1__gurobi,tree_40_seed0,tree,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h1_k1__r2__gurobi,tree_40_seed0,tree,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r0__cadical,tree_40_seed0,tree,2,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r1__cadical,tree_40_seed0,tree,2,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r2__cadical,tree_40_seed0,tree,2,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r0__gurobi,tree_40_seed0,tree,2,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r1__gurobi,tree_40_seed0,tree,2,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h2_k1__r2__gurobi,tree_40_seed0,tree,2,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r0__cadical,tree_40_seed0,tree,3,2,cadical,0,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r1__cadical,tree_40_seed0,tree,3,2,cadical,1,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r2__cadical,tree_40_seed0,tree,3,2,cadical,2,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r0__gurobi,tree_40_seed0,tree,3,2,gurobi,0,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r1__gurobi,tree_40_seed0,tree,3,2,gurobi,1,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed0__h3_k2__r2__gurobi,tree_40_seed0,tree,3,2,gurobi,2,OPT,True,9,9,9,9,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r0__cadical,tree_40_seed1,tree,1,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r1__cadical,tree_40_seed1,tree,1,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r2__cadical,tree_40_seed1,tree,1,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r0__gurobi,tree_40_seed1,tree,1,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r1__gurobi,tree_40_seed1,tree,1,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h1_k1__r2__gurobi,tree_40_seed1,tree,1,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r0__cadical,tree_40_seed1,tree,2,1,cadical,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r1__cadical,tree_40_seed1,tree,2,1,cadical,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r2__cadical,tree_40_seed1,tree,2,1,cadical,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r0__gurobi,tree_40_seed1,tree,2,1,gurobi,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r1__gurobi,tree_40_seed1,tree,2,1,gurobi,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h2_k1__r2__gurobi,tree_40_seed1,tree,2,1,gurobi,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r0__cadical,tree_40_seed1,tree,3,2,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r1__cadical,tree_40_seed1,tree,3,2,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r2__cadical,tree_40_seed1,tree,3,2,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r0__gurobi,tree_40_seed1,tree,3,2,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r1__gurobi,tree_40_seed1,tree,3,2,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed1__h3_k2__r2__gurobi,tree_40_seed1,tree,3,2,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r0__cadical,tree_40_seed2,tree,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r1__cadical,tree_40_seed2,tree,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r2__cadical,tree_40_seed2,tree,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r0__gurobi,tree_40_seed2,tree,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r1__gurobi,tree_40_seed2,tree,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h1_k1__r2__gurobi,tree_40_seed2,tree,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r0__cadical,tree_40_seed2,tree,2,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r1__cadical,tree_40_seed2,tree,2,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r2__cadical,tree_40_seed2,tree,2,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r0__gurobi,tree_40_seed2,tree,2,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r1__gurobi,tree_40_seed2,tree,2,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h2_k1__r2__gurobi,tree_40_seed2,tree,2,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r0__cadical,tree_40_seed2,tree,3,2,cadical,0,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r1__cadical,tree_40_seed2,tree,3,2,cadical,1,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r2__cadical,tree_40_seed2,tree,3,2,cadical,2,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r0__gurobi,tree_40_seed2,tree,3,2,gurobi,0,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r1__gurobi,tree_40_seed2,tree,3,2,gurobi,1,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_40_seed2__h3_k2__r2__gurobi,tree_40_seed2,tree,3,2,gurobi,2,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r0__cadical,tree_60_seed0,tree,1,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r1__cadical,tree_60_seed0,tree,1,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r2__cadical,tree_60_seed0,tree,1,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r0__gurobi,tree_60_seed0,tree,1,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r1__gurobi,tree_60_seed0,tree,1,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h1_k1__r2__gurobi,tree_60_seed0,tree,1,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r0__cadical,tree_60_seed0,tree,2,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r1__cadical,tree_60_seed0,tree,2,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r2__cadical,tree_60_seed0,tree,2,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r0__gurobi,tree_60_seed0,tree,2,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r1__gurobi,tree_60_seed0,tree,2,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h2_k1__r2__gurobi,tree_60_seed0,tree,2,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r0__cadical,tree_60_seed0,tree,3,2,cadical,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r1__cadical,tree_60_seed0,tree,3,2,cadical,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r2__cadical,tree_60_seed0,tree,3,2,cadical,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r0__gurobi,tree_60_seed0,tree,3,2,gurobi,0,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r1__gurobi,tree_60_seed0,tree,3,2,gurobi,1,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed0__h3_k2__r2__gurobi,tree_60_seed0,tree,3,2,gurobi,2,OPT,True,11,11,11,11,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r0__cadical,tree_60_seed1,tree,1,1,cadical,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r1__cadical,tree_60_seed1,tree,1,1,cadical,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r2__cadical,tree_60_seed1,tree,1,1,cadical,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r0__gurobi,tree_60_seed1,tree,1,1,gurobi,0,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r1__gurobi,tree_60_seed1,tree,1,1,gurobi,1,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h1_k1__r2__gurobi,tree_60_seed1,tree,1,1,gurobi,2,OPT,True,6,6,6,6,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r0__cadical,tree_60_seed1,tree,2,1,cadical,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r1__cadical,tree_60_seed1,tree,2,1,cadical,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r2__cadical,tree_60_seed1,tree,2,1,cadical,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r0__gurobi,tree_60_seed1,tree,2,1,gurobi,0,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r1__gurobi,tree_60_seed1,tree,2,1,gurobi,1,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h2_k1__r2__gurobi,tree_60_seed1,tree,2,1,gurobi,2,OPT,True,7,7,7,7,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r0__cadical,tree_60_seed1,tree,3,2,cadical,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r1__cadical,tree_60_seed1,tree,3,2,cadical,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r2__cadical,tree_60_seed1,tree,3,2,cadical,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r0__gurobi,tree_60_seed1,tree,3,2,gurobi,0,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r1__gurobi,tree_60_seed1,tree,3,2,gurobi,1,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed1__h3_k2__r2__gurobi,tree_60_seed1,tree,3,2,gurobi,2,OPT,True,13,13,13,13,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r0__cadical,tree_60_seed2,tree,1,1,cadical,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r1__cadical,tree_60_seed2,tree,1,1,cadical,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r2__cadical,tree_60_seed2,tree,1,1,cadical,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r0__gurobi,tree_60_seed2,tree,1,1,gurobi,0,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r1__gurobi,tree_60_seed2,tree,1,1,gurobi,1,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h1_k1__r2__gurobi,tree_60_seed2,tree,1,1,gurobi,2,OPT,True,4,4,4,4,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r0__cadical,tree_60_seed2,tree,2,1,cadical,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r1__cadical,tree_60_seed2,tree,2,1,cadical,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r2__cadical,tree_60_seed2,tree,2,1,cadical,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r0__gurobi,tree_60_seed2,tree,2,1,gurobi,0,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r1__gurobi,tree_60_seed2,tree,2,1,gurobi,1,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h2_k1__r2__gurobi,tree_60_seed2,tree,2,1,gurobi,2,OPT,True,5,5,5,5,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r0__cadical,tree_60_seed2,tree,3,2,cadical,0,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r1__cadical,tree_60_seed2,tree,3,2,cadical,1,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r2__cadical,tree_60_seed2,tree,3,2,cadical,2,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r0__gurobi,tree_60_seed2,tree,3,2,gurobi,0,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r1__gurobi,tree_60_seed2,tree,3,2,gurobi,1,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0
+tree_60_seed2__h3_k2__r2__gurobi,tree_60_seed2,tree,3,2,gurobi,2,OPT,True,10,10,10,10,KNOWN_OPTIMAL,0,0

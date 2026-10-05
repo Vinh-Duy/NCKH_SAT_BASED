@@ -1,0 +1,44 @@
+{
+  "identity": {
+    "inputs": {
+      "results/runs/general_confirm_r1.csv": "f8e2d56bbc511c599c041f729ac9acc4bd2e3446db8957941dd814825e8758f5",
+      "results/runs/general_confirm_r1.metadata.json": "9c37d8666d7b657b86b3a26a1ff37371896cb72f4c9be90ba6cbd93ecf2ab4ea",
+      "results/runs/general_confirm_r1.witnesses.jsonl": "913d728a0aef0f3a2e4459730961a3c8bad408c3714d34c7c7dfdf26360282ea"
+    },
+    "sources": {
+      "scripts/analyze_confirmation_gaps.py": "36e314c1986a4fbd21332487293d0529fe1414424c2ec10a770387ac6f7fd40f",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/audit_general_pilot.py": "0289ad01f372d3753639acf93e9a0011f7ef1c84126a50683af00167a5d93bf1",
+      "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+    },
+    "environment": {
+      "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+      "networkx": "3.6.1"
+    }
+  },
+  "counts": {
+    "GapInstances": 117,
+    "GapObservations": 702,
+    "GapTheory": 61,
+    "GapRecorded": 35,
+    "GapCombined": 0,
+    "GapClosed": 96,
+    "GapOpen": 21,
+    "GapOpenMin": 4,
+    "GapOpenMax": 83,
+    "GapSATFeasibleOptimal": 12
+  },
+  "outputs_sha256": {
+    "summary.csv": "356ef57ba4077b04bed8a5c1c31a027d15a1ed6f8a378637d9f3ee6d328d3250",
+    "unresolved.csv": "c227e8eac939a2a684c4edf617eb1bb3256e5ceeab619890053493e3755e13a1",
+    "README.md": "d4d8b19bf74619808b1160e966402f78fe6ea632319c5491f07ae6f21139f321",
+    "feasible_quality.csv": "fb0b142e36e46c0d7e258197e6023cd2cea8e3127f7c6074570d051ecf1e5a1d",
+    "instances.csv": "c6ac2a0ac2e8b27c2d69020b78e0e57542ebda63a341a39b8d8c0c4a4e384bb8",
+    "summary.tex": "455c5cb5511a70d682c5d4500044d375e8fc25ae14a986ff97ba5b2889377d7f",
+    "quality.tex": "0d797edb6b9596eca91a5eaa046dcd3d244204c9fff89dcb229de46762b9afd2",
+    "counts.tex": "f4e5d8295e825f7d8748cefb688c7c08ea8e1a702340b54ffe0fb21ea3c49862",
+    "observations.csv": "bb02f4a54c30d1dde272b6b34e086819fe574fdff46630f01cf05eb127b77c71"
+  }
+}
