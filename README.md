@@ -14,6 +14,8 @@ September 28 update: [audit of five current runs and common-span model counts](r
 
 ## Current status
 
+- The [post-hoc interval analysis](docs/methods/optimality_intervals.md) combines the confirmation's stored evidence: 96/117 instance intervals close and 21 remain open. Twelve SAT FEASIBLE observations contain retrospectively optimal witnesses; their recorded statuses and timed coverage remain unchanged. Reproduce the analysis and PDF with `make gap-analysis`.
+
 - Completed 50 L(3,2) trees with 100–1600 vertices and 100 CaDiCaL/Gurobi runs: both backends report OPT on every tree; all 100 labelings are valid; 48 trees attain the degree bound.
 - Archived L(2,1) symmetry experiments cover 48 cycles and 448 product samples, with two product pairs unresolved. These appear in the PDF appendix.
 - The multi-family pilot has 39 samples × 3 h,k pairs × 2 backends = 234 runs. All **234 witnesses** were validated: SAT solves 79/117 instances to optimality and Gurobi 97/117; the 78 common OPT values agree, as do both backends on all 12 instances with exact reference formulas.
