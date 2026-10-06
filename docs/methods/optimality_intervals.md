@@ -59,6 +59,23 @@ These are observation counts, including repeated runs of the same instances.
 The 12 optimal SAT incumbents do not add 12 successes to the original SAT
 coverage. Likewise, an unresolved witness is not demonstrated suboptimal.
 
+### Follow-up audit: origin of the saved bounds
+
+The [bound-capture audit](../../results/analysis/unresolved_bounds/README.md)
+finds that all 186 FEASIBLE observations retained the common initial snapshot
+after an external wall timeout. All 63 repeat pairs on the 21 open instances
+have equal recorded LB and UB, but this equality is caused by the shared
+fallback. The initial labeling and bounds were regenerated and matched against
+each saved witness, under the matching archived benchmark source fingerprint.
+
+The 12 retrospectively optimal SAT FEASIBLE witnesses are therefore initial
+greedy labelings, not demonstrated SAT-search improvements. Interval validity,
+recorded statuses, and OPT counts remain unchanged. Native solvers may have
+made progress that was never sent before interruption; the saved data cannot
+establish their relative bound quality at timeout. Future comparisons require
+intermediate progress capture and a separately versioned run, on the existing
+cohort. The archived snapshots must not be modified to imply recovered progress.
+
 The data support reporting separate solution-quality and proof-of-optimality
 outcomes. They do not establish the internal cause of a timeout, a new
 mathematical formula, an intrinsic hardness ordering of families, or an advantage
