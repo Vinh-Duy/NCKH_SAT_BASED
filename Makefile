@@ -1,14 +1,14 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data english-tables gap-data gap-analysis
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data english-tables gap-data gap-analysis bounds-data bounds-comparison
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
 confirmation-data:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_confirmation_report.py
 
-confirmation: confirmation-data gap-data
+confirmation: confirmation-data gap-data bounds-data
 	$(MAKE) pdf
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
@@ -16,6 +16,13 @@ gap-data:
 	$(PYTHON) scripts/analyze_confirmation_gaps.py
 
 gap-analysis: gap-data
+	$(MAKE) pdf
+
+# Audit recorded bound differences and the archived timeout capture protocol.
+bounds-data:
+	$(PYTHON) scripts/compare_unresolved_bounds.py
+
+bounds-comparison: bounds-data
 	$(MAKE) pdf
 
 test:
@@ -28,7 +35,7 @@ tree-tables:
 paper-figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_manuscript_figures.py
 
-manuscript: tree-tables paper-figures confirmation-data gap-data
+manuscript: tree-tables paper-figures confirmation-data gap-data bounds-data
 	$(MAKE) pdf
 
 tables:
