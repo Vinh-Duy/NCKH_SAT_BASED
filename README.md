@@ -14,6 +14,8 @@ September 28 update: [audit of five current runs and common-span model counts](r
 
 ## Current status
 
+- The [timeout-capture audit](results/analysis/unresolved_bounds/README.md) finds equal saved bounds on all 63 repeat pairs from the 21 open instances, but both sides retained the shared initial snapshot. All 186 FEASIBLE confirmation observations have this origin. The data do not establish equivalent native solver bound quality; intermediate progress capture is required before that comparison.
+
 - The [post-hoc interval analysis](docs/methods/optimality_intervals.md) combines the confirmation's stored evidence: 96/117 instance intervals close and 21 remain open. Twelve SAT FEASIBLE observations contain retrospectively optimal witnesses; their recorded statuses and timed coverage remain unchanged. Reproduce the analysis and PDF with `make gap-analysis`.
 
 - Completed 50 L(3,2) trees with 100–1600 vertices and 100 CaDiCaL/Gurobi runs: both backends report OPT on every tree; all 100 labelings are valid; 48 trees attain the degree bound.
