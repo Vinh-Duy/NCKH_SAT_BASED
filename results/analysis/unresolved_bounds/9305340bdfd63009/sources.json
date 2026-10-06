@@ -1,0 +1,31 @@
+{
+  "identity": {
+    "inputs": {
+      "results/runs/general_confirm_r1.csv": "f8e2d56bbc511c599c041f729ac9acc4bd2e3446db8957941dd814825e8758f5",
+      "results/runs/general_confirm_r1.metadata.json": "9c37d8666d7b657b86b3a26a1ff37371896cb72f4c9be90ba6cbd93ecf2ab4ea",
+      "results/runs/general_confirm_r1.witnesses.jsonl": "913d728a0aef0f3a2e4459730961a3c8bad408c3714d34c7c7dfdf26360282ea"
+    },
+    "analysis_sources": {
+      "scripts/compare_unresolved_bounds.py": "0a50719f67165ce585965f0d0aa6c814ea136a6fda46a3fc273af8744d99e690",
+      "scripts/analyze_confirmation_gaps.py": "36e314c1986a4fbd21332487293d0529fe1414424c2ec10a770387ac6f7fd40f",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/audit_general_pilot.py": "0289ad01f372d3753639acf93e9a0011f7ef1c84126a50683af00167a5d93bf1"
+    },
+    "matched_benchmark_source_sha256": "a5c54bd945ed35f385a379252a7dac6f6eeaf43a9fc12990394fa1a34ef07760"
+  },
+  "counts": {
+    "BoundsOpenInstances": 21,
+    "BoundsOpenPairs": 63,
+    "BoundsOpenFallbackPairs": 63,
+    "BoundsFallbackObservations": 186
+  },
+  "outputs_sha256": {
+    "comparison.tex": "524a901d8f0c517794513897ad29fca2621844db7b814aa4a06c277c1170bd2a",
+    "summary.csv": "97c14697d145b3f6ba5d4ba03aced25ca332cd738f3f43e0853c2633e7abdb64",
+    "unresolved_pairs.csv": "99ac7a56396b265f688aa71c175b7de4cefbea4eba4f83a81d3d759cb7d31e4d",
+    "README.md": "d2873fd808b4f0844f2a6ec02e2c0f516d601c6308ab10b46b8770bca6a11305",
+    "capture_provenance.csv": "3d2e9e46fae2c92490cb8023a9cfec96aefe6ee791a05e789792ac95c1fcd85d",
+    "counts.tex": "76120a38f663f782713eb5820ea1345f679d67161a57ad4c06930dc9ce716b5a",
+    "paired_bounds.csv": "144851c3bf822a5a72a776c52d661bc87855425e22cbf1dac5e093b29610a574"
+  }
+}

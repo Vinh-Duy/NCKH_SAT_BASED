@@ -1,0 +1,3 @@
+Scope,Instances,Repeat_Pairs,SAT_Tighter_LB,Equal_LB,ILP_Tighter_LB,SAT_Better_UB,Equal_UB,ILP_Better_UB,Both_Initial_Fallback,Max_Abs_Delta_LB,Max_Abs_Delta_UB
+ALL,117,351,3,293,55,3,305,43,64,32,10
+OPEN,21,63,0,63,0,0,63,0,63,0,0
