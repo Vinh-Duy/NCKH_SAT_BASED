@@ -17,6 +17,9 @@ Under the all-three-OPT criterion, the backends solve \ConfirmSATStable{}
 and \ConfirmILPStable{} instances, respectively, with \ConfirmJointStable{}
 in their intersection. Runtime statistics on this intersection must be
 read alongside coverage and do not represent instances remaining FEASIBLE.
+Equal stored intervals on the unresolved subset arise from shared initial
+fallbacks after external timeout, so they do not establish comparable native
+solver bound quality. Progress capture must be improved before that comparison.
 Broader formula/bound comparisons, incremental SAT, UNSAT certificates,
 and specialized algorithm baselines require separate implementation and
 evaluation. Edge labeling and $L(h,1,1)$ are distinguished in the related
