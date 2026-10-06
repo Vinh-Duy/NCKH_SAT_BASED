@@ -70,4 +70,40 @@ of proving lower bounds. Such causal conclusions require further controlled
 experiments. All unresolved instances, bound sources, and observation-level
 classifications are exported with source hashes under
 \path{results/analysis/confirmation_gaps/}.
+
+\paragraph{Recorded bounds versus native solver progress.}
+A separate provenance audit matches the benchmark source fingerprint and
+regenerates each initial greedy labeling and lower bound. On the
+\BoundsOpenInstances{} open instances, all \BoundsOpenPairs{} matched
+backend/repetition pairs have identical recorded lower bounds and identical
+recorded upper bounds. However, both observations in all
+\BoundsOpenFallbackPairs{} pairs ended with an external wall timeout and
+retained the initial snapshot. The benchmark worker sends an initial incumbent
+and a final result, but does not transmit intermediate search progress.
+When the parent terminates a worker before its final response, any unsent
+improvements are unavailable to this analysis.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Comparison of recorded bounds by matched repetition. LB columns
+count a tighter lower bound for SAT, equal bounds, or a tighter bound for ILP;
+UB: equal counts equal witness spans. Both initial counts pairs retaining
+the shared initialization after external timeout. ALL covers 117 instances;
+OPEN is the post-hoc subset of 21 unresolved instances.}
+\label{tab:recorded-bound-comparison}
+\input{\BoundsReportDir/comparison.tex}
+\end{table}
+
+Across the full cohort, all \BoundsFallbackObservations{} FEASIBLE
+observations retain this initial snapshot. Consequently, the
+\GapSATFeasibleOptimal{} retrospectively optimal SAT FEASIBLE witnesses were
+provided by the shared initialization, not demonstrated to have been produced
+by SAT search. Their validity and the combined intervals remain unchanged.
+The zero bound differences on OPEN describe equality of the saved fallbacks;
+they do not establish comparable native bound quality or overall solver
+effectiveness. In particular, the all-three-OPT counts remain
+\ConfirmSATStable{} for SAT and \ConfirmILPStable{} for ILP.
+Direct comparison of bound quality at interruption requires a new protocol
+that preserves intermediate primal and lower-bound updates for both backends.
+Missing progress cannot be reconstructed from these stored snapshots.
 \FloatBarrier
