@@ -6,7 +6,7 @@ import math
 import time
 from typing import Any
 
-from src.core.graph_utils import graph_constraints, greedy_labeling
+from src.core.graph_utils import graph_constraints, greedy_labeling, lower_bound
 from src.core.validator import validate_labeling
 from src.models.ilp_assignment import (
     labeling_from_values,
@@ -22,14 +22,21 @@ def solve_graph(
     formulation: str = "assignment",
     h: int = 2,
     k: int = 1,
+    progress_callback=None,
 ) -> tuple[int | None, int | None, int | None, float, str, dict]:
-    """Solve an L(h,k) instance with the selected backend and formulation."""
+    """Solve an L(h,k) instance, preserving the legacy six-element return tuple.
+
+    Assignment/Gurobi optionally publishes validated incumbents and conservative
+    integer dual bounds through progress_callback; other formulations reject it.
+    """
     if solver_name.lower() not in {"gurobi", "cplex"}:
         raise ValueError("solver_name must be 'gurobi' or 'cplex'")
     if formulation not in {"assignment", "big-m"}:
         raise ValueError("formulation must be 'assignment' or 'big-m'")
     if not math.isfinite(timeout_sec) or timeout_sec < 0:
         raise ValueError("timeout_sec must be finite and non-negative")
+    if progress_callback is not None and (solver_name.lower() != "gurobi" or formulation != "assignment"):
+        raise ValueError("progress capture requires assignment/Gurobi")
     start = time.perf_counter()
     edges, distance_two_pairs = graph_constraints(graph)
     upper_bound, greedy_labels = greedy_labeling(graph, h, k)
@@ -38,7 +45,11 @@ def solve_graph(
     )
     try:
         if formulation == "assignment":
-            result = _solve_assignment(spec, greedy_labels, solver_name, timeout_sec)
+            if progress_callback is None:
+                result = _solve_assignment(spec, greedy_labels, solver_name, timeout_sec)
+            else:
+                progress = _GurobiProgress(spec, greedy_labels, lower_bound(graph, h, k), progress_callback)
+                result = _solve_assignment_gurobi(spec, greedy_labels, timeout_sec, progress)
         else:
             result = _solve_big_m(spec, greedy_labels, solver_name, timeout_sec)
     except ImportError:
@@ -60,7 +71,7 @@ def _solve_assignment(spec, greedy_labels, solver_name, timeout_sec):
     raise ValueError("solver_name must be 'gurobi' or 'cplex'")
 
 
-def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec):
+def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec, progress=None):
     import gurobipy as gp
     from gurobipy import GRB
 
@@ -80,7 +91,7 @@ def _solve_assignment_gurobi(spec, greedy_labels, timeout_sec):
     _set_gurobi_start(x, span, warm_start_values(spec, greedy_labels), spec.upper_bound)
     model.setObjective(span, GRB.MINIMIZE)
     try:
-        return _run_gurobi(model, spec, x)
+        return _run_gurobi(model, spec, x, progress)
     finally:
         model.dispose()
 
@@ -115,11 +126,79 @@ def _set_gurobi_start(x, span, values, upper_bound):
     span.Start = upper_bound
 
 
-def _run_gurobi(model, spec, x):
+class _GurobiProgress:
+    """Publish interval improvements or certification changes, not every callback.
+
+    MIP/MIPSOL bounds are numerical solver bounds, not independently checked
+    UNSAT certificates. Floor avoids strengthening a fractional bound by rounding
+    to the nearest integer. Final OPT still relies on Gurobi's status/tolerances.
+    """
+
+    def __init__(self, spec, labels, low, publish):
+        self.spec, self.publish = spec, publish
+        self.error = None
+        self.state = dict(status="FEASIBLE", span=spec.upper_bound, labels=dict(labels),
+                          proven_lower_bound=low, source="greedy", lower_bound_source="elementary",
+                          variable_count=spec.variable_count, clause_count=spec.constraint_count,
+                          model_span=spec.upper_bound, h=spec.h, k=spec.k)
+
+    def update(self, bound, labels=None, *, optimal=False):
+        state = dict(self.state)
+        if math.isfinite(bound) and abs(bound) < 1e100:
+            low = math.floor(bound)
+            if low > state["proven_lower_bound"]:
+                state.update(proven_lower_bound=low, lower_bound_source="gurobi_dual")
+        if labels is not None:
+            minimum = min(labels.values(), default=0)
+            labels = {v: label - minimum for v, label in labels.items()}
+            span = max(labels.values(), default=0)
+            valid, errors = validate_labeling(self.spec.edges, self.spec.distance_two_pairs,
+                labels, span, self.spec.h, self.spec.k, vertices=self.spec.vertices)
+            if not valid:
+                raise RuntimeError(f"invalid Gurobi progress witness: {errors}")
+            if span < state["span"]:
+                state.update(span=span, labels=labels, source="gurobi_incumbent")
+        if state["proven_lower_bound"] > state["span"]:
+            raise RuntimeError("Gurobi lower bound exceeds validated incumbent")
+        if optimal:
+            if labels is None or max(labels.values(), default=0) != state["span"]:
+                raise RuntimeError("Gurobi optimum disagrees with retained incumbent")
+            state.update(proven_lower_bound=state["span"], lower_bound_source="gurobi_optimal")
+        state["status"] = "OPT" if state["span"] == state["proven_lower_bound"] else "FEASIBLE"
+        if state != self.state:
+            self.state = state
+            self.publish(dict(state, labels=dict(state["labels"])))
+
+    def callback(self, x):
+        from gurobipy import GRB
+        keys, variables = list(x), list(x.values())
+        def receive(model, where):
+            if self.error is not None:
+                return
+            try:
+                if where == GRB.Callback.MIP:
+                    self.update(model.cbGet(GRB.Callback.MIP_OBJBND))
+                elif where == GRB.Callback.MIPSOL:
+                    values = dict(zip(keys, model.cbGetSolution(variables)))
+                    self.update(model.cbGet(GRB.Callback.MIPSOL_OBJBND),
+                                labeling_from_values(self.spec, values))
+            except Exception as error:
+                # Gurobi otherwise logs and swallows Python callback exceptions.
+                self.error = error
+                model.terminate()
+        return receive
+
+
+def _run_gurobi(model, spec, x, progress=None):
     from gurobipy import GRB
 
     start = time.perf_counter()
-    model.optimize()
+    if progress is None:
+        model.optimize()
+    else:
+        model.optimize(progress.callback(x))
+        if progress.error is not None:
+            raise RuntimeError("Gurobi progress callback failed") from progress.error
     runtime = time.perf_counter() - start
     labels = {}
     span_value = None
@@ -135,6 +214,8 @@ def _run_gurobi(model, spec, x):
         status = "TIMEOUT"
     else:
         status = "INFEASIBLE" if model.Status == GRB.INFEASIBLE else "ERROR"
+    if progress is not None and status in {"OPT", "FEASIBLE", "TIMEOUT"}:
+        progress.update(model.ObjBound, labels if model.SolCount else None, optimal=status == "OPT")
     return span_value, spec.variable_count, model.NumConstrs, runtime, status, labels
 
 

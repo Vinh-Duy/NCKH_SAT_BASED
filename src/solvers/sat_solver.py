@@ -1,6 +1,7 @@
 """Exact L(h,k) search, with a process deadline for both SAT backends."""
 
 from dataclasses import dataclass, field
+from copy import deepcopy
 import math
 import multiprocessing as mp
 import time
@@ -173,7 +174,8 @@ def _search_worker(connection, args):
 
 
 def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_sec=60,
-                symmetry_kind=None, enable_symmetry_breaking=True, h=2, k=1) -> SatResult:
+                symmetry_kind=None, enable_symmetry_breaking=True, h=2, k=1,
+                progress_callback=None) -> SatResult:
     """Solve with a validated incumbent and an explicit optimality lower bound.
 
     Timing includes preprocessing, worker startup, CNF construction, search,
@@ -181,6 +183,9 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
     interruptible; the remaining deadline is enforced on the solver worker.
     Use timeout_sec=None for in-process, unlimited solving. Finite-time calls
     use multiprocessing spawn and must be made under a __main__ guard in scripts.
+    An optional callback receives independent SatResult snapshots after completed
+    span decisions, with original vertex names. It does not observe a SAT call
+    that is still running. Callback time is part of the caller's wall budget.
     """
     start = time.perf_counter()
     solver_name, strategy = solver_name.lower(), strategy.lower()
@@ -189,6 +194,12 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
     if timeout_sec is not None and (not math.isfinite(timeout_sec) or timeout_sec < 0):
         raise ValueError("timeout_sec must be finite and non-negative, or None")
     original_nodes = list(graph.nodes())
+    def publish(result):
+        if progress_callback is not None:
+            snapshot = deepcopy(result)
+            snapshot.labels = {original_nodes[v]: value for v, value in result.labels.items()}
+            snapshot.runtime = time.perf_counter() - start
+            progress_callback(snapshot)
     # Keep external node names in the returned labeling, including isolated nodes.
     normalized = nx.relabel_nodes(graph, {v: i for i, v in enumerate(original_nodes)}, copy=True)
     edges, distance_two = graph_constraints(normalized)
@@ -203,7 +214,7 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
                           enable_symmetry_breaking and min(h, k) > 0)
     args = (len(graph), edges, distance_two, solver_name, strategy, plan, best)
     if low < upper and timeout_sec is None:
-        best = _search(*args, publish=lambda result: None)
+        best = _search(*args, publish=publish)
     elif low < upper and time.perf_counter() - start < timeout_sec:
         context = mp.get_context("spawn")
         receiver, sender = context.Pipe(duplex=False)
@@ -223,6 +234,8 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
                 if event == "error":
                     raise RuntimeError(payload)
                 best = payload
+                if event == "progress":
+                    publish(best)
                 if event == "done":
                     break
         finally:
