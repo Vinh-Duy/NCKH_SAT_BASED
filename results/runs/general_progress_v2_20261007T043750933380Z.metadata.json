@@ -1,0 +1,94 @@
+{
+  "config": {
+    "suite": "general-pilot-v1",
+    "families": [
+      "tree",
+      "PxP",
+      "ER",
+      "BA"
+    ],
+    "min_vertices": 20,
+    "max_vertices": 60,
+    "pairs": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "methods": [
+      "cadical",
+      "gurobi"
+    ],
+    "repeats": 3,
+    "seed": null,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "tree_sizes": null,
+    "timeout": 30.0,
+    "max_instances": null,
+    "allow_unavailable": false,
+    "protocol": "isolated-progress-v2",
+    "symmetry": false,
+    "ilp_threads": 1,
+    "preflight": {
+      "cadical": "OPT",
+      "gurobi": "OPT"
+    }
+  },
+  "source_sha256": "287db6201f677942a1e6fb23474657fd25e09e0b43b8a5395555de77c21df6ba",
+  "schema": [
+    "Graph",
+    "Instance",
+    "Family",
+    "h",
+    "k",
+    "Repeat",
+    "Position",
+    "Method",
+    "V",
+    "E",
+    "Delta",
+    "Diameter",
+    "Limit",
+    "Status",
+    "Termination",
+    "Span",
+    "LB",
+    "Wall_Time",
+    "Peak_RSS_MB",
+    "Memory_Scope",
+    "Variables",
+    "Constraints",
+    "Model_Span",
+    "Count_Scope",
+    "Decisions",
+    "Conflicts",
+    "Stats_Complete",
+    "Error",
+    "Incumbent_Source",
+    "LB_Source",
+    "Progress_Updates",
+    "Last_Progress_Seconds"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-10-07T04:37:53.435236+00:00"
+}
