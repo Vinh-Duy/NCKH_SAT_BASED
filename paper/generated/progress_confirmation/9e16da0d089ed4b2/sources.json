@@ -1,0 +1,37 @@
+{
+  "identity": {
+    "report_sources_sha256": "7fb19b0f83dc9cc8b01dbf2e16d8037dc2b1742a96636a7eb87bfb77f7b697d8",
+    "report": "results/analysis/progress_confirmation/e8aaee5841468f67",
+    "exporter_sha256": "30aa2ac6dac3a57f70893f8f07c2004b8cd036473f478d3a590c90cadbfd50d3"
+  },
+  "counts": {
+    "ProgressObservations": 702,
+    "ProgressInstances": 117,
+    "ProgressJointStable": 74,
+    "ProgressOpen": 21,
+    "ProgressOpenPairs": 63,
+    "ProgressOpenSATUB": 39,
+    "ProgressOpenILPUB": 18,
+    "ProgressOpenEqualUB": 6,
+    "ProgressOpenILPLB": 13,
+    "ProgressOpenEqualLB": 50,
+    "ProgressMaxUB": 21,
+    "ProgressMaxLB": 24,
+    "ProgressSATOpt": 232,
+    "ProgressSATStable": 77,
+    "ProgressSATFeasible": 119,
+    "ProgressSATImprovedUB": 60,
+    "ProgressILPOpt": 281,
+    "ProgressILPStable": 91,
+    "ProgressILPFeasible": 70,
+    "ProgressILPImprovedUB": 68,
+    "ProgressReturnedFeasible": 1,
+    "ProgressClosed": 96
+  },
+  "outputs_sha256": {
+    "bounds.tex": "3b500ae5c040f9c86cf55085e6586f446aefd48220aa58a7f656182601586e4d",
+    "README.md": "3f0f88aa9bb09be51faf31e885c372e2cc10c7534228d149d9ae65961d56b1d8",
+    "coverage.tex": "389a66f7411290ec6da4690727186cc3c78761d996ff11ba573a284d312271a2",
+    "counts.tex": "da718a07da76acfba84aa3b27d60c9b26f3b45ed81f943f3a2612f731208a65c"
+  }
+}
