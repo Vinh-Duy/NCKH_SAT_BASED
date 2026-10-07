@@ -1,0 +1,66 @@
+\subsection{Confirmation with intermediate progress capture}
+\label{sec:progress-confirmation}
+A separate confirmation uses the revised \texttt{isolated-progress-v2}
+protocol on the same 39 graphs, three parameter pairs, three repetitions,
+and 30-second external budget. The complete file
+\path{general_progress_v2_20261007T062406751526Z.csv} contains
+\ProgressObservations{} observations. An earlier interrupted attempt is
+excluded rather than merged into the completed run.
+SAT transmits completed span decisions; Gurobi transmits validated
+incumbent updates and conservative integer dual bounds. The parent checks
+received intervals and retains the last accepted update at interruption.
+Progress timestamps measure parent receipt, not native solver discovery.
+Callback, transport, and intermediate validation overhead are included in
+wall time; v1 and v2 timing observations are not pooled.
+
+All saved labelings and progress ledgers pass the audit, with no
+contradictory OPT values or intervals across backends and repetitions.
+As before, witness validation does not independently verify UNSAT or dual
+certificates. The data support the coverage results in
+Table~\ref{tab:progress-coverage}. Both backends satisfy the all-three-OPT
+criterion on \ProgressJointStable{} instances.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Separate v2 confirmation: optimality coverage and retained feasible
+solutions. $^*$FEASIBLE observations whose upper bound improves on the
+initial greedy span. Improvements do not establish optimality.}
+\label{tab:progress-coverage}
+\input{\ProgressReportDir/coverage.tex}
+\end{table}
+
+Pooling only the completed v2 run's solver bounds across repetitions and
+backends closes \ProgressClosed{} instance intervals and leaves
+\ProgressOpen{} open, all in the ER family. This post-hoc combination is
+not attributed to a single timed solver run. The open instances give
+\ProgressOpenPairs{} paired observations, not independent graph samples.
+Table~\ref{tab:progress-bounds} distinguishes larger lower bounds from
+smaller feasible upper bounds.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Paired retained bounds in v2. Each pair matches graph, $(h,k)$,
+and repetition; ``open'' is defined by pooling this run's intervals.
+Counts for all instances and the open subset must not be added together.}
+\label{tab:progress-bounds}
+\input{\ProgressReportDir/bounds.tex}
+\end{table}
+
+On the open subset, SAT has a better upper bound in
+\ProgressOpenSATUB{} pairs, ILP in \ProgressOpenILPUB{}, and
+\ProgressOpenEqualUB{} are tied. ILP has a stronger lower bound in
+\ProgressOpenILPLB{} pairs; the remaining \ProgressOpenEqualLB{} are tied.
+Maximum absolute differences reach \ProgressMaxUB{} label units for upper
+bounds and \ProgressMaxLB{} for lower bounds. These discrepancies do not
+support a claim that all differences are small or that the methods are
+interchangeable. Gurobi proves more optima on this cohort, whereas SAT
+provides better feasible spans on part of the unresolved subset.
+
+There is \ProgressReturnedFeasible{} Gurobi observation recorded as
+\FEAS{} after a normal worker return, rather than an external timeout.
+Its native termination code was not saved, so its stopping reason cannot
+be reconstructed. It is retained as \FEAS{} and is not counted as OPT.
+The full observation tables preserve this distinction. These results
+motivate reporting coverage and primal/dual bound quality together,
+without inferring a general runtime or quality ranking over all graphs.
+\FloatBarrier

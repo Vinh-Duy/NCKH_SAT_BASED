@@ -20,10 +20,11 @@
 \input{paper/generated/general_confirm}
 \input{paper/generated/confirmation_gaps}
 \input{paper/generated/unresolved_bounds}
+\input{paper/generated/progress_confirmation}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs\\[0.5em]
 {\large Research manuscript: methods and experiments}}
 \author{}
-\date{September 29, 2026}
+\date{October 7, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -45,9 +46,10 @@ symmetry experiments. These results do not establish a performance advantage
 on general graphs. A pilot study comprising 117 instances across several
 families yields 79 instances solved to optimality by SAT and 97 by ILP
 within 30 seconds per run; all 12 instances with exact reference formulas
-agree with both backends. A confirmation experiment with three repetitions
-on the same cohort yields \ConfirmSATStable/117 instances solved to optimality
-in all three runs by SAT and \ConfirmILPStable/117 by ILP. The current solver
+agree with both backends. A separate confirmation with intermediate progress capture and three repetitions
+on the same cohort yields \ProgressSATStable/117 instances solved to optimality
+in all three runs by SAT and \ProgressILPStable/117 by ILP. On the unresolved
+subset, feasible upper bounds and solver lower bounds favor different backends. The current solver
 does not use incremental SAT or export independently checkable UNSAT certificates.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
@@ -60,6 +62,7 @@ span minimization, ILP baseline, reproducible experiments.
 \input{paper/sections/experiments}
 \input{paper/sections/confirmation}
 \input{paper/sections/optimality_gaps}
+\input{paper/sections/progress_confirmation}
 \input{paper/sections/discussion}
 \input{paper/sections/conclusion}
 \bibliographystyle{plain}

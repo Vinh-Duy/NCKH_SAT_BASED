@@ -18,13 +18,17 @@ must be described as repeated runs of the same model. These results are
 not an evaluation of incremental SAT: learned clauses are not reused across spans.
 
 \subsection{Limitations}
-The confirmation runner retains a shared initial snapshot when an external
+The archived confirmation runner retains a shared initial snapshot when an external
 timeout precedes the final worker response. The provenance audit in
-Section~\ref{sec:optimality-gaps} shows that all FEASIBLE confirmation
+Section~\ref{sec:optimality-gaps} shows that all FEASIBLE v1 confirmation
 observations have this origin. These are valid conservative intervals, but
 their equality cannot establish equal native solver progress. A revised
-capture protocol is necessary before making bound-quality comparisons at
-timeout; the old snapshots cannot supply missing intermediate information.
+capture protocol now transmits completed SAT span decisions and validated
+Gurobi incumbent/dual-bound updates to the parent process. Interruption tests
+exercise retention of the last accepted snapshot. The completed v2 experiment in Section~\ref{sec:progress-confirmation}
+retains these updates and distinguishes feasible-solution quality from
+optimality coverage. Its results do not establish equivalent effectiveness;
+the old v1 snapshots remain separate and cannot recover missing progress.
 
 A valid labeling establishes an upper bound. Optimality additionally requires
 a matching lower bound, a proof excluding smaller spans, or an exact formula
@@ -64,10 +68,11 @@ checking the original publications and the precise assumptions of their results.
 The repeated confirmation experiment and the post-hoc interval analysis
 have been completed. Section~\ref{sec:optimality-gaps} identifies the
 unresolved instances and distinguishes incumbent quality from proof of
-optimality within a run. Preserving intermediate progress is the immediate
-measurement priority, while retaining the current graph families.
-Any resulting rerun must use a new protocol version and remain separate
-from the archived confirmation. Further experiments should separate improvements
+optimality within a run. The revised capture experiment is also complete.
+The immediate priority is to consolidate its coverage and bound-quality
+findings, including the unknown native stopping reason of one returned
+FEASIBLE observation. The existing graph families are retained. Any further
+experiment must remain separately identified rather than rewriting these data. Further experiments should separate improvements
 to feasible solutions from improvements to lower bounds or proof search.
 Results favoring Gurobi must be retained; the dataset should not be reselected
 to increase the fraction of SAT wins. The SAT--ILP comparison should be

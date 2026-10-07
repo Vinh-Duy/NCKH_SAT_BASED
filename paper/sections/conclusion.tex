@@ -11,7 +11,7 @@ with both backends, and all 234 pilot witnesses are valid. These results
 support an assessment of exact methods and their computational limits,
 not a claim that SAT dominates across graph families.
 
-The three-repetition confirmation on the same 117 instances records
+The archived v1 three-repetition confirmation on the same 117 instances records
 \ConfirmSATOpt/351 OPT observations for SAT and \ConfirmILPOpt/351 for ILP.
 Under the all-three-OPT criterion, the backends solve \ConfirmSATStable{}
 and \ConfirmILPStable{} instances, respectively, with \ConfirmJointStable{}
@@ -19,7 +19,14 @@ in their intersection. Runtime statistics on this intersection must be
 read alongside coverage and do not represent instances remaining FEASIBLE.
 Equal stored intervals on the unresolved subset arise from shared initial
 fallbacks after external timeout, so they do not establish comparable native
-solver bound quality. Progress capture must be improved before that comparison.
+solver bound quality. The separate v2 confirmation records
+\ProgressSATOpt/351 and \ProgressILPOpt/351 OPT observations and
+\ProgressSATStable/117 and \ProgressILPStable/117 all-three-OPT instances
+for SAT and ILP, respectively. On its \ProgressOpen{} open instances, SAT
+has better upper bounds in \ProgressOpenSATUB{} of \ProgressOpenPairs{}
+repeat pairs, while ILP has stronger lower bounds in
+\ProgressOpenILPLB{} pairs. This supports a comparison of complementary
+solution and proof behavior within the tested cohort, rather than equivalence.
 Broader formula/bound comparisons, incremental SAT, UNSAT certificates,
 and specialized algorithm baselines require separate implementation and
 evaluation. Edge labeling and $L(h,1,1)$ are distinguished in the related

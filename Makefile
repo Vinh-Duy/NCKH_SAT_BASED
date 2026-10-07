@@ -1,15 +1,19 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data english-tables gap-data gap-analysis bounds-data bounds-comparison
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
 confirmation-data:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_confirmation_report.py
 
-confirmation: confirmation-data gap-data bounds-data
+confirmation: confirmation-data gap-data bounds-verify progress-data
 	$(MAKE) pdf
+
+# Separate completed v2 experiment; does not invoke either solver.
+progress-data:
+	$(PYTHON) scripts/export_progress_paper.py
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
 gap-data:
@@ -22,7 +26,12 @@ gap-analysis: gap-data
 bounds-data:
 	$(PYTHON) scripts/compare_unresolved_bounds.py
 
-bounds-comparison: bounds-data
+# Frozen v1 outputs remain usable after the runner moves to v2. Reconstructing
+# bounds-data still requires the matching historical source checkout.
+bounds-verify:
+	$(PYTHON) scripts/verify_archived_bounds.py
+
+bounds-comparison: bounds-verify
 	$(MAKE) pdf
 
 test:
@@ -35,7 +44,7 @@ tree-tables:
 paper-figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_manuscript_figures.py
 
-manuscript: tree-tables paper-figures confirmation-data gap-data bounds-data
+manuscript: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data
 	$(MAKE) pdf
 
 tables:
