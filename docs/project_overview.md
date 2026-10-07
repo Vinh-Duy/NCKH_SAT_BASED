@@ -34,7 +34,7 @@ NetworkX graph → edges and distance-2 pairs → lower bound + greedy labeling 
 | UNSAT certificates | DRAT/LRAT export and verification are not implemented |
 | Novelty / SAT superiority | Not established by suggested prompts |
 
-`benchmarks/benchmark_sat_vs_ilp.py` disables symmetry and uses separate processes, external deadlines, preflight checks, rotated backend order, and stored graphs. Runtime includes startup, model construction, solving, and cleanup. Every run has a source manifest; old metadata must not be changed to resume under new code.
+`benchmarks/benchmark_sat_vs_ilp.py` disables symmetry and uses separate processes, external deadlines, preflight checks, rotated backend order, and stored graphs. Runtime includes startup, model construction, solving, and cleanup. Every run has a source manifest; old metadata must not be changed to resume under new code. The current [v2 protocol](methods/progress_capture.md) also preserves intermediate validated SAT/Gurobi progress. The full v2 confirmation is complete (702 observations): SAT/Gurobi are OPT in all three repetitions on 77/91 instances. Its bound-quality analysis remains separate from v1; see [the reviewed summary](../paper/generated/progress_confirmation/4927a34577a0c9d4/README.md).
 
 ## Available evidence
 

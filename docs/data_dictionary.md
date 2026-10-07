@@ -9,6 +9,8 @@ combined lower/upper bounds, interval widths, bound-source IDs, and retrospectiv
 witness quality. These columns never replace the original solver statuses or
 single-run coverage.
 
+The [v2 progress dictionary](methods/progress_capture.md#additional-fields) defines `Incumbent_Source`, `LB_Source`, `Progress_Updates`, `Last_Progress_Seconds`, and the witness ledger. These fields must not be inferred for historical rows.
+
 ## 1. Concepts to understand before reading CSVs
 
 | Term/symbol | Meaning |

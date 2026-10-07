@@ -1,6 +1,6 @@
 # SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-**The confirmation benchmark is complete:** run `make confirmation` to validate 702 witnesses, generate tables/figures for three repetitions, and build the PDF.
+**The v2 confirmation is complete and audited:** the complete run has 702 observations; the interrupted 464-observation attempt is kept separate. Run `make confirmation` to verify the archived and v2 reports and build the PDF; no solver runs are needed.
 
 This project studies SAT-based minimum-span labeling of simple undirected graphs. Adjacent vertices require label difference at least h; vertices at distance **exactly 2** require difference at least k. The primary research domain is h≥k≥1, with default (2,1). Labels start at 0; span s permits s+1 label values. Disconnected graphs are supported.
 
@@ -14,7 +14,7 @@ September 28 update: [audit of five current runs and common-span model counts](r
 
 ## Current status
 
-- The [timeout-capture audit](results/analysis/unresolved_bounds/README.md) finds equal saved bounds on all 63 repeat pairs from the 21 open instances, but both sides retained the shared initial snapshot. All 186 FEASIBLE confirmation observations have this origin. The data do not establish equivalent native solver bound quality; intermediate progress capture is required before that comparison.
+- The [timeout-capture audit](results/analysis/unresolved_bounds/README.md) finds equal saved bounds on all 63 repeat pairs from the 21 open instances, but both sides retained the shared initial snapshot. All 186 FEASIBLE confirmation observations have this origin. The data do not establish equivalent native solver bound quality. The separate [v2 progress confirmation](paper/generated/progress_confirmation/4927a34577a0c9d4/README.md) is complete: 77/117 SAT and 91/117 Gurobi instances are OPT in all three runs. Bound quality on its 21 open instances favors different backends; equivalence is not established.
 
 - The [post-hoc interval analysis](docs/methods/optimality_intervals.md) combines the confirmation's stored evidence: 96/117 instance intervals close and 21 remain open. Twelve SAT FEASIBLE observations contain retrospectively optimal witnesses; their recorded statuses and timed coverage remain unchanged. Reproduce the analysis and PDF with `make gap-analysis`.
 
@@ -45,7 +45,7 @@ make test
 make manuscript
 ```
 
-This revalidates the tree screen, generates tables and figures, processes the confirmation, and compiles `main.tex` to `build/main.pdf`. `make pdf` compiles existing artifacts only. `main.tex` remains at the repository root; the old PDF is preserved under `archive/reports/legacy_root/`.
+This revalidates the tree screen, generates tables and figures, processes the archived confirmation, verifies the frozen v1 bound-report hashes, and compiles `main.tex` to `build/main.pdf`. `make pdf` compiles existing artifacts only. `main.tex` remains at the repository root; the old PDF is preserved under `archive/reports/legacy_root/`.
 
 `make report`/`make tables` reconstruct historical main_r1 CNFs. Following source changes, hashes differ from the manifests and the exporter intentionally refuses reconstruction. Use a separate checkout of the matching historical source to recount; do not alter old hashes. The current manuscript uses saved main_r1 tables and validated tree/confirmation tables. English presentation copies preserve historical numerical contents and provenance records.
 

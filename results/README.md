@@ -26,3 +26,11 @@ Current run paths:
 Directory migration did not modify CSVs or sidecars. Historical manifests may retain run-time paths to preserve provenance. New textual outputs of `scripts/analyze_conjectures.py` go to `results/analysis/`. Figures included in the manuscript are under `paper/generated/`, separate from exploratory figures here.
 
 The multi-family pilot contains 234 audited rows/witnesses; theoretical comparisons are in [analysis/general_pilot_v1](analysis/general_pilot_v1/README.md). The audit verifies labels without reclassifying FEASIBLE as optimal. Do not overwrite completed experiments. Older versioned report snapshots may preserve their original language; the current manuscript uses English presentation outputs.
+
+## Progress-capture confirmation (v2)
+
+New runs use `runs/general_progress_v2_<UTC>.csv` and sidecars, with audited
+outputs under `analysis/progress_confirmation/<version>/`. The fixed cohort is
+unchanged, but progress capture and timing overhead differ from v1. Do not pool
+the versions. See the [protocol and data dictionary](../docs/methods/progress_capture.md).
+The complete `general_progress_v2_20261007T062406751526Z.csv` has 702 observations; the earlier `043750933380Z` attempt has 464 and is excluded. [Reviewed results](../paper/generated/progress_confirmation/4927a34577a0c9d4/README.md).

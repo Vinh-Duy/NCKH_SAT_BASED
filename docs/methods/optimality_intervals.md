@@ -73,8 +73,8 @@ greedy labelings, not demonstrated SAT-search improvements. Interval validity,
 recorded statuses, and OPT counts remain unchanged. Native solvers may have
 made progress that was never sent before interruption; the saved data cannot
 establish their relative bound quality at timeout. Future comparisons require
-intermediate progress capture and a separately versioned run, on the existing
-cohort. The archived snapshots must not be modified to imply recovered progress.
+a separately versioned run on the existing cohort using the now-implemented
+[progress-capture protocol](progress_capture.md). The completed v2 analysis is reported [separately](../../paper/generated/progress_confirmation/4927a34577a0c9d4/README.md). The archived snapshots must not be modified to imply recovered progress.
 
 The data support reporting separate solution-quality and proof-of-optimality
 outcomes. They do not establish the internal cause of a timeout, a new
