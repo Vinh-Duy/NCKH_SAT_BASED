@@ -1,0 +1,31 @@
+{
+  "identity": {
+    "protocol": "isolated-progress-v2",
+    "inputs": {
+      "results/runs/general_progress_v2_20261007T062406751526Z.csv": "b4099cfd60d3a08914e83aadb983c94e8a133d9c188c6be38e7da3977de26a96",
+      "results/runs/general_progress_v2_20261007T062406751526Z.metadata.json": "a2ed8bfd39ecc7fbe5d3b48c11641a54f062cabed17d3422e49ae251fef3c45f",
+      "results/runs/general_progress_v2_20261007T062406751526Z.witnesses.jsonl": "0a81cbf5ed596e2cb8b22eae16c068f0ef30083f4146ad1e0c48e15d3a110bca"
+    },
+    "analysis_sources": {
+      "scripts/summarize_progress_run.py": "9c7e7d06bf14a9b779a3a27f2bef2b1481c0e3e27d1ff4a3793a615ce18eb56c",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/audit_general_pilot.py": "0289ad01f372d3753639acf93e9a0011f7ef1c84126a50683af00167a5d93bf1",
+      "scripts/compare_unresolved_bounds.py": "0a50719f67165ce585965f0d0aa6c814ea136a6fda46a3fc273af8744d99e690",
+      "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+    }
+  },
+  "counts": {
+    "observations": 702,
+    "instances": 117
+  },
+  "outputs_sha256": {
+    "summary.csv": "381e9707e15f610ef4123365399297ea38827f3fe55f4fe3542aa9c8fc17dd93",
+    "coverage.csv": "f661be957b0dd35e46e8d2b508161e2d8b4908b476f7610739e029219878c649",
+    "README.md": "64d5e45d128e9cf32ff11176c7631f8c0242feb326bbe71ece9545258ef51df9",
+    "instances.csv": "6566d235eb929d762823b69e25e21f31eb6c9986ebba86b4a1f0c1836c5ad21c",
+    "observations.csv": "b850fa0d42ea1016548c7fecfa8b418c461181a86fbe26e9a3678a68d8fc59f3",
+    "paired_bounds.csv": "13a0df313bba48f872eefa49c7892d8ba224fb91051151b98e665e34a6573e63"
+  }
+}
