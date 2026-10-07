@@ -31,7 +31,9 @@ FIELDS = ["Graph", "Instance", "Family", "h", "k", "Repeat", "Position", "Method
           "V", "E", "Delta", "Diameter", "Limit", "Status", "Termination", "Span", "LB", "Wall_Time",
           "Peak_RSS_MB", "Memory_Scope", "Variables", "Constraints", "Model_Span",
           "Count_Scope", "Decisions", "Conflicts", "Stats_Complete", "Error"]
-METHODS = ("cadical", "gurobi", "cplex")
+FIELDS += ["Incumbent_Source", "LB_Source", "Progress_Updates", "Last_Progress_Seconds"]
+METHODS = ("cadical", "gurobi")
+PROTOCOL = "isolated-progress-v2"
 
 
 def instances(families, minimum, maximum, seed, tree_sizes=None, seeds=None):
@@ -71,23 +73,31 @@ def _worker(connection, graph, method, h, k, limit):
         upper, labels = greedy_labeling(graph, h, k)
         low = lower_bound(graph, h, k)
         initial = dict(status="FEASIBLE", span=upper, labels=labels,
-                       proven_lower_bound=low, h=h, k=k)
+                       proven_lower_bound=low, source="greedy", lower_bound_source="elementary", h=h, k=k)
         connection.send(("incumbent", initial))
+        latest = dict(initial)
+        def publish(payload):
+            latest.update(payload)
+            connection.send(("progress", dict(latest)))
+        def sat_payload(result):
+            payload = asdict(result)
+            payload["lower_bound_source"] = ("sat_unsat" if result.proven_lower_bound > low else "elementary")
+            return payload
         if method == "cadical":
             from src.solvers.sat_solver import solve_graph
-            result = asdict(solve_graph(graph, solver_name="cadical", timeout_sec=None,
-                                      enable_symmetry_breaking=False, h=h, k=k))
+            result = sat_payload(solve_graph(graph, solver_name="cadical", timeout_sec=None,
+                enable_symmetry_breaking=False, h=h, k=k,
+                progress_callback=lambda snapshot: publish(sat_payload(snapshot))))
         else:
             from src.solvers.ilp_solver import solve_graph
             span, variables, constraints, runtime, status, labeling = solve_graph(
-                graph, solver_name=method, formulation="assignment", timeout_sec=limit, h=h, k=k)
-            result = dict(status=status, span=span, labels=labeling, variable_count=variables,
-                          clause_count=constraints, runtime=runtime,
-                          proven_lower_bound=span if status == "OPT" else low,
-                          model_span=upper, h=h, k=k)
-            # A missing backend is never presented as a solver-produced incumbent.
-            if status == "TIMEOUT":
-                result.update(status="FEASIBLE", span=upper, labels=labels)
+                graph, solver_name=method, formulation="assignment", timeout_sec=limit, h=h, k=k,
+                progress_callback=publish)
+            result = dict(latest, variable_count=variables, clause_count=constraints, runtime=runtime,
+                          model_span=upper)
+            if status not in {"OPT", "FEASIBLE", "TIMEOUT"}:
+                # Never hide backend errors behind a previously feasible witness.
+                result.update(status=status, span=None, labels={})
         result["peak_rss_mb"] = _peak_rss()
         connection.send(("done", result))
     except Exception as error:
@@ -103,12 +113,15 @@ def _worker(connection, graph, method, h, k, limit):
 
 
 def run_isolated(graph, method, h, k, limit, *, target=_worker):
+    if not math.isfinite(limit) or limit <= 0:
+        raise ValueError("limit must be finite and positive")
     context = mp.get_context("spawn")
     receiver, sender = context.Pipe(duplex=False)
     process = context.Process(target=target, args=(sender, graph, method, h, k, limit))
     result = dict(status="TIMEOUT", span=None, labels={}, h=h, k=k)
     started = time.perf_counter()
     termination = "WALL_TIMEOUT"
+    trace = []
     try:
         process.start()
         sender.close()
@@ -122,7 +135,18 @@ def run_isolated(graph, method, h, k, limit, *, target=_worker):
                 result.update(status="ERROR", error="WorkerExited")
                 termination = "ERROR"
                 break
+            received = time.perf_counter()-started
+            # A message received after the deadline cannot support this observation.
+            if received > limit:
+                break
+            if event not in {"incumbent", "progress", "done"}:
+                raise RuntimeError("unknown worker event")
+            _validate_progress(graph, h, k, result, payload)
             result = payload
+            trace.append(dict(event=event, received_seconds=received,
+                              span=result.get("span"), lb=result.get("proven_lower_bound"),
+                              status=result["status"], source=result.get("source"),
+                              lower_bound_source=result.get("lower_bound_source")))
             if event == "done":
                 termination = "RETURNED"
                 break
@@ -136,13 +160,39 @@ def run_isolated(graph, method, h, k, limit, *, target=_worker):
                 process.join()
         receiver.close()
         sender.close()
-    result.update(wall_time=time.perf_counter()-started, termination=termination)
+    updates = [entry for entry in trace if entry["event"] == "progress"]
+    result.update(wall_time=time.perf_counter()-started, termination=termination,
+                  progress_trace=trace, progress_updates=len(updates),
+                  last_progress_seconds=updates[-1]["received_seconds"] if updates else None)
     if result.get("span") is not None:
         valid, errors = validate_labeling(*graph_constraints(graph), result["labels"],
                                          result["span"], h, k, vertices=graph)
         if not valid:
             raise RuntimeError(f"invalid {method} witness: {errors}")
     return result
+
+
+def _validate_progress(graph, h, k, previous, payload):
+    """Check every received witness and interval before retaining it at timeout.
+
+    Lower bounds remain solver claims; this is not independent UNSAT checking.
+    Errors are kept as errors even if an earlier feasible labeling exists.
+    """
+    if payload.get("h") != h or payload.get("k") != k:
+        raise RuntimeError("progress parameter mismatch")
+    if payload.get("status") in {"ERROR", "UNAVAILABLE", "INFEASIBLE", "INVALID"}:
+        return
+    span, low = payload.get("span"), payload.get("proven_lower_bound")
+    if any(type(value) is not int for value in (span, low)) or not 0 <= low <= span:
+        raise RuntimeError("invalid progress interval")
+    if payload["status"] not in {"FEASIBLE", "OPT"} or (payload["status"] == "OPT" and low != span):
+        raise RuntimeError("unsupported optimality claim")
+    valid, errors = validate_labeling(*graph_constraints(graph), payload["labels"],
+                                     span, h, k, vertices=graph)
+    if not valid:
+        raise RuntimeError(f"invalid progress witness: {errors}")
+    if previous.get("span") is not None and (span > previous["span"] or low < previous["proven_lower_bound"]):
+        raise RuntimeError("progress interval regressed")
 
 
 def main():
@@ -214,7 +264,7 @@ def main():
     if failed and not args.allow_unavailable:
         parser.error(f"backend preflight failed: {failed}; fix runtime/license before a comparison, or use --allow-unavailable for a pilot")
     config = {key: value for key, value in vars(args).items() if key not in {"output", "resume", "plan_only"}}
-    config.update(protocol="isolated-wall-v1", symmetry=False, ilp_threads=1,
+    config.update(protocol=PROTOCOL, symmetry=False, ilp_threads=1,
                   preflight={method: result["status"] for method, result in probes.items()})
     writer = BenchmarkWriter(args.output or default_output("sat_vs_ilp"), fields=FIELDS,
                              config=config, resume=args.resume)
@@ -256,7 +306,10 @@ def main():
                         Model_Span=result.get("model_span"),
                         Count_Scope="last_sat_witness" if method == "cadical" else "assignment_at_greedy_UB",
                         Decisions=stats.get("decisions"), Conflicts=stats.get("conflicts"),
-                        Stats_Complete=method == "cadical" and result["status"] == "OPT",
+                        Stats_Complete=method == "cadical" and result["status"] == "OPT" and result["termination"] == "RETURNED",
+                        Incumbent_Source=result.get("source"), LB_Source=result.get("lower_bound_source"),
+                        Progress_Updates=result.get("progress_updates"),
+                        Last_Progress_Seconds=result.get("last_progress_seconds"),
                         Error=result.get("error", ""))
                     writer.append(row)
                     writer.log(f"{identity}: {row['Status']}, span={row['Span']}")

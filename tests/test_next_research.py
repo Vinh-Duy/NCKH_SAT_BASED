@@ -19,7 +19,7 @@ from src.solvers.sat_solver import solve_graph
 
 def stalled_worker(connection, graph, method, h, k, limit):
     connection.send(("incumbent", dict(status="FEASIBLE", span=3,
-                                     labels={0:0, 1:3}, h=h, k=k)))
+                                     labels={0:0, 1:3}, proven_lower_bound=3, h=h, k=k)))
     time.sleep(5)
 
 
