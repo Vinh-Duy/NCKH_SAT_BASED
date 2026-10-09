@@ -1,0 +1,22 @@
+Instance,Group,h,k,V,Original_LB,Witness_UB,Clique_Size,Clique_LB,Augmented_LB,Original_Gap,Augmented_Gap,Clique_Optimal,Newly_Closed,Certificate_ID,Witness_Observation
+ER_40_p0.15_seed0,ER p=0.15,2,1,40,13,14,13,12,13,1,1,False,False,ER_40_p0.15_seed0__h2_k1,ER_40_p0.15_seed0__h2_k1__r0__cadical
+ER_40_p0.15_seed0,ER p=0.15,3,2,40,25,29,13,24,25,4,4,False,False,ER_40_p0.15_seed0__h3_k2,ER_40_p0.15_seed0__h3_k2__r0__cadical
+ER_40_p0.15_seed1,ER p=0.15,2,1,40,12,13,13,12,12,1,1,False,False,ER_40_p0.15_seed1__h2_k1,ER_40_p0.15_seed1__h2_k1__r0__cadical
+ER_40_p0.15_seed1,ER p=0.15,3,2,40,21,32,13,24,24,11,8,False,False,ER_40_p0.15_seed1__h3_k2,ER_40_p0.15_seed1__h3_k2__r0__cadical
+ER_40_p0.15_seed2,ER p=0.15,1,1,40,12,13,13,12,12,1,1,False,False,ER_40_p0.15_seed2__h1_k1,ER_40_p0.15_seed2__h1_k1__r0__cadical
+ER_40_p0.15_seed2,ER p=0.15,2,1,40,13,14,13,12,13,1,1,False,False,ER_40_p0.15_seed2__h2_k1,ER_40_p0.15_seed2__h2_k1__r0__cadical
+ER_40_p0.15_seed2,ER p=0.15,3,2,40,25,28,13,24,25,3,3,False,False,ER_40_p0.15_seed2__h3_k2,ER_40_p0.15_seed2__h3_k2__r0__cadical
+ER_40_p0.30_seed0,ER p=0.30,3,2,40,59,66,33,64,64,7,2,False,False,ER_40_p0.30_seed0__h3_k2,ER_40_p0.30_seed0__h3_k2__r0__gurobi
+ER_40_p0.30_seed1,ER p=0.30,3,2,40,53,64,33,64,64,11,0,True,True,ER_40_p0.30_seed1__h3_k2,ER_40_p0.30_seed1__h3_k2__r0__gurobi
+ER_60_p0.15_seed0,ER p=0.15,1,1,60,17,22,21,20,20,5,2,False,False,ER_60_p0.15_seed0__h1_k1,ER_60_p0.15_seed0__h1_k1__r0__cadical
+ER_60_p0.15_seed0,ER p=0.15,2,1,60,18,24,21,20,20,6,4,False,False,ER_60_p0.15_seed0__h2_k1,ER_60_p0.15_seed0__h2_k1__r0__cadical
+ER_60_p0.15_seed0,ER p=0.15,3,2,60,35,50,21,40,40,15,10,False,False,ER_60_p0.15_seed0__h3_k2,ER_60_p0.15_seed0__h3_k2__r0__cadical
+ER_60_p0.15_seed1,ER p=0.15,1,1,60,17,22,21,20,20,5,2,False,False,ER_60_p0.15_seed1__h1_k1,ER_60_p0.15_seed1__h1_k1__r0__cadical
+ER_60_p0.15_seed1,ER p=0.15,2,1,60,18,24,21,20,20,6,4,False,False,ER_60_p0.15_seed1__h2_k1,ER_60_p0.15_seed1__h2_k1__r0__cadical
+ER_60_p0.15_seed1,ER p=0.15,3,2,60,35,49,21,40,40,14,9,False,False,ER_60_p0.15_seed1__h3_k2,ER_60_p0.15_seed1__h3_k2__r0__cadical
+ER_60_p0.15_seed2,ER p=0.15,1,1,60,17,20,20,19,19,3,1,False,False,ER_60_p0.15_seed2__h1_k1,ER_60_p0.15_seed2__h1_k1__r0__gurobi
+ER_60_p0.15_seed2,ER p=0.15,2,1,60,15,21,20,19,19,6,2,False,False,ER_60_p0.15_seed2__h2_k1,ER_60_p0.15_seed2__h2_k1__r0__cadical
+ER_60_p0.15_seed2,ER p=0.15,3,2,60,29,46,20,38,38,17,8,False,False,ER_60_p0.15_seed2__h3_k2,ER_60_p0.15_seed2__h3_k2__r0__cadical
+ER_60_p0.30_seed0,ER p=0.30,3,2,60,49,114,56,110,110,65,4,False,False,ER_60_p0.30_seed0__h3_k2,ER_60_p0.30_seed0__h3_k2__r0__gurobi
+ER_60_p0.30_seed1,ER p=0.30,3,2,60,59,110,56,110,110,51,0,True,True,ER_60_p0.30_seed1__h3_k2,ER_60_p0.30_seed1__h3_k2__r0__gurobi
+ER_60_p0.30_seed2,ER p=0.30,3,2,60,49,118,57,112,112,69,6,False,False,ER_60_p0.30_seed2__h3_k2,ER_60_p0.30_seed2__h3_k2__r0__gurobi
