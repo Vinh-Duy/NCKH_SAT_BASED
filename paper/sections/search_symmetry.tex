@@ -140,6 +140,50 @@ use $u_i\mapsto u_{-i}$ and $v_i\mapsto v_{-i}$; step-$k$ edges become
 step-$-k$ edges, preserving the undirected edge set. The constructor uses
 $u_i=i$ and $v_i=n+i$, consistent with the stored label indices.
 
+\subsection{Post-hoc combinatorial certificates}
+\label{sec:clique-method}
+We also use an elementary packing bound to check stored solutions after
+the experiments. This bound is separate from the degree bound used during
+span search and is not claimed as a new general theorem.
+
+\begin{proposition}
+\label{prop:square-clique}
+Let $G$ be a simple undirected graph, $h,k$ nonnegative integers, and
+$Q\subseteq V(G)$ a set in which every two distinct vertices have distance
+at most two in $G$. Then
+\[
+ \lambda_{h,k}(G)\geq \min(h,k)\max\{0,|Q|-1\}.
+\]
+If a valid labeling attains this bound, its span is optimal.
+\end{proposition}
+\begin{proof}
+The claim is immediate for $|Q|\leq1$. Otherwise, sort the labels on $Q$
+as $a_1\leq\cdots\leq a_q$. Each pair of vertices in $Q$ is subject to
+separation $h$ or $k$, so $a_{i+1}-a_i\geq\min(h,k)$. Summing gives
+$a_q-a_1\geq(q-1)\min(h,k)$, and the labeling's full span is at least
+$a_q-a_1$. A feasible labeling attaining the lower bound supplies the
+matching upper bound, proving optimality.
+\end{proof}
+
+Such a set $Q$ is a clique in $G^2$, where vertices are adjacent exactly
+when their distance in $G$ is one or two. In the studied domain $h\geq k$,
+the bound is $k(|Q|-1)$ for nonempty $Q$. Paths establishing distance two
+may use vertices outside $Q$. No maximum-clique certificate is required:
+membership of any proposed $Q$ suffices for the lower bound.
+For the current small cohort, the postprocessor enumerates maximal cliques,
+selects a largest one, and breaks ties lexicographically. Enumeration can
+take exponential time; this is not a scalability claim or a change to
+the timed SAT/ILP pipeline.
+
+A separate verifier, using only the Python standard library, checks the
+embedded graph, the complete labeling, all edge and distance-two label
+constraints, clique membership, and both bounds. The exporter binds each
+certificate to an audited experimental graph and saved witness; source
+hashes and vertex indices are retained. This yields a direct combinatorial
+optimality certificate when the bounds meet, without relying on SAT UNSAT
+or ILP dual-bound claims. It does not certify optimality when the bounds
+remain unequal.
+
 \subsection{Time limits and solution validation}
 A SAT conflict limit is not a wall-clock time limit \cite{pysat}. The revised
 implementation runs span search in a child process, uses a monotonic clock,
