@@ -6,6 +6,13 @@ September 28, 2026: [audit of five current runs and common-span model counts](..
 
 ## Objective and scope
 
+The October 9 [square-clique analysis](methods/clique_certificates.md) adds
+independently checkable combinatorial certificates to the complete v2 results.
+It improves 15 lower bounds, proves two additional optima, and leaves 19 of
+117 instances open after combining evidence. Fifty optima have matching
+clique bounds and labelings, without relying on solver lower-bound claims.
+Timed solver coverage is unchanged.
+
 Develop and evaluate a SAT approach for minimum-span L(h,k)-labeling of **general simple undirected graphs**. Trees are an important experimental group, not the entire project. “General graphs” describes formulation scope; finite experiments neither represent all graphs nor imply that all instances solve quickly.
 
 The primary domain is h≥k≥1, with reference pairs (1,1), (2,1), and (3,2). The API also accepts nonnegative integer h,k, including h<k, using distance **exactly 2**. Labels start at 0; span s permits s+1 values. Disconnected graphs, isolated vertices, and the empty graph are supported. Directed graphs, parallel edges, and self-loops are outside scope. Equal degrees alone do not establish symmetry.

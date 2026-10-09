@@ -58,6 +58,11 @@ September 28 additions are derived CSVs, not new solver runs:
 | [results/analysis/general_pilot_v1/observations.csv](../results/analysis/general_pilot_v1/observations.csv) | 234 | Witnesses and reference bounds | [Guide](../results/analysis/general_pilot_v1/README.md) |
 | [results/analysis/general_pilot_v1/summary.csv](../results/analysis/general_pilot_v1/summary.csv) | 12 | Family–h,k groups, SAT–ILP | [Guide](../results/analysis/general_pilot_v1/README.md) |
 
+The October 9 [square-clique report](../results/analysis/clique_certificates/README.md)
+adds `instances.csv` (117 rows), `originally_open.csv` (21 rows), and
+`summary.csv` (one aggregate row), with self-contained certificates and
+source fingerprints. These are derived evidence, not additional solver runs.
+
 The inventory after adding the pilot audit contained **41 CSVs**. This is a documentation snapshot; new runs require a companion README and a catalog update.
 
 Figures, LaTeX tables, metadata, and witnesses are not counted as additional CSVs. Historical code and reports are described in [archive](../archive/README.md).

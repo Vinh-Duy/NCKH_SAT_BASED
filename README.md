@@ -14,6 +14,8 @@ September 28 update: [audit of five current runs and common-span model counts](r
 
 ## Current status
 
+- [Independent square-clique certificates](results/analysis/clique_certificates/README.md) improve 15 lower bounds and prove two additional L(3,2) optima (64 and 110). Combined evidence closes 98/117 v2 instances, leaving 19 open; 50 optima have direct clique-plus-labeling certificates. This post-hoc analysis does not change timed solver coverage or raw statuses.
+
 - The [timeout-capture audit](results/analysis/unresolved_bounds/README.md) finds equal saved bounds on all 63 repeat pairs from the 21 open instances, but both sides retained the shared initial snapshot. All 186 FEASIBLE confirmation observations have this origin. The data do not establish equivalent native solver bound quality. The separate [v2 progress confirmation](paper/generated/progress_confirmation/4927a34577a0c9d4/README.md) is complete: 77/117 SAT and 91/117 Gurobi instances are OPT in all three runs. Bound quality on its 21 open instances favors different backends; equivalence is not established.
 
 - The [post-hoc interval analysis](docs/methods/optimality_intervals.md) combines the confirmation's stored evidence: 96/117 instance intervals close and 21 remain open. Twelve SAT FEASIBLE observations contain retrospectively optimal witnesses; their recorded statuses and timed coverage remain unchanged. Reproduce the analysis and PDF with `make gap-analysis`.

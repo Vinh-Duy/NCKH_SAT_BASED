@@ -1,5 +1,10 @@
 # Research data and outputs
 
+October 9: [independent square-clique certificates](analysis/clique_certificates/README.md)
+improve 15 lower bounds and close two additional instances. Combined evidence
+closes 98/117 v2 instances, leaving 19 open. Original solver-only intervals
+and timed coverage remain unchanged.
+
 September 28 audit: [1,344 current witnesses and 117 common-span model comparisons](analysis/exact_review_20260928/README.md). Derived results are stored separately; raw data and solver statuses remain unchanged.
 
 Read the [notation/column dictionary](../docs/data_dictionary.md) before combining results. The [CSV catalog](../docs/results_catalog.md) links to each schema's README. Current CSVs have matching `.README.md` files.
