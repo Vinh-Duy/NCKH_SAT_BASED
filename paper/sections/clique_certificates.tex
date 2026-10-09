@@ -1,0 +1,52 @@
+\subsection{Closing intervals with square-clique certificates}
+\label{sec:clique-results}
+We apply Proposition~\ref{prop:square-clique} post hoc to all
+\CliqueInstances{} instances of the completed v2 confirmation, rather
+than selecting only successful cases. For each instance, the best saved
+labeling is compared with a clique bound computed on its original graph.
+The independent verifier validates all \CliqueInstances{} certificate
+objects. In \CliqueIndependentOptima{} cases the clique bound alone
+equals the witness span, proving optimality without using the solver's
+reported lower bound. Most of these cases were already closed by the
+pooled solver evidence.
+
+The clique bound improves the pooled lower bound for \CliqueImproved{}
+instances and closes \CliqueNewlyClosed{} of the \ProgressOpen{}
+previously open intervals. Table~\ref{tab:clique-closures} gives the two
+newly certified values. For the 40-vertex graph, $|Q|=33$ implies
+$\lambda_{3,2}(G)\geq2(33-1)=64$; a stored valid labeling has span 64.
+For the 60-vertex graph, $|Q|=56$ gives the matching bound
+$2(56-1)=110$. These equalities concern the specific generated graphs,
+not every graph with the same order or edge probability.
+Both selected witnesses are Gurobi repetition-0 incumbents originally
+recorded as \FEAS{}; their post-hoc certification is not attributed to SAT
+or counted as a Gurobi OPT result within the original time budget.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Additional post-hoc optimality certificates for two ER instances
+with $(h,k)=(3,2)$. The saved interval combines the six original v2
+observations; the certified value follows from a square clique and a
+stored feasible labeling. Graphs use the archived generator and seeds.}
+\label{tab:clique-closures}
+\input{\CliqueReportDir/closures.tex}
+\end{table}
+
+Combining the original solver intervals with this additional evidence
+increases the closed-instance count from \CliqueOriginalClosed{} to
+\CliqueAugmentedClosed{} out of \CliqueInstances{}, leaving
+\CliqueRemainingOpen{} open. This count includes solver-dependent bounds;
+it must not be confused with the \CliqueIndependentOptima{} optima certified
+by clique bounds alone. Remaining intervals use
+$\max\{L_{\mathrm{saved}},L_{\mathrm{clique}}\}$ and the best saved witness
+span. Where the saved lower bound is stronger, its solver-dependent
+evidence remains necessary.
+
+The certificates, complete per-instance table, original-open subset,
+and source fingerprints are archived under
+\path{results/analysis/clique_certificates/}.
+No raw status, time, or 30-second coverage figure is changed. Consequently,
+these certificates strengthen the theoretical validation of selected
+solutions, but do not increase either backend's timed success count or
+establish performance equivalence between SAT and ILP.
+\FloatBarrier

@@ -21,10 +21,11 @@
 \input{paper/generated/confirmation_gaps}
 \input{paper/generated/unresolved_bounds}
 \input{paper/generated/progress_confirmation}
+\input{paper/generated/clique_certificates}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs\\[0.5em]
 {\large Research manuscript: methods and experiments}}
 \author{}
-\date{October 7, 2026}
+\date{October 9, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -49,7 +50,9 @@ within 30 seconds per run; all 12 instances with exact reference formulas
 agree with both backends. A separate confirmation with intermediate progress capture and three repetitions
 on the same cohort yields \ProgressSATStable/117 instances solved to optimality
 in all three runs by SAT and \ProgressILPStable/117 by ILP. On the unresolved
-subset, feasible upper bounds and solver lower bounds favor different backends. The current solver
+subset, feasible upper bounds and solver lower bounds favor different backends.
+A post-hoc square-clique bound, checked against stored labelings, additionally
+certifies two previously unresolved instances without changing timed solver coverage. The current solver
 does not use incremental SAT or export independently checkable UNSAT certificates.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
@@ -63,6 +66,7 @@ span minimization, ILP baseline, reproducible experiments.
 \input{paper/sections/confirmation}
 \input{paper/sections/optimality_gaps}
 \input{paper/sections/progress_confirmation}
+\input{paper/sections/clique_certificates}
 \input{paper/sections/discussion}
 \input{paper/sections/conclusion}
 \bibliographystyle{plain}

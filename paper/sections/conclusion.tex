@@ -27,6 +27,13 @@ has better upper bounds in \ProgressOpenSATUB{} of \ProgressOpenPairs{}
 repeat pairs, while ILP has stronger lower bounds in
 \ProgressOpenILPLB{} pairs. This supports a comparison of complementary
 solution and proof behavior within the tested cohort, rather than equivalence.
+Post-hoc square-clique certificates independently establish
+\CliqueIndependentOptima{} optimal values from explicit cliques and
+labelings, including \CliqueNewlyClosed{} previously open cases. Combining
+this evidence with saved solver intervals closes \CliqueAugmentedClosed{}
+of 117 instances and leaves \CliqueRemainingOpen{} open. These are
+instance-specific mathematical certificates, not additional timed solver
+successes or a new formula for an entire graph family.
 Broader formula/bound comparisons, incremental SAT, UNSAT certificates,
 and specialized algorithm baselines require separate implementation and
 evaluation. Edge labeling and $L(h,1,1)$ are distinguished in the related

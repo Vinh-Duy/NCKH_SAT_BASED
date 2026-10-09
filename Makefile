@@ -1,19 +1,23 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
 confirmation-data:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_confirmation_report.py
 
-confirmation: confirmation-data gap-data bounds-verify progress-data
+confirmation: confirmation-data gap-data bounds-verify progress-data clique-data
 	$(MAKE) pdf
 
 # Separate completed v2 experiment; does not invoke either solver.
 progress-data:
 	$(PYTHON) scripts/export_progress_paper.py
+
+# Independent post-hoc combinatorial certificates; no SAT/ILP reruns.
+clique-data:
+	$(PYTHON) scripts/analyze_clique_certificates.py --publish
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
 gap-data:
@@ -44,7 +48,7 @@ tree-tables:
 paper-figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_manuscript_figures.py
 
-manuscript: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data
+manuscript: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data clique-data
 	$(MAKE) pdf
 
 tables:
