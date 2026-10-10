@@ -58,6 +58,12 @@ September 28 additions are derived CSVs, not new solver runs:
 | [results/analysis/general_pilot_v1/observations.csv](../results/analysis/general_pilot_v1/observations.csv) | 234 | Witnesses and reference bounds | [Guide](../results/analysis/general_pilot_v1/README.md) |
 | [results/analysis/general_pilot_v1/summary.csv](../results/analysis/general_pilot_v1/summary.csv) | 12 | Family–h,k groups, SAT–ILP | [Guide](../results/analysis/general_pilot_v1/README.md) |
 
+The October 10 [consolidated evidence report](../results/analysis/evidence_summary/README.md)
+adds `instances.csv` (117 rows) and `summary.csv` (15 family/parameter rows
+plus one ALL row). Its final columns use v2 and clique certificates; the
+archived v1 classification is compared separately. The total row must not
+be summed again with the group rows.
+
 The October 9 [square-clique report](../results/analysis/clique_certificates/README.md)
 adds `instances.csv` (117 rows), `originally_open.csv` (21 rows), and
 `summary.csv` (one aggregate row), with self-contained certificates and

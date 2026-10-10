@@ -1,5 +1,9 @@
 # Square-clique certificates
 
+The [consolidated evidence table](../evidence_summary/README.md) compares the
+before/after counts by family and (h,k) for all 117 instances; this directory
+retains the detailed clique certificates and their original audit.
+
 The reviewed report is [cc0e412739ccc8d2](cc0e412739ccc8d2/README.md),
 derived only from the complete v2 confirmation of October 7.
 
