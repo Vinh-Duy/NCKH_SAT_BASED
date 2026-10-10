@@ -1,0 +1,64 @@
+{
+  "identity": {
+    "kind": "consolidated-v2-evidence-v1",
+    "reports": {
+      "results/analysis/clique_certificates/cc0e412739ccc8d2/sources.json": "ac606abfe616f284d32b38b5942074eb4688441f63e08f601a35f81c97486848",
+      "results/analysis/confirmation_gaps/3bec94390952fd50/sources.json": "c08458065d5ff51cdb37e1cc15c93af64793ac59ea17552d1bcf6a61f5c90ca4"
+    },
+    "sources": {
+      "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "benchmarks/benchmark_lhk_general.py": "12b47c8dd0b8ad16e1dc04af4613e904818c79db4ed90dc657c401faa197e8b0",
+      "benchmarks/benchmark_petersen.py": "8b8a43ddbfbd588b065ff09d8576cc7cfc99f7c9c509fbc78e787a49c8aa64bb",
+      "benchmarks/benchmark_products.py": "f337163bfed5f18302ba4117b637decdefd4c32c6b9255a89dbe433eda224308",
+      "benchmarks/benchmark_sat_vs_ilp.py": "118757667ecba6ba2b72b2c4e9b11f0979a392821b166591d4524f7baf801b4d",
+      "benchmarks/benchmark_symmetry_comparison.py": "0ea584841fba7912a6ed7356ce30792e74bf7a9abd9c37633f4edc91e58239c5",
+      "benchmarks/benchmark_symmetry_sizes.py": "d52441e37e26216d28b2dc97417659bd5796866cc1ea6ada257128f37b75dd2d",
+      "benchmarks/families.py": "ecb2b0fee4921aab4c342ee9cfc2f39e462ba0662a0fbb018db7803ff13b83ea",
+      "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+      "benchmarks/run_ilp.py": "7c74eb0de19c311e8c7da0814de9c7a620b696be2de820adac9d00062cd1c463",
+      "benchmarks/run_sat.py": "57c8ca7facf86c90677388a14859372f6abb4704c8245c35bf4ac6c586a088b6",
+      "benchmarks/symmetry_metrics.py": "98bfb66e4c969d49ea71d69ab487916e10730413ab554a087b4c0caa356cd339",
+      "scripts/analyze_confirmation_gaps.py": "36e314c1986a4fbd21332487293d0529fe1414424c2ec10a770387ac6f7fd40f",
+      "scripts/audit_general_pilot.py": "0289ad01f372d3753639acf93e9a0011f7ef1c84126a50683af00167a5d93bf1",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/compare_unresolved_bounds.py": "0a50719f67165ce585965f0d0aa6c814ea136a6fda46a3fc273af8744d99e690",
+      "scripts/export_evidence_summary.py": "93b51c6c904e0e679d08afa2e873c5fe525fba08e151e8cac23e899df13fb0f1",
+      "scripts/summarize_progress_run.py": "9c7e7d06bf14a9b779a3a27f2bef2b1481c0e3e27d1ff4a3793a615ce18eb56c",
+      "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b",
+      "src/__init__.py": "611620b8133ecc7dcd229c1ace2a88ef9e31312db04f8c1f42a24710f854f68e",
+      "src/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/core/constructions.py": "0e7ad52316a8e0b492b3632c7ddf91388ca12e4d6f6cace2052885682ad23429",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/io.py": "b8fd1b53f2210065246027a992e8abeb188eaf091ba70cd80e28f824200816b2",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76",
+      "src/core/validator.py": "e3267bda08f0b74c34d768db55634e8ee725fbc0126e4257a042cfa4758867f1",
+      "src/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/models/__pycache__/solvers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/models/__pycache__/solvers/ilp_solver.py": "d0364855f78e8beb965e122af116258752641a2b3928463d4ccec3ef81a4c8c3",
+      "src/models/__pycache__/solvers/sat_solver.py": "42e5b245011e1f743abf10509f27b58a49d9a6ea7f1bd2ab4b0e120239e5aa09",
+      "src/models/ilp_assignment.py": "c839f2aa5b84ee2167a233ea28d62fe3f67523724e20517c03129b1c8e9a7475",
+      "src/models/sat_encoding.py": "cdd2bf7d3730d58e120f1af897523fcda60d39f0117cd335e5dc154142083c81",
+      "src/solvers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/solvers/ilp_solver.py": "b2c859f5b7908a52db1e49917715060c32f5bf08f747c624ec1e6bb1e2b8b466",
+      "src/solvers/sat_solver.py": "f9069f852be4fc81b1d781ce887102c2180771a8f4cfc69fbd2e114bc88f6619"
+    }
+  },
+  "counts": {
+    "EvidenceInstances": 117,
+    "EvidenceTheory": 61,
+    "EvidenceOtherClosed": 35,
+    "EvidenceOpenBefore": 21,
+    "EvidenceCliqueCertified": 50,
+    "EvidenceNewlyClosed": 2,
+    "EvidenceClosedAfter": 98,
+    "EvidenceOpenAfter": 19,
+    "EvidenceVOneSame": 117
+  },
+  "outputs_sha256": {
+    "summary.csv": "a42e186771d69e690c44920f516158b3ef5335ebe0430d215eb4547b10856f8c",
+    "README.md": "4f4a52d5141193db3780ece74eb36e0671182eef6941cfbc92696cfe600fe326",
+    "instances.csv": "a12852fba756aa14e359c31650bfcd33bcc5e323ad76776b08488181f88beeb9",
+    "summary.tex": "c0ec0b4784515d32cd4443b4fad426219a98c4c3e9489ca6819f3901118b873f",
+    "counts.tex": "5923131d4ad3f6ddd0c43ba96238ec24f268e98a21edf7e4e028c544eb91052a"
+  }
+}
