@@ -6,10 +6,11 @@ reused between SAT calls.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{paper/generated/manuscript_figures/solver_pipeline.pdf}
-\caption{SAT pipeline for $L(h,k)$. A SAT result is decoded and validated
+\caption{SAT span-search pipeline.}
+\label{fig:pipeline}
+\tablenote{SAT pipeline for $L(h,k)$. A SAT result is decoded and validated
 before decreasing the upper bound; UNSAT increases the lower bound. A timeout
 retains the bounds and feasible incumbent and must not be treated as UNSAT.}
-\label{fig:pipeline}
 \end{figure}
 \subsection{Bounds and search invariant}
 For a graph with at least one edge, let $m=\min(h,k)$ and use

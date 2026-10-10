@@ -52,11 +52,13 @@ PySAT 1.9.dev15, Gurobi 13.0.3, and macOS 13.7.8 x86\_64. CPU, RAM, and
 background-load information is insufficient to specify a complete reference machine.
 
 \begin{table}[H]
+\caption{Results on 50 $L(3,2)$ trees.}
 \centering\small
-\caption{Measured tree results. Degree and span ranges are minima and maxima
-across ten trees; times are medians of ten runs per backend at each size.}
+
 \label{tab:tree-screen}
 \input{paper/generated/tree_screen}
+\tablenote{Measured tree results. Degree and span ranges are minima and maxima
+across ten trees; times are medians of ten runs per backend at each size.}
 \end{table}
 Table~\ref{tab:tree-screen} shows that both backends report \OPT{} within
 budget on every tree, with no disagreement in span. CaDiCaL has a lower
@@ -71,11 +73,12 @@ across input graphs, not a confidence interval or repeated-run variability.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{paper/generated/manuscript_figures/tree_runtime.pdf}
-\caption{Measured runtimes on 50 $L(3,2)$ trees: (a) median curves and
+\caption{Runtime comparison on 50 $L(3,2)$ trees.}
+\label{fig:tree-runtime}
+\tablenote{Measured runtimes on 50 $L(3,2)$ trees: (a) median curves and
 25--75\% bands over ten seeds per size; (b) each point represents one tree,
 with points below the diagonal indicating lower CaDiCaL runtime. Time axes
 are logarithmic. All runs are OPT; each graph is measured once per backend.}
-\label{fig:tree-runtime}
 \end{figure}
 
 For $L(3,2)$, the degree bound is $3+2(\Delta-1)=2\Delta+1$.
@@ -99,8 +102,9 @@ does not reproduce runtime measurements or recount historical CNFs.
 \subsection{Multi-family pilot design and validation}
 The \texttt{general-pilot-v1} cohort fixes 39 graph samples before execution:
 \begin{table}[H]
+\caption{Multi-family study design.}
 \centering\small
-\caption{Multi-family study design, not experimental results.}
+
 \label{tab:planned-cohort}
 \begin{tabular}{p{3.0cm}p{9.0cm}r}
 \toprule
@@ -111,6 +115,7 @@ Erdős--Rényi & $G(n,p)$, $n=20,40,60$, $p=0.15,0.30$, seeds $0,1,2$ & 18\\
 Barabási--Albert & $n=20,40,60$, $m=2$ edges per new vertex, seeds $0,1,2$ & 9\\
 \bottomrule
 \end{tabular}
+\tablenote{Multi-family study design, not experimental results.}
 \end{table}
 Disconnected Erdős--Rényi samples are retained; graphs are not regenerated
 to select easy or difficult cases. Each graph is evaluated with $(1,1),(2,1),(3,2)$,
@@ -125,12 +130,14 @@ CSV--witness consistency was verified. The audit does not reproduce timings,
 CNFs, or UNSAT certificates.
 
 \begin{table}[H]
+\caption{Pilot optimality coverage.}
 \centering\small
-\caption{Pilot with 30 seconds per run: instances reported optimal and
-instances covered by exact reference formulas. Each sample is run once by
-both backends; the remaining entries in each solver column are \FEAS.}
+
 \input{paper/generated/english/results/analysis/general_pilot_v1/summary.tex}
 \label{tab:general-pilot}
+\tablenote{Pilot with 30 seconds per run: instances reported optimal and
+instances covered by exact reference formulas. Each sample is run once by
+both backends; the remaining entries in each solver column are \FEAS.}
 \end{table}
 CaDiCaL establishes optimality on 79/117 instances and Gurobi on 97/117.
 Both report \OPT{} with the same value on 78 instances; 19 are \OPT{} only
@@ -171,13 +178,15 @@ Assignment ILP uses the same domain $0,\ldots,s$ and is counted from its
 specification; backend presolve is not executed for this comparison.
 
 \begin{table}[htbp]
+\caption{Model sizes at a common span.}
 \centering\scriptsize
-\caption{Median model sizes using a common span per instance. SAT counts
+
+\label{tab:common-model-size}
+\input{paper/generated/english/results/analysis/exact_review_20260928/models.tex}
+\tablenote{Median model sizes using a common span per instance. SAT counts
 raw clauses; ILP counts binary variables, with one additional integer
 $\ell_{\max}$ per model. Column medians are computed separately and may
 come from different instances; fractional values do not denote half a clause.}
-\label{tab:common-model-size}
-\input{paper/generated/english/results/analysis/exact_review_20260928/models.tex}
 \end{table}
 Table~\ref{tab:common-model-size} describes representation size, not equivalent
 solution difficulty. At the same $s$, both models have

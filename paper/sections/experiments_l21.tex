@@ -28,8 +28,9 @@ independently verify UNSAT conclusions; DRAT/LRAT certificates are not exported.
 
 \subsection{Configuration and measurement definitions}
 \begin{table}[H]
+\caption{Archived symmetry-run configurations.}
 \centering\small\input{paper/generated/english/paper/generated/run_config}
-\caption{Configuration from the manifests. For products, the $m$ range is
+\tablenote{Configuration from the manifests. For products, the $m$ range is
 $\ProductMFirst$--$\ProductMLast$; the budget applies to each configuration
 on each graph.}
 \end{table}
@@ -64,9 +65,10 @@ input CNF counts, not counts after backend preprocessing or clause learning.
 
 \subsection{Optimality coverage and unresolved instances}
 \begin{table}[H]
+\caption{Symmetry-run coverage by family.}
 \centering\small\setlength{\tabcolsep}{4pt}
 \input{paper/generated/english/paper/generated/coverage}
-\caption{Results by family. Span ranges include only matching OPT/OPT
+\tablenote{Results by family. Span ranges include only matching OPT/OPT
 pairs; ``Unresolved'' counts pairs with at least one run lacking an optimality conclusion.}
 \end{table}
 There are \PairedOpt{} jointly OPT pairs, with no span disagreements.
@@ -74,8 +76,9 @@ Every cycle in the evaluated domain has span 4. Two product instances
 remain unresolved under both configurations:
 $C_9\mathbin{\square}C_{10}$ and $C_{10}\mathbin{\square}C_9$.
 \begin{table}[H]
+\caption{Unresolved symmetry-run intervals.}
 \centering\small\input{paper/generated/english/paper/generated/unresolved}
-\caption{Bound intervals $[L,U]$ for FEASIBLE runs; each $U$ has an explicit
+\tablenote{Bound intervals $[L,U]$ for FEASIBLE runs; each $U$ has an explicit
 labeling. Bounds come from witnesses, not from an unproved formula.}
 \end{table}
 These graphs are isomorphic by coordinate exchange. Incumbents can differ
@@ -90,13 +93,15 @@ Let $t_B,t_S$ denote the two runtimes. A ratio $t_B/t_S>1$ indicates a faster
 Symmetry run for that pair. The following tables use jointly OPT pairs only.
 FEASIBLE pairs are reported separately and are not assigned substitute runtimes.
 \begin{table}[H]
+\caption{Runtime comparison on jointly OPT pairs.}
 \centering\small\input{paper/generated/english/paper/generated/timing}
-\caption{Total runtimes and median ratios on jointly OPT pairs. Total time
+\tablenote{Total runtimes and median ratios on jointly OPT pairs. Total time
 and the median of pairwise ratios are different statistics.}
 \end{table}
 \begin{table}[H]
+\caption{Variable and clause reductions.}
 \centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/english/paper/generated/encoding}
-\caption{Median percentage reductions in variables and clauses. The final
+\tablenote{Median percentage reductions in variables and clauses. The final
 three columns count pairs with fewer/equal/more Symmetry clauses than Baseline.
 The subset is the same OPT/OPT subset as in the runtime table.}
 \end{table}
@@ -118,14 +123,16 @@ family-specific symmetry constraints; timing differences reflect measurement var
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_runtime_C.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/cycles_main_r1_plots/delta_clauses_C.png}
-\caption{Cycles: runtime and clause differences, Base minus Sym. Negative
+\caption{Symmetry effects on cycles.}
+\tablenote{Cycles: runtime and clause differences, Base minus Sym. Negative
 runtime differences indicate slower Symmetry runs.}
 \end{figure}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_cartesian.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_runtime_corona.png}
-\caption{Product runtimes: each curve represents a separate family; each
+\caption{Runtime differences on graph products.}
+\tablenote{Product runtimes: each curve represents a separate family; each
 point is the mean difference over jointly OPT pairs in that family with the
 same vertex count. Families are not pooled; the two unresolved pairs are excluded.}
 \end{figure}
@@ -133,7 +140,8 @@ same vertex count. Families are not pooled; the two unresolved pairs are exclude
 \centering
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_cartesian.png}
 \includegraphics[width=0.49\linewidth]{paper/generated/products_main_r1_plots/delta_clauses_corona.png}
-\caption{Product clauses: Base minus Sym at a common span after common
+\caption{Clause differences on graph products.}
+\tablenote{Product clauses: Base minus Sym at a common span after common
 preprocessing, restricted to OPT/OPT pairs. Zero-valued curves may overlap
 for families with no additional symmetry constraints.}
 \end{figure}
@@ -141,13 +149,15 @@ for families with no additional symmetry constraints.}
 
 \subsection{Search counters and runtime components}
 \begin{table}[H]
+\caption{Glucose search counters.}
 \centering\small\setlength{\tabcolsep}{4pt}\input{paper/generated/english/paper/generated/search_stats}
-\caption{Total Glucose conflicts and decisions over completed span trials
+\tablenote{Total Glucose conflicts and decisions over completed span trials
 on OPT/OPT pairs, including both SAT and UNSAT trials.}
 \end{table}
 \begin{table}[H]
+\caption{Encoding and SAT-call times.}
 \centering\small\input{paper/generated/english/paper/generated/components}
-\caption{Median CNF-construction and internal SAT-call times in seconds,
+\tablenote{Median CNF-construction and internal SAT-call times in seconds,
 summed within each search and then summarized over OPT/OPT pairs.}
 \end{table}
 Clause counts at a common span measure model size; total decisions/conflicts

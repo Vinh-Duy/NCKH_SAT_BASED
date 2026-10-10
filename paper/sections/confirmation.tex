@@ -22,42 +22,48 @@ both. Repeated-run variability is retained rather than reporting the
 fastest run as the representative time.
 
 \begin{table}[htbp]
+\caption{Optimality coverage in archived v1.}
 \centering\small
-\caption{Confirmation results: distinct instances, OPT observations within
-30 seconds, and instances OPT in all three repetitions. ER groups are
-separated by edge probability $p$.}
+
 \label{tab:confirmation-coverage}
 \input{\ConfirmReportDir/summary.tex}
+\tablenote{Confirmation results: distinct instances, OPT observations within
+30 seconds, and instances OPT in all three repetitions. ER groups are
+separated by edge probability $p$.}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\ConfirmReportDir/coverage.pdf}
-\caption{Instances solved to optimality in all three repetitions, by group.
+\caption{All-three-OPT coverage in archived v1.}
+\label{fig:confirmation-coverage}
+\tablenote{Instances solved to optimality in all three repetitions, by group.
 The denominator is the number of graph/$(h,k)$ instances in the group,
 not the number of repetitions.}
-\label{fig:confirmation-coverage}
 \end{figure}
 
 \begin{table}[htbp]
+\caption{Paired runtimes in archived v1.}
 \centering\small
-\caption{Runtime on the common subset solved to optimality in all three
+
+\label{tab:confirmation-time}
+\input{\ConfirmReportDir/timing.tex}
+\tablenote{Runtime on the common subset solved to optimality in all three
 repetitions by both backends. The median of three runs is computed per
 instance, followed by the median across instances in each group. A dash
 indicates no eligible instances, not zero seconds.}
-\label{tab:confirmation-time}
-\input{\ConfirmReportDir/timing.tex}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{\ConfirmReportDir/runtime.pdf}
-\caption{Each point represents an instance in the common all-three-OPT
+\caption{Paired runtime distributions in archived v1.}
+\label{fig:confirmation-runtime}
+\tablenote{Each point represents an instance in the common all-three-OPT
 subset. Coordinates are median runtimes; error bars show the minimum and
 maximum of three runs, not confidence intervals. Points below the diagonal
 indicate lower SAT runtime. Interpret together with coverage in
 Figure~\ref{fig:confirmation-coverage}.}
-\label{fig:confirmation-runtime}
 \end{figure}
 
 These runtime medians are subject to selection bias because they include
