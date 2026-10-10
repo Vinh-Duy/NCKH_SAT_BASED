@@ -7,8 +7,9 @@ labeling is compared with a clique bound computed on its original graph.
 The independent verifier validates all \CliqueInstances{} certificate
 objects. In \CliqueIndependentOptima{} cases the clique bound alone
 equals the witness span, proving optimality without using the solver's
-reported lower bound. Most of these cases were already closed by the
-pooled solver evidence.
+reported lower bound. Table~\ref{tab:gap-coverage} reports these counts
+alongside the pre-clique and final classifications by family and $(h,k)$.
+Most clique-certified cases were already closed by the pooled solver evidence.
 
 The clique bound improves the pooled lower bound for \CliqueImproved{}
 instances and closes \CliqueNewlyClosed{} of the \ProgressOpen{}
@@ -24,20 +25,20 @@ or counted as a Gurobi OPT result within the original time budget.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Additional post-hoc optimality certificates for two ER instances
-with $(h,k)=(3,2)$. The saved interval combines the six original v2
-observations; the certified value follows from a square clique and a
-stored feasible labeling. Graphs use the archived generator and seeds.}
+\caption{Two additional certified $L(3,2)$ optima.}
 \label{tab:clique-closures}
 \input{\CliqueReportDir/closures.tex}
+\tablenote{The saved interval combines the six original v2 observations.
+The certified value follows from a square clique and a stored feasible
+labeling. ER graphs use the archived generator and seeds. These are the
+two newly closed cases in Table~\ref{tab:gap-coverage}, not additional
+timed solver successes.}
 \end{table}
 
-Combining the original solver intervals with this additional evidence
-increases the closed-instance count from \CliqueOriginalClosed{} to
-\CliqueAugmentedClosed{} out of \CliqueInstances{}, leaving
-\CliqueRemainingOpen{} open. This count includes solver-dependent bounds;
-it must not be confused with the \CliqueIndependentOptima{} optima certified
-by clique bounds alone. Remaining intervals use
+The final closed/open partition is reported in
+Table~\ref{tab:gap-coverage}. The closed count includes solver-dependent
+bounds and must not be added to the overlapping clique-certified count.
+Remaining intervals use
 $\max\{L_{\mathrm{saved}},L_{\mathrm{clique}}\}$ and the best saved witness
 span. Where the saved lower bound is stronger, its solver-dependent
 evidence remains necessary.

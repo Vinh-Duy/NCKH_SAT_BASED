@@ -22,28 +22,32 @@ criterion on \ProgressJointStable{} instances.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Separate v2 confirmation: optimality coverage and retained feasible
-solutions. $^*$FEASIBLE observations whose upper bound improves on the
-initial greedy span. Improvements do not establish optimality.}
+\caption{Optimality coverage and feasible solutions in v2.}
 \label{tab:progress-coverage}
 \input{\ProgressReportDir/coverage.tex}
+\tablenote{$^*$FEASIBLE observations whose upper bound improves on the
+initial greedy span. Improvements do not establish optimality. These are
+timed solver outcomes, distinct from the combined evidence in
+Table~\ref{tab:gap-coverage}.}
 \end{table}
 
-Pooling only the completed v2 run's solver bounds across repetitions and
-backends closes \ProgressClosed{} instance intervals and leaves
-\ProgressOpen{} open, all in the ER family. This post-hoc combination is
-not attributed to a single timed solver run. The open instances give
+Before adding clique certificates, pooling the completed v2 run's solver
+bounds across repetitions and backends leaves the \ProgressOpen{} open
+instances identified in Table~\ref{tab:gap-coverage}. This post-hoc
+combination is not attributed to a single timed solver run. These instances give
 \ProgressOpenPairs{} paired observations, not independent graph samples.
 Table~\ref{tab:progress-bounds} distinguishes larger lower bounds from
 smaller feasible upper bounds.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Paired retained bounds in v2. Each pair matches graph, $(h,k)$,
-and repetition; ``open'' is defined by pooling this run's intervals.
-Counts for all instances and the open subset must not be added together.}
+\caption{Paired retained bounds in v2.}
 \label{tab:progress-bounds}
 \input{\ProgressReportDir/bounds.tex}
+\tablenote{Each pair matches graph, $(h,k)$, and repetition. ``Open'' means
+the 21 instances open before adding clique certificates, as shown in
+Table~\ref{tab:gap-coverage}. Counts for all instances and the open subset
+overlap and must not be added.}
 \end{table}
 
 On the open subset, SAT has a better upper bound in
