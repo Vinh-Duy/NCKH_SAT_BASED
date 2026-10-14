@@ -1,0 +1,17 @@
+Instance,Group,h,k,V,Theory,Other_Closed,Open_Before,Before_Construction_LB,Before_Construction_UB,Construction_Status,Construction_Span,Class_Count,Attempts,Improved_UB,Final_LB,Final_UB,Final_Gap,Clique_Certified,Newly_Closed,Closed_After,Open_After,Certificate_ID,Witness_Source
+ER_40_p0.15_seed0,ER p=0.15,2,1,40,0,0,1,13,14,FEASIBLE,19,20,1,False,13,14,1,False,False,False,True,ER_40_p0.15_seed0__h2_k1,archived_v2
+ER_40_p0.15_seed0,ER p=0.15,3,2,40,0,0,1,25,29,FEASIBLE,38,20,1,False,25,29,4,False,False,False,True,ER_40_p0.15_seed0__h3_k2,archived_v2
+ER_40_p0.15_seed1,ER p=0.15,2,1,40,0,0,1,12,13,FEASIBLE,19,20,1,False,12,13,1,False,False,False,True,ER_40_p0.15_seed1__h2_k1,archived_v2
+ER_40_p0.15_seed1,ER p=0.15,3,2,40,0,0,1,24,32,FEASIBLE,38,20,1,False,24,32,8,False,False,False,True,ER_40_p0.15_seed1__h3_k2,archived_v2
+ER_40_p0.15_seed2,ER p=0.15,1,1,40,0,0,1,12,13,FEASIBLE,19,20,0,False,12,13,1,False,False,False,True,ER_40_p0.15_seed2__h1_k1,archived_v2
+ER_40_p0.15_seed2,ER p=0.15,2,1,40,0,0,1,13,14,FEASIBLE,19,20,1,False,13,14,1,False,False,False,True,ER_40_p0.15_seed2__h2_k1,archived_v2
+ER_40_p0.15_seed2,ER p=0.15,3,2,40,0,0,1,25,28,FEASIBLE,38,20,1,False,25,28,3,False,False,False,True,ER_40_p0.15_seed2__h3_k2,archived_v2
+ER_60_p0.15_seed0,ER p=0.15,1,1,60,0,0,1,20,22,FEASIBLE,29,30,0,False,20,22,2,False,False,False,True,ER_60_p0.15_seed0__h1_k1,archived_v2
+ER_60_p0.15_seed0,ER p=0.15,2,1,60,0,0,1,20,24,FEASIBLE,29,30,1,False,20,24,4,False,False,False,True,ER_60_p0.15_seed0__h2_k1,archived_v2
+ER_60_p0.15_seed0,ER p=0.15,3,2,60,0,0,1,40,50,FEASIBLE,58,30,1,False,40,50,10,False,False,False,True,ER_60_p0.15_seed0__h3_k2,archived_v2
+ER_60_p0.15_seed1,ER p=0.15,1,1,60,0,0,1,20,22,FEASIBLE,29,30,0,False,20,22,2,False,False,False,True,ER_60_p0.15_seed1__h1_k1,archived_v2
+ER_60_p0.15_seed1,ER p=0.15,2,1,60,0,0,1,20,24,FEASIBLE,29,30,1,False,20,24,4,False,False,False,True,ER_60_p0.15_seed1__h2_k1,archived_v2
+ER_60_p0.15_seed1,ER p=0.15,3,2,60,0,0,1,40,49,FEASIBLE,58,30,1,False,40,49,9,False,False,False,True,ER_60_p0.15_seed1__h3_k2,archived_v2
+ER_60_p0.15_seed2,ER p=0.15,1,1,60,0,0,1,19,20,FEASIBLE,29,30,0,False,19,20,1,False,False,False,True,ER_60_p0.15_seed2__h1_k1,archived_v2
+ER_60_p0.15_seed2,ER p=0.15,2,1,60,0,0,1,19,21,FEASIBLE,29,30,1,False,19,21,2,False,False,False,True,ER_60_p0.15_seed2__h2_k1,archived_v2
+ER_60_p0.15_seed2,ER p=0.15,3,2,60,0,0,1,38,46,FEASIBLE,58,30,1,False,38,46,8,False,False,False,True,ER_60_p0.15_seed2__h3_k2,archived_v2

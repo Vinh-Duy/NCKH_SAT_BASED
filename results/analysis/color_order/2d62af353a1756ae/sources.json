@@ -1,0 +1,70 @@
+{
+  "identity": {
+    "kind": "posthoc-color-order-v1",
+    "seed": 0,
+    "max_restarts": 100,
+    "networkx": "3.6.1",
+    "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "reports": {
+      "results/analysis/clique_certificates/cc0e412739ccc8d2": "ac606abfe616f284d32b38b5942074eb4688441f63e08f601a35f81c97486848",
+      "results/analysis/evidence_summary/0700e674e1e6ba4e": "b473f15c1efb9833686789223646f3cd5a907eae717e2c3dab2125a40ab0e1f2"
+    },
+    "sources": {
+      "benchmarks/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "benchmarks/benchmark_lhk_general.py": "12b47c8dd0b8ad16e1dc04af4613e904818c79db4ed90dc657c401faa197e8b0",
+      "benchmarks/benchmark_petersen.py": "8b8a43ddbfbd588b065ff09d8576cc7cfc99f7c9c509fbc78e787a49c8aa64bb",
+      "benchmarks/benchmark_products.py": "f337163bfed5f18302ba4117b637decdefd4c32c6b9255a89dbe433eda224308",
+      "benchmarks/benchmark_sat_vs_ilp.py": "118757667ecba6ba2b72b2c4e9b11f0979a392821b166591d4524f7baf801b4d",
+      "benchmarks/benchmark_symmetry_comparison.py": "0ea584841fba7912a6ed7356ce30792e74bf7a9abd9c37633f4edc91e58239c5",
+      "benchmarks/benchmark_symmetry_sizes.py": "d52441e37e26216d28b2dc97417659bd5796866cc1ea6ada257128f37b75dd2d",
+      "benchmarks/families.py": "ecb2b0fee4921aab4c342ee9cfc2f39e462ba0662a0fbb018db7803ff13b83ea",
+      "benchmarks/general_suite.py": "169f1f579afde7295f0a325281171293f65f2c876dddaab60870226cadae7ccd",
+      "benchmarks/run_ilp.py": "7c74eb0de19c311e8c7da0814de9c7a620b696be2de820adac9d00062cd1c463",
+      "benchmarks/run_sat.py": "57c8ca7facf86c90677388a14859372f6abb4704c8245c35bf4ac6c586a088b6",
+      "benchmarks/symmetry_metrics.py": "98bfb66e4c969d49ea71d69ab487916e10730413ab554a087b4c0caa356cd339",
+      "scripts/analyze_color_order.py": "14b59282c5dfc95d83930fb5e79702aea07ae4fe7a2a4a5bcc19818f5ed25f20",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/construct_color_order.py": "6a365ae8c8e11ee17cebc65222e1c2ddf8244efded326ce0e3afb12d571b4a62",
+      "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b",
+      "src/__init__.py": "611620b8133ecc7dcd229c1ace2a88ef9e31312db04f8c1f42a24710f854f68e",
+      "src/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/core/constructions.py": "0e7ad52316a8e0b492b3632c7ddf91388ca12e4d6f6cace2052885682ad23429",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/io.py": "b8fd1b53f2210065246027a992e8abeb188eaf091ba70cd80e28f824200816b2",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76",
+      "src/core/validator.py": "e3267bda08f0b74c34d768db55634e8ee725fbc0126e4257a042cfa4758867f1",
+      "src/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/models/__pycache__/solvers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/models/__pycache__/solvers/ilp_solver.py": "d0364855f78e8beb965e122af116258752641a2b3928463d4ccec3ef81a4c8c3",
+      "src/models/__pycache__/solvers/sat_solver.py": "42e5b245011e1f743abf10509f27b58a49d9a6ea7f1bd2ab4b0e120239e5aa09",
+      "src/models/ilp_assignment.py": "c839f2aa5b84ee2167a233ea28d62fe3f67523724e20517c03129b1c8e9a7475",
+      "src/models/sat_encoding.py": "cdd2bf7d3730d58e120f1af897523fcda60d39f0117cd335e5dc154142083c81",
+      "src/solvers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/solvers/ilp_solver.py": "b2c859f5b7908a52db1e49917715060c32f5bf08f747c624ec1e6bb1e2b8b466",
+      "src/solvers/sat_solver.py": "f9069f852be4fc81b1d781ce887102c2180771a8f4cfc69fbd2e114bc88f6619"
+    }
+  },
+  "counts": {
+    "ConstructionInstances": 117,
+    "ConstructionClosed": 101,
+    "ConstructionOpen": 16,
+    "ConstructionNewlyClosed": 3,
+    "ConstructionImproved": 3,
+    "ConstructionCliqueCertified": 53,
+    "ConstructionTotalNewlyClosed": 5,
+    "ConstructionCandidates": 113,
+    "ConstructionUnknown": 4
+  },
+  "outputs_sha256": {
+    "summary.csv": "431eaa5d728e855feba6c1013ab27c30a4731b7294a05157dac0454d8b1e527f",
+    "certificates.jsonl": "473e39ca3f4fa556e5b25812499d061984f160eb8b456cc536739861fb5216c4",
+    "unresolved.csv": "c3674a7533775a3e9473629cda8a82e8b7361e16e4bce2ca38753e7f1b39e0f8",
+    "README.md": "419d648f2a31965f4ac64f5c35ec8374f7d18ef207bdde23b159881f79aed3db",
+    "instances.csv": "d271b0395a358a0503c8f22d3495d126771216000fa07eb8f9df390c3438b247",
+    "closures.tex": "d87c3ee63c8bb93905dc28a7ae0ef14b01139373b3d5e90e181a7323dcab2595",
+    "newly_closed.csv": "785847f5c93c1c919b3917efaa9681015a2de62f5f0e14d5c086e0ca9631b4e0",
+    "summary.tex": "67a992bdc9f70ba6b66a06c9d079b0858665953b483106df5d0c979e906645ab",
+    "candidates.jsonl": "55c68873b670e0e539d5c0f3e6a0460ca0f6080d4235bd7b4aa32217286df374",
+    "counts.tex": "948bf44085319c8e27257b9e8e9a23a0d034d9d14ff15c65ea23e7f24a4ccf5e"
+  }
+}

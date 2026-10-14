@@ -1,0 +1,4 @@
+Instance,Group,h,k,V,Theory,Other_Closed,Open_Before,Before_Construction_LB,Before_Construction_UB,Construction_Status,Construction_Span,Class_Count,Attempts,Improved_UB,Final_LB,Final_UB,Final_Gap,Clique_Certified,Newly_Closed,Closed_After,Open_After,Certificate_ID,Witness_Source
+ER_40_p0.30_seed0,ER p=0.30,3,2,40,0,0,1,64,66,FEASIBLE,64,33,1,True,64,64,0,True,True,True,False,ER_40_p0.30_seed0__h3_k2,construction
+ER_60_p0.30_seed0,ER p=0.30,3,2,60,0,0,1,110,114,FEASIBLE,110,56,1,True,110,110,0,True,True,True,False,ER_60_p0.30_seed0__h3_k2,construction
+ER_60_p0.30_seed2,ER p=0.30,3,2,60,0,0,1,112,118,FEASIBLE,112,57,1,True,112,112,0,True,True,True,False,ER_60_p0.30_seed2__h3_k2,construction
