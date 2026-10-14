@@ -1,6 +1,6 @@
 # SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-**The v2 confirmation is complete and audited:** the complete run has 702 observations; the interrupted 464-observation attempt is kept separate. Run `make confirmation` to verify the archived and v2 reports and build the PDF; no solver runs are needed.
+**October 12 research package:** the fixed v2 experiment is complete (702 observations). Combined evidence now establishes **101 optima among 117 instances, with 16 open**; 53 have directly checkable clique-plus-labeling certificates. Run `make research-package` to verify the evidence and build both PDFs without rerunning SAT/ILP. [Research summary](docs/research_summary.md) · [full technical report](build/main.pdf) · [focused manuscript](build/submission.pdf).
 
 This project studies SAT-based minimum-span labeling of simple undirected graphs. Adjacent vertices require label difference at least h; vertices at distance **exactly 2** require difference at least k. The primary research domain is h≥k≥1, with default (2,1). Labels start at 0; span s permits s+1 label values. Disconnected graphs are supported.
 
@@ -14,18 +14,18 @@ September 28 update: [audit of five current runs and common-span model counts](r
 
 ## Current status
 
-- [Consolidated evidence summary](results/analysis/evidence_summary/README.md): manuscript Table 9 places all 117 instances in one before/after table by family and (h,k). The 50 clique-certified cases overlap the 96 baseline closures; only two are new, giving 98 closed and 19 open. Table/figure captions are concise, with definitions and qualifications below each float.
+- [Current consolidated evidence and constructions](results/analysis/color_order/README.md): one table groups all 117 instances by family and (h,k). A proved sufficient color-class ordering condition supplies three new optimal L(3,2) witnesses of spans 64, 110 and 112. The construction was attempted on all 117 instances; 113 yielded valid candidates and four returned UNKNOWN. Exactly three improve the saved upper bounds. The 53 directly certified optima overlap the 101 closed cases and must not be added to them.
 
-- [Independent square-clique certificates](results/analysis/clique_certificates/README.md) improve 15 lower bounds and prove two additional L(3,2) optima (64 and 110). Combined evidence closes 98/117 v2 instances, leaving 19 open; 50 optima have direct clique-plus-labeling certificates. This post-hoc analysis does not change timed solver coverage or raw statuses.
+- The earlier [square-clique audit](results/analysis/clique_certificates/README.md) improved 15 lower bounds and closed two cases from stored witnesses, producing the historical 98/19 partition. The new construction adds three closures. Both stages are post hoc and leave timed solver coverage and raw statuses unchanged.
 
 - The [timeout-capture audit](results/analysis/unresolved_bounds/README.md) finds equal saved bounds on all 63 repeat pairs from the 21 open instances, but both sides retained the shared initial snapshot. All 186 FEASIBLE confirmation observations have this origin. The data do not establish equivalent native solver bound quality. The separate [v2 progress confirmation](paper/generated/progress_confirmation/4927a34577a0c9d4/README.md) is complete: 77/117 SAT and 91/117 Gurobi instances are OPT in all three runs. Bound quality on its 21 open instances favors different backends; equivalence is not established.
 
-- The [post-hoc interval analysis](docs/methods/optimality_intervals.md) combines the confirmation's stored evidence: 96/117 instance intervals close and 21 remain open. Twelve SAT FEASIBLE observations contain retrospectively optimal witnesses; their recorded statuses and timed coverage remain unchanged. Reproduce the analysis and PDF with `make gap-analysis`.
+- The archived v1 [interval analysis](docs/methods/optimality_intervals.md) closes 96/117 intervals before structural certification. Twelve SAT FEASIBLE observations contain retrospectively optimal initialization witnesses; their recorded statuses and timed coverage remain unchanged. This historical analysis is separate from the current combined 101/16 evidence.
 
 - Completed 50 L(3,2) trees with 100–1600 vertices and 100 CaDiCaL/Gurobi runs: both backends report OPT on every tree; all 100 labelings are valid; 48 trees attain the degree bound.
 - Archived L(2,1) symmetry experiments cover 48 cycles and 448 product samples, with two product pairs unresolved. These appear in the PDF appendix.
 - The multi-family pilot has 39 samples × 3 h,k pairs × 2 backends = 234 runs. All **234 witnesses** were validated: SAT solves 79/117 instances to optimality and Gurobi 97/117; the 78 common OPT values agree, as do both backends on all 12 instances with exact reference formulas.
-- The confirmation has 702 runs on the same 117 instances with three repetitions per backend: 77 instances are OPT in all three SAT runs, 94 in all three ILP runs, and 76 for both. These results do not establish general SAT superiority or algorithmic novelty.
+- The archived **v1** confirmation has 702 runs: 77 instances are OPT in all three SAT runs, 94 in all three ILP runs, and 76 for both. Its capture protocol and timings remain separate from current **v2**, whose corresponding counts are 77, 91 and 74. These results do not establish general SAT superiority or algorithmic novelty.
 
 ## Installation
 
@@ -46,10 +46,10 @@ make test
 ## Building the manuscript
 
 ```bash
-make manuscript
+make research-package
 ```
 
-This revalidates the tree screen, generates tables and figures, processes the archived confirmation, verifies the frozen v1 bound-report hashes, and compiles `main.tex` to `build/main.pdf`. `make pdf` compiles existing artifacts only. `main.tex` remains at the repository root; the old PDF is preserved under `archive/reports/legacy_root/`.
+This verifies selected evidence and bounded post-hoc constructions, then builds `main.tex` → `build/main.pdf` (comprehensive technical report) and `paper/submission.tex` → `build/submission.pdf` (focused review draft). It does not run SAT/ILP benchmarks. `make manuscript` additionally refreshes tree tables and illustrations. `make pdf` and `make submission-pdf` compile the respective existing artifacts. The two documents still require confirmed author information and the chosen institution/venue format before formal submission. The old PDF remains under `archive/reports/legacy_root/`.
 
 `make report`/`make tables` reconstruct historical main_r1 CNFs. Following source changes, hashes differ from the manifests and the exporter intentionally refuses reconstruction. Use a separate checkout of the matching historical source to recount; do not alter old hashes. The current manuscript uses saved main_r1 tables and validated tree/confirmation tables. English presentation copies preserve historical numerical contents and provenance records.
 
@@ -70,6 +70,7 @@ This revalidates the tree screen, generates tables and figures, processes the ar
 | `paper/sections/` | Main LaTeX sections and appendices |
 | `paper/generated/` | Generated tables, source hashes, and manuscript figures |
 | `main.tex`, `build/main.pdf` | Main source and current PDF |
+| `paper/submission.tex`, `build/submission.pdf` | Focused manuscript for supervisor review and venue adaptation |
 | `archive/` | Historical code/PDFs retained for provenance |
 
 ## Additional runners

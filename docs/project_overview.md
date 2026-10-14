@@ -1,6 +1,6 @@
 # SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-**The confirmation benchmark is complete:** `make confirmation` validates 702 witnesses, generates three-repetition tables/figures, and builds the PDF.
+**October 12 package:** `make research-package` verifies the selected evidence and builds the full technical report and focused manuscript. Current combined evidence closes **101/117** intervals, with **16 open** and **53 overlapping direct certificates**. [Research summary](research_summary.md).
 
 September 28, 2026: [audit of five current runs and common-span model counts](../results/analysis/exact_review_20260928/README.md). It validated 1,344 witnesses; the 117 model-count comparisons are new analyses, not new timing measurements. Complete SAT–ILP evaluation first; GA is a later step with no results yet.
 
@@ -8,10 +8,12 @@ September 28, 2026: [audit of five current runs and common-span model counts](..
 
 The October 9 [square-clique analysis](methods/clique_certificates.md) adds
 independently checkable combinatorial certificates to the complete v2 results.
-It improves 15 lower bounds, proves two additional optima, and leaves 19 of
-117 instances open after combining evidence. Fifty optima have matching
-clique bounds and labelings, without relying on solver lower-bound claims.
-Timed solver coverage is unchanged.
+It improved 15 lower bounds and established the historical 98 closed / 19
+open partition. The October 12 color-order construction then supplied three
+new matching witnesses, producing the current 101/16 partition. Fifty-three
+optima have matching clique bounds and labelings without relying on solver
+lower-bound claims. This is an overlapping subset, not an extra category.
+Timed solver coverage remains 77/117 SAT and 91/117 ILP under the all-three-OPT criterion.
 
 Develop and evaluate a SAT approach for minimum-span L(h,k)-labeling of **general simple undirected graphs**. Trees are an important experimental group, not the entire project. “General graphs” describes formulation scope; finite experiments neither represent all graphs nor imply that all instances solve quickly.
 

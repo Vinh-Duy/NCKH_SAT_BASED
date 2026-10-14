@@ -1,5 +1,6 @@
 # Project documentation
 
+- **Current research findings:** [claim-to-evidence summary](research_summary.md).
 - **Symbols, columns, and plots:** [data dictionary](data_dictionary.md).
 - **Explanations of old and new files:** [CSV catalog](results_catalog.md).
 - [Pipeline overview](project_overview.md).
