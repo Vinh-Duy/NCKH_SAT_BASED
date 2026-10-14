@@ -4,7 +4,8 @@ The OPT/FEASIBLE distinction describes the outcome of a particular run;
 it does not, by itself, determine the quality of a FEASIBLE incumbent.
 Table~\ref{tab:gap-coverage} consolidates the evidence for all
 \EvidenceInstances{} graph/parameter instances, using the completed v2
-confirmation before and after the addition of square-clique certificates.
+confirmation before and after square-clique certification and the
+color-order witness construction in Section~\ref{sec:color-order-results}.
 The archived v1 experiment is retained separately for the observation-quality
 and timeout-provenance analyses below. No v1/v2 observations or timings are pooled.
 For a fixed protocol and instance $i$, let
@@ -29,25 +30,29 @@ instances have closed intervals, leaving \EvidenceOpenBefore{} open.
 The archived v1 and current v2 classifications agree on all
 \EvidenceVOneSame{} instances, although their interval widths and retained
 progress differ. These matching counts do not imply equivalent solver progress.
-The additional bound from Proposition~\ref{prop:square-clique} certifies
-\EvidenceCliqueCertified{} optima from cliques and labelings alone; only
-\EvidenceNewlyClosed{} of these were previously open. Combining it with
-the v2 evidence therefore yields \EvidenceClosedAfter{} closed intervals
-and \EvidenceOpenAfter{} open intervals. The latter remain in the ER
-groups. The consolidated table is the common reference for these counts
-throughout the manuscript.
+Square-clique bounds first close \EvidenceNewlyClosed{} further intervals
+using stored witnesses. The color-order construction then closes
+\ConstructionNewlyClosed{} additional intervals with fresh witnesses.
+The combined evidence therefore yields \ConstructionClosed{} closed
+and \ConstructionOpen{} open intervals. The latter remain in the ER
+groups. Of the closed cases, \ConstructionCliqueCertified{} can be
+certified by a clique and a labeling alone. This overlapping subset is
+not added to the closed total. The consolidated table is the common
+reference for the final counts throughout the manuscript.
 
 \begin{table}[htbp]
 \centering\small\setlength{\tabcolsep}{4pt}
 \caption{Consolidated optimality evidence for 117 instances.}
 \label{tab:gap-coverage}
-\input{\EvidenceReportDir/summary.tex}
-\tablenote{Before-clique columns use v2: Theory denotes a witness attaining
+\input{\ConstructionReportDir/summary.tex}
+\tablenote{Original-v2 columns: Theory denotes a witness attaining
 the applicable pre-clique theoretical lower bound; Other denotes additional
 closed intervals. Theory + Other + Open = Cases. Clique-cert. counts optima
 proved by a square clique and a labeling; it overlaps the earlier closed
-cases and is not an additive category. Only \EvidenceNewlyClosed{} cases
-are newly closed. After adding clique bounds, Closed + Open = Cases.
+cases and is not an additive category. Overall,
+\ConstructionTotalNewlyClosed{} cases are newly closed: two by clique
+bounds on stored witnesses and three by new color-order witnesses.
+After both certification steps, Closed + Open = Cases.
 All counts refer to distinct graph/$(h,k)$ instances, not repetitions or
 timed solver successes. V1 has the same baseline classification but is not
 pooled into the final v2 intervals.}
@@ -56,7 +61,7 @@ pooled into the final v2 intervals.}
 For the archived v1 observation-quality analysis below, $L_i,U_i$ retain
 their original v1 meaning. In particular, its \GapOpen{} open intervals
 have widths \GapOpenMin{}--\GapOpenMax{}; these are not the widths or
-open-case count after the v2 clique analysis.
+open-case count after the v2 certification analyses.
 
 For any stored witness of span $u$, the remaining suboptimality satisfies
 \[
@@ -113,7 +118,7 @@ count a tighter lower bound for SAT, equal bounds, or a tighter bound for ILP;
 UB: equal counts equal witness spans. Both initial counts pairs retaining
 the shared initialization after external timeout. ALL covers 117 instances;
 OPEN is the original v1 subset of 21 unresolved instances, not the final
-19 open cases in Table~\ref{tab:gap-coverage}.}
+\ConstructionOpen{} open cases in Table~\ref{tab:gap-coverage}.}
 \end{table}
 
 Across the full cohort, all \BoundsFallbackObservations{} FEASIBLE

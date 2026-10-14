@@ -4,11 +4,13 @@ We apply Proposition~\ref{prop:square-clique} post hoc to all
 \CliqueInstances{} instances of the completed v2 confirmation, rather
 than selecting only successful cases. For each instance, the best saved
 labeling is compared with a clique bound computed on its original graph.
+This subsection describes the first certification stage, before the fresh
+witness construction in Section~\ref{sec:color-order-results}.
 The independent verifier validates all \CliqueInstances{} certificate
 objects. In \CliqueIndependentOptima{} cases the clique bound alone
 equals the witness span, proving optimality without using the solver's
 reported lower bound. Table~\ref{tab:gap-coverage} reports these counts
-alongside the pre-clique and final classifications by family and $(h,k)$.
+after incorporating both certification stages, by family and $(h,k)$.
 Most clique-certified cases were already closed by the pooled solver evidence.
 
 The clique bound improves the pooled lower bound for \CliqueImproved{}
@@ -31,12 +33,14 @@ or counted as a Gurobi OPT result within the original time budget.
 \tablenote{The saved interval combines the six original v2 observations.
 The certified value follows from a square clique and a stored feasible
 labeling. ER graphs use the archived generator and seeds. These are the
-two newly closed cases in Table~\ref{tab:gap-coverage}, not additional
+first two of the newly closed cases in Table~\ref{tab:gap-coverage}, not additional
 timed solver successes.}
 \end{table}
 
-The final closed/open partition is reported in
-Table~\ref{tab:gap-coverage}. The closed count includes solver-dependent
+This stage produces \EvidenceClosedAfter{} closed and
+\EvidenceOpenAfter{} open intervals. The final partition after the
+subsequent construction is reported in Table~\ref{tab:gap-coverage}.
+The closed count includes solver-dependent
 bounds and must not be added to the overlapping clique-certified count.
 Remaining intervals use
 $\max\{L_{\mathrm{saved}},L_{\mathrm{clique}}\}$ and the best saved witness

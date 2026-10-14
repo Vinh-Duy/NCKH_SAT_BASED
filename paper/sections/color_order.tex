@@ -1,0 +1,99 @@
+\subsection{Constructing witnesses by ordering color classes}
+\label{sec:color-order-results}
+The clique audit identifies instances with a useful lower bound but no
+stored labeling attaining it. We now seek such a labeling through a
+sufficient condition, separate from the timed SAT--ILP comparison.
+This is a bounded construction, not a complete decision procedure or a
+claim of a new general coloring method.
+
+\begin{proposition}[A sufficient color-order condition]
+\label{prop:color-order}
+Let $G$ be a nonempty simple undirected graph and $0<k\leq h\leq2k$.
+Suppose $C_1,\ldots,C_r$ partition $V(G)$ into nonempty independent sets
+of $G^2$. If $h>k$, suppose additionally that no edge of $G$ joins
+consecutive classes $C_i,C_{i+1}$. Then
+\[
+ f(v)=k(i-1)\quad\text{for }v\in C_i
+\]
+is an $L(h,k)$-labeling of span $k(r-1)$.
+If $G^2$ also contains a clique of size $r$, this span is optimal.
+\end{proposition}
+\begin{proof}
+Vertices in the same class have distance greater than two, so equal
+labels violate no constraint. Distinct classes have label difference at
+least $k$, satisfying every distance-two constraint. If $h=k$, this also
+suffices for edges. Otherwise, an edge cannot join consecutive classes
+by assumption, and its endpoints differ by at least $2k\geq h$.
+Every class is nonempty, so the span is $k(r-1)$. A square clique of size
+$r$ gives the matching lower bound by Proposition~\ref{prop:square-clique}.
+\end{proof}
+
+\paragraph{Bounded construction.}
+The implementation constructs a maximum-cardinality matching in the
+complement of $G^2$. Each matched pair forms a class; unmatched vertices
+form singleton classes. Every class is therefore independent in $G^2$.
+This restricts the construction to classes of size at most two and need
+not find a minimum coloring of $G^2$. Maximum matching only minimizes
+the number of classes within this restricted partition scheme; its
+optimality is unnecessary for checking a resulting labeling.
+
+For $h>k$, define a compatibility graph on the classes, with an edge
+between two classes exactly when no original graph edge joins them.
+The required ordering is a Hamiltonian path in this compatibility graph.
+A seeded insertion heuristic starts at a low-degree class, repeatedly
+inserts an unplaced class into a compatible position, and restarts if
+it cannot continue. It makes at most 100 attempts, with algorithmic seed 0
+and canonical vertex and class ordering. The algorithmic seed is separate
+from each archived graph-generation seed. A failure is reported as
+\texttt{UNKNOWN}; it proves neither nonexistence of an ordering nor
+infeasibility of the labeling instance. When $h=k$, no ordering search
+is needed. Parameters outside the sufficient condition are not handled
+by this construction; the general SAT/ILP formulations retain their
+original domain.
+
+\paragraph{Complete-cohort audit.}
+The construction was applied to all \ConstructionInstances{} instances,
+including those already solved, with the same attempt budget.
+It returned \ConstructionCandidates{} validated candidates and
+\ConstructionUnknown{} UNKNOWN outcomes. Only \ConstructionImproved{}
+candidates improve the previously saved upper bounds; all three attain
+the existing square-clique lower bounds. The four unsuccessful searches
+occur on already-closed BA instances and do not reopen their intervals.
+Table~\ref{tab:color-order-closures} records the new optima. Each listed
+graph has a square-independent partition with exactly $|Q|$ classes and
+a verified compatible order. Thus Proposition~\ref{prop:color-order}
+applies directly.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Optima certified by new color-order witnesses.}
+\label{tab:color-order-closures}
+\input{\ConstructionReportDir/closures.tex}
+\tablenote{ER graphs use the archived generator, edge probability $p$,
+and graph seed. Saved intervals include the earlier square-clique audit.
+Here $(h,k)=(3,2)$, and the constructed span equals $2(|Q|-1)$.
+The witnesses are fresh post-hoc constructions, not incumbents from the
+timed SAT/ILP runs. These three cases are included in the consolidated
+totals, not additional to them.}
+\end{table}
+
+Together with the two earlier clique closures from stored witnesses,
+this yields \ConstructionTotalNewlyClosed{} additional closed intervals
+relative to the pooled solver evidence: \ConstructionClosed{} closed
+and \ConstructionOpen{} open cases. Among the closed cases,
+\ConstructionCliqueCertified{} have a direct clique-plus-labeling
+optimality certificate. This subset overlaps the earlier closures and
+must not be added to the total. The remaining closed cases rely on
+applicable theoretical bounds or recorded solver lower-bound evidence;
+their optimality certificates are not supplied by this square-clique checker.
+
+All proposed partitions, orders and statuses are archived, including
+unsuccessful and non-improving attempts. A separate standard-library
+checker validates every retained labeling and clique from the original
+embedded graph. New constructions carry distinct provenance rather than
+the identity of the earlier solver observation. The full 117-instance
+record and its fingerprints are in \path{results/analysis/color_order/}.
+No original status, time or optimality-coverage count is changed.
+These certificates establish optima for particular archived graphs,
+not an exact formula for all ER graphs or evidence of faster SAT search.
+\FloatBarrier

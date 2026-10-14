@@ -23,7 +23,8 @@ oracle. Reference formulas with explicit applicability conditions are separated
 from general bounds and final search bounds. The tree experiments and the
 multi-family pilot provide initial evidence of agreement and the ability to
 establish optimality within a time limit. The supplementary $L(2,1)$ experiments
-partially address the fourth question. Symmetry experiments do not replace
+partially address the fourth question; detailed supplementary tables are
+retained in the companion technical report. Symmetry experiments do not replace
 SAT--ILP comparisons, and results on trees do not establish performance on all graphs.
 
 \subsection{Contributions and scope of evidence}
@@ -38,9 +39,15 @@ distinguishing established optima from feasible solutions at the time limit.
 \item An evaluation of optimality coverage and computational cost on structured
 and random instances, including cases where SAT or ILP does not establish
 optimality, rather than timing comparisons restricted to easy instances.
+\item Instance-specific optimality certificates combining square-clique
+lower bounds with explicit labelings, including a proved sufficient
+color-class ordering condition for $0<k\leq h\leq2k$ and its application
+to three previously unresolved instances in the fixed cohort.
 \end{enumerate}
 These are the contributions supported by the current manuscript. They do not
-claim that order encoding is new or that SAT always outperforms ILP. Bounds
+claim the first SAT approach to labeling, that order encoding is new, or
+that SAT always outperforms ILP. Earlier SAT/ILP formulations already exist
+\cite{shao2013distance,shao2014strong}. Bounds
 for structured graphs serve as validation references. Finite experiments do
 not establish a new formula for an entire family or resolve an open conjecture;
 such claims require separate proofs and comparison with prior work. The
