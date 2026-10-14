@@ -1,14 +1,14 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data color-data submission-pdf research-package english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
 confirmation-data:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_confirmation_report.py
 
-confirmation: confirmation-data gap-data bounds-verify progress-data clique-data evidence-data
+confirmation: confirmation-data gap-data bounds-verify progress-data clique-data evidence-data color-data
 	$(MAKE) pdf
 
 # Separate completed v2 experiment; does not invoke either solver.
@@ -22,6 +22,18 @@ clique-data:
 # Consolidated instance counts; archived v1 and current v2 remain separate.
 evidence-data:
 	$(PYTHON) scripts/export_evidence_summary.py
+
+# Bounded post-hoc construction on all 117 instances; no SAT/ILP benchmark.
+color-data:
+	$(PYTHON) scripts/analyze_color_order.py --publish
+
+# Two reviewable deliverables from the audited, fixed evidence.
+research-package: confirmation-data gap-data bounds-verify progress-data clique-data evidence-data color-data
+	$(MAKE) pdf
+	$(MAKE) submission-pdf
+
+submission-pdf:
+	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build paper/submission.tex
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
 gap-data:
@@ -52,7 +64,7 @@ tree-tables:
 paper-figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/build_manuscript_figures.py
 
-manuscript: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data clique-data evidence-data
+manuscript: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data clique-data evidence-data color-data
 	$(MAKE) pdf
 
 tables:

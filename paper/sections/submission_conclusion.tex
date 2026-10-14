@@ -1,0 +1,25 @@
+\section{Conclusion}
+We developed an exact SAT pipeline for minimum-span $L(h,k)$-labeling,
+established the correctness of its encoding and span search, and evaluated
+it against assignment ILP on a fixed multi-family cohort. In the repeated
+30-second comparison, SAT and ILP establish optimality in all three runs
+on \ProgressSATStable{} and \ProgressILPStable{} of 117 instances,
+respectively. The remaining-bound analysis shows why feasible-solution
+quality and optimality proofs must be evaluated separately.
+
+Combinatorial postprocessing complements this comparison. Combining the
+existing evidence with verified square-clique bounds and explicit
+color-class ordering witnesses closes \ConstructionClosed{} instances
+and leaves \ConstructionOpen{} open. Of the closed instances,
+\ConstructionCliqueCertified{} have matching square-clique bounds and
+labelings, allowing a solver-independent optimality check. These
+certificates concern the evaluated instances and are not additional
+timed solver successes or a new exact formula for an entire graph class.
+
+The contribution is a correct general-graph formulation with an auditable
+comparison of exact methods and explicit limits of their current evidence.
+The study does not claim that order encoding is new or that SAT dominates
+ILP. A controlled encoding ablation and independently checkable UNSAT
+traces are possible future extensions. Resolving every remaining interval
+is not required to report the established results and computational limits
+of the present experiment.
