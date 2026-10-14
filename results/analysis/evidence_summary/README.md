@@ -1,6 +1,10 @@
 # Consolidated evidence summary
 
-The [reviewed report](0700e674e1e6ba4e/README.md) supplies manuscript Table 9.
+The [reviewed report](0700e674e1e6ba4e/README.md) is the historical 98/19
+summary, before the [color-order construction](../color_order/README.md).
+The manuscript's current unified table uses that subsequent report and
+shows 101 closed / 16 open with 53 overlapping direct certificates.
+The earlier version below remains unchanged for provenance.
 It brings the baseline and clique-augmented classifications of the same
 117 instances into one table, grouped by graph family and (h,k).
 
@@ -23,5 +27,5 @@ Per-run statuses, times, and optimality coverage are unchanged.
 - [Source fingerprints](0700e674e1e6ba4e/sources.json).
 
 `make evidence-data` revalidates and exports this summary without running either
-solver. `make pdf` compiles the selected table. The final total is a combination
+solver. `make research-package` compiles the current selected evidence. Each total is a combination
 of available evidence, not the number solved by either backend within 30 seconds.

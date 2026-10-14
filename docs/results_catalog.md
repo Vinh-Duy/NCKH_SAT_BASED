@@ -1,5 +1,11 @@
 # CSV catalog and documentation index
 
+**October 12:** [current construction report](../results/analysis/color_order/README.md)
+contains `instances.csv` (117), `summary.csv` (15 groups + ALL),
+`newly_closed.csv` (3) and `unresolved.csv` (16). The consolidated outcome
+is 101 closed / 16 open; 53 overlapping clique-plus-labeling certificates
+are independently checkable. This is post-hoc evidence, not new solver runs.
+
 **New confirmation:** [general_confirm_r1.csv](../results/runs/general_confirm_r1.csv) has 702 rows; see its [companion guide](../results/runs/general_confirm_r1.README.md). [Versioned analysis](../results/analysis/general_confirm_r1/README.md) contains observations (702), instances (117), and summary (15 groups). Do not pool report versions as new measurements. Run `make confirmation` to create/update the PDF.
 
 This inventory was compiled on September 27, 2026. Row counts exclude headers and are not counts of independent graphs or optimal solutions. Having metadata/witnesses does not imply that a dataset has been audited. Raw files are preserved. general_pilot_v1 had 234 rows at this review and was subsequently audited separately; see the analysis entries below.

@@ -1,9 +1,11 @@
 # Research data and outputs
 
-October 9: [independent square-clique certificates](analysis/clique_certificates/README.md)
-improve 15 lower bounds and close two additional instances. Combined evidence
-closes 98/117 v2 instances, leaving 19 open. Original solver-only intervals
-and timed coverage remain unchanged.
+October 12: [color-order constructions and consolidated evidence](analysis/color_order/README.md)
+close three additional instances, bringing the total to **101/117 closed,
+16 open**, including 53 overlapping direct clique-plus-labeling certificates.
+The October 9 [square-clique audit](analysis/clique_certificates/README.md)
+remains the historical 98/19 stage. Neither post-hoc step changes original
+solver statuses or timed coverage.
 
 September 28 audit: [1,344 current witnesses and 117 common-span model comparisons](analysis/exact_review_20260928/README.md). Derived results are stored separately; raw data and solver statuses remain unchanged.
 

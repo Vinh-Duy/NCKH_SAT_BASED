@@ -18,6 +18,9 @@ These are derived artifacts; raw data are in results/runs. Do not edit numerical
 | *_main_r1_plots/ | Symmetry delta figures, Base−Sym; per-directory READMEs |
 | manuscript_figures/ | Labeling/pipeline illustrations and tree plots; not all are benchmark measurements |
 | general_confirm.tex | Pointer to the current versioned three-repetition confirmation report |
+| progress_confirmation.tex | Audited v2 coverage/bound comparisons; separate from archived v1 |
+| evidence_summary.tex | Historical 98/19 pooled evidence after the first clique audit |
+| color_order.tex | Current 101/16 evidence and three construction closures; pointer to the versioned report under results/analysis/color_order/ |
 | english/ | English presentation copies of historical tables, with original/translated hashes; numerical entries unchanged |
 
 See the [table/plot dictionary](../../docs/data_dictionary.md), [CSV catalog](../../docs/results_catalog.md). `make manuscript` audits the tree/confirmation inputs, generates figures, and compiles; it does not automatically certify arbitrary new CSVs. `make pdf` prepares English table copies and compiles existing data artifacts. The main_r1 exporter requires matching historical source hashes; do not edit manifests to bypass checks.

@@ -1,5 +1,10 @@
 # Square-clique certificates
 
+This is the historical first certification stage (98 closed / 19 open).
+The [subsequent color-order construction](../color_order/README.md) provides
+three new witnesses; current combined totals are 101 closed / 16 open,
+with 53 overlapping direct certificates. The archived results below are unchanged.
+
 The [consolidated evidence table](../evidence_summary/README.md) compares the
 before/after counts by family and (h,k) for all 117 instances; this directory
 retains the detailed clique certificates and their original audit.
@@ -18,8 +23,10 @@ derived only from the complete v2 confirmation of October 7.
 | Optima independently certified by clique + labeling alone | 50 |
 
 The 50 independently certified optima overlap the 98 combined closures;
-these counts must not be added. The other 48 combined closures still use
-saved solver lower-bound claims. The 15 improvements include the two new closures.
+these counts must not be added. The other 48 combined closures use
+applicable theoretical bounds or saved solver lower-bound claims; the
+square-clique checker does not certify those optima. The 15 improvements
+include the two new closures.
 
 For `ER_40_p0.30_seed1`, L(3,2) has optimal span **64**: a 33-vertex
 square clique gives 2(33−1)=64. For `ER_60_p0.30_seed1`, the optimum is
