@@ -2,6 +2,17 @@
 
 Review dated September 27, 2026. The topic remains **SAT-Based Approach for L(h,k)-Labeling of General Graphs**. The main problem is **vertex** labeling with shortest-path distance-1 and distance-2 constraints. The four additional PDFs inform related work; their variants do not automatically expand implementation scope.
 
+**October 12 positioning update:** SAT and ILP labeling formulations predate
+this project. Shao and Vesel's [2013 paper](https://doi.org/10.1049/iet-com.2012.0568)
+uses assignment ILP and direct SAT for distance-constrained labeling, with
+L(3,2,1) product-graph experiments. Their [2014 paper](https://doi.org/10.1155/2014/741932)
+presents direct SAT for L(2,1). [Tamura et al. (2009)](https://doi.org/10.1007/s10601-008-9061-0)
+provide an established order-encoding reference. These are included in the
+revised bibliography and related-work section. The defensible contribution
+is the proved implementation, fixed-cohort evaluation and auditable
+certificates; it is not first use of SAT, invention of order encoding or
+an unmeasured improvement over these earlier implementations.
+
 **September 27 evening addition:** `outline_L(hk).pdf` and `genetic.pdf` were read. The outline is a working document, not evidence of novelty. Murugan (2015) on coronas and Sarhan et al. (2026) on radio-labeling GA were added to the bibliography; GA has not been implemented or evaluated.
 
 ## Identifying the references

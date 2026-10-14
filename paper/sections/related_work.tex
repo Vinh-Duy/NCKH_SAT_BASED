@@ -82,6 +82,33 @@ Vu Thanh et al.\ \cite{vu2026radio} & Radio labeling, preprint & Related formula
 Table~\ref{tab:related} distinguishes foundational references from extensions.
 The shared term ``labeling'' does not make these problems or their optima identical.
 
+\subsection{Established SAT and ILP approaches}
+Shao and Vesel \cite{shao2013distance} formulated assignment ILP and direct
+SAT models for distance-constrained $L(k_1,\ldots,k_r)$-labeling with positive,
+strictly decreasing thresholds. They used LINGO and MiniSAT
+for $L(3,2,1)$-labeling of products of paths and cycles. Their subsequent
+$L(2,1)$ study \cite{shao2014strong} explicitly presented a direct SAT
+encoding and used MiniSAT to obtain values on strong products. SAT and ILP
+are therefore established approaches to these labeling problems. The
+distance-3 results are not numerical reference values for our two-distance
+problem, and strong products are distinct from the Cartesian products in
+the main benchmark.
+
+Order encoding is also an established technique. Tamura et al.\
+\cite{tamura2009order} encode finite-domain integer comparisons by Boolean
+threshold variables and relate the technique to earlier scheduling
+encodings. The present study applies this representation to the two
+distance constraints and proves the correctness of the implemented
+formulation; it does not introduce order encoding itself.
+
+The contribution is consequently scoped to the implemented $L(h,k)$
+pipeline and its reproducible evaluation: common instances and label
+domains for SAT and assignment ILP, retained feasible witnesses and search
+bounds, and separately checked post-hoc optimality certificates. These
+features define what is evaluated here; they do not establish a first-use
+claim or computational superiority over the cited implementations, which
+have not been reproduced under the present protocol.
+
 \subsection{Relation to SAT methods for radio labeling}
 The preprint by Vu Thanh et al.\ \cite{vu2026radio} uses order encoding and
 incremental SAT for radio labeling; its evaluation sets the radio parameter
