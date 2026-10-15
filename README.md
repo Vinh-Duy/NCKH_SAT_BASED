@@ -1,6 +1,6 @@
 # SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-**October 12 research package:** the fixed v2 experiment is complete (702 observations). Combined evidence now establishes **101 optima among 117 instances, with 16 open**; 53 have directly checkable clique-plus-labeling certificates. Run `make research-package` to verify the evidence and build both PDFs without rerunning SAT/ILP. [Research summary](docs/research_summary.md) · [full technical report](build/main.pdf) · [focused manuscript](build/submission.pdf).
+**October 14 research package:** the fixed v2 experiment is complete (702 observations). Combined evidence establishes **101 optima among 117 instances, with 16 open**. Rechecking the saved graphs and labelings identifies **90 optima supported independently of solver bounds**, including 53 clique-plus-labeling certificates; the other 11 closures rely on recorded solver lower bounds. These categories overlap and must not be added together. Run `make research-package` to verify the evidence and build both PDFs without rerunning SAT/ILP. [Research summary](docs/research_summary.md) · [full technical report](build/main.pdf) · [focused manuscript](build/submission.pdf).
 
 This project studies SAT-based minimum-span labeling of simple undirected graphs. Adjacent vertices require label difference at least h; vertices at distance **exactly 2** require difference at least k. The primary research domain is h≥k≥1, with default (2,1). Labels start at 0; span s permits s+1 label values. Disconnected graphs are supported.
 
@@ -49,7 +49,9 @@ make test
 make research-package
 ```
 
-This verifies selected evidence and bounded post-hoc constructions, then builds `main.tex` → `build/main.pdf` (comprehensive technical report) and `paper/submission.tex` → `build/submission.pdf` (focused review draft). It does not run SAT/ILP benchmarks. `make manuscript` additionally refreshes tree tables and illustrations. `make pdf` and `make submission-pdf` compile the respective existing artifacts. The two documents still require confirmed author information and the chosen institution/venue format before formal submission. The old PDF remains under `archive/reports/legacy_root/`.
+Both manuscripts follow the same five-section structure. The focused version includes evidence for all four research questions, including a separate symmetry table and runtime figures alongside optimality coverage.
+
+This verifies selected evidence and bounded post-hoc constructions, regenerates tables and illustrations, then builds `main.tex` → `build/main.pdf` (comprehensive technical report) and `paper/submission.tex` → `build/submission.pdf` (focused review draft). It does not run SAT/ILP benchmarks. `make manuscript` performs the same preparation but compiles only the full report. `make pdf` and `make submission-pdf` refresh compact summary tables and compile the respective existing artifacts. The two documents still require confirmed author information and the chosen institution/venue format before formal submission. The old PDF remains under `archive/reports/legacy_root/`.
 
 `make report`/`make tables` reconstruct historical main_r1 CNFs. Following source changes, hashes differ from the manifests and the exporter intentionally refuses reconstruction. Use a separate checkout of the matching historical source to recount; do not alter old hashes. The current manuscript uses saved main_r1 tables and validated tree/confirmation tables. English presentation copies preserve historical numerical contents and provenance records.
 
