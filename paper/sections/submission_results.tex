@@ -1,144 +1,192 @@
-\section{Experimental evaluation}
+\section{Experiments}
 \label{sec:submission-results}
-\subsection{Cohort and protocol}
-The primary experiment uses a fixed cohort of 39 graphs. Each graph is
-evaluated with $(h,k)=(1,1)$, $(2,1)$ and $(3,2)$, giving 117 labeling instances.
-It comprises nine random labeled trees with 20, 40 and 60 vertices and
-three graph-generation seeds per size; three grids
-$P_4\square P_5$, $P_5\square P_8$ and $P_6\square P_{10}$;
-18 Erd\H{o}s--R\'enyi graphs with the same sizes and seeds and edge
-probabilities $p\in\{0.15,0.30\}$; and nine Barab\'asi--Albert graphs
-with the same sizes and seeds and attachment parameter $m=2$.
-Disconnected samples are retained. The graph cohort is not reselected
-according to solver outcomes.
+\subsection{Cohort, protocol and validation}
+The primary experiment fixes 39 graphs and evaluates each with
+$(h,k)\in\{(1,1),(2,1),(3,2)\}$, giving 117 instances. It includes nine
+random labeled trees, 18 Erd\H{o}s--R\'enyi (ER) graphs and nine
+Barab\'asi--Albert (BA) graphs: each randomized configuration uses
+20, 40 and 60 vertices and seeds 0, 1 and 2. ER edge probabilities are
+$p=0.15,0.30$; BA adds $m=2$ edges per new vertex. The remaining three
+graphs are grids $P_4\square P_5$, $P_5\square P_8$ and
+$P_6\square P_{10}$. Disconnected samples are retained; the cohort is
+not selected by solver outcome.
 
-The SAT backend is CaDiCaL with order encoding and a fresh solver for each
-span trial. The ILP baseline is Gurobi with the assignment formulation,
-one thread and a greedy MIP start. Symmetry breaking is disabled in this
-comparison. Each instance has three repetitions per backend, producing
-\ProgressObservations{} observations. Backends run sequentially in
-separate processes, with their order rotated across instances and
-repetitions. Each run has a 30-second external limit; elapsed wall time
-includes startup, model construction, solving and cleanup. Parent-side
-witness validation is outside the recorded worker interval.
-The shared comparison runner's external deadline governs both backends;
-the individual solver APIs' time-limit mechanisms are not assumed equivalent.
+CaDiCaL uses order encoding and Gurobi 13.0.3 uses assignment ILP with one
+thread and a greedy MIP start. Symmetry breaking is disabled in this
+comparison. Three repetitions per backend give \ProgressObservations{}
+observations. Backends run sequentially in separate processes, with
+execution order rotated. Each run has a 30-second external limit;
+wall time includes startup, model construction, solving and cleanup.
+Final parent-side witness validation is outside this interval.
+The manifest records Python 3.13.7, NetworkX 3.6.1 and PySAT 1.9.dev15
+on macOS 13.7.8 x86\_64. This comparison uses the same external deadline
+for both backends; their individual APIs have different native timeout
+mechanisms, which are not treated as equivalent measurements. The
+\texttt{isolated-progress-v2} runner retains intermediate feasible
+solutions and lower-bound updates at interruption. SAT sends completed
+span decisions; Gurobi sends incumbent and bound updates. Interruption
+tests check retention of the last accepted snapshot. The archived v1
+runner could retain only the initial shared snapshot after an external
+timeout; its equal intervals are not evidence of equal solver progress. One Gurobi run
+returned \FEAS{} early with an unrecorded native stopping reason;
+it remains feasible and is not counted as optimal.
 
-The completed \texttt{isolated-progress-v2} run retains intermediate
-validated incumbents and lower-bound updates. SAT transmits completed
-span decisions; Gurobi transmits available incumbent and bound information.
-A timeout without a closed interval is reported as \FEAS, not \OPT.
-One Gurobi observation returned \FEAS{} early; its native stopping reason
-was not recorded, so it remains a feasible observation with an unknown
-native termination reason. No \OPT{} observation exceeds the recorded budget.
+The audit checks all saved labelings against shortest-path constraints,
+plus cohort coverage, configurations and interval consistency. The
+encoding is also tested against an exhaustive small-instance oracle.
+These checks supplement the proof for RQ1; feasibility validation does
+not independently verify UNSAT or ILP dual-bound claims. Raw graphs,
+labelings and manifests are retained under \path{results/runs/}, with
+fingerprinted analyses under \path{results/analysis/}. Historical pilot
+and v1 runs are not pooled with v2. Hardware metadata are incomplete,
+so the measurements do not specify a portable reference-machine benchmark.
+The build target \texttt{make research-package} audits selected evidence,
+regenerates tables and illustrations, and compiles both reports. Input and
+output hashes prevent silent changes to cached analyses. Reconstructing
+historical CNFs requires matching source fingerprints; summarizing their
+recorded counts does not reconstruct them. Resuming a benchmark requires
+the same configuration, source, environment and schema.
 
-The source manifest, explicit graphs, configurations, bounds and saved
-labelings are retained with the raw results. An audit checks all
-\ProgressObservations{} witnesses and the expected cohort and repetitions.
-Label validation independently checks shortest-path constraints, but does
-not verify SAT UNSAT traces or MILP dual certificates. Historical pilot,
-v1 and supplementary $L(2,1)$ symmetry results remain in the companion
-research report and archive; their timings are not pooled into this experiment.
+\subsection{Agreement with theory and consolidated evidence (RQ2)}
+The equal-parameter tree formula
+$\lambda_{h,h}(T)=h\Delta(T)$ and the grid formula
+$\lambda_{2,1}(P_n\square P_m)=6$ for $n,m\geq4$ cover 12 instances.
+Both backends agree with these values throughout the repeated experiment.
+Proofs and applicability conditions appear in the appendix. More generally,
+61 instances attain their applicable initial theoretical lower bound;
+35 additional instances close through pooled solver evidence.
+Table~\ref{tab:submission-evidence} consolidates these original outcomes
+and the subsequent certificates for all 117 instances.
 
-\subsection{Optimality coverage and bound quality}
+\begin{table}[htbp]
+\centering\small
+\caption{Consolidated optimality evidence on 117 instances.}
+\label{tab:submission-evidence}
+\input{\ConstructionReportDir/summary.tex}
+\tablenote{Original-v2 columns: Theory is a witness attaining the initial
+theoretical bound; Other counts additional closed intervals. Theory +
+Other + Open = Cases. Final columns include both postprocessing steps.
+Clique-cert. counts matching square-clique bounds and labelings and
+is a subset of Closed; Closed + Open = Cases. These are distinct
+instances, not timed solver successes or independent repetitions.}
+\end{table}
+
+The clique audit closes two of the 21 initially open intervals using
+stored witnesses. The bounded color-order construction is then applied
+to all 117 instances under the same configuration, returning
+\ConstructionCandidates{} feasible candidates and
+\ConstructionUnknown{} UNKNOWN outcomes. Exactly
+\ConstructionImproved{} candidates improve the retained upper bound,
+all attaining the existing clique lower bound. Table~\ref{tab:five-closures} gives all five newly closed cases,
+including the three constructions. The four unsuccessful construction
+searches concern already-closed BA cases and do not reopen them.
+The final total is \ConstructionClosed{} closed and \ConstructionOpen{}
+open intervals. These post-hoc certificates leave the original solver
+times and statuses unchanged.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Five intervals closed by combinatorial certificates.}
+\label{tab:five-closures}
+\input{\SubmissionSummaryDir/five_closures.tex}
+\tablenote{All cases are ER graphs with $p=0.30$ and $(h,k)=(3,2)$;
+Seed denotes the graph-generation seed. V2 interval precedes both
+certification stages. UB gain is the reduction from the best saved
+solver span. Two cases use stored labelings; three use new constructions.
+Every final span equals its checked square-clique lower bound. These
+five cases are included in Table~\ref{tab:submission-evidence}.}
+\end{table}
+
+\input{paper/sections/certificate_support}
+
+\subsection{Separate tree screen}
+As a separate structured-graph check, the $L(3,2)$ screen of
+\TreeGraphCount{} trees with 100--1600 vertices gives matching reported
+optimal spans for both backends; \TreeTightCount{} attain the degree
+bound. Its single run per graph/backend and 60-second budget differ
+from v2. It is additional validation, not part of the 117-instance total.
+Table~\ref{tab:submission-tree-screen} summarizes the measured runs.
+The two degree-bound exceptions are the 100-vertex tree with seed 5
+(span 10 versus bound 9) and the 400-vertex tree with seed 3
+(span 12 versus bound 11). These values rule out universal attainment
+of the degree bound, even in this sampled tree cohort.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Separate $L(3,2)$ screen of 50 trees.}
+\label{tab:submission-tree-screen}
+\input{paper/generated/tree_screen}
+\tablenote{Ten graph seeds, 0--9, per size; one measurement per backend
+and graph, under a 60-second external limit. Degree and span entries
+are ranges; times are medians across the ten graphs. All runs report
+OPT, and 48 trees attain the degree bound. These timings are not pooled
+with the repeated 30-second primary comparison.}
+\end{table}
+
+\subsection{SAT--ILP cost and optimality coverage (RQ3)}
+SAT and ILP report OPT in \ProgressSATOpt/351 and \ProgressILPOpt/351 observations, respectively.
+More conservatively, they prove optimality in every repetition on
+\ProgressSATStable/117 and \ProgressILPStable/117 instances;
+\ProgressJointStable{} satisfy this criterion for both backends.
+Repetitions measure variability on the same input, rather than supplying
+additional independent graph samples.
 \begin{table}[htbp]
 \centering\small
 \caption{Optimality coverage within 30 seconds.}
 \label{tab:submission-coverage}
 \input{\ProgressReportDir/coverage.tex}
-\tablenote{Each backend has 351 observations on 117 instances. All-three OPT
-counts instances proved optimal in every repetition. Improved UB counts
-FEASIBLE observations with a saved feasible span smaller than the shared
-initial incumbent. It does not establish optimality.}
+\tablenote{Each backend has 351 observations. All-three OPT counts
+instances optimal in every repetition. Improved UB counts feasible
+observations with a smaller span than the shared initial incumbent;
+it is not an optimality claim.}
 \end{table}
-
-Table~\ref{tab:submission-coverage} shows more stable optimality proofs for
-Gurobi: \ProgressILPStable/117 instances, compared with
-\ProgressSATStable/117 for CaDiCaL. Both backends are optimal in all three
-repetitions on \ProgressJointStable{} instances. Repetitions are observations
-of the same graphs, not additional independent graph samples. Runtime
-comparisons restricted to this common solved subset would need to be read
-alongside the coverage difference; they cannot characterize unsolved instances.
+\input{paper/sections/family_runtime_summary}
+The size-based summary in Appendix~\ref{sec:submission-size-summary}
+also reports coverage alongside time; medians on solved subsets alone
+cannot establish scaling on the full cohort.
 
 \begin{table}[htbp]
 \centering\small
 \caption{Paired lower- and upper-bound comparisons.}
 \label{tab:submission-bounds}
 \input{\ProgressReportDir/bounds.tex}
-\tablenote{Pairs match the same graph, parameter pair and repetition. A
-higher lower bound and a smaller validated upper bound are preferable.
-The open subset comprises the 21 instances unresolved after pooling v2
-solver evidence, before either combinatorial postprocessing step. Its
-63 pairs are retained as a fixed analysis subset; they are not the final
-\ConstructionOpen{} open instances in Table~\ref{tab:submission-evidence}.}
+\tablenote{Pairs match graph, parameters and repetition. A higher lower
+bound (LB) and a smaller validated upper bound (UB) are preferable.
+Open denotes the fixed 21-instance subset unresolved by pooled v2
+solver evidence before postprocessing, giving 63 pairs. It is not the
+final \ConstructionOpen{} open instances in
+Table~\ref{tab:submission-evidence}.}
 \end{table}
 
-On this initially open subset, SAT has a smaller feasible upper bound in
+In this initially open subset, SAT obtains a smaller upper bound in
 \ProgressOpenSATUB{} pairs, ILP in \ProgressOpenILPUB{}, and
-\ProgressOpenEqualUB{} tie. ILP has a stronger recorded lower bound in
-\ProgressOpenILPLB{} pairs and \ProgressOpenEqualLB{} tie; SAT has none
-with a stronger lower bound on this subset. These outcomes distinguish
-solution quality from the ability to exclude smaller spans. They support
-complementary behavior on the measured instances, not equivalent
-effectiveness or universal dominance by either method.
+\ProgressOpenEqualUB{} tie. ILP has a stronger lower bound in
+\ProgressOpenILPLB{} pairs and \ProgressOpenEqualLB{} tie; SAT has no
+stronger lower bound in this subset. Differences reach
+\ProgressMaxUB{} label units for upper bounds and \ProgressMaxLB{}
+for lower bounds. Thus the methods show complementary solution and
+proof behavior, not uniformly small differences or general equivalence.
 
-\subsection{Consolidated optimality evidence}
 \begin{table}[htbp]
 \centering\small
-\caption{Consolidated instance-level evidence.}
-\label{tab:submission-evidence}
-\input{\ConstructionReportDir/summary.tex}
-\tablenote{Original-v2 columns: Theory denotes a witness attaining the
-applicable initial theoretical bound; Other denotes additional closed
-intervals. Theory + Other + Open = Cases. The final columns include both
-certification steps: two new closures from cliques with stored witnesses
-and three from color-order constructions. Clique-cert. counts matching
-square-clique bounds and labelings; it overlaps Closed and is not added
-again. Closed + Open = Cases. Counts are distinct graph/parameter
-instances, not per-run successes; timed solver coverage remains unchanged.}
+\caption{Model sizes at a common label domain.}
+\label{tab:submission-model-size}
+\input{paper/generated/english/results/analysis/exact_review_20260928/models.tex}
+\tablenote{Medians over the same fixed cohort, using the smaller validated
+pilot span per instance as a common domain. SAT counts unsimplified order
+CNF; ILP counts assignment binaries and rows, with one additional integer
+variable per model. No backend presolve is included. Column medians may
+come from different instances. This separate size audit does not describe
+the models visited during each v2 solver run.}
 \end{table}
 
-Applicable formulas and bounds provide a separate correctness reference.
-In particular, the equal-parameter tree formula and the $L(2,1)$ grid
-formula in the appendix cover 12 instances in this cohort. References
-are used only within their stated graph and parameter domains. Agreement
-on tested instances is validation evidence, rather than a proof of a new
-formula over an entire family.
+At the same span, order SAT uses fewer variables than assignment ILP,
+but can contain more clauses than the ILP has rows
+(Table~\ref{tab:submission-model-size}). Both include the same number
+$B$ of forbidden pairs in Table~\ref{tab:submission-symbolic}; SAT adds
+monotonicity clauses, while ILP adds assignment and maximum-label rows.
+A linear row and a clause have different processing costs. These counts
+explain representation size and do not predict a solver's runtime.
 
-Pooling v2 solver intervals originally closed \ProgressClosed{} instances.
-The square-clique analysis increased this to \EvidenceClosedAfter{} by
-matching a lower bound to stored feasible witnesses in two previously
-unresolved cases. The additional construction in
-Section~\ref{sec:color-order-results} supplies new explicit witnesses and
-closes \ConstructionNewlyClosed{} more. Table~\ref{tab:submission-evidence}
-is the final instance-level summary. Solver-dependent proofs remain
-distinguished from directly checked combinatorial certificates.
-
-A separate screen of \TreeGraphCount{} $L(3,2)$ trees with 100--1600 vertices
-found matching reported optimal spans for both backends; \TreeTightCount{}
-attain the degree bound. Its different size range, single run per graph
-and backend, and 60-second limit prevent pooling its timings with the
-primary experiment. It supplies additional structured-graph validation,
-not evidence that every tree is easy or that the degree bound is always tight.
-
-\subsection{Validity and reproducibility limits}
-The cohort includes several graph models but only three graph-generation
-seeds at each randomized configuration and 20--60 vertices in the primary
-comparison. Its observations do not represent all graphs or all solver
-implementations. Assignment ILP is one formulation; the results are not a
-comparison with every possible ILP method. SAT/ILP agreement supplements,
-but does not replace, mathematical arguments or independent certificates.
-
-The experiment does not include a controlled direct-versus-order encoding
-ablation, incremental SAT or a GA baseline. Clause counts measure model
-representation and do not prove runtime improvements. The post-hoc
-construction is analyzed separately from timed solver performance.
-Historical hardware metadata are incomplete, so no reference-machine
-performance claim is inferred from the available software versions alone.
-
-Raw observations, witnesses and manifests remain under \path{results/runs/}.
-The v2 analysis, combinatorial certificates and consolidated summaries are
-stored in versioned directories under \path{results/analysis/}. Source
-fingerprints link derived tables to their inputs. The report-generation
-targets revalidate saved evidence and compile the manuscript without
-rerunning the original solver experiment.
+\input{paper/sections/symmetry_summary}
+\FloatBarrier

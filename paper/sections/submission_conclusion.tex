@@ -1,25 +1,62 @@
-\section{Conclusion}
-We developed an exact SAT pipeline for minimum-span $L(h,k)$-labeling,
-established the correctness of its encoding and span search, and evaluated
-it against assignment ILP on a fixed multi-family cohort. In the repeated
-30-second comparison, SAT and ILP establish optimality in all three runs
-on \ProgressSATStable{} and \ProgressILPStable{} of 117 instances,
-respectively. The remaining-bound analysis shows why feasible-solution
-quality and optimality proofs must be evaluated separately.
+\section{Discussion and conclusion}
+\subsection{Interpretation of the results}
+The four research questions have different types of answers.
+For RQ1, the encoding equivalence and span-search invariant establish
+correctness: a feasible labeling supplies an upper bound, and the search
+reports optimality only when justified bounds meet. The implementation
+checks decoded labelings independently; solver-only lower bounds still
+rely on the backend's correctness because UNSAT and dual certificates
+are not independently replayed.
 
-Combinatorial postprocessing complements this comparison. Combining the
-existing evidence with verified square-clique bounds and explicit
-color-class ordering witnesses closes \ConstructionClosed{} instances
-and leaves \ConstructionOpen{} open. Of the closed instances,
-\ConstructionCliqueCertified{} have matching square-clique bounds and
-labelings, allowing a solver-independent optimality check. These
-certificates concern the evaluated instances and are not additional
-timed solver successes or a new exact formula for an entire graph class.
+For RQ2, the 12 applicable exact-reference instances agree with theory.
+Combining solver intervals, theoretical bounds and new constructions
+closes \ConstructionClosed{} of 117 instances, leaving
+\ConstructionOpen{} open. Within the retained evidence,
+\SupportIndependent{} closures have mathematical support independent
+of solver bounds; the other \SupportSolverDependent{} depend on
+recorded solver lower bounds. The \ConstructionCliqueCertified{} direct
+clique-plus-labeling certificates are included in that total. The
+color-order condition provides a sufficient construction and three
+new matching witnesses, rather than a formula for all graphs in a family.
 
-The contribution is a correct general-graph formulation with an auditable
-comparison of exact methods and explicit limits of their current evidence.
-The study does not claim that order encoding is new or that SAT dominates
-ILP. A controlled encoding ablation and independently checkable UNSAT
-traces are possible future extensions. Resolving every remaining interval
-is not required to report the established results and computational limits
-of the present experiment.
+For RQ3, Gurobi proves optimality more consistently on the full cohort,
+while CaDiCaL has lower median times on the common solved subset and
+better feasible bounds on part of the initially unresolved subset.
+Coverage, time and bound quality therefore describe distinct strengths.
+For RQ4, the paired symmetry study shows smaller CNFs on the tested
+families with added constraints, but the runtime effect varies. Cycles
+have a median clause reduction of 12.58\% with a median time ratio near
+one. The evidence supports descriptive, family-specific effects rather
+than a universal speedup.
+
+All 16 intervals remaining open after postprocessing concern ER graphs
+with $p=0.15$; all five certificate closures concern $p=0.30$. This is a
+pattern in the present cohort and certification method, not a general
+ranking of ER difficulty. The timed comparison also contains difficult
+dense instances, as Table~\ref{tab:family-runtime} shows. The matching
+construction applies to any graph square, but restricts color classes
+to pairs and singletons. On sparse squares, larger independent sets may
+be needed to approach the clique bound. General square-coloring followed
+by compatible class ordering is a possible extension, with no guarantee
+of attaining that bound. The tested random trees are solved within their
+budgets; this does not imply that arbitrary $L(3,2)$ tree instances are easy.
+
+\subsection{Limitations}
+The primary comparison is limited to 20--60 vertices, three parameter
+pairs and three graph seeds per randomized configuration. Results depend
+on the chosen formulations, backends and time budget. The construction
+was designed after examining unresolved cases; testing it on the whole
+cohort records failures as well as successes but is not a held-out
+assessment. The symmetry experiment has only one measurement per
+configuration and cannot establish statistical significance. Neither
+experiment tests direct versus order encoding, incremental SAT, a
+specialized tree algorithm or a GA baseline. These limits qualify performance conclusions without weakening
+checked labeling and clique certificates.
+
+\subsection{Conclusion}
+The study provides an exact general-graph formulation and a reproducible
+account of where the evaluated methods prove optimality, retain useful
+bounds or remain unresolved. Independent UNSAT traces, a controlled encoding ablation and solver reuse
+across spans would strengthen the evidence. Coloring-based certificate
+search may supply further optimal witnesses, but is not part of the
+reported experiment.

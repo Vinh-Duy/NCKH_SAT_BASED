@@ -6,6 +6,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[a4paper,margin=2.5cm]{geometry}
+\setlength{\emergencystretch}{1em}
 \usepackage{amsmath,amssymb,amsthm,booktabs,array}
 \renewcommand{\qedsymbol}{\textnormal{QED}}
 \usepackage{graphicx,float,hyperref}
@@ -22,44 +23,42 @@
 \input{paper/generated/progress_confirmation}
 \input{paper/generated/evidence_summary}
 \input{paper/generated/color_order}
+\input{paper/generated/submission_summary}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs}
 \author{}
-\date{October 12, 2026}
+\date{October 14, 2026}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-We study an exact Boolean satisfiability (SAT) approach to minimum-span
-$L(h,k)$-labeling of simple undirected graphs, with $h\geq k\geq1$.
-Threshold variables provide an order encoding, and a bounded span search
-separates feasible labelings from proven optima. We establish encoding
-equivalence and the search invariant, specify valid symmetry conditions,
-and compare the approach with assignment integer linear programming (ILP).
-A fixed cohort of 117 instances includes trees, grids, Erd\H{o}s--R\'enyi
-and Barab\'asi--Albert graphs with three parameter pairs. Under a 30-second
-external limit and three repetitions, SAT and ILP establish optimality in
-every repetition on \ProgressSATStable{} and \ProgressILPStable{} instances,
-respectively. Validated feasible bounds and recorded lower bounds favor
-different backends on some unresolved instances.
-Separately, combinatorial certificates combine square-clique lower bounds
-with explicit labelings. A color-class ordering construction closes
-\ConstructionNewlyClosed{} additional instances beyond the earlier
-clique analysis, bringing the combined evidence to \ConstructionClosed{}
-closed cases and \ConstructionOpen{} open intervals. These post-hoc results
-do not change timed solver coverage. The study establishes correctness and
-documents computational limits within the evaluated cohort, without claiming
-universal SAT superiority or a new formula for an entire graph family.
+We study an exact SAT approach to minimum-span $L(h,k)$-labeling of
+simple undirected graphs with $h\geq k\geq1$. An order encoding and
+bounded span search are proved correct and compared with assignment
+integer linear programming (ILP). On 117 tree, grid and random-graph
+instances, with three repetitions and a 30-second limit, SAT and ILP
+prove optimality in every repetition on \ProgressSATStable{} and
+\ProgressILPStable{} instances, respectively. SAT has lower median wall
+time on the common solved subset and better feasible upper bounds on
+some unresolved instances; ILP has greater optimality coverage.
+Post-hoc clique bounds and explicit labelings yield
+\ConstructionCliqueCertified{} directly checkable certificates and,
+together with the remaining evidence, close \ConstructionClosed{}
+intervals, leaving \ConstructionOpen{} open. A sufficient color-class
+ordering condition supplies three new optimal witnesses.
+A separate $L(2,1)$ symmetry study reports 494 jointly optimal pairs
+out of 496. Cycles show a median clause reduction of 12.58\%, with
+little change in the median time ratio; effects vary across product
+families. The results distinguish model size, feasible-solution quality
+and proof coverage, while documenting the limits of the evaluated methods.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
 exact optimization, ILP, optimality certificates.
 
 \input{paper/sections/introduction}
-\input{paper/sections/problem}
-\input{paper/sections/related_work}
-\input{paper/sections/models}
-\input{paper/sections/search_symmetry}
+\input{paper/sections/submission_preliminaries}
+\input{paper/sections/submission_related_work}
+\input{paper/sections/submission_method}
 \input{paper/sections/submission_results}
-\input{paper/sections/color_order}
 \input{paper/sections/submission_conclusion}
 
 \bibliographystyle{plain}
@@ -67,4 +66,11 @@ exact optimization, ILP, optimality certificates.
 \clearpage
 \appendix
 \input{paper/sections/theoretical_baselines}
+\section{Runtime by size and supplementary illustrations}
+\label{sec:submission-size-summary}
+\input{paper/sections/runtime_summary}
+The full technical report retains the paired tree runtime plot and
+family-level symmetry runtime and clause plots, together with their
+original protocol descriptions. They are supplementary views of the
+archived experiments, not new measurements.
 \end{document}
