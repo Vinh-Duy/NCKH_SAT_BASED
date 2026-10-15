@@ -1,7 +1,7 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data color-data submission-pdf research-package english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data color-data submission-tables submission-pdf research-package english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
@@ -28,11 +28,15 @@ color-data:
 	$(PYTHON) scripts/analyze_color_order.py --publish
 
 # Two reviewable deliverables from the audited, fixed evidence.
-research-package: confirmation-data gap-data bounds-verify progress-data clique-data evidence-data color-data
+research-package: tree-tables paper-figures confirmation-data gap-data bounds-verify progress-data clique-data evidence-data color-data
 	$(MAKE) pdf
 	$(MAKE) submission-pdf
 
-submission-pdf:
+# Compact evidence and performance tables; no benchmark rerun.
+submission-tables:
+	$(PYTHON) scripts/export_submission_tables.py
+
+submission-pdf: english-tables submission-tables
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build paper/submission.tex
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
@@ -74,12 +78,12 @@ figures:
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/plot_symmetry_impact.py --input results/runs/cycles_main_r1.csv --output-dir paper/generated/cycles_main_r1_plots
 	MPLCONFIGDIR=/tmp/nckh-matplotlib $(PYTHON) scripts/plot_symmetry_impact.py --input results/runs/products_main_r1.csv --output-dir paper/generated/products_main_r1_plots
 
-report: tables figures tree-tables
+report: tables figures tree-tables submission-tables
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex
 
 # Compile the manuscript using the already archived generated tables.
 english-tables:
 	$(PYTHON) scripts/export_english_tables.py
 
-pdf: english-tables
+pdf: english-tables submission-tables
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex
