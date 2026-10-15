@@ -1,55 +1,57 @@
-\section{Introduction and research questions}
-The $L(h,k)$-labeling problem models label-separation requirements at two
-graph distances and originates in frequency assignment \cite{griggs,calamoneri}.
-This study considers a SAT solver applicable to an input graph and a pair
-$(h,k)$. Generality refers to the scope of the formulation: a finite benchmark
-set neither represents all graphs nor guarantees efficient solution of every instance.
+\section{Introduction}
+The $L(h,k)$-labeling problem assigns nonnegative integers to graph
+vertices, with prescribed separation at distances one and two. It
+originates in frequency assignment, where nearby transmitters require
+different levels of interference protection \cite{griggs,calamoneri}.
+The objective is to minimize the span between the largest and smallest
+labels. Formulas are known for particular graph classes and parameter
+regimes; a general-purpose exact method must also handle inputs for which
+these formulas do not determine the optimum.
 
-The focus is exact optimization and the strength of the evidence supporting
-its results. We do not assume that SAT must outperform ILP on every input.
-Four questions guide the study:
-\begin{enumerate}
-\item Do the encoding and span search preserve feasibility, bounds, and
-optimality conclusions across graphs and parameter pairs $(h,k)$?
-\item Where exact formulas or proven bounds apply, do solver results agree
-with them, and which bounds are attained on the evaluated instances?
-\item How do total computational cost, model size, and the ability to prove
-optimality differ between SAT and assignment ILP as graph size and structure vary?
-\item On families with justified symmetries, how do symmetry-breaking
-constraints affect CNF size and solution time?
-\end{enumerate}
-The first question is addressed through proofs and tests against an exhaustive
-oracle. Reference formulas with explicit applicability conditions are separated
-from general bounds and final search bounds. The tree experiments and the
-multi-family pilot provide initial evidence of agreement and the ability to
-establish optimality within a time limit. The supplementary $L(2,1)$ experiments
-partially address the fourth question; detailed supplementary tables are
-retained in the companion technical report. Symmetry experiments do not replace
-SAT--ILP comparisons, and results on trees do not establish performance on all graphs.
+This study develops and evaluates an exact SAT pipeline for finite simple
+undirected graphs with $h\geq k\geq1$. Boolean threshold variables encode
+labels, and a bounded span search maintains a feasible solution together
+with a lower bound. Assignment integer linear programming (ILP) provides
+the principal exact baseline. Both methods can prove optimality, but may
+retain an open interval when their time budget expires. We therefore
+compare feasible-solution quality and proof coverage alongside runtime.
+``General graphs'' describes the formulation's input domain, not a claim
+of efficient solution on every graph.
 
-\subsection{Contributions and scope of evidence}
-The current study provides the following:
+Four research questions organize the study:
 \begin{enumerate}
-\item An $L(h,k)$ SAT pipeline, including a proof of feasibility equivalence
-for the threshold encoding and a span-search invariant, together with an
-assignment ILP formulation as an exact baseline.
-\item An independent labeling-validation procedure, configuration and witness
-records, and comparisons with formulas and bounds within their validity domains,
-distinguishing established optima from feasible solutions at the time limit.
-\item An evaluation of optimality coverage and computational cost on structured
-and random instances, including cases where SAT or ILP does not establish
-optimality, rather than timing comparisons restricted to easy instances.
-\item Instance-specific optimality certificates combining square-clique
-lower bounds with explicit labelings, including a proved sufficient
-color-class ordering condition for $0<k\leq h\leq2k$ and its application
-to three previously unresolved instances in the fixed cohort.
+\item\label{rq:correctness} Does the SAT encoding preserve feasibility,
+and does the span search report optimality only when it is established?
+\item\label{rq:theory} Where exact formulas or proven bounds apply, do
+computed labelings agree with them, and which instances can be certified
+by matching lower and upper bounds?
+\item\label{rq:comparison} How do runtime, model size and optimality
+coverage compare between SAT and assignment ILP across the evaluated
+graph sizes and families?
+\item\label{rq:symmetry} For families with justified symmetries, how do
+symmetry-breaking constraints affect CNF size and solution time?
 \end{enumerate}
-These are the contributions supported by the current manuscript. They do not
-claim the first SAT approach to labeling, that order encoding is new, or
-that SAT always outperforms ILP. Earlier SAT/ILP formulations already exist
-\cite{shao2013distance,shao2014strong}. Bounds
-for structured graphs serve as validation references. Finite experiments do
-not establish a new formula for an entire family or resolve an open conjecture;
-such claims require separate proofs and comparison with prior work. The
-related-work section identifies established techniques and distinguishes
-between labeling variants.
+
+The study makes four contributions:
+\begin{enumerate}
+\item A general-graph SAT pipeline with encoding equivalence, a
+span-search invariant and justified symmetry conditions.
+\item Independent labeling checks and reference-bound comparisons,
+with retained graphs, configurations and witnesses for reproducibility.
+\item A comparison with assignment ILP on 117 fixed graph/parameter
+instances that reports unresolved cases, bound quality and proof
+coverage alongside runtime. A separate paired $L(2,1)$ study evaluates
+symmetry effects by family under its original backend and budget.
+\item Instance-specific certificates closing five of the 21 intervals
+left open by pooled solver evidence: two from clique bounds and stored
+labelings, and three from a proved sufficient color-class ordering
+condition with newly constructed witnesses.
+\end{enumerate}
+
+SAT and ILP formulations for distance-constrained labeling already exist
+\cite{shao2013distance,shao2014strong}, and order encoding is established
+\cite{tamura2009order}. Our contribution is the verified formulation and
+the accompanying evidence on exact search, bound quality and symmetry
+effects under stated protocols. The computational certificates establish
+optima for the evaluated instances; they do not establish new formulas
+over entire graph families.

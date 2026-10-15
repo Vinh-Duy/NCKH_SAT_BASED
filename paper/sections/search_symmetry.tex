@@ -1,4 +1,4 @@
-\section{Span search and symmetry breaking}
+\subsection{Span search and symmetry breaking}
 Figure~\ref{fig:pipeline} describes the implemented solution procedure.
 Each candidate span is tested using a separate formula. Bounds and the best
 labeling are retained by the optimization layer; learned clauses are not
@@ -12,7 +12,7 @@ reused between SAT calls.
 before decreasing the upper bound; UNSAT increases the lower bound. A timeout
 retains the bounds and feasible incumbent and must not be treated as UNSAT.}
 \end{figure}
-\subsection{Bounds and search invariant}
+\subsubsection{Bounds and search invariant}
 For a graph with at least one edge, let $m=\min(h,k)$ and use
 \[
  L=h+(\Delta(G)-1)m.
@@ -58,7 +58,7 @@ If the budget expires with $L<U$, the algorithm returns \FEAS{} with its
 incumbent. If the initial bounds already satisfy $L=U$, it may return
 \OPT{} without calling SAT; variable and clause counts may then be absent.
 
-\subsection{Validity of symmetry breaking}
+\subsubsection{Validity of symmetry breaking}
 Translation guarantees only that \emph{some vertex} receives label 0.
 Fixing a chosen vertex $v_0$ to 0 requires an additional structural argument.
 \begin{proposition}
@@ -141,7 +141,7 @@ use $u_i\mapsto u_{-i}$ and $v_i\mapsto v_{-i}$; step-$k$ edges become
 step-$-k$ edges, preserving the undirected edge set. The constructor uses
 $u_i=i$ and $v_i=n+i$, consistent with the stored label indices.
 
-\subsection{Post-hoc combinatorial certificates}
+\subsubsection{Post-hoc combinatorial certificates}
 \label{sec:clique-method}
 We also use an elementary packing bound to check stored solutions after
 the experiments. This bound is separate from the degree bound used during
@@ -185,7 +185,7 @@ optimality certificate when the bounds meet, without relying on SAT UNSAT
 or ILP dual-bound claims. It does not certify optimality when the bounds
 remain unequal.
 
-\subsection{Time limits and solution validation}
+\subsubsection{Time limits and solution validation}
 A SAT conflict limit is not a wall-clock time limit \cite{pysat}. The revised
 implementation runs span search in a child process, uses a monotonic clock,
 and terminates the process when the remaining budget expires. This applies

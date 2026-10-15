@@ -1,4 +1,4 @@
-\section{Conclusion}
+\subsection{Conclusion}
 We presented a SAT pipeline for minimum-span $L(h,k)$-labeling of simple
 undirected graphs, with order-encoding equivalence, a span-search bound
 invariant and conditions for valid symmetry breaking. The primary v2
@@ -18,11 +18,17 @@ additional optima from saved witnesses, and a sufficient color-class
 ordering condition supplies matching witnesses for three more instances.
 In total, \ConstructionCliqueCertified{} optima can be checked directly
 from a clique and a labeling, without relying on reported solver lower
-bounds. This subset overlaps the closed total. The new certificates are
+bounds. This subset overlaps the closed total. Including the applicable degree
+and reference bounds, \SupportIndependent{} closures have mathematical
+support and \SupportSolverDependent{} retain solver-dependent lower bounds. The new certificates are
 instance-specific and do not alter any original timing or status.
 
 The separate 50-tree $L(3,2)$ study and archived $L(2,1)$ symmetry
 experiments provide additional validation with their own protocols.
+The symmetry summary in Table~\ref{tab:compact-symmetry} answers RQ4:
+CNF reductions depend on the family and need not produce proportional
+time reductions. For cycles, the median clause reduction is 12.58\%
+while the median time ratio is near one.
 Neither finite agreement with reference formulas nor solver agreement
 proves a new formula over an entire graph family. Existing SAT and ILP
 labeling methods also preclude a first-use claim for these approaches.

@@ -1,14 +1,13 @@
-\section{Discussion and future work}
+\section{Discussion and conclusion}
 \subsection{Scope of the current conclusions}
 The formulation and search apply to general simple undirected graphs.
-This is distinct from experimental scope: the $L(3,2)$ tree screen and
-multi-family pilot are reported separately because their graph domains
-and budgets differ. In the pilot, Gurobi solves more instances to optimality
-than CaDiCaL, while one instance is solved to optimality only by CaDiCaL.
-Encoding correctness does not depend on which backend is faster. Trees
-with 1600 vertices provide an initial size study; short runtimes are not
-an error and do not establish that trees are easy in general. In this
-sample, 48 trees attain the degree bound and two show that it is not always tight.
+In the primary v2 comparison, Gurobi proves optimality in all repetitions
+on more instances, while CaDiCaL has lower median time on the common
+solved subset (Table~\ref{tab:compact-runtime}). These are different
+criteria; neither gives a universal ranking. The separate tree screen
+extends the size range to 1600 vertices, with 48 of 50 trees attaining
+the degree bound. Its short runtimes do not imply that all trees are easy.
+Encoding correctness is established independently of these runtime results.
 
 Only cycles use root fixing in the symmetry experiments. Reflections on
 product families require explicit automorphisms, not merely equal vertex

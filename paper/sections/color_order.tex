@@ -6,50 +6,7 @@ sufficient condition, separate from the timed SAT--ILP comparison.
 This is a bounded construction, not a complete decision procedure or a
 claim of a new general coloring method.
 
-\begin{proposition}[A sufficient color-order condition]
-\label{prop:color-order}
-Let $G$ be a nonempty simple undirected graph and $0<k\leq h\leq2k$.
-Suppose $C_1,\ldots,C_r$ partition $V(G)$ into nonempty independent sets
-of $G^2$. If $h>k$, suppose additionally that no edge of $G$ joins
-consecutive classes $C_i,C_{i+1}$. Then
-\[
- f(v)=k(i-1)\quad\text{for }v\in C_i
-\]
-is an $L(h,k)$-labeling of span $k(r-1)$.
-If $G^2$ also contains a clique of size $r$, this span is optimal.
-\end{proposition}
-\begin{proof}
-Vertices in the same class have distance greater than two, so equal
-labels violate no constraint. Distinct classes have label difference at
-least $k$, satisfying every distance-two constraint. If $h=k$, this also
-suffices for edges. Otherwise, an edge cannot join consecutive classes
-by assumption, and its endpoints differ by at least $2k\geq h$.
-Every class is nonempty, so the span is $k(r-1)$. A square clique of size
-$r$ gives the matching lower bound by Proposition~\ref{prop:square-clique}.
-\end{proof}
-
-\paragraph{Bounded construction.}
-The implementation constructs a maximum-cardinality matching in the
-complement of $G^2$. Each matched pair forms a class; unmatched vertices
-form singleton classes. Every class is therefore independent in $G^2$.
-This restricts the construction to classes of size at most two and need
-not find a minimum coloring of $G^2$. Maximum matching only minimizes
-the number of classes within this restricted partition scheme; its
-optimality is unnecessary for checking a resulting labeling.
-
-For $h>k$, define a compatibility graph on the classes, with an edge
-between two classes exactly when no original graph edge joins them.
-The required ordering is a Hamiltonian path in this compatibility graph.
-A seeded insertion heuristic starts at a low-degree class, repeatedly
-inserts an unplaced class into a compatible position, and restarts if
-it cannot continue. It makes at most 100 attempts, with algorithmic seed 0
-and canonical vertex and class ordering. The algorithmic seed is separate
-from each archived graph-generation seed. A failure is reported as
-\texttt{UNKNOWN}; it proves neither nonexistence of an ordering nor
-infeasibility of the labeling instance. When $h=k$, no ordering search
-is needed. Parameters outside the sufficient condition are not handled
-by this construction; the general SAT/ILP formulations retain their
-original domain.
+\input{paper/sections/color_order_method}
 
 \paragraph{Complete-cohort audit.}
 The construction was applied to all \ConstructionInstances{} instances,
