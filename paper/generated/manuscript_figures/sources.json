@@ -8,6 +8,6 @@
   "matplotlib": "3.11.1",
   "numpy": "2.5.2",
   "script_sha256": "7d22c1457218aa8d301fb7a84d3062bf638b78067a96281036c1b2541d5261bf",
-  "auditor_sha256": "bace6c03d5519e92b4337f165c1033bde8aa998765ff2248b230ed984aee6dc0",
+  "auditor_sha256": "1092d26af445900532ceaf4e150529954ac7bf935834e35ac97c9ef9a2498b60",
   "scope": "original validated example; implementation diagram; measured tree screen (median/IQR, paired scatter)"
 }

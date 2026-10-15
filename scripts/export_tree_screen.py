@@ -132,7 +132,7 @@ def export(path, output_dir):
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     lines = [r"\begin{tabular}{rrrrrr}", r"\toprule",
-             r"$|V|$ & Cây & $\Delta$ & Span & CaDiCaL (s) & Gurobi (s)\\", r"\midrule"]
+             r"$|V|$ & Trees & $\Delta$ & Span & CaDiCaL (s) & Gurobi (s)\\", r"\midrule"]
     for row in result["summary"]:
         lines.append(f"{row['vertices']} & {row['graphs']} & {row['delta_min']}--{row['delta_max']} & "
                      f"{row['span_min']}--{row['span_max']} & {row['cadical']:.3f} & {row['gurobi']:.3f}" + r"\\")
