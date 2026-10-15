@@ -1,0 +1,118 @@
+Certificate_ID,Instance,Group,h,k,Theory_Bound,Clique_Bound,Mathematical_LB,Witness_UB,Theory_Attained,Clique_Attained,Independent_Optimal,Closed,Solver_Dependent
+BA_20_m2_seed0__h1_k1,BA_20_m2_seed0,BA,1,1,12,12,12,12,True,True,True,True,False
+BA_20_m2_seed0__h2_k1,BA_20_m2_seed0,BA,2,1,13,12,13,13,True,False,True,True,False
+BA_20_m2_seed0__h3_k2,BA_20_m2_seed0,BA,3,2,25,24,25,25,True,False,True,True,False
+BA_20_m2_seed1__h1_k1,BA_20_m2_seed1,BA,1,1,12,12,12,12,True,True,True,True,False
+BA_20_m2_seed1__h2_k1,BA_20_m2_seed1,BA,2,1,13,12,13,13,True,False,True,True,False
+BA_20_m2_seed1__h3_k2,BA_20_m2_seed1,BA,3,2,25,24,25,25,True,False,True,True,False
+BA_20_m2_seed2__h1_k1,BA_20_m2_seed2,BA,1,1,12,13,13,13,False,True,True,True,False
+BA_20_m2_seed2__h2_k1,BA_20_m2_seed2,BA,2,1,13,13,13,13,True,True,True,True,False
+BA_20_m2_seed2__h3_k2,BA_20_m2_seed2,BA,3,2,25,26,26,26,False,True,True,True,False
+BA_40_m2_seed0__h1_k1,BA_40_m2_seed0,BA,1,1,15,15,15,15,True,True,True,True,False
+BA_40_m2_seed0__h2_k1,BA_40_m2_seed0,BA,2,1,16,15,16,16,True,False,True,True,False
+BA_40_m2_seed0__h3_k2,BA_40_m2_seed0,BA,3,2,31,30,31,31,True,False,True,True,False
+BA_40_m2_seed1__h1_k1,BA_40_m2_seed1,BA,1,1,16,16,16,16,True,True,True,True,False
+BA_40_m2_seed1__h2_k1,BA_40_m2_seed1,BA,2,1,17,16,17,17,True,False,True,True,False
+BA_40_m2_seed1__h3_k2,BA_40_m2_seed1,BA,3,2,33,32,33,33,True,False,True,True,False
+BA_40_m2_seed2__h1_k1,BA_40_m2_seed2,BA,1,1,16,16,16,16,True,True,True,True,False
+BA_40_m2_seed2__h2_k1,BA_40_m2_seed2,BA,2,1,17,16,17,17,True,False,True,True,False
+BA_40_m2_seed2__h3_k2,BA_40_m2_seed2,BA,3,2,33,32,33,33,True,False,True,True,False
+BA_60_m2_seed0__h1_k1,BA_60_m2_seed0,BA,1,1,19,19,19,19,True,True,True,True,False
+BA_60_m2_seed0__h2_k1,BA_60_m2_seed0,BA,2,1,20,19,20,20,True,False,True,True,False
+BA_60_m2_seed0__h3_k2,BA_60_m2_seed0,BA,3,2,39,38,39,39,True,False,True,True,False
+BA_60_m2_seed1__h1_k1,BA_60_m2_seed1,BA,1,1,18,18,18,18,True,True,True,True,False
+BA_60_m2_seed1__h2_k1,BA_60_m2_seed1,BA,2,1,19,18,19,19,True,False,True,True,False
+BA_60_m2_seed1__h3_k2,BA_60_m2_seed1,BA,3,2,37,36,37,37,True,False,True,True,False
+BA_60_m2_seed2__h1_k1,BA_60_m2_seed2,BA,1,1,20,20,20,20,True,True,True,True,False
+BA_60_m2_seed2__h2_k1,BA_60_m2_seed2,BA,2,1,21,20,21,21,True,False,True,True,False
+BA_60_m2_seed2__h3_k2,BA_60_m2_seed2,BA,3,2,41,40,41,41,True,False,True,True,False
+ER_20_p0.15_seed0__h1_k1,ER_20_p0.15_seed0,ER p=0.15,1,1,7,7,7,7,True,True,True,True,False
+ER_20_p0.15_seed0__h2_k1,ER_20_p0.15_seed0,ER p=0.15,2,1,8,7,8,8,True,False,True,True,False
+ER_20_p0.15_seed0__h3_k2,ER_20_p0.15_seed0,ER p=0.15,3,2,15,14,15,15,True,False,True,True,False
+ER_20_p0.15_seed1__h1_k1,ER_20_p0.15_seed1,ER p=0.15,1,1,7,7,7,7,True,True,True,True,False
+ER_20_p0.15_seed1__h2_k1,ER_20_p0.15_seed1,ER p=0.15,2,1,8,7,8,8,True,False,True,True,False
+ER_20_p0.15_seed1__h3_k2,ER_20_p0.15_seed1,ER p=0.15,3,2,15,14,15,15,True,False,True,True,False
+ER_20_p0.15_seed2__h1_k1,ER_20_p0.15_seed2,ER p=0.15,1,1,6,6,6,6,True,True,True,True,False
+ER_20_p0.15_seed2__h2_k1,ER_20_p0.15_seed2,ER p=0.15,2,1,7,6,7,7,True,False,True,True,False
+ER_20_p0.15_seed2__h3_k2,ER_20_p0.15_seed2,ER p=0.15,3,2,13,12,13,14,False,False,False,True,True
+ER_20_p0.30_seed0__h1_k1,ER_20_p0.30_seed0,ER p=0.30,1,1,9,11,11,11,False,True,True,True,False
+ER_20_p0.30_seed0__h2_k1,ER_20_p0.30_seed0,ER p=0.30,2,1,10,11,11,11,False,True,True,True,False
+ER_20_p0.30_seed0__h3_k2,ER_20_p0.30_seed0,ER p=0.30,3,2,19,22,22,22,False,True,True,True,False
+ER_20_p0.30_seed1__h1_k1,ER_20_p0.30_seed1,ER p=0.30,1,1,11,13,13,13,False,True,True,True,False
+ER_20_p0.30_seed1__h2_k1,ER_20_p0.30_seed1,ER p=0.30,2,1,12,13,13,13,False,True,True,True,False
+ER_20_p0.30_seed1__h3_k2,ER_20_p0.30_seed1,ER p=0.30,3,2,23,26,26,26,False,True,True,True,False
+ER_20_p0.30_seed2__h1_k1,ER_20_p0.30_seed2,ER p=0.30,1,1,10,13,13,13,False,True,True,True,False
+ER_20_p0.30_seed2__h2_k1,ER_20_p0.30_seed2,ER p=0.30,2,1,11,13,13,13,False,True,True,True,False
+ER_20_p0.30_seed2__h3_k2,ER_20_p0.30_seed2,ER p=0.30,3,2,21,26,26,26,False,True,True,True,False
+ER_40_p0.15_seed0__h1_k1,ER_40_p0.15_seed0,ER p=0.15,1,1,12,12,12,13,False,False,False,True,True
+ER_40_p0.15_seed0__h2_k1,ER_40_p0.15_seed0,ER p=0.15,2,1,13,12,13,14,False,False,False,False,False
+ER_40_p0.15_seed0__h3_k2,ER_40_p0.15_seed0,ER p=0.15,3,2,25,24,25,29,False,False,False,False,False
+ER_40_p0.15_seed1__h1_k1,ER_40_p0.15_seed1,ER p=0.15,1,1,10,12,12,13,False,False,False,True,True
+ER_40_p0.15_seed1__h2_k1,ER_40_p0.15_seed1,ER p=0.15,2,1,11,12,12,13,False,False,False,False,False
+ER_40_p0.15_seed1__h3_k2,ER_40_p0.15_seed1,ER p=0.15,3,2,21,24,24,32,False,False,False,False,False
+ER_40_p0.15_seed2__h1_k1,ER_40_p0.15_seed2,ER p=0.15,1,1,12,12,12,13,False,False,False,False,False
+ER_40_p0.15_seed2__h2_k1,ER_40_p0.15_seed2,ER p=0.15,2,1,13,12,13,14,False,False,False,False,False
+ER_40_p0.15_seed2__h3_k2,ER_40_p0.15_seed2,ER p=0.15,3,2,25,24,25,28,False,False,False,False,False
+ER_40_p0.30_seed0__h1_k1,ER_40_p0.30_seed0,ER p=0.30,1,1,17,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed0__h2_k1,ER_40_p0.30_seed0,ER p=0.30,2,1,18,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed0__h3_k2,ER_40_p0.30_seed0,ER p=0.30,3,2,35,64,64,64,False,True,True,True,False
+ER_40_p0.30_seed1__h1_k1,ER_40_p0.30_seed1,ER p=0.30,1,1,17,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed1__h2_k1,ER_40_p0.30_seed1,ER p=0.30,2,1,18,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed1__h3_k2,ER_40_p0.30_seed1,ER p=0.30,3,2,35,64,64,64,False,True,True,True,False
+ER_40_p0.30_seed2__h1_k1,ER_40_p0.30_seed2,ER p=0.30,1,1,18,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed2__h2_k1,ER_40_p0.30_seed2,ER p=0.30,2,1,19,32,32,32,False,True,True,True,False
+ER_40_p0.30_seed2__h3_k2,ER_40_p0.30_seed2,ER p=0.30,3,2,37,64,64,64,False,True,True,True,False
+ER_60_p0.15_seed0__h1_k1,ER_60_p0.15_seed0,ER p=0.15,1,1,17,20,20,22,False,False,False,False,False
+ER_60_p0.15_seed0__h2_k1,ER_60_p0.15_seed0,ER p=0.15,2,1,18,20,20,24,False,False,False,False,False
+ER_60_p0.15_seed0__h3_k2,ER_60_p0.15_seed0,ER p=0.15,3,2,35,40,40,50,False,False,False,False,False
+ER_60_p0.15_seed1__h1_k1,ER_60_p0.15_seed1,ER p=0.15,1,1,17,20,20,22,False,False,False,False,False
+ER_60_p0.15_seed1__h2_k1,ER_60_p0.15_seed1,ER p=0.15,2,1,18,20,20,24,False,False,False,False,False
+ER_60_p0.15_seed1__h3_k2,ER_60_p0.15_seed1,ER p=0.15,3,2,35,40,40,49,False,False,False,False,False
+ER_60_p0.15_seed2__h1_k1,ER_60_p0.15_seed2,ER p=0.15,1,1,14,19,19,20,False,False,False,False,False
+ER_60_p0.15_seed2__h2_k1,ER_60_p0.15_seed2,ER p=0.15,2,1,15,19,19,21,False,False,False,False,False
+ER_60_p0.15_seed2__h3_k2,ER_60_p0.15_seed2,ER p=0.15,3,2,29,38,38,46,False,False,False,False,False
+ER_60_p0.30_seed0__h1_k1,ER_60_p0.30_seed0,ER p=0.30,1,1,24,55,55,55,False,True,True,True,False
+ER_60_p0.30_seed0__h2_k1,ER_60_p0.30_seed0,ER p=0.30,2,1,25,55,55,55,False,True,True,True,False
+ER_60_p0.30_seed0__h3_k2,ER_60_p0.30_seed0,ER p=0.30,3,2,49,110,110,110,False,True,True,True,False
+ER_60_p0.30_seed1__h1_k1,ER_60_p0.30_seed1,ER p=0.30,1,1,28,55,55,55,False,True,True,True,False
+ER_60_p0.30_seed1__h2_k1,ER_60_p0.30_seed1,ER p=0.30,2,1,29,55,55,55,False,True,True,True,False
+ER_60_p0.30_seed1__h3_k2,ER_60_p0.30_seed1,ER p=0.30,3,2,57,110,110,110,False,True,True,True,False
+ER_60_p0.30_seed2__h1_k1,ER_60_p0.30_seed2,ER p=0.30,1,1,24,56,56,56,False,True,True,True,False
+ER_60_p0.30_seed2__h2_k1,ER_60_p0.30_seed2,ER p=0.30,2,1,25,56,56,56,False,True,True,True,False
+ER_60_p0.30_seed2__h3_k2,ER_60_p0.30_seed2,ER p=0.30,3,2,49,112,112,112,False,True,True,True,False
+P_4xP_5__h1_k1,P_4xP_5,PxP,1,1,4,4,4,4,True,True,True,True,False
+P_4xP_5__h2_k1,P_4xP_5,PxP,2,1,6,4,6,6,True,False,True,True,False
+P_4xP_5__h3_k2,P_4xP_5,PxP,3,2,9,8,9,11,False,False,False,True,True
+P_5xP_8__h1_k1,P_5xP_8,PxP,1,1,4,4,4,4,True,True,True,True,False
+P_5xP_8__h2_k1,P_5xP_8,PxP,2,1,6,4,6,6,True,False,True,True,False
+P_5xP_8__h3_k2,P_5xP_8,PxP,3,2,9,8,9,11,False,False,False,True,True
+P_6xP_10__h1_k1,P_6xP_10,PxP,1,1,4,4,4,4,True,True,True,True,False
+P_6xP_10__h2_k1,P_6xP_10,PxP,2,1,6,4,6,6,True,False,True,True,False
+P_6xP_10__h3_k2,P_6xP_10,PxP,3,2,9,8,9,11,False,False,False,True,True
+tree_20_seed0__h1_k1,tree_20_seed0,tree,1,1,3,3,3,3,True,True,True,True,False
+tree_20_seed0__h2_k1,tree_20_seed0,tree,2,1,4,3,4,5,False,False,False,True,True
+tree_20_seed0__h3_k2,tree_20_seed0,tree,3,2,7,6,7,8,False,False,False,True,True
+tree_20_seed1__h1_k1,tree_20_seed1,tree,1,1,4,4,4,4,True,True,True,True,False
+tree_20_seed1__h2_k1,tree_20_seed1,tree,2,1,5,4,5,5,True,False,True,True,False
+tree_20_seed1__h3_k2,tree_20_seed1,tree,3,2,9,8,9,9,True,False,True,True,False
+tree_20_seed2__h1_k1,tree_20_seed2,tree,1,1,3,3,3,3,True,True,True,True,False
+tree_20_seed2__h2_k1,tree_20_seed2,tree,2,1,4,3,4,4,True,False,True,True,False
+tree_20_seed2__h3_k2,tree_20_seed2,tree,3,2,7,6,7,8,False,False,False,True,True
+tree_40_seed0__h1_k1,tree_40_seed0,tree,1,1,4,4,4,4,True,True,True,True,False
+tree_40_seed0__h2_k1,tree_40_seed0,tree,2,1,5,4,5,5,True,False,True,True,False
+tree_40_seed0__h3_k2,tree_40_seed0,tree,3,2,9,8,9,9,True,False,True,True,False
+tree_40_seed1__h1_k1,tree_40_seed1,tree,1,1,6,6,6,6,True,True,True,True,False
+tree_40_seed1__h2_k1,tree_40_seed1,tree,2,1,7,6,7,7,True,False,True,True,False
+tree_40_seed1__h3_k2,tree_40_seed1,tree,3,2,13,12,13,13,True,False,True,True,False
+tree_40_seed2__h1_k1,tree_40_seed2,tree,1,1,4,4,4,4,True,True,True,True,False
+tree_40_seed2__h2_k1,tree_40_seed2,tree,2,1,5,4,5,5,True,False,True,True,False
+tree_40_seed2__h3_k2,tree_40_seed2,tree,3,2,9,8,9,10,False,False,False,True,True
+tree_60_seed0__h1_k1,tree_60_seed0,tree,1,1,5,5,5,5,True,True,True,True,False
+tree_60_seed0__h2_k1,tree_60_seed0,tree,2,1,6,5,6,6,True,False,True,True,False
+tree_60_seed0__h3_k2,tree_60_seed0,tree,3,2,11,10,11,11,True,False,True,True,False
+tree_60_seed1__h1_k1,tree_60_seed1,tree,1,1,6,6,6,6,True,True,True,True,False
+tree_60_seed1__h2_k1,tree_60_seed1,tree,2,1,7,6,7,7,True,False,True,True,False
+tree_60_seed1__h3_k2,tree_60_seed1,tree,3,2,13,12,13,13,True,False,True,True,False
+tree_60_seed2__h1_k1,tree_60_seed2,tree,1,1,4,4,4,4,True,True,True,True,False
+tree_60_seed2__h2_k1,tree_60_seed2,tree,2,1,5,4,5,5,True,False,True,True,False
+tree_60_seed2__h3_k2,tree_60_seed2,tree,3,2,9,8,9,10,False,False,False,True,True

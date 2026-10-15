@@ -1,0 +1,56 @@
+{
+  "identity": {
+    "kind": "compact-research-tables-v2",
+    "inputs": {
+      "results/runs/cycles_main_r1.csv": "e5bced936b8f4289f3af628b2994e28daf7a79e896e7d76f51376fb67c32d4b8",
+      "results/runs/cycles_main_r1.metadata.json": "0aa43558bf1ed574b4472f9bfb1f33db1f559791c6b45e73a274f80528070ce0",
+      "results/runs/cycles_main_r1.witnesses.jsonl": "dcd76776c4af30b2fccb63aded52def38908b80629f56b0f107d953418fc0144",
+      "results/runs/products_main_r1.csv": "acc761feabfbf3b70350bb15bda2541fa988e43020b3bb9407c8ce2a0f71c0d4",
+      "results/runs/products_main_r1.metadata.json": "5463edfdb58bc417fcb08a7e05db03151ec2946324c7308cff55032ccc21f9b1",
+      "results/runs/products_main_r1.witnesses.jsonl": "6fa3d51ce03c49fb93070f0b514dbd2b0fcd314f7dcedeeede5d401007ee4793",
+      "paper/generated/sources.json": "ac0e0962d21f6e4cbb8be2fd2e8912082cd3b31b940e833d374bf4d497f16ee8",
+      "results/runs/general_progress_v2_20261007T062406751526Z.csv": "b4099cfd60d3a08914e83aadb983c94e8a133d9c188c6be38e7da3977de26a96",
+      "results/runs/general_progress_v2_20261007T062406751526Z.metadata.json": "a2ed8bfd39ecc7fbe5d3b48c11641a54f062cabed17d3422e49ae251fef3c45f",
+      "results/runs/general_progress_v2_20261007T062406751526Z.witnesses.jsonl": "0a81cbf5ed596e2cb8b22eae16c068f0ef30083f4146ad1e0c48e15d3a110bca",
+      "results/analysis/progress_confirmation/e8aaee5841468f67/sources.json": "7fb19b0f83dc9cc8b01dbf2e16d8037dc2b1742a96636a7eb87bfb77f7b697d8",
+      "results/analysis/color_order/2d62af353a1756ae/sources.json": "bd37f4ee5408d71b4d8564b49b97115c2562c4c5979fd8f44270995dae9052d5",
+      "results/analysis/clique_certificates/cc0e412739ccc8d2/sources.json": "ac606abfe616f284d32b38b5942074eb4688441f63e08f601a35f81c97486848"
+    },
+    "sources": {
+      "scripts/export_submission_tables.py": "4270eddffcdf0d6d2e2b4e09ae032f180ce379a28899e37f7e4354173598cd9a",
+      "scripts/summarize_symmetry.py": "689d83b4668f81af081c92be8210dc1da30939da47d06dce096b3999c0fced98",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb",
+      "scripts/certificate_support.py": "b4f45f4cdb87b45af04f2edb3ca966a222ff498d6f39f0d0d2ce7af129b44faf",
+      "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b"
+    }
+  },
+  "counts": {
+    "symmetry_pairs": 496,
+    "joint_symmetry_opt": 494,
+    "v2_instances": 117,
+    "joint_v2_opt": 74,
+    "Instances": 117,
+    "Theory": 61,
+    "Clique": 53,
+    "Overlap": 24,
+    "Independent": 90,
+    "SolverDependent": 11,
+    "Closed": 101,
+    "Open": 16
+  },
+  "outputs_sha256": {
+    "symmetry_counters.tex": "b9dcff6114dbd222ff515015f0f54390f8a597c2811fe411c0867e5c9b09311f",
+    "five_closures.tex": "1b3eb58bcca22cecd385ecb8208b6adddd20dfa78a51f4bde54717832e0f815a",
+    "certificate_support.csv": "3dfb096e3ea8edd271f2df1250612f0807e0209fa3ee5bc2a5b95191cfb95357",
+    "family_runtime.csv": "d3d316db52ae55c3cc694f4ba2d405f8d913b314705a7104d7eb502ba427aeec",
+    "runtime.tex": "de13a31f196a83310e1ad7ab1a4f7456df236311fd8c0cd3c6efce7dfbef8f7c",
+    "symmetry.csv": "cf2812e1ad87a31dcb28f66b65eb72a7c703336fad3a0f789c740a26ba25065d",
+    "README.md": "cfd5393ffc21b853ff135e878d5bf803b1d84760484d1ded10689ba17da3bedf",
+    "five_closures.csv": "7f9ffc86148e0690c5dc2a314b3ae959254d1bcc91f652f6f1ddec02ad8004bb",
+    "symmetry_counters.csv": "5796048696ac6c1a39fb16e7dbab5405527f575c7195a09b23ea12883594b14a",
+    "symmetry.tex": "ddb36932745608c57894bc2e20ac4229ce88ef76839c0bd71dc4c51d5c0601e2",
+    "family_runtime.tex": "2635b24ed1515a14675b7c6b6969d2e3ca080f75116542051f3f08645689cf19",
+    "runtime.csv": "873b5e4795b64b7509b1f258ee145ff5b39919973417f2144dde410d3486e26a",
+    "counts.tex": "4bf2374a075349e8f26fe82d15f7d43ff36809cd825350658f0b07a621e86b5c"
+  }
+}

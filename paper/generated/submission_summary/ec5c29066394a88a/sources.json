@@ -1,0 +1,36 @@
+{
+  "identity": {
+    "kind": "compact-research-tables-v1",
+    "inputs": {
+      "results/runs/cycles_main_r1.csv": "e5bced936b8f4289f3af628b2994e28daf7a79e896e7d76f51376fb67c32d4b8",
+      "results/runs/cycles_main_r1.metadata.json": "0aa43558bf1ed574b4472f9bfb1f33db1f559791c6b45e73a274f80528070ce0",
+      "results/runs/cycles_main_r1.witnesses.jsonl": "dcd76776c4af30b2fccb63aded52def38908b80629f56b0f107d953418fc0144",
+      "results/runs/products_main_r1.csv": "acc761feabfbf3b70350bb15bda2541fa988e43020b3bb9407c8ce2a0f71c0d4",
+      "results/runs/products_main_r1.metadata.json": "5463edfdb58bc417fcb08a7e05db03151ec2946324c7308cff55032ccc21f9b1",
+      "results/runs/products_main_r1.witnesses.jsonl": "6fa3d51ce03c49fb93070f0b514dbd2b0fcd314f7dcedeeede5d401007ee4793",
+      "paper/generated/sources.json": "ac0e0962d21f6e4cbb8be2fd2e8912082cd3b31b940e833d374bf4d497f16ee8",
+      "results/runs/general_progress_v2_20261007T062406751526Z.csv": "b4099cfd60d3a08914e83aadb983c94e8a133d9c188c6be38e7da3977de26a96",
+      "results/runs/general_progress_v2_20261007T062406751526Z.metadata.json": "a2ed8bfd39ecc7fbe5d3b48c11641a54f062cabed17d3422e49ae251fef3c45f",
+      "results/runs/general_progress_v2_20261007T062406751526Z.witnesses.jsonl": "0a81cbf5ed596e2cb8b22eae16c068f0ef30083f4146ad1e0c48e15d3a110bca",
+      "results/analysis/progress_confirmation/e8aaee5841468f67/sources.json": "7fb19b0f83dc9cc8b01dbf2e16d8037dc2b1742a96636a7eb87bfb77f7b697d8"
+    },
+    "sources": {
+      "scripts/export_submission_tables.py": "3a8fc5f760deb006ef91dcb6fff074b4d44df00458050a8dbf0f16609ac38234",
+      "scripts/summarize_symmetry.py": "689d83b4668f81af081c92be8210dc1da30939da47d06dce096b3999c0fced98",
+      "scripts/build_confirmation_report.py": "93edc6cb3b3ba07709aa131ee3b7be0e0d151c71420cdd8af53b2158fe7718fb"
+    }
+  },
+  "counts": {
+    "symmetry_pairs": 496,
+    "joint_symmetry_opt": 494,
+    "v2_instances": 117,
+    "joint_v2_opt": 74
+  },
+  "outputs_sha256": {
+    "runtime.tex": "de13a31f196a83310e1ad7ab1a4f7456df236311fd8c0cd3c6efce7dfbef8f7c",
+    "symmetry.csv": "cf2812e1ad87a31dcb28f66b65eb72a7c703336fad3a0f789c740a26ba25065d",
+    "README.md": "f8154c28ed74acf9e3566a90b82aeca9b3ad97665450efdbdb5c6fc3ef8955d3",
+    "symmetry.tex": "ddb36932745608c57894bc2e20ac4229ce88ef76839c0bd71dc4c51d5c0601e2",
+    "runtime.csv": "873b5e4795b64b7509b1f258ee145ff5b39919973417f2144dde410d3486e26a"
+  }
+}

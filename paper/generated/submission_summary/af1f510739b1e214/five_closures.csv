@@ -1,0 +1,6 @@
+Instance,h,k,V,Graph_Seed,Original_LB,Original_UB,Clique_LB,Final_Span,UB_Improvement,Witness
+ER_40_p0.30_seed0,3,2,40,0,59,66,64,64,2,new construction
+ER_40_p0.30_seed1,3,2,40,1,53,64,64,64,0,stored solver
+ER_60_p0.30_seed0,3,2,60,0,49,114,110,110,4,new construction
+ER_60_p0.30_seed1,3,2,60,1,59,110,110,110,0,stored solver
+ER_60_p0.30_seed2,3,2,60,2,49,118,112,112,6,new construction
