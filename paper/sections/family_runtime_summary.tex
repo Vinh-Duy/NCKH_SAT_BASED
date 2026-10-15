@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering\small
+\caption{SAT--ILP coverage and runtime by family.}
+\label{tab:family-runtime}
+\input{\SubmissionSummaryDir/family_runtime.tex}
+\tablenote{Each row includes the three graph sizes. SAT OPT and ILP OPT
+count instances optimal in all three repetitions; Joint is their
+intersection. Times are medians of per-instance three-run medians on
+that same joint subset. A dash means the subset is empty. ER densities
+are separated. The ALL row is computed across instances, not group medians.}
+\end{table}
+
+The family breakdown qualifies the overall timing result. CaDiCaL has
+lower paired medians on the tested trees, grids and BA cases. Gurobi is
+faster on the common solved $p=0.30$ ER instances with $(1,1)$ and
+$(2,1)$, and proves more optima in those groups. The $p=0.30$, $(3,2)$
+group has no instance optimal in all three runs of both backends, so a
+paired median is not defined. A single pooled median would hide these
+differences and the small sizes of some common subsets.

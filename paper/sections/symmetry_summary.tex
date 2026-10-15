@@ -1,0 +1,65 @@
+\subsection{Symmetry effects by graph family (RQ4)}
+\label{sec:symmetry-summary}
+The archived $L(2,1)$ experiment compares a baseline with a symmetry
+configuration on $C_3,\ldots,C_{50}$ and seven product families with
+factor sizes $3\leq n,m\leq10$. It uses Glucose, a fresh solver at each
+span trial, and limits of 60 seconds for cycles and 180 seconds for
+products. Each graph/configuration is measured once; execution order
+alternates. Both configurations apply the same encoder preprocessing.
+These timings are separate from the 30-second CaDiCaL--Gurobi experiment.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Symmetry effects in the paired $L(2,1)$ experiment.}
+\label{tab:compact-symmetry}
+\input{\SubmissionSummaryDir/symmetry.tex}
+\tablenote{B and S denote baseline and symmetry. R fixes the cycle root
+to 0; O orders a reflected pair;
+-- adds no family-specific constraint. OPT/pairs counts jointly optimal
+pairs out of all tested pairs. On these pairs, $\Delta V$ and $\Delta C$
+are median percentage reductions in allocated variables and emitted
+clauses, measured after common encoder preprocessing at the same span.
+The next column counts fewer/equal/more clauses. The last column is the
+median of paired time ratios; values above 1 favor symmetry. Unresolved
+pairs remain in the denominator but are excluded from the medians.}
+\end{table}
+
+Both configurations report the same optimal span on 494 of 496 pairs.
+The two unresolved pairs are $C_9\square C_{10}$ and
+$C_{10}\square C_9$, with intervals $[5,10]$ and $[7,8]$, respectively,
+under both configurations. Coordinate exchange is an isomorphism, so
+these are two presentations of the same graph. Their different retained
+incumbents are not different optima; vertex order and search history
+can affect the search. All four unresolved runs have incomplete search
+statistics and are excluded from the descriptive timing and counter
+summaries. For cycles, root fixing with reflection ordering
+reduces the median clause count by 12.58\%, but the median time ratio is
+1.000 to three decimals. In the four product families using an order
+constraint, median clause reductions range from 0.58\% to 1.14\% and
+median time ratios from 1.021 to 1.120. The three families with no added
+constraint have identical model counts; their timing differences describe
+repeat variation. Thus the data show family-dependent reductions in CNF
+size, without a proportional runtime reduction. Single measurements and
+the combined cycle constraints do not support significance claims or
+separate attribution of the cycle effect to root fixing and ordering.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Search counters in complete symmetry-run pairs.}
+\label{tab:compact-counters}
+\input{\SubmissionSummaryDir/symmetry_counters.tex}
+\tablenote{B and S denote baseline and symmetry. Each entry sums the
+counters over all completed span trials and all complete jointly OPT
+runs in that family; these are totals, not medians. Different runs can
+visit different spans, so this is not a fixed-span ablation. Partial
+counters, including zeros after an interrupted trial, are excluded.}
+\end{table}
+
+Across the cycle runs, conflicts fall from 490 to 16 and decisions from
+1014 to 304, while the median time ratio remains near one.
+Aggregate conflicts fall by about 45\% for $C_n\square C_m$ and 32\%
+for $C_n\circ C_m$. Counters describe completed solver search;
+wall time also includes encoding, startup, validation and cleanup.
+Reduced counts can therefore coexist with little change in total time.
+The measurements do not isolate which overhead explains the difference
+or establish a causal relationship between clause count and runtime.

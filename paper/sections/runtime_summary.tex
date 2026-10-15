@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering\small
+\caption{Optimality coverage and runtime by graph size.}
+\label{tab:compact-runtime}
+\input{\SubmissionSummaryDir/runtime.tex}
+\tablenote{SAT OPT and ILP OPT count instances optimal in all three
+repetitions. Joint counts their intersection. For each backend, time is
+the median of per-instance three-run medians on that same joint subset.
+The ALL row uses all joint instances, not the average of size-group
+medians. Times are wall-clock seconds under the v2 30-second protocol.}
+\end{table}
+
+On the common solved subset, median wall time is lower for CaDiCaL at
+each size (Table~\ref{tab:compact-runtime}). This must be read with the
+coverage columns: at 60 vertices, SAT proves optimality in every run on
+21 of 39 instances, compared with 26 for ILP. The subsecond medians
+describe the jointly solved cases, not the cost of the full cohort.
+The nearly flat SAT medians therefore do not demonstrate size-independent
+scaling; harder instances drop out of this subset, and startup contributes
+to these short measurements.
