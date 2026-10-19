@@ -1,0 +1,17 @@
+Certificate_ID,Instance,Group,h,k,V,Before_LB,Before_UB,Mathematical_LB,Capacity_LB,UNSAT_LB,Final_LB,Final_UB,Evidence,Independently_Closed,Newly_Closed,Improved_UB,Witness_Source
+ER_40_p0.15_seed0__h2_k1,ER_40_p0.15_seed0,ER p=0.15,2,1,40,13,14,13,13,14,14,14,UNSAT proof,True,True,False,archived_v2
+ER_40_p0.15_seed0__h3_k2,ER_40_p0.15_seed0,ER p=0.15,3,2,40,25,29,25,26,28,28,28,UNSAT proof,True,True,True,scaled_L21_witness
+ER_40_p0.15_seed1__h2_k1,ER_40_p0.15_seed1,ER p=0.15,2,1,40,12,13,12,13,,13,13,capacity,True,True,False,archived_v2
+ER_40_p0.15_seed1__h3_k2,ER_40_p0.15_seed1,ER p=0.15,3,2,40,24,32,24,26,,26,26,capacity,True,True,True,scaled_L21_witness
+ER_40_p0.15_seed2__h1_k1,ER_40_p0.15_seed2,ER p=0.15,1,1,40,12,13,12,13,,13,13,capacity,True,True,False,archived_v2
+ER_40_p0.15_seed2__h2_k1,ER_40_p0.15_seed2,ER p=0.15,2,1,40,13,14,13,13,,13,13,theory/clique,True,True,True,posthoc_color_rank_sat
+ER_40_p0.15_seed2__h3_k2,ER_40_p0.15_seed2,ER p=0.15,3,2,40,25,28,25,26,,26,26,capacity,True,True,True,scaled_L21_witness
+ER_60_p0.15_seed0__h1_k1,ER_60_p0.15_seed0,ER p=0.15,1,1,60,20,22,20,22,,22,22,capacity,True,True,False,archived_v2
+ER_60_p0.15_seed0__h2_k1,ER_60_p0.15_seed0,ER p=0.15,2,1,60,20,24,20,22,,22,22,capacity,True,True,True,posthoc_class_order
+ER_60_p0.15_seed0__h3_k2,ER_60_p0.15_seed0,ER p=0.15,3,2,60,40,50,40,44,,44,44,capacity,True,True,True,posthoc_class_order
+ER_60_p0.15_seed1__h1_k1,ER_60_p0.15_seed1,ER p=0.15,1,1,60,20,22,20,22,,22,22,capacity,True,True,False,archived_v2
+ER_60_p0.15_seed1__h2_k1,ER_60_p0.15_seed1,ER p=0.15,2,1,60,20,24,20,22,,22,22,capacity,True,True,True,posthoc_class_order
+ER_60_p0.15_seed1__h3_k2,ER_60_p0.15_seed1,ER p=0.15,3,2,60,40,49,40,44,,44,44,capacity,True,True,True,posthoc_class_order
+ER_60_p0.15_seed2__h1_k1,ER_60_p0.15_seed2,ER p=0.15,1,1,60,19,20,19,20,,20,20,capacity,True,True,False,archived_v2
+ER_60_p0.15_seed2__h2_k1,ER_60_p0.15_seed2,ER p=0.15,2,1,60,19,21,19,20,,20,20,capacity,True,True,True,posthoc_class_order
+ER_60_p0.15_seed2__h3_k2,ER_60_p0.15_seed2,ER p=0.15,3,2,60,38,46,38,40,,40,40,capacity,True,True,True,posthoc_class_order

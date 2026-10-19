@@ -1,0 +1,68 @@
+[
+  {
+    "id": "ER_40_p0.15_seed0__h2_k1",
+    "verified": true,
+    "additions": 4546,
+    "hints_checked": 411214
+  },
+  {
+    "id": "ER_40_p0.15_seed0__h3_k2",
+    "verified": true,
+    "additions": 57877,
+    "hints_checked": 5075028
+  },
+  {
+    "id": "ER_20_p0.15_seed2__h3_k2",
+    "verified": true,
+    "additions": 3715,
+    "hints_checked": 50904
+  },
+  {
+    "id": "P_4xP_5__h3_k2",
+    "verified": true,
+    "additions": 1082,
+    "hints_checked": 11737
+  },
+  {
+    "id": "P_5xP_8__h3_k2",
+    "verified": true,
+    "additions": 1278,
+    "hints_checked": 15522
+  },
+  {
+    "id": "P_6xP_10__h3_k2",
+    "verified": true,
+    "additions": 1023,
+    "hints_checked": 11781
+  },
+  {
+    "id": "tree_20_seed0__h2_k1",
+    "verified": true,
+    "additions": 31,
+    "hints_checked": 245
+  },
+  {
+    "id": "tree_20_seed0__h3_k2",
+    "verified": true,
+    "additions": 108,
+    "hints_checked": 838
+  },
+  {
+    "id": "tree_20_seed2__h3_k2",
+    "verified": true,
+    "additions": 80,
+    "hints_checked": 612
+  },
+  {
+    "id": "tree_40_seed2__h3_k2",
+    "verified": true,
+    "additions": 426,
+    "hints_checked": 3582
+  },
+  {
+    "id": "tree_60_seed2__h3_k2",
+    "verified": true,
+    "additions": 494,
+    "hints_checked": 3611
+  }
+]

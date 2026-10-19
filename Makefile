@@ -1,7 +1,7 @@
 PYTHON ?= .venv-1/bin/python
 LATEXMK ?= /Library/TeX/texbin/latexmk
 
-.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data color-data submission-tables submission-pdf research-package english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison
+.PHONY: test report tables figures pdf tree-tables manuscript paper-figures confirmation confirmation-data progress-data clique-data evidence-data color-data submission-tables submission-pdf research-package english-tables gap-data gap-analysis bounds-data bounds-verify bounds-comparison certificate-validation-data
 
 # Audit completed confirmation data, publish tables/figures, then compile.
 # No benchmark or solver is run; repeating this target is safe.
@@ -36,7 +36,7 @@ research-package: tree-tables paper-figures confirmation-data gap-data bounds-ve
 submission-tables:
 	$(PYTHON) scripts/export_submission_tables.py
 
-submission-pdf: english-tables submission-tables
+submission-pdf: english-tables submission-tables certificate-validation-data proof-closure-data
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build paper/submission.tex
 
 # Post-hoc interval analysis of existing confirmation evidence; no solver calls.
@@ -85,5 +85,14 @@ report: tables figures tree-tables submission-tables
 english-tables:
 	$(PYTHON) scripts/export_english_tables.py
 
-pdf: english-tables submission-tables
+pdf: english-tables submission-tables certificate-validation-data proof-closure-data
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex
+
+# Verify saved new-seed evidence and refresh tables; no construction rerun.
+certificate-validation-data:
+	$(PYTHON) -S scripts/audit_certificate_validation.py
+	$(PYTHON) -S scripts/analyze_matching_bounds.py --verify-only
+
+.PHONY: proof-closure-data
+proof-closure-data:
+	$(PYTHON) -S scripts/verify_proof_closure.py

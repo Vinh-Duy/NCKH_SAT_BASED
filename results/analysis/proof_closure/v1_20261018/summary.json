@@ -1,0 +1,10 @@
+{
+  "instances": 117,
+  "independently_closed": 117,
+  "open": 0,
+  "newly_closed": 16,
+  "improved_upper_bounds": 10,
+  "theory_clique": 91,
+  "capacity": 15,
+  "unsat": 11
+}

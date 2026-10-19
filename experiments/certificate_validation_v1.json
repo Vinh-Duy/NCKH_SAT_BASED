@@ -1,0 +1,23 @@
+{
+  "schema": "certificate-validation-protocol-v1",
+  "fixed_before_execution": "2026-10-17",
+  "purpose": "New-seed validation of the frozen color-order construction and independent matching lower bounds; separate from timed SAT/ILP experiments.",
+  "random_sizes": [20, 40, 60],
+  "graph_seeds": [100, 101, 102, 103, 104],
+  "er_probabilities": [0.15, 0.30],
+  "ba_edges": 2,
+  "grids": [[3, 7], [4, 9], [5, 11]],
+  "cycles": [20, 40, 60],
+  "bipartite_part_sizes": [10, 20, 30],
+  "parameter_pairs": [[1, 1], [2, 1], [3, 2]],
+  "algorithm_seed": 0,
+  "ordering_attempts": 100,
+  "methods": ["greedy", "matching_h", "random_order", "insertion_order", "dsatur_h"],
+  "clique_search": "deterministic greedy from every starting vertex; valid clique only, not claimed maximum",
+  "expected_graphs": 69,
+  "expected_instances": 207,
+  "expected_observations": 1035,
+  "primary_endpoints": ["feasible proposals", "verified certificate matches", "strict improvements over greedy", "random versus insertion ordering successes on the same partition"],
+  "timing_scope": "descriptive single-run wall time only; attempt counts are not equal time budgets",
+  "reporting": "Retain disconnected graphs, all failures, all parameter pairs and all methods. Keep structural stress cases separate. No outcome-based filtering or retuning. Multiple parameters share a graph and are not independent samples. The protocol is locally fixed, not externally preregistered."
+}

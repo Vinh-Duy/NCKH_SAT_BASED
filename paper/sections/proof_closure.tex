@@ -1,0 +1,95 @@
+\section{Complete certification of the fixed cohort}
+\label{sec:proof-closure}
+A targeted follow-up closes all 16 intervals left open by the earlier
+postprocessing. Every one of the 117 instances now has a valid labeling
+attaining an independently verified lower bound. Ten retained upper bounds
+improve. The disjoint evidence categories are 91 theory/clique certificates,
+15 weighted-capacity certificates, and 11 clausal UNSAT proofs. These are
+post-hoc, instance-specific results selected after inspecting difficult
+cases. They do not change the original timed SAT--ILP observations or
+establish a general performance advantage.
+
+\subsection{A weighted lower bound}
+Assign nonnegative integer weights $w_v$, not all zero, to the vertices of
+$G^2$, and let
+\[
+ W=\sum_v w_v,\qquad C=\max_{I\text{ independent in }G^2}\sum_{v\in I}w_v.
+\]
+For $h\ge k\ge1$,
+\begin{equation}
+ \lambda_{h,k}(G)\ge k\bigl(\lceil W/C\rceil-1\bigr).
+ \label{eq:weighted-capacity}
+\end{equation}
+Indeed, vertices whose labels belong to a block of $k$ consecutive integers
+form an independent set of $G^2$. A labeling of span $s$, normalized to
+minimum zero, therefore satisfies
+$W\le C(\lfloor s/k\rfloor+1)$, proving
+\eqref{eq:weighted-capacity}. This is the classical fractional-coloring
+dual bound, rounded to an integer number of colors, rather than a new
+general theorem. Numerical optimization proposes weights only: the checker
+uses integer arithmetic to enumerate all maximal independent sets and
+recompute $C$. Nonnegative weights justify restricting the enumeration to
+maximal sets. The six difficult graph squares have 170--390 such sets;
+this favorable size does not imply polynomial complexity in general.
+
+\subsection{Witness constructions}
+The earlier class-order construction extends to arbitrary independent
+classes of $G^2$. For $k\le h\le2k$, successive classes receive gap $h$
+when they contain an original edge and gap $k$ otherwise. Nonconsecutive
+classes differ by at least $2k\ge h$, proving validity. Searching for an
+order is an upper-bound procedure, not a complete labeling decision method.
+Parameter transfer supplies further witnesses: multiplying an $L(a,b)$
+labeling by an integer $t>0$ produces an $L(h,k)$ labeling whenever
+$ta\ge h$ and $tb\ge k$. In particular, doubling an $L(2,1)$ witness
+gives an $L(3,2)$ witness. These constructions, an additional SAT witness,
+and the capacity bounds close 14 of the 16 previously open intervals.
+
+\subsection{Color, rank and residual formulation}
+The last two intervals require infeasibility proofs. At proposed span $s$,
+put $q=\lfloor s/k\rfloor+1$ and represent labels by
+\[
+ f(v)=k\pi(c(v))+r_v,\qquad
+ c(v)\in\{0,\ldots,q-1\},\quad \pi\in S_q,\quad 0\le r_v<k.
+\]
+The internal colors $c$ form a proper coloring of $G^2$; $\pi$ assigns
+their physical ranks. Every feasible labeling admits this representation
+by division with remainder. A square clique may be fixed to distinct
+internal color names because $\pi$ remains free. This does not fix its
+vertices' numerical labels. One-hot constraints use the sequential
+cardinality encoding of Sinz~\cite{sinz2005cardinality}.
+
+For $L(2,1)$, residuals vanish and classes containing an original edge
+cannot occupy consecutive ranks. For $L(3,2)$, each vertex retains a
+residual bit. Across consecutive ranks, an original edge requires residuals
+$(0,1)$ in increasing-rank order; a distance-two pair forbids $(1,0)$.
+Rank differences of at least two imply label difference at least three.
+The final rank's residual is restricted by $f(v)\le s$.
+These conditions are necessary and sufficient, so the formulas are
+equisatisfiable with the bounded-span labeling problem. Omitting residual
+bits would invalidate this equivalence. Exhaustive tests compare both
+specializations with independent label enumeration on every graph with
+at most four vertices, across spans 0--7.
+
+For ER\_40\_p0.15\_seed0, the formulas are UNSAT at span 13 for
+$L(2,1)$ and at span 27 for $L(3,2)$. Valid labelings of spans 14 and 28
+therefore establish the exact optima. Nine additional instances previously
+dependent on solver lower bounds receive proofs from the original order
+formulation. Two other such instances are certified by the capacity bound.
+
+\subsection{Independent proof replay}
+Glucose produces clausal refutations. DRAT-trim checks them and exports
+RUP-only LRAT derivations with propagation hints~\cite{cruzfilipe2017lrat}.
+A separate standard-library checker reconstructs each CNF from the archived
+graph and validates every indicated unit-propagation chain, requiring a
+derived empty clause. All 11 proofs pass. The largest uses 57,877 derived
+clauses and 5,075,028 checked hints. The checker is tested but has not itself
+been formally verified in a proof assistant.
+
+\begin{table}[H]
+\centering\small
+\caption{Exact optima for the six graphs with formerly open intervals.}
+\input{results/analysis/proof_closure/v1_20261018/six_graphs.tex}
+\tablenote{All graphs are ER with $p=0.15$. Each value has a validated
+labeling and a separately checked lower bound. These are supplementary
+certificates, not additional successes within the original time limit.}
+\end{table}

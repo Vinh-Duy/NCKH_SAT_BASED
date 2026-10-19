@@ -1,0 +1,13 @@
+{"id": "ER_40_p0.15_seed0__h2_k1", "span": 13, "kind": "compact", "status": "TIMEOUT", "time": 20.028718894000008}
+{"id": "ER_40_p0.15_seed0__h2_k1", "span": 13, "kind": "baseline", "status": "TIMEOUT", "time": 20.01152262000005}
+{"id": "ER_40_p0.15_seed1__h2_k1", "span": 12, "kind": "compact", "status": "TIMEOUT", "time": 20.009985831999984}
+{"id": "ER_40_p0.15_seed1__h2_k1", "span": 12, "kind": "baseline", "status": "TIMEOUT", "time": 20.00938012000006}
+{"id": "ER_40_p0.15_seed2__h2_k1", "span": 13, "kind": "compact", "status": "TIMEOUT", "time": 20.011040493999985}
+{"id": "ER_40_p0.15_seed2__h2_k1", "span": 13, "kind": "baseline", "status": "TIMEOUT", "time": 20.011266350000028}
+{"id": "ER_60_p0.15_seed2__h3_k2", "span": 41, "kind": "compact", "status": "TIMEOUT", "time": 45.02527306000002}
+{"id": "ER_40_p0.15_seed0__h3_k2", "span": 27, "kind": "compact", "status": "TIMEOUT", "time": 45.019160478}
+{"id": "ER_40_p0.15_seed1__h3_k2", "span": 27, "kind": "compact", "status": "SAT", "time": 2.731749411999999, "encode": 0.3660122149999552, "variables": 1575, "clauses": 27109, "stats": {"restarts": 979, "conflicts": 37358, "decisions": 59838, "propagations": 5014509}, "labels": {"0": 0, "1": 27, "2": 4, "3": 2, "4": 19, "5": 15, "6": 11, "7": 13, "8": 21, "9": 15, "10": 11, "11": 21, "12": 27, "13": 21, "14": 13, "15": 7, "16": 4, "17": 25, "18": 27, "19": 8, "20": 20, "21": 18, "22": 2, "23": 27, "24": 23, "25": 15, "26": 17, "27": 9, "28": 17, "29": 19, "30": 25, "31": 17, "32": 25, "33": 6, "34": 23, "35": 13, "36": 25, "37": 10, "38": 0, "39": 4}}
+{"id": "ER_40_p0.15_seed2__h3_k2", "span": 27, "kind": "compact", "status": "SAT", "time": 22.431711796999934, "encode": 0.15191989799996009, "variables": 1577, "clauses": 27208, "stats": {"restarts": 6746, "conflicts": 214195, "decisions": 361792, "propagations": 35933748}, "labels": {"0": 2, "1": 27, "2": 21, "3": 5, "4": 27, "5": 11, "6": 23, "7": 4, "8": 15, "9": 21, "10": 0, "11": 17, "12": 23, "13": 15, "14": 9, "15": 9, "16": 2, "17": 0, "18": 11, "19": 25, "20": 17, "21": 23, "22": 19, "23": 13, "24": 0, "25": 0, "26": 13, "27": 17, "28": 7, "29": 27, "30": 25, "31": 15, "32": 7, "33": 21, "34": 27, "35": 21, "36": 25, "37": 19, "38": 19, "39": 4}}
+{"id": "ER_40_p0.15_seed0__h3_k2", "span": 26, "kind": "compact", "status": "TIMEOUT", "time": 45.01004696299992}
+{"id": "ER_40_p0.15_seed1__h3_k2", "span": 26, "kind": "compact", "status": "TIMEOUT", "time": 45.01269795300004}
+{"id": "ER_40_p0.15_seed2__h3_k2", "span": 26, "kind": "compact", "status": "TIMEOUT", "time": 45.011398782000015}
