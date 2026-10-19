@@ -1,10 +1,14 @@
 \section{Discussion and conclusion}
 \subsection{Scope of the current conclusions}
 The formulation and search apply to general simple undirected graphs.
-In the primary v2 comparison, Gurobi proves optimality in all repetitions
-on more instances, while CaDiCaL has lower median time on the common
-solved subset (Table~\ref{tab:compact-runtime}). These are different
-criteria; neither gives a universal ranking. The separate tree screen
+In the primary v2 comparison, Gurobi meets the all-three-OPT criterion
+on 91/117 instances, compared with 77/117 for CaDiCaL. Conditional
+runtime medians use only the 74 instances meeting this criterion for
+both backends, excluding the other 43 from both timing columns.
+The lower SAT median on this intersection is not a full-cohort speed
+claim. In particular, the direction reverses for ER $p=0.30$ with
+$(1,1)$ and $(2,1)$, each represented by only two jointly solved
+instances (Table~\ref{tab:family-runtime}). The separate tree screen
 extends the size range to 1600 vertices, with 48 of 50 trees attaining
 the degree bound. Its short runtimes do not imply that all trees are easy.
 Encoding correctness is established independently of these runtime results.
@@ -55,7 +59,11 @@ one formulation/backend cannot establish superiority over all ILP methods.
 Graph-generation seeds measure input variation; repeated runs on one graph
 measure timing variation. These are not interchangeable. Short runtimes
 also reflect startup and licensing overhead; each comparison must use a
-consistent timing definition.
+consistent timing definition. Although graph structure and constraint
+counts may affect runtime, these measurements do not isolate their
+effects from formulation, preprocessing and search behavior. Attributing
+the ER differences to the number of SAT variables or clauses alone
+would require a controlled comparison with phase-specific measurements.
 
 Known formulas and the reference proofs in the appendix validate the
 pipeline and are not claimed as new mathematical contributions. The lower
@@ -64,30 +72,33 @@ construction. Claims about novelty or the complexity of a graph class require
 checking the original publications and the precise assumptions of their results.
 
 \subsection{Completed evidence and possible extensions}
-The repeated comparison, progress-capture audit and combinatorial
-postprocessing now provide a fixed body of evidence. The consolidated
-table closes \ConstructionClosed{} instances and retains
-\ConstructionOpen{} open intervals. The color-order construction supplies
-three explicit witnesses attaining previously known clique bounds.
-It improves the final evidence without changing either backend's timed
-coverage or proving a formula for a whole graph family. Remaining open
-intervals document the limits of the current methods and budget; reporting
-this study does not require solving every instance.
+The repeated comparison and successive certification studies now establish
+all 117 optima. Appendix~\ref{sec:proof-closure} closes the 16 intervals
+remaining after the original color-order construction and removes the
+remaining reliance on solver-only lower bounds through mathematical
+certificates and independently replayed UNSAT traces. This improves
+certainty about each instance without changing timed coverage or proving
+a formula for a whole graph family.
 
 The constructor was explored after inspecting the unresolved instances.
 Applying its fixed configuration to the entire cohort prevents reporting
 only its successful attempts, but does not make this a held-out evaluation.
-It supports instance-specific certificates, not a generalization or speed
-claim. The unknown native stopping reason of one Gurobi observation also
+Appendix~\ref{sec:certificate-validation} subsequently evaluates the frozen
+constructor and four controls on 69 new graphs. Its 207 parameter instances
+are separate from the primary comparison. Insertion order certifies
+43/45 dense-ER cases but no sparse-ER cases, and DSATUR with spacing $h$
+has greater overall certificate coverage. This supports a limited
+structural role, not a universal or speed claim. The matching certificate
+in Appendix~\ref{sec:matching-bound} is independently checkable but
+improves no bound in either cohort. The unknown native stopping reason of one Gurobi observation also
 remains a limitation rather than an inferred explanation.
 
 Further experiments should be separately identified and distinguish
 improvements to feasible solutions from improvements to lower bounds or
 proof search. Results favoring Gurobi remain part of the comparison.
 A subsequent SAT improvement should be evaluated by ablation, for example
-solver reuse across spans or more efficient constraint generation. Independently
-checkable UNSAT certificates would strengthen optimality conclusions where
-mathematical bounds are insufficient. Multiple techniques should not be
+solver reuse across spans or more efficient constraint generation. The new independently replayed UNSAT certificates supply the lower-bound
+evidence where mathematical certificates are insufficient. Multiple techniques should not be
 introduced simultaneously and their combined gains attributed to a single technique.
 
 Further evaluation should distinguish model-construction cost from search

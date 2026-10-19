@@ -1,20 +1,25 @@
 \begin{table}[htbp]
 \centering\small
-\caption{Optimality coverage and runtime by graph size.}
+\caption{Coverage and conditional runtime by graph size.}
 \label{tab:compact-runtime}
 \input{\SubmissionSummaryDir/runtime.tex}
 \tablenote{SAT OPT and ILP OPT count instances optimal in all three
-repetitions. Joint counts their intersection. For each backend, time is
+repetitions within budget. Joint counts their intersection. For each backend, time is
 the median of per-instance three-run medians on that same joint subset.
 The ALL row uses all joint instances, not the average of size-group
-medians. Times are wall-clock seconds under the v2 30-second protocol.}
+medians. Both ALL timings use 74 instances and exclude the other 43.
+Times are wall-clock seconds under the v2 30-second protocol.}
 \end{table}
 
-On the common solved subset, median wall time is lower for CaDiCaL at
-each size (Table~\ref{tab:compact-runtime}). This must be read with the
-coverage columns: at 60 vertices, SAT proves optimality in every run on
-21 of 39 instances, compared with 26 for ILP. The subsecond medians
-describe the jointly solved cases, not the cost of the full cohort.
-The nearly flat SAT medians therefore do not demonstrate size-independent
-scaling; harder instances drop out of this subset, and startup contributes
-to these short measurements.
+Each size group contains 39 instances, but its timing subset contains
+only 33, 21 and 20 instances at 20, 40 and 60 vertices, respectively.
+Within these subsets, CaDiCaL has lower medians
+(Table~\ref{tab:compact-runtime}); at 60 vertices, however, its
+all-three-OPT coverage is 21/39, compared with 26/39 for ILP.
+The pooled medians, 0.373 seconds for SAT and 0.559 seconds for ILP,
+describe only the 74 jointly all-three-OPT instances. Their family
+composition matters: the direction reverses in the two ER $p=0.30$
+parameter groups with nonempty timing subsets
+(Table~\ref{tab:family-runtime}). The nearly flat SAT medians do not
+demonstrate size-independent scaling; instances failing the joint
+criterion are excluded, and startup contributes to these short measurements.

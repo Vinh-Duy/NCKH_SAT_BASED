@@ -26,7 +26,7 @@
 \input{paper/generated/submission_summary}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs}
 \author{}
-\date{October 14, 2026}
+\date{October 18, 2026}
 
 \begin{document}
 \maketitle
@@ -37,14 +37,14 @@ bounded span search are proved correct and compared with assignment
 integer linear programming (ILP). On 117 tree, grid and random-graph
 instances, with three repetitions and a 30-second limit, SAT and ILP
 prove optimality in every repetition on \ProgressSATStable{} and
-\ProgressILPStable{} instances, respectively. SAT has lower median wall
-time on the common solved subset and better feasible upper bounds on
-some unresolved instances; ILP has greater optimality coverage.
-Post-hoc clique bounds and explicit labelings yield
-\ConstructionCliqueCertified{} directly checkable certificates and,
-together with the remaining evidence, close \ConstructionClosed{}
-intervals, leaving \ConstructionOpen{} open. A sufficient color-class
-ordering condition supplies three new optimal witnesses.
+\ProgressILPStable{} instances, respectively. ILP has greater optimality
+coverage, while feasible upper bounds favor different backends on some
+instances unresolved within the time limit.
+Supplementary clique and weighted-capacity bounds, explicit labelings,
+and proof-producing SAT search independently certify all 117 optima.
+The final evidence comprises 91 theory/clique certificates, 15
+weighted-capacity certificates and 11 replayed UNSAT proofs; it does not
+change the original timed coverage.
 A separate $L(2,1)$ symmetry study reports 494 jointly optimal pairs
 out of 496. Cycles show a median clause reduction of 12.58\%, with
 little change in the median time ratio; effects vary across product
@@ -61,8 +61,11 @@ exact optimization, ILP, optimality certificates.
 \input{paper/sections/submission_results}
 \input{paper/sections/submission_conclusion}
 
+\begingroup
+\small
 \bibliographystyle{plain}
 \bibliography{paper/references}
+\endgroup
 \clearpage
 \appendix
 \input{paper/sections/theoretical_baselines}
@@ -73,4 +76,8 @@ The full technical report retains the paired tree runtime plot and
 family-level symmetry runtime and clause plots, together with their
 original protocol descriptions. They are supplementary views of the
 archived experiments, not new measurements.
+\clearpage
+\input{paper/sections/certificate_validation}
+\input{paper/sections/matching_bound}
+\input{paper/sections/proof_closure}
 \end{document}

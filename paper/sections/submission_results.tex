@@ -35,7 +35,9 @@ The audit checks all saved labelings against shortest-path constraints,
 plus cohort coverage, configurations and interval consistency. The
 encoding is also tested against an exhaustive small-instance oracle.
 These checks supplement the proof for RQ1; feasibility validation does
-not independently verify UNSAT or ILP dual-bound claims. Raw graphs,
+not independently verify UNSAT or ILP dual-bound claims. The separate
+proof replay in Appendix~\ref{sec:proof-closure} supplies the missing
+lower-bound certificates for this cohort. Raw graphs,
 labelings and manifests are retained under \path{results/runs/}, with
 fingerprinted analyses under \path{results/analysis/}. Historical pilot
 and v1 runs are not pooled with v2. Hardware metadata are incomplete,
@@ -62,13 +64,13 @@ and the subsequent certificates for all 117 instances.
 \centering\small
 \caption{Consolidated optimality evidence on 117 instances.}
 \label{tab:submission-evidence}
-\input{\ConstructionReportDir/summary.tex}
-\tablenote{Original-v2 columns: Theory is a witness attaining the initial
-theoretical bound; Other counts additional closed intervals. Theory +
-Other + Open = Cases. Final columns include both postprocessing steps.
-Clique-cert. counts matching square-clique bounds and labelings and
-is a subset of Closed; Closed + Open = Cases. These are distinct
-instances, not timed solver successes or independent repetitions.}
+\input{results/analysis/proof_closure/v1_20261018/summary.tex}
+\tablenote{Before counts the 101 closed intervals after the earlier clique
+and color-order stages; Added counts the 16 newly closed intervals.
+Certified requires a checked labeling and an independently verified lower
+bound. All 117 are now certified, with zero open intervals. These are
+distinct instances, not timed solver successes. See
+Appendix~\ref{sec:proof-closure} for the new proof stage.}
 \end{table}
 
 The clique audit closes two of the 21 initially open intervals using
@@ -80,8 +82,8 @@ to all 117 instances under the same configuration, returning
 all attaining the existing clique lower bound. Table~\ref{tab:five-closures} gives all five newly closed cases,
 including the three constructions. The four unsuccessful construction
 searches concern already-closed BA cases and do not reopen them.
-The final total is \ConstructionClosed{} closed and \ConstructionOpen{}
-open intervals. These post-hoc certificates leave the original solver
+At this historical stage the total is \ConstructionClosed{} closed and
+\ConstructionOpen{} open intervals; the subsequent proof stage closes all 117. These post-hoc certificates leave the original solver
 times and statuses unchanged.
 
 \begin{table}[htbp]
@@ -98,6 +100,14 @@ five cases are included in Table~\ref{tab:submission-evidence}.}
 \end{table}
 
 \input{paper/sections/certificate_support}
+
+\paragraph{New-sample validation.}
+A separate fixed-protocol study evaluates five label constructions on
+69 new graphs (207 parameter instances). Insertion order certifies
+53 instances and DSATUR with spacing $h$ certifies 58; their strengths
+differ by family. The union of all five methods certifies 96 instances.
+Appendix~\ref{sec:certificate-validation} retains failures and controls;
+it does not add observations to the timed SAT--ILP comparison.
 
 \subsection{Separate tree screen}
 As a separate structured-graph check, the $L(3,2)$ screen of
@@ -140,6 +150,7 @@ instances optimal in every repetition. Improved UB counts feasible
 observations with a smaller span than the shared initial incumbent;
 it is not an optimality claim.}
 \end{table}
+\input{paper/sections/runtime_scope}
 \input{paper/sections/family_runtime_summary}
 The size-based summary in Appendix~\ref{sec:submission-size-summary}
 also reports coverage alongside time; medians on solved subsets alone
@@ -153,9 +164,9 @@ cannot establish scaling on the full cohort.
 \tablenote{Pairs match graph, parameters and repetition. A higher lower
 bound (LB) and a smaller validated upper bound (UB) are preferable.
 Open denotes the fixed 21-instance subset unresolved by pooled v2
-solver evidence before postprocessing, giving 63 pairs. It is not the
-final \ConstructionOpen{} open instances in
-Table~\ref{tab:submission-evidence}.}
+solver evidence before postprocessing, giving 63 pairs. The final
+certification in Table~\ref{tab:submission-evidence} leaves no open
+intervals.}
 \end{table}
 
 In this initially open subset, SAT obtains a smaller upper bound in

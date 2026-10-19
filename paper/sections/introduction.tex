@@ -42,10 +42,12 @@ with retained graphs, configurations and witnesses for reproducibility.
 instances that reports unresolved cases, bound quality and proof
 coverage alongside runtime. A separate paired $L(2,1)$ study evaluates
 symmetry effects by family under its original backend and budget.
-\item Instance-specific certificates closing five of the 21 intervals
-left open by pooled solver evidence: two from clique bounds and stored
-labelings, and three from a proved sufficient color-class ordering
-condition with newly constructed witnesses.
+\item A supplementary certificate pipeline combining mathematical
+bounds, explicit labelings and independently replayed UNSAT proofs.
+Clique and color-order certificates first close five of the 21 intervals
+left open by pooled solver evidence. Weighted capacity bounds and a
+color-rank-residual SAT formulation then close the remaining 16, yielding
+independently checked optimal spans for all 117 instances.
 \end{enumerate}
 
 SAT and ILP formulations for distance-constrained labeling already exist

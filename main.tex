@@ -31,7 +31,7 @@
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs\\[0.5em]
 {\large Technical research report: methods and experiments}}
 \author{}
-\date{October 14, 2026}
+\date{October 18, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -49,17 +49,16 @@ graph models uses three repetitions and a 30-second external limit.
 SAT and ILP establish optimality in all three runs on
 \ProgressSATStable{} and \ProgressILPStable{} instances, respectively.
 Feasible upper bounds and recorded lower bounds favor different backends
-on some unresolved instances. Separately, square-clique bounds and explicit
-labelings certify \ConstructionCliqueCertified{} optima without solver
-lower-bound claims. A sufficient color-class ordering condition supplies
-three new matching witnesses. Combining the available evidence closes
-\ConstructionClosed{} instances and leaves \ConstructionOpen{} open;
-post-hoc certification does not change timed solver coverage.
+on some unresolved instances. Supplementary mathematical bounds,
+color-class constructions and proof-producing SAT search independently
+certify the optimal span of all 117 instances. The certificate pipeline
+combines weighted independent-set capacities with a color-rank-residual
+formulation and replays 11 clausal UNSAT proofs. This post-hoc
+certification does not change timed solver coverage.
 Supplementary tree and symmetry studies are retained with their original
 protocols. These results establish correctness and describe computational
 limits on the evaluated graphs, without claiming universal SAT superiority.
-The current solver neither reuses learned clauses across span trials nor
-exports independently checkable UNSAT traces.
+The timed solver does not reuse learned clauses across span trials.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
 span minimization, ILP baseline, reproducible experiments.
@@ -85,4 +84,8 @@ span minimization, ILP baseline, reproducible experiments.
 \input{paper/sections/theoretical_baselines}
 \input{paper/sections/graph_families}
 \input{paper/sections/experiments_l21}
+\clearpage
+\input{paper/sections/certificate_validation}
+\input{paper/sections/matching_bound}
+\input{paper/sections/proof_closure}
 \end{document}

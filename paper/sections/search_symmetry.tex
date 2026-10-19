@@ -201,4 +201,6 @@ are not treated as identical when comparing SAT and ILP.
 The validator checks the label domain, coverage of all vertices including
 isolates, and the edge and distance-2 conditions. It verifies feasibility,
 not UNSAT. Search history is likewise not an independently checkable UNSAT
-certificate: this version does not export or verify DRAT/LRAT proofs.
+certificate: the original timed runner does not export DRAT/LRAT proofs.
+The separate follow-up in Appendix~\ref{sec:proof-closure} exports and
+independently replays LRAT proofs for the remaining lower-bound obligations.

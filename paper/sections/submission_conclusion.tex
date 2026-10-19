@@ -4,50 +4,52 @@ The four research questions have different types of answers.
 For RQ1, the encoding equivalence and span-search invariant establish
 correctness: a feasible labeling supplies an upper bound, and the search
 reports optimality only when justified bounds meet. The implementation
-checks decoded labelings independently; solver-only lower bounds still
-rely on the backend's correctness because UNSAT and dual certificates
-are not independently replayed.
+checks decoded labelings independently. A supplementary proof stage now
+replays the UNSAT evidence needed beyond the mathematical bounds.
 
 For RQ2, the 12 applicable exact-reference instances agree with theory.
-Combining solver intervals, theoretical bounds and new constructions
-closes \ConstructionClosed{} of 117 instances, leaving
-\ConstructionOpen{} open. Within the retained evidence,
-\SupportIndependent{} closures have mathematical support independent
-of solver bounds; the other \SupportSolverDependent{} depend on
-recorded solver lower bounds. The \ConstructionCliqueCertified{} direct
-clique-plus-labeling certificates are included in that total. The
-color-order condition provides a sufficient construction and three
-new matching witnesses, rather than a formula for all graphs in a family.
+The earlier postprocessing closed 101 intervals and left 16 open.
+Appendix~\ref{sec:proof-closure} closes all 16 and supplies independent
+support for the entire cohort: 91 theory/clique certificates, 15
+weighted-capacity certificates and 11 replayed UNSAT proofs. Ten upper
+bounds improve. These disjoint categories total 117; none changes
+original run statuses or timed solver coverage.
 
-For RQ3, Gurobi proves optimality more consistently on the full cohort,
-while CaDiCaL has lower median times on the common solved subset and
-better feasible bounds on part of the initially unresolved subset.
-Coverage, time and bound quality therefore describe distinct strengths.
+For RQ3, Gurobi meets the all-three-OPT criterion on 91/117 instances,
+compared with 77/117 for CaDiCaL. Timing comparisons cover only their
+74-instance intersection. CaDiCaL has lower medians in the tree, grid
+and BA subsets, whereas Gurobi has lower medians in the ER $p=0.30$
+subsets for $(1,1)$ and $(2,1)$. Each of those ER timing subsets has
+only two instances. The pooled median does not establish a full-cohort
+speed ranking. SAT supplies better feasible bounds on part of the
+initially unresolved subset; coverage, conditional time and bound
+quality are distinct measures.
 For RQ4, the paired symmetry study shows smaller CNFs on the tested
 families with added constraints, but the runtime effect varies. Cycles
 have a median clause reduction of 12.58\% with a median time ratio near
 one. The evidence supports descriptive, family-specific effects rather
 than a universal speedup.
 
-All 16 intervals remaining open after postprocessing concern ER graphs
-with $p=0.15$; all five certificate closures concern $p=0.30$. This is a
-pattern in the present cohort and certification method, not a general
-ranking of ER difficulty. The timed comparison also contains difficult
-dense instances, as Table~\ref{tab:family-runtime} shows. The matching
-construction applies to any graph square, but restricts color classes
-to pairs and singletons. On sparse squares, larger independent sets may
-be needed to approach the clique bound. General square-coloring followed
-by compatible class ordering is a possible extension, with no guarantee
-of attaining that bound. The tested random trees are solved within their
+The 16 formerly open intervals all concern ER graphs with $p=0.15$.
+Their closure uses arbitrary square-independent color classes, weighted
+capacity bounds and a color-rank-residual SAT encoding. These are targeted
+post-hoc improvements and do not establish a general ranking of ER
+instance difficulty or an encoding speed advantage. The tested random trees are solved within their
 budgets; this does not imply that arbitrary $L(3,2)$ tree instances are easy.
 
 \subsection{Limitations}
 The primary comparison is limited to 20--60 vertices, three parameter
 pairs and three graph seeds per randomized configuration. Results depend
-on the chosen formulations, backends and time budget. The construction
-was designed after examining unresolved cases; testing it on the whole
-cohort records failures as well as successes but is not a held-out
-assessment. The symmetry experiment has only one measurement per
+on the chosen formulations, backends and time budget. Model size alone
+does not explain the observed timing differences: this experiment does
+not isolate constraint density, construction overhead and solver search.
+The construction
+was designed after examining unresolved cases. Its subsequent
+fixed-protocol evaluation on 69 new graphs supplies separate evidence:
+insertion order certifies 43/45 dense-ER instances but none of the
+sparse-ER instances. DSATUR with spacing $h$ certifies more cases
+overall, so the construction has no universal advantage. This study
+uses one algorithmic seed and does not compare runtimes. The symmetry experiment has only one measurement per
 configuration and cannot establish statistical significance. Neither
 experiment tests direct versus order encoding, incremental SAT, a
 specialized tree algorithm or a GA baseline. These limits qualify performance conclusions without weakening
@@ -56,7 +58,8 @@ checked labeling and clique certificates.
 \subsection{Conclusion}
 The study provides an exact general-graph formulation and a reproducible
 account of where the evaluated methods prove optimality, retain useful
-bounds or remain unresolved. Independent UNSAT traces, a controlled encoding ablation and solver reuse
-across spans would strengthen the evidence. Coloring-based certificate
-search may supply further optimal witnesses, but is not part of the
-reported experiment.
+bounds or remain unresolved. A controlled ablation of the new encoding and bounds on unseen instances,
+and solver reuse across spans, would test the scope of these improvements. The new-sample construction
+study identifies where coloring-based certificates help and where they
+remain insufficient. A matching-bound checker provides an additional
+proof format but closes no further interval in the evaluated cohorts.

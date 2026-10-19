@@ -1,0 +1,15 @@
+\paragraph{Scope of the runtime summaries.}
+Let $S$ and $I$ be the sets of instances for which SAT and ILP,
+respectively, report OPT within budget in all three repetitions.
+Their intersection $J=S\cap I$ contains \ProgressJointStable{} instances,
+out of $|S|=\ProgressSATStable{}$, $|I|=\ProgressILPStable{}$ and
+\ProgressInstances{} instances in total. For both backends, each runtime
+entry is the median, over the relevant subset of $J$, of the per-instance
+median across three runs. The same instances enter both timing columns.
+The overall timing subset excludes 43 instances: three satisfy the
+all-three-OPT criterion for SAT only, 17 for ILP only, and 23 for neither.
+``Neither'' does not rule out an OPT result in an individual repetition.
+These exclusions leave out unequal coverage as well as unresolved cases;
+the conditional medians cannot rank performance on the full cohort.
+Full-cohort coverage and retained bounds are reported separately, and no
+missing completion time is replaced by zero or by the timeout limit.

@@ -1,6 +1,9 @@
 # Research summary: exact L(h,k)-labeling
 
-**Snapshot: October 14, 2026.** The project studies a SAT-based method for
+**October 18 update.** All 117 fixed-v2 instances now have independently certified optimal spans. The [complete proof package](../results/analysis/proof_closure/README.md) closes the 16 formerly open intervals and improves ten upper bounds. Its disjoint certificate counts are 91 theory/clique, 15 weighted-capacity and 11 replayed UNSAT proofs. The [method note](methods/proof_closure.md) supplies the mathematical arguments and replay command. Original timed solver coverage remains unchanged. Sections below retain the preceding evidence stages and their historical counts for provenance.
+
+
+**Snapshot: October 17, 2026.** The project studies a SAT-based method for
 minimum-span L(h,k)-labeling of general simple undirected graphs, with
 assignment ILP as the principal exact baseline. The main domain is
 h >= k >= 1; “general graphs” describes the formulation's scope, not a
@@ -62,6 +65,29 @@ The result is a sufficient construction, not a necessary characterization
 of all optimal labelings. The bounded ordering search can return UNKNOWN;
 that outcome neither proves infeasibility nor rules out a better labeling.
 
+## Separate new-sample validation
+
+The frozen constructor has now been tested on 69 new graphs, with
+207 parameter instances and five construction methods. The protocol,
+edge sets and implementation hashes were saved before execution. This
+cohort is separate from all original SAT/ILP measurements.
+
+Insertion ordering certifies 53 instances, DSATUR with spacing h certifies
+58, and the union of all five methods certifies 96. All DSATUR certificates
+occur for (1,1); insertion supplies 31 certificates with h>k. Its strongest
+group is dense ER (43/45), whereas it certifies no sparse-ER, tree, grid or
+cycle instance in this cohort. The results support a structural role for
+the restricted matching partition rather than universal superiority.
+All 907 feasible labelings and all failed searches remain in the record.
+See the [design and full results](experiments/certificate_validation.md).
+
+An additional matching/barrier proof format uses classical Tutte--Berge
+theory when the square complement is triangle-free. It applies to 15
+historical and 39 new parameter instances but improves no degree/clique
+bound in either cohort. The historical 101/16 closure split and the
+90 independently supported closures remain unchanged. This null result
+is documented in the [matching audit](methods/matching_certificates.md).
+
 ## Scope of the contribution
 
 The study provides a proved formulation, an auditable SAT–ILP comparison,
@@ -93,16 +119,27 @@ retains evidence for all four research questions:
 | RQ3: cost and proof coverage | Symbolic and common-domain model counts, matched bound comparisons, and runtime by family and parameter pair alongside all-three-OPT coverage; size summary in the appendix |
 | RQ4: symmetry | Eight-family table of paired coverage, variable/clause reductions, clause-count directions and time ratios; complete-run conflict/decision totals; explicit unresolved intervals |
 
-Runtime summaries use the same 74 jointly all-three-OPT instances for both
-backends. Each instance first contributes its median across three runs;
-the table then takes the median across these instances. Overall medians
-are 0.373 s for SAT and 0.559 s for ILP. This solved-subset result must be
-read with the full-cohort coverage, 77/117 versus 91/117, and is not a
-runtime claim about unresolved inputs. Per-family results qualify the
-overall median: Gurobi is faster on the jointly solved ER p=0.30 instances
-for (1,1) and (2,1), while CaDiCaL is faster on the jointly solved trees,
-grids and BA instances. The ER p=0.30, (3,2) group has no instance optimal
-in every repetition for both backends, so its paired median is undefined.
+Runtime summaries are conditional on the same 74 instances being OPT
+within budget in all three repetitions for both backends. Each instance
+first contributes its median across three runs; the table then takes the
+median across these instances. The other 43 instances are excluded from
+both timing columns: three meet the all-three-OPT criterion for SAT only,
+17 for ILP only, and 23 for neither. The latter category may still include
+individual successful repetitions. Full-cohort coverage remains 77/117
+for SAT and 91/117 for ILP.
+
+The conditional pooled medians, 0.373 s for SAT and 0.559 s for ILP, do not
+establish a full-cohort speed ranking. They also depend on the composition
+of the selected graph families. For ER p=0.30, the SAT/ILP medians are
+7.196/0.470 s for (1,1) and 4.055/0.811 s for (2,1), each on just two
+jointly all-three-OPT instances out of nine. These are the 20-vertex
+graphs with seeds 0 and 2 in each group. Gurobi also has greater coverage
+in those groups: 8/9 versus 2/9 and 8/9 versus 3/9, respectively.
+CaDiCaL has lower conditional medians on the tree, grid and BA subsets.
+The ER p=0.30, (3,2) group has no jointly all-three-OPT instance, so its
+conditional median is undefined. Variable and clause counts alone do not
+establish the cause of these timing differences; model construction,
+preprocessing and search have not been isolated by a controlled ablation.
 Symmetry timings use a separate
 backend, budget and single-run protocol; no timings are pooled across them.
 
@@ -140,7 +177,8 @@ The remaining work is finite: supervisor review of the final scope and
 claims, confirmed author/affiliation information, adaptation to the NCKH
 institutional format, and selection of a submission venue with its required
 declarations and approvals. A controlled encoding ablation may be considered
-if the intended venue requires stronger method-specific evidence. It is not
-necessary to resolve all 16 open cases to report the established findings.
+if the intended venue requires stronger method-specific evidence. The
+October 18 follow-up has now resolved all 16 formerly open cases; the
+remaining decisions concern interpretation, evaluation scope and submission.
 Preparation of a complete report does not guarantee acceptance by a journal
 or conference.

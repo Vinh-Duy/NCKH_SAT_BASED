@@ -1,19 +1,30 @@
 \begin{table}[htbp]
 \centering\small
-\caption{SAT--ILP coverage and runtime by family.}
+\caption{Coverage and conditional runtime by family.}
 \label{tab:family-runtime}
 \input{\SubmissionSummaryDir/family_runtime.tex}
 \tablenote{Each row includes the three graph sizes. SAT OPT and ILP OPT
-count instances optimal in all three repetitions; Joint is their
-intersection. Times are medians of per-instance three-run medians on
-that same joint subset. A dash means the subset is empty. ER densities
-are separated. The ALL row is computed across instances, not group medians.}
+count instances optimal within budget in all three repetitions; Joint
+is their intersection. Both timing columns use only that same Joint
+subset: first the three-run median for each instance, then the median
+across instances. The ALL timings cover 74 of 117 instances and exclude
+the other 43. A dash means the subset is empty. ER densities are
+separated; ALL is computed across instances, not group medians.}
 \end{table}
 
-The family breakdown qualifies the overall timing result. CaDiCaL has
-lower paired medians on the tested trees, grids and BA cases. Gurobi is
-faster on the common solved $p=0.30$ ER instances with $(1,1)$ and
-$(2,1)$, and proves more optima in those groups. The $p=0.30$, $(3,2)$
-group has no instance optimal in all three runs of both backends, so a
-paired median is not defined. A single pooled median would hide these
-differences and the small sizes of some common subsets.
+Runtime comparisons depend on the graph family and parameter pair.
+On the jointly all-three-OPT subsets, CaDiCaL has lower medians for
+trees, grids and BA graphs. The direction reverses for ER $p=0.30$:
+the SAT and ILP medians are 7.196 and 0.470 seconds for $(1,1)$, and
+4.055 and 0.811 seconds for $(2,1)$. Each of these timing comparisons
+contains only two instances out of nine: the 20-vertex graphs with
+seeds 0 and 2. No 40- or 60-vertex instance enters either timing subset.
+ILP also has greater
+all-three-OPT coverage in these groups: 8 versus 2 and 8 versus 3,
+respectively. For ER $p=0.30$, $(3,2)$, the joint subset is empty,
+so no conditional timing median is reported.
+Trees, grids and BA graphs account for 61 of the 74 joint instances;
+the two ER densities contribute nine and four, respectively.
+The pooled medians therefore depend on both cohort composition and
+selection into the jointly solved subset. They do not establish an
+overall SAT speed advantage or a general ordering of graph difficulty.

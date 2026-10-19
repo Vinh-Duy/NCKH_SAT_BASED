@@ -5,23 +5,23 @@ invariant and conditions for valid symmetry breaking. The primary v2
 comparison evaluates 117 fixed graph/parameter instances with three
 repetitions and a 30-second limit per backend. SAT and assignment ILP
 establish optimality in all three runs on \ProgressSATStable{} and
-\ProgressILPStable{} instances, respectively. On the 21 initially open
+\ProgressILPStable{} instances, respectively. Runtime summaries are
+conditional on the 74 instances solved optimally in every repetition by
+both backends. Their direction varies by family and parameter pair;
+they do not establish an overall SAT speed advantage.
+On the 21 initially open
 instances, SAT has better upper bounds in \ProgressOpenSATUB{} of
 \ProgressOpenPairs{} matched pairs, while ILP has stronger lower bounds
 in \ProgressOpenILPLB{} pairs. These findings describe complementary
 solution and proof behavior in this cohort, not general equivalence.
 
-Table~\ref{tab:gap-coverage} consolidates the available evidence:
-\ConstructionClosed{} of \ConstructionInstances{} intervals are closed
-and \ConstructionOpen{} remain open. Square-clique bounds certify two
-additional optima from saved witnesses, and a sufficient color-class
-ordering condition supplies matching witnesses for three more instances.
-In total, \ConstructionCliqueCertified{} optima can be checked directly
-from a clique and a labeling, without relying on reported solver lower
-bounds. This subset overlaps the closed total. Including the applicable degree
-and reference bounds, \SupportIndependent{} closures have mathematical
-support and \SupportSolverDependent{} retain solver-dependent lower bounds. The new certificates are
-instance-specific and do not alter any original timing or status.
+Table~\ref{tab:gap-coverage} and Appendix~\ref{sec:proof-closure}
+consolidate the final evidence: all 117 intervals are closed with
+independent certificates. The disjoint categories are 91 theory/clique,
+15 weighted-capacity and 11 replayed UNSAT proofs. The targeted follow-up
+closes the 16 remaining intervals and improves ten upper bounds.
+These are instance-specific results and do not alter original timings
+or solver statuses.
 
 The separate 50-tree $L(3,2)$ study and archived $L(2,1)$ symmetry
 experiments provide additional validation with their own protocols.
@@ -34,10 +34,14 @@ proves a new formula over an entire graph family. Existing SAT and ILP
 labeling methods also preclude a first-use claim for these approaches.
 The contribution is a documented exact implementation, correctness
 arguments and reproducible evidence about its scope and limits.
+Separate new-sample construction validation certifies 96 of 207 instances
+through the union of five methods. Its family-specific outcomes support
+complementary constructions rather than a single dominant heuristic.
+The additional matching-bound audit does not change the historical
+101/16 closure split or the independent-support count.
 
-A controlled direct-versus-order ablation and independently checkable
-UNSAT traces could extend this work. GA remains a proposed separate
+A controlled ablation on unseen instances should assess the new bounds
+and color-rank-residual encoding separately. GA remains a proposed
 upper-bound baseline; no present result establishes superiority or
-inferiority relative to it. Resolving the remaining intervals is a
-possible extension rather than a prerequisite for reporting the
-established results.
+inferiority relative to it. Complete certification resolves this fixed
+cohort, while scalability and general performance remain empirical questions.
