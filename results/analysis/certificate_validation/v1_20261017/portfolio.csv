@@ -1,0 +1,208 @@
+Instance,Family,h,k,Best_LB,Best_UB,Gap,Certified,Certifying_Methods,Best_Methods,Matching_Eligible,Matching_LB,Matching_Strictly_Stronger,Matching_Necessary
+tree_20_seed100,Tree,1,1,4,4,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_20_seed100,Tree,2,1,5,6,1,False,,greedy,False,,False,False
+tree_20_seed100,Tree,3,2,9,10,1,False,,greedy,False,,False,False
+BA_20_m2_seed100,BA,1,1,11,11,0,True,matching_h;random_order;insertion_order;dsatur_h,matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+BA_20_m2_seed100,BA,2,1,12,14,2,False,,greedy,False,,False,False
+BA_20_m2_seed100,BA,3,2,23,28,5,False,,greedy,False,,False,False
+ER_20_p0.15_seed100,ER p=0.15,1,1,6,6,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+ER_20_p0.15_seed100,ER p=0.15,2,1,6,8,2,False,,greedy,False,,False,False
+ER_20_p0.15_seed100,ER p=0.15,3,2,12,18,6,False,,greedy;insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed100,ER p=0.30,1,1,14,14,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed100,ER p=0.30,2,1,14,14,0,True,insertion_order,insertion_order,False,,False,False
+ER_20_p0.30_seed100,ER p=0.30,3,2,28,28,0,True,insertion_order,insertion_order,False,,False,False
+tree_20_seed101,Tree,1,1,5,5,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_20_seed101,Tree,2,1,6,7,1,False,,greedy,False,,False,False
+tree_20_seed101,Tree,3,2,11,12,1,False,,greedy,False,,False,False
+BA_20_m2_seed101,BA,1,1,10,10,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+BA_20_m2_seed101,BA,2,1,11,11,0,True,greedy,greedy,False,,False,False
+BA_20_m2_seed101,BA,3,2,21,24,3,False,,greedy,False,,False,False
+ER_20_p0.15_seed101,ER p=0.15,1,1,7,7,0,True,dsatur_h,dsatur_h,False,,False,False
+ER_20_p0.15_seed101,ER p=0.15,2,1,7,9,2,False,,insertion_order,False,,False,False
+ER_20_p0.15_seed101,ER p=0.15,3,2,14,18,4,False,,insertion_order,False,,False,False
+ER_20_p0.30_seed101,ER p=0.30,1,1,13,13,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed101,ER p=0.30,2,1,13,13,0,True,insertion_order,insertion_order,False,,False,False
+ER_20_p0.30_seed101,ER p=0.30,3,2,26,26,0,True,insertion_order,insertion_order,False,,False,False
+tree_20_seed102,Tree,1,1,5,5,0,True,dsatur_h,dsatur_h,False,,False,False
+tree_20_seed102,Tree,2,1,6,7,1,False,,greedy,False,,False,False
+tree_20_seed102,Tree,3,2,11,15,4,False,,dsatur_h,False,,False,False
+BA_20_m2_seed102,BA,1,1,10,10,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+BA_20_m2_seed102,BA,2,1,11,11,0,True,greedy,greedy,False,,False,False
+BA_20_m2_seed102,BA,3,2,21,22,1,False,,greedy,False,,False,False
+ER_20_p0.15_seed102,ER p=0.15,1,1,6,6,0,True,dsatur_h,dsatur_h,False,,False,False
+ER_20_p0.15_seed102,ER p=0.15,2,1,7,9,2,False,,insertion_order,False,,False,False
+ER_20_p0.15_seed102,ER p=0.15,3,2,13,18,5,False,,insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed102,ER p=0.30,1,1,11,11,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed102,ER p=0.30,2,1,11,18,7,False,,greedy,False,,False,False
+ER_20_p0.30_seed102,ER p=0.30,3,2,22,33,11,False,,matching_h;dsatur_h,False,,False,False
+tree_20_seed103,Tree,1,1,4,4,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_20_seed103,Tree,2,1,5,5,0,True,greedy,greedy,False,,False,False
+tree_20_seed103,Tree,3,2,9,10,1,False,,greedy,False,,False,False
+BA_20_m2_seed103,BA,1,1,8,8,0,True,dsatur_h,dsatur_h,False,,False,False
+BA_20_m2_seed103,BA,2,1,8,11,3,False,,greedy,False,,False,False
+BA_20_m2_seed103,BA,3,2,16,22,6,False,,greedy,False,,False,False
+ER_20_p0.15_seed103,ER p=0.15,1,1,7,7,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+ER_20_p0.15_seed103,ER p=0.15,2,1,8,9,1,False,,greedy;insertion_order,False,,False,False
+ER_20_p0.15_seed103,ER p=0.15,3,2,15,17,2,False,,greedy,False,,False,False
+ER_20_p0.30_seed103,ER p=0.30,1,1,12,12,0,True,matching_h;random_order;insertion_order;dsatur_h,matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed103,ER p=0.30,2,1,12,12,0,True,insertion_order,insertion_order,False,,False,False
+ER_20_p0.30_seed103,ER p=0.30,3,2,24,24,0,True,insertion_order,insertion_order,False,,False,False
+tree_20_seed104,Tree,1,1,4,4,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_20_seed104,Tree,2,1,5,6,1,False,,greedy,False,,False,False
+tree_20_seed104,Tree,3,2,9,10,1,False,,greedy,False,,False,False
+BA_20_m2_seed104,BA,1,1,12,12,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+BA_20_m2_seed104,BA,2,1,12,12,0,True,insertion_order,insertion_order,False,,False,False
+BA_20_m2_seed104,BA,3,2,24,24,0,True,insertion_order,insertion_order,False,,False,False
+ER_20_p0.15_seed104,ER p=0.15,1,1,6,6,0,True,dsatur_h,dsatur_h,False,,False,False
+ER_20_p0.15_seed104,ER p=0.15,2,1,7,9,2,False,,insertion_order,False,,False,False
+ER_20_p0.15_seed104,ER p=0.15,3,2,13,18,5,False,,insertion_order;dsatur_h,False,,False,False
+ER_20_p0.30_seed104,ER p=0.30,1,1,16,16,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,16,False,False
+ER_20_p0.30_seed104,ER p=0.30,2,1,16,16,0,True,insertion_order,insertion_order,True,16,False,False
+ER_20_p0.30_seed104,ER p=0.30,3,2,32,32,0,True,insertion_order,insertion_order,True,32,False,False
+tree_40_seed100,Tree,1,1,5,5,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_40_seed100,Tree,2,1,6,7,1,False,,greedy,False,,False,False
+tree_40_seed100,Tree,3,2,11,15,4,False,,greedy;dsatur_h,False,,False,False
+BA_40_m2_seed100,BA,1,1,12,12,0,True,dsatur_h,dsatur_h,False,,False,False
+BA_40_m2_seed100,BA,2,1,13,15,2,False,,greedy,False,,False,False
+BA_40_m2_seed100,BA,3,2,25,30,5,False,,greedy,False,,False,False
+ER_40_p0.15_seed100,ER p=0.15,1,1,14,15,1,False,,dsatur_h,False,,False,False
+ER_40_p0.15_seed100,ER p=0.15,2,1,14,19,5,False,,insertion_order,False,,False,False
+ER_40_p0.15_seed100,ER p=0.15,3,2,28,38,10,False,,insertion_order,False,,False,False
+ER_40_p0.30_seed100,ER p=0.30,1,1,30,30,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,30,False,False
+ER_40_p0.30_seed100,ER p=0.30,2,1,30,30,0,True,insertion_order,insertion_order,True,30,False,False
+ER_40_p0.30_seed100,ER p=0.30,3,2,60,60,0,True,insertion_order,insertion_order,True,60,False,False
+tree_40_seed101,Tree,1,1,5,5,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_40_seed101,Tree,2,1,6,7,1,False,,greedy,False,,False,False
+tree_40_seed101,Tree,3,2,11,13,2,False,,greedy,False,,False,False
+BA_40_m2_seed101,BA,1,1,16,16,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_40_m2_seed101,BA,2,1,17,17,0,True,greedy,greedy,False,,False,False
+BA_40_m2_seed101,BA,3,2,33,37,4,False,,greedy,False,,False,False
+ER_40_p0.15_seed101,ER p=0.15,1,1,12,15,3,False,,dsatur_h,False,,False,False
+ER_40_p0.15_seed101,ER p=0.15,2,1,13,19,6,False,,insertion_order,False,,False,False
+ER_40_p0.15_seed101,ER p=0.15,3,2,25,38,13,False,,insertion_order,False,,False,False
+ER_40_p0.30_seed101,ER p=0.30,1,1,33,33,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,33,False,False
+ER_40_p0.30_seed101,ER p=0.30,2,1,33,33,0,True,insertion_order,insertion_order,True,33,False,False
+ER_40_p0.30_seed101,ER p=0.30,3,2,66,66,0,True,insertion_order,insertion_order,True,66,False,False
+tree_40_seed102,Tree,1,1,5,5,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_40_seed102,Tree,2,1,6,8,2,False,,greedy,False,,False,False
+tree_40_seed102,Tree,3,2,11,13,2,False,,greedy,False,,False,False
+BA_40_m2_seed102,BA,1,1,12,12,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_40_m2_seed102,BA,2,1,13,13,0,True,greedy,greedy,False,,False,False
+BA_40_m2_seed102,BA,3,2,25,29,4,False,,greedy,False,,False,False
+ER_40_p0.15_seed102,ER p=0.15,1,1,10,11,1,False,,dsatur_h,False,,False,False
+ER_40_p0.15_seed102,ER p=0.15,2,1,11,17,6,False,,greedy,False,,False,False
+ER_40_p0.15_seed102,ER p=0.15,3,2,21,33,12,False,,dsatur_h,False,,False,False
+ER_40_p0.30_seed102,ER p=0.30,1,1,28,28,0,True,matching_h;random_order;insertion_order;dsatur_h,matching_h;random_order;insertion_order;dsatur_h,False,,False,False
+ER_40_p0.30_seed102,ER p=0.30,2,1,28,28,0,True,insertion_order,insertion_order,False,,False,False
+ER_40_p0.30_seed102,ER p=0.30,3,2,56,56,0,True,insertion_order,insertion_order,False,,False,False
+tree_40_seed103,Tree,1,1,4,4,0,True,dsatur_h,dsatur_h,False,,False,False
+tree_40_seed103,Tree,2,1,5,8,3,False,,greedy;dsatur_h,False,,False,False
+tree_40_seed103,Tree,3,2,9,12,3,False,,dsatur_h,False,,False,False
+BA_40_m2_seed103,BA,1,1,12,12,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_40_m2_seed103,BA,2,1,13,14,1,False,,greedy,False,,False,False
+BA_40_m2_seed103,BA,3,2,25,28,3,False,,greedy,False,,False,False
+ER_40_p0.15_seed103,ER p=0.15,1,1,14,14,0,True,dsatur_h,dsatur_h,False,,False,False
+ER_40_p0.15_seed103,ER p=0.15,2,1,14,19,5,False,,insertion_order,False,,False,False
+ER_40_p0.15_seed103,ER p=0.15,3,2,28,38,10,False,,insertion_order,False,,False,False
+ER_40_p0.30_seed103,ER p=0.30,1,1,32,32,0,True,matching_h;random_order;insertion_order;dsatur_h,matching_h;random_order;insertion_order;dsatur_h,True,32,False,False
+ER_40_p0.30_seed103,ER p=0.30,2,1,32,32,0,True,insertion_order,insertion_order,True,32,False,False
+ER_40_p0.30_seed103,ER p=0.30,3,2,64,64,0,True,insertion_order,insertion_order,True,64,False,False
+tree_40_seed104,Tree,1,1,4,4,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_40_seed104,Tree,2,1,5,6,1,False,,greedy,False,,False,False
+tree_40_seed104,Tree,3,2,9,11,2,False,,greedy,False,,False,False
+BA_40_m2_seed104,BA,1,1,19,19,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_40_m2_seed104,BA,2,1,20,20,0,True,insertion_order,insertion_order,False,,False,False
+BA_40_m2_seed104,BA,3,2,39,40,1,False,,insertion_order,False,,False,False
+ER_40_p0.15_seed104,ER p=0.15,1,1,12,13,1,False,,dsatur_h,False,,False,False
+ER_40_p0.15_seed104,ER p=0.15,2,1,12,19,7,False,,greedy;insertion_order,False,,False,False
+ER_40_p0.15_seed104,ER p=0.15,3,2,24,38,14,False,,insertion_order,False,,False,False
+ER_40_p0.30_seed104,ER p=0.30,1,1,32,32,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,32,False,False
+ER_40_p0.30_seed104,ER p=0.30,2,1,32,32,0,True,insertion_order,insertion_order,True,32,False,False
+ER_40_p0.30_seed104,ER p=0.30,3,2,64,64,0,True,insertion_order,insertion_order,True,64,False,False
+tree_60_seed100,Tree,1,1,5,5,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_60_seed100,Tree,2,1,6,7,1,False,,greedy,False,,False,False
+tree_60_seed100,Tree,3,2,11,12,1,False,,greedy,False,,False,False
+BA_60_m2_seed100,BA,1,1,16,16,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_60_m2_seed100,BA,2,1,17,18,1,False,,greedy,False,,False,False
+BA_60_m2_seed100,BA,3,2,33,36,3,False,,greedy,False,,False,False
+ER_60_p0.15_seed100,ER p=0.15,1,1,20,22,2,False,,dsatur_h,False,,False,False
+ER_60_p0.15_seed100,ER p=0.15,2,1,20,29,9,False,,greedy;insertion_order,False,,False,False
+ER_60_p0.15_seed100,ER p=0.15,3,2,40,58,18,False,,insertion_order,False,,False,False
+ER_60_p0.30_seed100,ER p=0.30,1,1,56,56,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,56,False,False
+ER_60_p0.30_seed100,ER p=0.30,2,1,56,56,0,True,insertion_order,insertion_order,True,56,False,False
+ER_60_p0.30_seed100,ER p=0.30,3,2,112,112,0,True,insertion_order,insertion_order,True,112,False,False
+tree_60_seed101,Tree,1,1,5,5,0,True,dsatur_h,dsatur_h,False,,False,False
+tree_60_seed101,Tree,2,1,6,9,3,False,,greedy,False,,False,False
+tree_60_seed101,Tree,3,2,11,15,4,False,,dsatur_h,False,,False,False
+BA_60_m2_seed101,BA,1,1,19,19,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_60_m2_seed101,BA,2,1,20,20,0,True,greedy,greedy,False,,False,False
+BA_60_m2_seed101,BA,3,2,39,43,4,False,,greedy,False,,False,False
+ER_60_p0.15_seed101,ER p=0.15,1,1,20,22,2,False,,dsatur_h,False,,False,False
+ER_60_p0.15_seed101,ER p=0.15,2,1,20,29,9,False,,insertion_order,False,,False,False
+ER_60_p0.15_seed101,ER p=0.15,3,2,40,58,18,False,,insertion_order,False,,False,False
+ER_60_p0.30_seed101,ER p=0.30,1,1,54,54,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,54,False,False
+ER_60_p0.30_seed101,ER p=0.30,2,1,54,54,0,True,insertion_order,insertion_order,True,54,False,False
+ER_60_p0.30_seed101,ER p=0.30,3,2,108,108,0,True,insertion_order,insertion_order,True,108,False,False
+tree_60_seed102,Tree,1,1,6,6,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_60_seed102,Tree,2,1,7,8,1,False,,greedy,False,,False,False
+tree_60_seed102,Tree,3,2,13,15,2,False,,greedy,False,,False,False
+BA_60_m2_seed102,BA,1,1,17,17,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_60_m2_seed102,BA,2,1,18,18,0,True,greedy,greedy,False,,False,False
+BA_60_m2_seed102,BA,3,2,35,36,1,False,,greedy,False,,False,False
+ER_60_p0.15_seed102,ER p=0.15,1,1,19,20,1,False,,dsatur_h,False,,False,False
+ER_60_p0.15_seed102,ER p=0.15,2,1,19,29,10,False,,insertion_order,False,,False,False
+ER_60_p0.15_seed102,ER p=0.15,3,2,38,58,20,False,,insertion_order,False,,False,False
+ER_60_p0.30_seed102,ER p=0.30,1,1,54,54,0,True,matching_h;random_order;insertion_order;dsatur_h,matching_h;random_order;insertion_order;dsatur_h,True,54,False,False
+ER_60_p0.30_seed102,ER p=0.30,2,1,54,54,0,True,insertion_order,insertion_order,True,54,False,False
+ER_60_p0.30_seed102,ER p=0.30,3,2,108,108,0,True,insertion_order,insertion_order,True,108,False,False
+tree_60_seed103,Tree,1,1,4,4,0,True,dsatur_h,dsatur_h,False,,False,False
+tree_60_seed103,Tree,2,1,5,8,3,False,,greedy;dsatur_h,False,,False,False
+tree_60_seed103,Tree,3,2,9,12,3,False,,dsatur_h,False,,False,False
+BA_60_m2_seed103,BA,1,1,18,18,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_60_m2_seed103,BA,2,1,19,20,1,False,,greedy,False,,False,False
+BA_60_m2_seed103,BA,3,2,37,40,3,False,,greedy,False,,False,False
+ER_60_p0.15_seed103,ER p=0.15,1,1,21,24,3,False,,dsatur_h,False,,False,False
+ER_60_p0.15_seed103,ER p=0.15,2,1,21,29,8,False,,greedy;insertion_order,False,,False,False
+ER_60_p0.15_seed103,ER p=0.15,3,2,42,58,16,False,,insertion_order,False,,False,False
+ER_60_p0.30_seed103,ER p=0.30,1,1,54,54,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,54,False,False
+ER_60_p0.30_seed103,ER p=0.30,2,1,54,54,0,True,insertion_order,insertion_order,True,54,False,False
+ER_60_p0.30_seed103,ER p=0.30,3,2,108,108,0,True,insertion_order,insertion_order,True,108,False,False
+tree_60_seed104,Tree,1,1,4,4,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+tree_60_seed104,Tree,2,1,5,6,1,False,,greedy,False,,False,False
+tree_60_seed104,Tree,3,2,9,11,2,False,,greedy,False,,False,False
+BA_60_m2_seed104,BA,1,1,23,23,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+BA_60_m2_seed104,BA,2,1,24,25,1,False,,greedy,False,,False,False
+BA_60_m2_seed104,BA,3,2,47,49,2,False,,greedy,False,,False,False
+ER_60_p0.15_seed104,ER p=0.15,1,1,20,22,2,False,,dsatur_h,False,,False,False
+ER_60_p0.15_seed104,ER p=0.15,2,1,20,29,9,False,,insertion_order,False,,False,False
+ER_60_p0.15_seed104,ER p=0.15,3,2,40,58,18,False,,insertion_order,False,,False,False
+ER_60_p0.30_seed104,ER p=0.30,1,1,58,58,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,58,False,False
+ER_60_p0.30_seed104,ER p=0.30,2,1,58,58,0,True,greedy;insertion_order,greedy;insertion_order,True,58,False,False
+ER_60_p0.30_seed104,ER p=0.30,3,2,116,116,0,True,insertion_order,insertion_order,True,116,False,False
+grid_3x7,Grid stress,1,1,4,4,0,True,dsatur_h,dsatur_h,False,,False,False
+grid_3x7,Grid stress,2,1,5,8,3,False,,dsatur_h,False,,False,False
+grid_3x7,Grid stress,3,2,9,12,3,False,,dsatur_h,False,,False,False
+grid_4x9,Grid stress,1,1,4,4,0,True,dsatur_h,dsatur_h,False,,False,False
+grid_4x9,Grid stress,2,1,5,8,3,False,,dsatur_h,False,,False,False
+grid_4x9,Grid stress,3,2,9,12,3,False,,dsatur_h,False,,False,False
+grid_5x11,Grid stress,1,1,4,4,0,True,dsatur_h,dsatur_h,False,,False,False
+grid_5x11,Grid stress,2,1,5,8,3,False,,dsatur_h,False,,False,False
+grid_5x11,Grid stress,3,2,9,12,3,False,,dsatur_h,False,,False,False
+C_20,Cycle stress,1,1,2,4,2,False,,greedy;dsatur_h,False,,False,False
+C_20,Cycle stress,2,1,3,4,1,False,,greedy,False,,False,False
+C_20,Cycle stress,3,2,5,12,7,False,,greedy;dsatur_h,False,,False,False
+C_40,Cycle stress,1,1,2,3,1,False,,greedy;dsatur_h,False,,False,False
+C_40,Cycle stress,2,1,3,6,3,False,,greedy;dsatur_h,False,,False,False
+C_40,Cycle stress,3,2,5,9,4,False,,greedy;dsatur_h,False,,False,False
+C_60,Cycle stress,1,1,2,2,0,True,greedy;dsatur_h,greedy;dsatur_h,False,,False,False
+C_60,Cycle stress,2,1,3,4,1,False,,greedy;dsatur_h,False,,False,False
+C_60,Cycle stress,3,2,5,6,1,False,,greedy;dsatur_h,False,,False,False
+K_10_10,Bipartite stress,1,1,19,19,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,19,False,False
+K_10_10,Bipartite stress,2,1,19,20,1,False,,greedy,True,19,False,False
+K_10_10,Bipartite stress,3,2,38,39,1,False,,greedy,True,38,False,False
+K_20_20,Bipartite stress,1,1,39,39,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,39,False,False
+K_20_20,Bipartite stress,2,1,39,40,1,False,,greedy,True,39,False,False
+K_20_20,Bipartite stress,3,2,78,79,1,False,,greedy,True,78,False,False
+K_30_30,Bipartite stress,1,1,59,59,0,True,greedy;matching_h;random_order;insertion_order;dsatur_h,greedy;matching_h;random_order;insertion_order;dsatur_h,True,59,False,False
+K_30_30,Bipartite stress,2,1,59,60,1,False,,greedy,True,59,False,False
+K_30_30,Bipartite stress,3,2,118,119,1,False,,greedy,True,118,False,False

@@ -1,0 +1,63 @@
+{
+  "completed_utc": "2026-10-17T14:40:54.972353+00:00",
+  "elapsed_seconds": 7.737649966999015,
+  "identity": {
+    "graphs_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+    "historical_graph_source": "results/analysis/color_order/2d62af353a1756ae/certificates.jsonl",
+    "historical_graph_source_sha256": "473e39ca3f4fa556e5b25812499d061984f160eb8b456cc536739861fb5216c4",
+    "networkx": "3.6.1",
+    "prepared_utc": "2026-10-17T14:40:46.883076+00:00",
+    "protocol_sha256": "27e2a43315493b25de9da366e212e16ea7129d89ef790b60b1ebdfd2867d15f4",
+    "python": "3.13.7",
+    "sources": {
+      "benchmarks/benchmark_certificate_validation.py": "890639ec3357108a5f1ac87fec91312715155b6fb6929c56a16b15555fb9bbb7",
+      "scripts/construct_color_order.py": "6a365ae8c8e11ee17cebc65222e1c2ddf8244efded326ce0e3afb12d571b4a62",
+      "scripts/matching_bound_certificate.py": "48ef721adf5c03fc0fe2c95fbb52025e68af67f3e8f4db9ba5af1c0242169958",
+      "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b",
+      "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+      "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+    }
+  },
+  "outputs_sha256": {
+    "graphs.jsonl": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+    "matching_certificates.jsonl": "db9ae6f8d8184f3b811c324bf07586a37d3a815b40a851a3d066aed344b8b1a5",
+    "observations.csv": "5dc9303ce2cb406db93a6d3ae3743dbc949273afe4b731a3ab129a1cc741e218",
+    "prepared.json": "ff4ace369268b1e23a1141f2c60002e381adcf5fe3b0548af5812ecff4f008bd",
+    "progress.jsonl": "3a76f24095768eb77fee5a9505d77ca1be602655ac6960e2bb83ee36e2ed6cbe",
+    "protocol.json": "27e2a43315493b25de9da366e212e16ea7129d89ef790b60b1ebdfd2867d15f4",
+    "summary.csv": "3cfc76f8a2fb498950ce352307cda042885575ef03e3f420e53d0694423e2524",
+    "witnesses.jsonl": "7a01fccd646c557a1497f120eec9e6f658a36bf98d7d68081468ed3c9a9328ab"
+  },
+  "totals": {
+    "dsatur_h": {
+      "certified": 58,
+      "feasible": 207,
+      "improves_greedy": 46,
+      "observations": 207
+    },
+    "greedy": {
+      "certified": 48,
+      "feasible": 207,
+      "improves_greedy": 0,
+      "observations": 207
+    },
+    "insertion_order": {
+      "certified": 53,
+      "feasible": 191,
+      "improves_greedy": 57,
+      "observations": 207
+    },
+    "matching_h": {
+      "certified": 22,
+      "feasible": 207,
+      "improves_greedy": 6,
+      "observations": 207
+    },
+    "random_order": {
+      "certified": 22,
+      "feasible": 95,
+      "improves_greedy": 5,
+      "observations": 207
+    }
+  }
+}

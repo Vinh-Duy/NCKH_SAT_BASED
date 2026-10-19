@@ -1,0 +1,17 @@
+{
+  "graphs_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "historical_graph_source": "results/analysis/color_order/2d62af353a1756ae/certificates.jsonl",
+  "historical_graph_source_sha256": "473e39ca3f4fa556e5b25812499d061984f160eb8b456cc536739861fb5216c4",
+  "networkx": "3.6.1",
+  "prepared_utc": "2026-10-17T14:40:46.883076+00:00",
+  "protocol_sha256": "27e2a43315493b25de9da366e212e16ea7129d89ef790b60b1ebdfd2867d15f4",
+  "python": "3.13.7",
+  "sources": {
+    "benchmarks/benchmark_certificate_validation.py": "890639ec3357108a5f1ac87fec91312715155b6fb6929c56a16b15555fb9bbb7",
+    "scripts/construct_color_order.py": "6a365ae8c8e11ee17cebc65222e1c2ddf8244efded326ce0e3afb12d571b4a62",
+    "scripts/matching_bound_certificate.py": "48ef721adf5c03fc0fe2c95fbb52025e68af67f3e8f4db9ba5af1c0242169958",
+    "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b",
+    "src/core/graph_utils.py": "d8293e7043a6d6fb45a15bc6b7875a48d0b38632af9b0f8b76dce883c5333ee8",
+    "src/core/parameters.py": "c4342e70803e785d733ddc980caccfec6bee8ba58e6a9513e974da8b1b7fab76"
+  }
+}

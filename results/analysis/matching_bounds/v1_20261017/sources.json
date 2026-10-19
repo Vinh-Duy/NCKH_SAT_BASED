@@ -1,0 +1,25 @@
+{
+  "input_hashes": {
+    "results/analysis/color_order/2d62af353a1756ae/certificates.jsonl": "473e39ca3f4fa556e5b25812499d061984f160eb8b456cc536739861fb5216c4",
+    "results/analysis/color_order/2d62af353a1756ae/instances.csv": "d271b0395a358a0503c8f22d3495d126771216000fa07eb8f9df390c3438b247"
+  },
+  "output_hashes": {
+    "certificates.jsonl": "df5d03c3e92c24f5e5326d40416b90525943245999ed908bd60ee8de08c9411a",
+    "instances.csv": "08bbf54d706bea927f1be139f16f7493b6b6fd8ccf6f3433110a751a3181c267"
+  },
+  "source_hashes": {
+    "scripts/analyze_matching_bounds.py": "2c89d5233750b3b695274869836c90fd3f2db12973d57cf62bd191a977ac909b",
+    "scripts/certificate_support.py": "b4f45f4cdb87b45af04f2edb3ca966a222ff498d6f39f0d0d2ce7af129b44faf",
+    "scripts/matching_bound_certificate.py": "48ef721adf5c03fc0fe2c95fbb52025e68af67f3e8f4db9ba5af1c0242169958",
+    "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b"
+  },
+  "totals": {
+    "eligible": 15,
+    "improved_mathematical_bounds": 0,
+    "independently_certified_after": 90,
+    "instances": 117,
+    "matching_certified": 15,
+    "newly_closed": 0,
+    "newly_independent": 0
+  }
+}

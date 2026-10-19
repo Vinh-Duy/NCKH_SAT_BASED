@@ -1,0 +1,8 @@
+Family,Cases,greedy,matching_h,random_order,insertion_order,dsatur_h,Portfolio,Matching_Eligible
+BA,45,18,4,4,7,15,24,0
+Bipartite stress,9,3,3,3,3,3,3,9
+Cycle stress,9,1,0,0,0,1,1,0
+ER p=0.15,45,2,0,0,0,6,6,0
+ER p=0.30,45,12,15,15,43,15,43,30
+Grid stress,9,0,0,0,0,3,3,0
+Tree,45,12,0,0,0,15,16,0

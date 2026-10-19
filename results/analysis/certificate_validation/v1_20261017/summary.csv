@@ -1,0 +1,106 @@
+Family,h,k,Method,Cases,Feasible,Unknown,Certified,Improves_Greedy,Median_Gap
+BA,1,1,dsatur_h,15,15,0,15,3,0
+BA,1,1,greedy,15,15,0,12,0,0
+BA,1,1,insertion_order,15,15,0,4,1,6
+BA,1,1,matching_h,15,15,0,4,1,6
+BA,1,1,random_order,15,15,0,4,1,6
+BA,2,1,dsatur_h,15,15,0,0,0,12
+BA,2,1,greedy,15,15,0,6,0,1
+BA,2,1,insertion_order,15,11,4,2,2,6
+BA,2,1,matching_h,15,15,0,0,0,25
+BA,2,1,random_order,15,0,15,0,0,
+BA,3,2,dsatur_h,15,15,0,0,0,12
+BA,3,2,greedy,15,15,0,0,0,3
+BA,3,2,insertion_order,15,11,4,1,2,13
+BA,3,2,matching_h,15,15,0,0,0,32
+BA,3,2,random_order,15,0,15,0,0,
+Bipartite stress,1,1,dsatur_h,3,3,0,3,0,0
+Bipartite stress,1,1,greedy,3,3,0,3,0,0
+Bipartite stress,1,1,insertion_order,3,3,0,3,0,0
+Bipartite stress,1,1,matching_h,3,3,0,3,0,0
+Bipartite stress,1,1,random_order,3,3,0,3,0,0
+Bipartite stress,2,1,dsatur_h,3,3,0,0,0,39
+Bipartite stress,2,1,greedy,3,3,0,0,0,1
+Bipartite stress,2,1,insertion_order,3,0,3,0,0,
+Bipartite stress,2,1,matching_h,3,3,0,0,0,39
+Bipartite stress,2,1,random_order,3,0,3,0,0,
+Bipartite stress,3,2,dsatur_h,3,3,0,0,0,39
+Bipartite stress,3,2,greedy,3,3,0,0,0,1
+Bipartite stress,3,2,insertion_order,3,0,3,0,0,
+Bipartite stress,3,2,matching_h,3,3,0,0,0,39
+Bipartite stress,3,2,random_order,3,0,3,0,0,
+Cycle stress,1,1,dsatur_h,3,3,0,1,0,1
+Cycle stress,1,1,greedy,3,3,0,1,0,1
+Cycle stress,1,1,insertion_order,3,3,0,0,0,17
+Cycle stress,1,1,matching_h,3,3,0,0,0,17
+Cycle stress,1,1,random_order,3,3,0,0,0,17
+Cycle stress,2,1,dsatur_h,3,3,0,0,0,3
+Cycle stress,2,1,greedy,3,3,0,0,0,1
+Cycle stress,2,1,insertion_order,3,3,0,0,0,16
+Cycle stress,2,1,matching_h,3,3,0,0,0,35
+Cycle stress,2,1,random_order,3,3,0,0,0,16
+Cycle stress,3,2,dsatur_h,3,3,0,0,0,4
+Cycle stress,3,2,greedy,3,3,0,0,0,4
+Cycle stress,3,2,insertion_order,3,3,0,0,0,33
+Cycle stress,3,2,matching_h,3,3,0,0,0,52
+Cycle stress,3,2,random_order,3,3,0,0,0,33
+ER p=0.15,1,1,dsatur_h,15,15,0,6,13,1
+ER p=0.15,1,1,greedy,15,15,0,2,0,3
+ER p=0.15,1,1,insertion_order,15,15,0,0,0,7
+ER p=0.15,1,1,matching_h,15,15,0,0,0,7
+ER p=0.15,1,1,random_order,15,15,0,0,0,7
+ER p=0.15,2,1,dsatur_h,15,15,0,0,0,14
+ER p=0.15,2,1,greedy,15,15,0,0,0,7
+ER p=0.15,2,1,insertion_order,15,15,0,0,9,6
+ER p=0.15,2,1,matching_h,15,15,0,0,0,25
+ER p=0.15,2,1,random_order,15,0,15,0,0,
+ER p=0.15,3,2,dsatur_h,15,15,0,0,8,15
+ER p=0.15,3,2,greedy,15,15,0,0,0,16
+ER p=0.15,3,2,insertion_order,15,15,0,0,12,13
+ER p=0.15,3,2,matching_h,15,15,0,0,0,32
+ER p=0.15,3,2,random_order,15,0,15,0,0,
+ER p=0.30,1,1,dsatur_h,15,15,0,15,4,0
+ER p=0.30,1,1,greedy,15,15,0,11,0,0
+ER p=0.30,1,1,insertion_order,15,15,0,15,4,0
+ER p=0.30,1,1,matching_h,15,15,0,15,4,0
+ER p=0.30,1,1,random_order,15,15,0,15,4,0
+ER p=0.30,2,1,dsatur_h,15,15,0,0,0,32
+ER p=0.30,2,1,greedy,15,15,0,1,0,4
+ER p=0.30,2,1,insertion_order,15,14,1,14,13,0.0
+ER p=0.30,2,1,matching_h,15,15,0,0,0,32
+ER p=0.30,2,1,random_order,15,0,15,0,0,
+ER p=0.30,3,2,dsatur_h,15,15,0,0,1,32
+ER p=0.30,3,2,greedy,15,15,0,0,0,14
+ER p=0.30,3,2,insertion_order,15,14,1,14,14,0.0
+ER p=0.30,3,2,matching_h,15,15,0,0,1,32
+ER p=0.30,3,2,random_order,15,0,15,0,0,
+Grid stress,1,1,dsatur_h,3,3,0,3,3,0
+Grid stress,1,1,greedy,3,3,0,0,0,2
+Grid stress,1,1,insertion_order,3,3,0,0,0,13
+Grid stress,1,1,matching_h,3,3,0,0,0,13
+Grid stress,1,1,random_order,3,3,0,0,0,13
+Grid stress,2,1,dsatur_h,3,3,0,0,3,3
+Grid stress,2,1,greedy,3,3,0,0,0,4
+Grid stress,2,1,insertion_order,3,3,0,0,0,12
+Grid stress,2,1,matching_h,3,3,0,0,0,29
+Grid stress,2,1,random_order,3,1,2,0,0,22
+Grid stress,3,2,dsatur_h,3,3,0,0,3,3
+Grid stress,3,2,greedy,3,3,0,0,0,7
+Grid stress,3,2,insertion_order,3,3,0,0,0,25
+Grid stress,3,2,matching_h,3,3,0,0,0,42
+Grid stress,3,2,random_order,3,1,2,0,0,45
+Tree,1,1,dsatur_h,15,15,0,15,4,0
+Tree,1,1,greedy,15,15,0,11,0,0
+Tree,1,1,insertion_order,15,15,0,0,0,14
+Tree,1,1,matching_h,15,15,0,0,0,14
+Tree,1,1,random_order,15,15,0,0,0,14
+Tree,2,1,dsatur_h,15,15,0,0,0,4
+Tree,2,1,greedy,15,15,0,1,0,1
+Tree,2,1,insertion_order,15,15,0,0,0,13
+Tree,2,1,matching_h,15,15,0,0,0,32
+Tree,2,1,random_order,15,9,6,0,0,14
+Tree,3,2,dsatur_h,15,15,0,0,4,4
+Tree,3,2,greedy,15,15,0,0,0,2
+Tree,3,2,insertion_order,15,15,0,0,0,27
+Tree,3,2,matching_h,15,15,0,0,0,46
+Tree,3,2,random_order,15,9,6,0,0,29

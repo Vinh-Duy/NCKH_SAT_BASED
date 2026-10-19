@@ -1,0 +1,97 @@
+\section{Construction validation on new graph samples}
+\label{sec:certificate-validation}
+The original constructor was developed after inspecting the unresolved
+instances. To test its behavior beyond those instances, we fixed a
+separate protocol before executing the following study. It uses seeds
+100--104 at each of 20, 40 and 60 vertices for random trees, BA graphs
+with $m=2$, and ER graphs with $p=0.15,0.30$: 60 random graphs in total.
+Nine structural stress cases are added: grids $P_3\square P_7$,
+$P_4\square P_9$, $P_5\square P_{11}$; cycles $C_{20},C_{40},C_{60}$;
+and $K_{10,10},K_{20,20},K_{30,30}$. Each graph uses $(1,1),(2,1),(3,2)$,
+giving 207 instances. Embedded edge sets, source hashes and configuration
+were saved before execution. No labeled graph fingerprint overlaps the
+original cohort; graph isomorphism was not used as an exclusion test.
+The protocol is locally fixed, not externally preregistered. All samples
+and unsuccessful searches are retained, without retuning after observing results.
+
+\paragraph{Controls and endpoints.}
+Five construction methods are compared. Greedy assigns the smallest
+allowed label in vertex-index order. Matching-$h$ gives the frozen
+pair/singleton classes labels $0,h,2h,\ldots$. Random order and insertion
+order use that same partition and seek compatible orders, with at most
+100 attempts and algorithm seed 0; successful orders use spacing $k$.
+For $h=k$, both ordering arms use the canonical order without search.
+The final baseline applies DSATUR to $G^2$ and multiplies its colors by
+$h$; it uses NetworkX's saturation-largest-first greedy implementation
+of the classical coloring heuristic \cite{brelaz1979coloring}.
+Thus every baseline is an explicit labeling construction, rather than a
+claim of exact coloring or a reproduction of a specialized heuristic.
+
+The shared lower bound is the maximum of the degree bound, a checked
+square-clique bound, and the matching certificate described below when
+applicable. Cliques are obtained by a fixed greedy search from every
+starting vertex; maximum size is not assumed. Family-specific exact
+formulas are not added to this common certificate pool. A positive gap
+therefore means that this pool does not establish optimality, not that
+the labeling is suboptimal or that its optimum is unknown in the literature.
+Every proposed labeling is checked directly against the embedded graph.
+Attempt counts are not equal wall-time budgets, and this experiment makes
+no runtime comparison with SAT or ILP.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Construction outcomes on 207 new instances.}
+\label{tab:validation-methods}
+\input{results/analysis/certificate_validation/v1_20261017/methods.tex}
+\tablenote{Certified means that the validated span attains the shared
+lower bound. Improved means strictly smaller span than Greedy on the
+same instance. Unknown means no order was found within budget; it does
+not establish infeasibility. The 207 instances share 69 graphs and are
+not 207 independent graph samples.}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Certificate coverage by graph family.}
+\label{tab:validation-families}
+\input{results/analysis/certificate_validation/v1_20261017/families.tex}
+\tablenote{Method columns count certified instances. Union counts each
+instance once if any of the five methods attains the shared bound; it
+is an aggregate of checked evidence, not a timed portfolio solver.
+Each family includes all three parameter pairs. The three stress groups
+are deterministic controls and are separate from the random samples.}
+\end{table}
+
+Insertion order returns 191 feasible proposals and certifies 53 instances;
+random order returns 95 and certifies 22. Excluding the 69 equal-parameter
+controls, the ordering success counts are 122/138 and 26/138. The same
+compatibility problem is used for $(2,1)$ and $(3,2)$, so these two outcomes
+on one graph are dependent. Successful orders of a fixed partition have
+the same span $k(r-1)$: the ordering comparison measures the ability to
+find an order, not smaller spans among successful orders.
+
+DSATUR-$h$ certifies more instances overall than insertion order (58
+versus 53). All 58 DSATUR-$h$ certificates occur for $h=k=1$;
+insertion order certifies 22 equal-parameter and 31 unequal-parameter
+instances. Spacing all DSATUR colors by $h$ is a conservative feasible
+baseline for $h>k$, not the strongest available coloring-based heuristic.
+On dense ER, insertion order certifies 43/45 instances and DSATUR-$h$
+certifies 15/45. Insertion certifies none of the tree, grid,
+cycle or $p=0.15$ ER instances in this study. This pattern is consistent
+with the restriction to classes of size at most two: sparse squares can
+admit substantially larger color classes. The dense-ER group has one
+ordering failure for each unequal parameter pair, and failures also
+occur on BA and complete-bipartite stress cases. These observations
+support a limited structural role for the construction, not universal
+superiority over greedy coloring.
+
+The union of the five methods certifies 96/207 instances. An independent
+standard-library audit checks all 907 feasible labelings, all 163 saved
+matching certificates, the shared partitions and the complete observation
+domain. The remaining 111 instances are uncertified by these constructions
+and bounds; neither exact backend was run on this cohort. Data and checker
+outputs are archived under \path{results/analysis/certificate_validation/}.
+These results are separate from the original 117-instance SAT--ILP
+experiment. Its later complete certification in
+Appendix~\ref{sec:proof-closure} does not change this new-sample study.
+\FloatBarrier

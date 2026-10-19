@@ -1,0 +1,77 @@
+\section{A checkable matching bound for restricted graph squares}
+\label{sec:matching-bound}
+Square-clique certificates can be replaced by a chromatic lower bound
+when a minimum square coloring has a checkable matching representation.
+The following argument applies classical matching theory; it is not a
+claim that the Tutte--Berge theorem or this elementary coloring identity
+is new.
+
+\begin{proposition}
+\label{prop:matching-bound}
+Let $G$ be a nonempty simple undirected graph with $n$ vertices and
+$h\geq k\geq1$. Write $H=\overline{G^2}$. If $H$ is triangle-free, then
+\[
+ \chi(G^2)=n-\nu(H),\qquad
+ \lambda_{h,k}(G)\geq k\bigl(n-\nu(H)-1\bigr),
+\]
+where $\nu(H)$ is the maximum matching size. A matching $M$ and a set
+$S\subseteq V(H)$ satisfying
+\begin{equation}
+ 2|M|=n+|S|-o(H-S)
+ \label{eq:matching-certificate}
+\end{equation}
+certify that $\nu(H)=|M|$, where $o(H-S)$ counts odd-order components.
+If $h=k$, matched pairs and unmatched singletons yield an optimal
+labeling with spacing $k$. If $k<h\leq2k$, the same conclusion holds
+whenever these classes admit a compatible order as in
+Proposition~\ref{prop:color-order}.
+\end{proposition}
+\begin{proof}
+Normalize any feasible labeling so its smallest label is zero, and
+write $s$ for its span. The bins $\lfloor f(v)/k\rfloor$ form a proper
+coloring of $G^2$: two labels in the same bin differ by less than $k$,
+which is forbidden at distance one or two. Hence
+$\chi(G^2)\leq\lfloor s/k\rfloor+1$, giving
+$s\geq k(\chi(G^2)-1)$.
+
+Since $H$ is triangle-free, every independent set of $G^2$ has at most
+two vertices. In any coloring, its two-vertex classes form a matching
+in $H$. Conversely, every matching in $H$, completed by unmatched
+singletons, defines a coloring of $G^2$. A coloring with $t$ pairs uses
+$n-t$ colors, proving the identity for $\chi(G^2)$.
+
+For any matching $N$ in $H$, at most $|S|$ of its edges touch $S$.
+In each component of $H-S$, the remaining edges cover at most the
+largest even number of vertices in that component. Therefore
+$2|N|\leq n+|S|-o(H-S)$. Equality for a valid $M$ proves it maximum.
+Finally, spacing the classes by $k$ is valid for $h=k$; for $h>k$,
+the compatible-order condition proves validity. In either case the
+span attains the established lower bound.
+\end{proof}
+
+The existence of a set $S$ satisfying~\eqref{eq:matching-certificate}
+for a maximum matching follows from the Tutte--Berge formula
+\cite{goemans2017matching}. The generator first checks $S=\varnothing$.
+If it is insufficient, it forms
+$D=\{v:\nu(H-v)=\nu(H)\}$ and uses $S=N_H(D)\setminus D$, the
+Gallai--Edmonds barrier. It makes at most $n+1$ matching calls. The
+standalone checker reconstructs $H$ from original edges, checks its
+triangle-free condition, validates the matching and counts components
+after deleting $S$. Verification uses neither NetworkX nor a solver's
+claim that a matching is maximum. Optional labelings are checked
+directly; optimality is reported only if the two bounds meet.
+
+The chromatic bound can exceed the clique bound: $C_7^2$ has clique
+number three and chromatic number four, with a seven-cycle complement.
+Thus the matching bound is $3k$ whereas the clique bound is $2k$.
+This example does not imply improvement over every other graph bound.
+In the actual original cohort, the condition holds for 15/117 instances;
+all 15 already have equally strong certificates. No bound is improved
+and no additional interval closes. The independent-support total stays
+90, with 11 other closed cases relying on saved solver lower bounds.
+On the new cohort the condition holds for 39/207 instances; again it
+never strengthens the common degree/clique bound. These null results
+are retained. The matching certificate expands the types of evidence
+the checker accepts, but provides no empirical coverage gain in these
+two cohorts. The earlier certificate counts and timed measurements are
+unchanged.

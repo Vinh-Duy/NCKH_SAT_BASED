@@ -1,0 +1,50 @@
+{
+  "audit_sources_sha256": {
+    "scripts/audit_certificate_validation.py": "e5613b14ad04d18429b42fe8919085ea4f51a967898c6c570507ef55b8fa8a62",
+    "scripts/construct_color_order.py": "6a365ae8c8e11ee17cebc65222e1c2ddf8244efded326ce0e3afb12d571b4a62",
+    "scripts/matching_bound_certificate.py": "48ef721adf5c03fc0fe2c95fbb52025e68af67f3e8f4db9ba5af1c0242169958",
+    "scripts/verify_clique_certificate.py": "b5396e5b387bf2b20ff44f6aee5fb98375c2548a9f9b6553c2eafc9e4e84a72b"
+  },
+  "checked_labelings": 907,
+  "checked_matching_certificates": 163,
+  "completion_manifest_sha256": "610a42990c4f4ddc65320df67c462bc6d2a007011b5f93ff9a6fddfad86ba961",
+  "graphs": 69,
+  "instances": 207,
+  "matching_eligible": 39,
+  "matching_necessary": 0,
+  "matching_stronger": 0,
+  "methods": {
+    "dsatur_h": {
+      "certified": 58,
+      "feasible": 207,
+      "improves_greedy": 46,
+      "observations": 207
+    },
+    "greedy": {
+      "certified": 48,
+      "feasible": 207,
+      "improves_greedy": 0,
+      "observations": 207
+    },
+    "insertion_order": {
+      "certified": 53,
+      "feasible": 191,
+      "improves_greedy": 57,
+      "observations": 207
+    },
+    "matching_h": {
+      "certified": 22,
+      "feasible": 207,
+      "improves_greedy": 6,
+      "observations": 207
+    },
+    "random_order": {
+      "certified": 22,
+      "feasible": 95,
+      "improves_greedy": 5,
+      "observations": 207
+    }
+  },
+  "observations": 1035,
+  "portfolio_certified": 96
+}
