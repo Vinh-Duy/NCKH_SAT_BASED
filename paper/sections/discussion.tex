@@ -40,21 +40,19 @@ not a general proof. A value between theoretical lower and upper bounds is
 consistent with them even if it attains neither. Finite agreement with a
 formula is validation evidence, not a proof over an entire family.
 
-Greedy labeling currently supplies incumbents and MIP starts; it has not
-been timed as a separate heuristic baseline. Heuristics and metaheuristics
-may find good solutions quickly but do not automatically prove optimality.
-A solution attaining a proven lower bound can nevertheless be certified
-optimal. We neither assume that every heuristic is faster than exact methods
-nor infer optimality from solution quality alone. A separate heuristic
-benchmark requires common label-domain conventions, validation, and timing definitions.
-A GA adapted from radio labeling \cite{sarhan2026genetic} should use a common
-budget and multiple algorithmic seeds, together with a random-order multi-start
-baseline to isolate the benefit of evolution. Its best solution remains an
-upper bound unless supported by additional optimality evidence. No GA data
-are currently available to compare quality or speed with SAT--ILP.
+Greedy labeling currently supplies incumbents and MIP starts; it has also
+been timed as a separate one-pass baseline. The GA adaptation from radio
+labeling \cite{sarhan2026genetic} is evaluated with a common permutation
+budget, multiple algorithmic seeds and a paired random-order multi-start
+control. It reaches a certified optimum on at least one of ten runs for
+95/117 tasks, versus 85/117 for random order; the paired-median advantage is
+concentrated in ER $L(3,2)$ cases. These outcomes describe this fixed cohort
+and one configuration. Feasible GA solutions remain upper bounds unless they
+meet a certified lower bound. Its decoder-only timing excludes shared
+preprocessing and validation and is not a like-for-like SAT--ILP comparison.
 
 The new screen does not include a direct-versus-order ablation, specialized
-tree algorithms, or MILP formulations other than assignment. Results for
+tree algorithms, GA parameter sensitivity, or MILP formulations other than assignment. Results for
 one formulation/backend cannot establish superiority over all ILP methods.
 Graph-generation seeds measure input variation; repeated runs on one graph
 measure timing variation. These are not interchangeable. Short runtimes

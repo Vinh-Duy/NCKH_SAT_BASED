@@ -33,14 +33,19 @@ Neither finite agreement with reference formulas nor solver agreement
 proves a new formula over an entire graph family. Existing SAT and ILP
 labeling methods also preclude a first-use claim for these approaches.
 The contribution is a documented exact implementation, correctness
-arguments and reproducible evidence about its scope and limits.
+arguments and reproducible evidence about its scope and limits. A fixed GA
+baseline attains a certified optimum in at least one of ten runs on 95/117
+tasks, compared with 85/117 for equal-evaluation random-order search; this
+descriptive difference is concentrated in ER $L(3,2)$ cases.
 Separate new-sample construction validation certifies 96 of 207 instances
 through the union of five methods. Its family-specific outcomes support
 complementary constructions rather than a single dominant heuristic.
 The additional matching-bound audit does not change the historical
 101/16 closure split or the independent-support count.
 
-A controlled ablation on unseen instances should assess the new bounds
+A broader evaluation of the GA across unseen graph cohorts and parameter
+configurations would test whether its observed ER $L(3,2)$ advantage
+generalizes. A controlled ablation on unseen instances should assess the new bounds
 and color-rank-residual encoding separately. GA remains a proposed
 upper-bound baseline; no present result establishes superiority or
 inferiority relative to it. Complete certification resolves this fixed

@@ -1,0 +1,45 @@
+\subsection{Supplementary GA heuristic baseline}
+\label{sec:ga-baseline}
+Sarhan et al. study a genetic algorithm for radio labeling
+\cite{sarhan2026genetic}; radio-labeling constraints are not interchangeable
+with the two-distance $L(h,k)$ constraints considered here. We adapt the
+permutation-search idea only. A chromosome orders the vertices; the decoder
+assigns each vertex the smallest nonnegative label satisfying threshold $h$
+against already labeled neighbors and threshold $k$ against already labeled
+vertices at distance two. Pairs at larger distance, including across connected
+components, have no constraint. Each decoded chromosome is feasible, and its
+fitness is the labeling span.
+
+The fixed configuration uses a population of 40, OX1 crossover with
+probability 0.9, segment inversion with probability 0.05, tournament
+selection of size three, and elitism. Ten independent algorithmic seeds are
+run on each of the same 117 graph/parameter tasks used in the progress-v2
+SAT--ILP study; each GA run decodes 1,000 permutations. As a control, a
+random-order multi-start method uses the same decoder, evaluation budget and
+paired seeds. A graph-insertion-order greedy labeling is also retained as a
+single-pass baseline. Settings are fixed rather than tuned on a held-out set.
+
+The optimum for every task is independently replayed from the proof-closure
+package, and each heuristic witness is rechecked by the separate validator.
+At least one of ten GA runs attains the certified optimum on 95/117 tasks,
+compared with 85/117 for random-order search. Aggregating the median of
+seed-paired span differences per task gives 21 GA wins, 96 ties and no losses;
+15 of the 18 ER $L(3,2)$ tasks are GA wins. This descriptive difference is
+concentrated in that family. It does not establish general superiority of
+genetic search. The signed span difference $\lambda_{\rm SAT}-\lambda_{\rm
+GA}$ is reported only when SAT was optimal in all three progress-v2 repeats;
+the standard nonnegative GA optimality gap is instead
+$\lambda_{\rm GA}-\lambda^*$. GA and random-order runtimes exclude shared
+constraint preprocessing and witness validation, so they are not compared
+directly with SAT/ILP wall times.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Fixed-budget GA and random-order outcomes by family and parameter.}
+\label{tab:ga-baseline}
+\input{results/analysis/lhk_ga/156eba44433bdad5/summary.tex}
+\tablenote{GA opt. and Random opt. count graph/parameter tasks on which the
+best of ten seeds attains the certified optimum. Win/tie/loss compares the
+median of seed-paired GA-minus-random span differences within each task;
+negative favors GA. Repeated seeds do not add graph instances.}
+\end{table}

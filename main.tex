@@ -55,9 +55,12 @@ certify the optimal span of all 117 instances. The certificate pipeline
 combines weighted independent-set capacities with a color-rank-residual
 formulation and replays 11 clausal UNSAT proofs. This post-hoc
 certification does not change timed solver coverage.
-Supplementary tree and symmetry studies are retained with their original
-protocols. These results establish correctness and describe computational
-limits on the evaluated graphs, without claiming universal SAT superiority.
+Supplementary tree, symmetry and fixed-budget genetic-heuristic studies are
+retained with their own protocols. The GA attains independently certified
+optima on more sampled tasks than an equal-evaluation random-order control,
+with the descriptive difference concentrated in ER $L(3,2)$ cases. These
+results establish correctness and describe computational limits on the
+evaluated graphs, without claiming universal SAT or GA superiority.
 The timed solver does not reuse learned clauses across span trials.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
@@ -75,6 +78,7 @@ span minimization, ILP baseline, reproducible experiments.
 \input{paper/sections/clique_certificates}
 \input{paper/sections/color_order}
 \input{paper/sections/symmetry_summary}
+\input{paper/sections/genetic_baseline}
 \input{paper/sections/discussion}
 \input{paper/sections/conclusion}
 \bibliographystyle{plain}

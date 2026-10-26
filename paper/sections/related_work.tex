@@ -126,9 +126,8 @@ Sarhan et al.\ \cite{sarhan2026genetic} studied a GA for radio labeling with
 the parameter set to the graph diameter. Their algorithm does not directly
 solve $L(h,k)$. For example, $C_3$ has diameter 1 and radio span 2, whereas
 $L(2,1)$ requires span 4. Their radio-labeling results are therefore not
-imported into our comparison tables. One possible adaptation uses a GA to
-search vertex permutations and a greedy decoder with thresholds $h$ at
-distance 1, $k$ at distance 2, and 0 otherwise. Unconstrained vertices may
-share labels. This supplementary baseline is a proposed design, not an
-implemented or evaluated method in this manuscript, nor a reproduction
-of the original algorithm and data.
+imported into our comparison tables. We adapt the permutation-search idea as
+a supplementary GA baseline, using the exact $L(h,k)$ thresholds in a greedy
+decoder and an equal-evaluation random-order control. This is not a
+reproduction of the radio-labeling problem or its results; the protocol and
+finite-cohort outcomes are reported in Section~\ref{sec:ga-baseline}.
