@@ -200,4 +200,43 @@ A linear row and a clause have different processing costs. These counts
 explain representation size and do not predict a solver's runtime.
 
 \input{paper/sections/symmetry_summary}
+\subsection{Supplementary genetic-heuristic baseline}
+The GA searches vertex permutations and decodes each order by assigning the
+smallest label consistent with previously labeled vertices at distance one
+and two. Vertices outside these constrained pairs may share labels. We use
+OX1 crossover (probability 0.9), segment inversion (0.05), tournament
+selection (size 3), elitism and a population of 40. Each of ten algorithmic
+seeds receives 1,000 permutation evaluations. A paired random-order
+multi-start baseline uses the same decoder and the same number of evaluations;
+the graph-insertion-order greedy labeling is included as a one-pass reference.
+The tested configuration is fixed, not tuned on a held-out cohort.
+
+All 117 feasible spans are compared with independently certified optima.
+Across the cohort, at least one of ten GA runs attains the certified optimum
+on 95 instances, versus 85 for random-order multi-start. Comparing the
+per-instance median of seed-paired span differences gives 21 GA wins, 96 ties
+and no losses; 15 of the 18 ER $L(3,2)$ tasks are GA wins, making that family
+the clearest observed difference. These are descriptive outcomes on the
+fixed cohort, not an inferential claim of general GA superiority.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Fixed-budget GA and random-order comparison by family.}
+\label{tab:ga-baseline}
+\input{results/analysis/lhk_ga/156eba44433bdad5/summary.tex}
+\tablenote{GA opt. and Random opt. count graph/parameter tasks where the
+best of ten seeds matches the independently replayed optimum. Win/tie/loss
+compares the median of ten seed-paired GA-minus-random span differences for
+each task; negative favors GA. Seeds are repeated searches on the same
+instance, not additional graphs.}
+\end{table}
+
+On the subset where CaDiCaL was optimal in all three progress-v2 repeats,
+the median signed difference $\lambda_{\mathrm{SAT}}-\lambda_{\mathrm{GA}}$
+is zero; it is negative on 13 cases where the median GA span remains above
+the certified optimum. The standard nonnegative GA optimality gap is instead
+$\lambda_{\mathrm{GA}}-\lambda^*$. The GA and random decoder runtimes exclude
+shared constraint preprocessing and independent validation, so they are not
+presented as a direct runtime comparison with SAT or ILP. Full per-instance
+gaps, seed outcomes and witnesses are archived with the benchmark analysis.
 \FloatBarrier

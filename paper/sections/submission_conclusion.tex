@@ -30,6 +30,13 @@ have a median clause reduction of 12.58\% with a median time ratio near
 one. The evidence supports descriptive, family-specific effects rather
 than a universal speedup.
 
+The supplementary GA obtains a certified optimum in at least one of ten
+fixed-budget runs on 95/117 tasks, compared with 85/117 for equal-evaluation
+random-order search. Its paired-median advantage is concentrated in ER
+$L(3,2)$ cases. This is descriptive evidence for one adapted GA
+configuration on the fixed cohort; it does not establish general
+metaheuristic superiority or a runtime advantage over SAT/ILP.
+
 The 16 formerly open intervals all concern ER graphs with $p=0.15$.
 Their closure uses arbitrary square-independent color classes, weighted
 capacity bounds and a color-rank-residual SAT encoding. These are targeted
@@ -50,10 +57,12 @@ insertion order certifies 43/45 dense-ER instances but none of the
 sparse-ER instances. DSATUR with spacing $h$ certifies more cases
 overall, so the construction has no universal advantage. This study
 uses one algorithmic seed and does not compare runtimes. The symmetry experiment has only one measurement per
-configuration and cannot establish statistical significance. Neither
-experiment tests direct versus order encoding, incremental SAT, a
-specialized tree algorithm or a GA baseline. These limits qualify performance conclusions without weakening
-checked labeling and clique certificates.
+configuration and cannot establish statistical significance. The GA
+comparison uses one fixed hyperparameter configuration and one finite graph
+cohort; its timer excludes shared constraint preprocessing and witness
+validation, so it is not compared directly with SAT/ILP wall times. These
+limits qualify performance conclusions without weakening checked labeling
+and clique certificates.
 
 \subsection{Conclusion}
 The study provides an exact general-graph formulation and a reproducible
@@ -63,3 +72,6 @@ and solver reuse across spans, would test the scope of these improvements. The n
 study identifies where coloring-based certificates help and where they
 remain insufficient. A matching-bound checker provides an additional
 proof format but closes no further interval in the evaluated cohorts.
+The fixed-budget GA comparison adds a feasible-solution baseline and shows
+where the permutation search improves on equal-budget random orders; broader
+graph cohorts and parameter sensitivity remain open empirical questions.
