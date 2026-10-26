@@ -1,0 +1,78 @@
+{
+  "config": {
+    "study": "l-hk-ga-baseline-v1",
+    "cohort": "general-pilot-v1",
+    "pairs": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "repeats": 10,
+    "seed_base": 0,
+    "evaluation_budget": 1000,
+    "population_size": 40,
+    "crossover_probability": 0.9,
+    "mutation_probability": 0.05,
+    "tournament_size": 3,
+    "baselines": [
+      "greedy_order",
+      "random_order",
+      "ga_ox1_inversion"
+    ],
+    "sat_reference": "results/runs/general_progress_v2_20261007T062406751526Z.csv",
+    "proof_reference": "results/analysis/proof_closure/v1_20261018",
+    "limitation": "fixed benchmark cohort; not a general-complexity result",
+    "runtime_scope": "decoder/search only; graph-constraint preprocessing and independent validation excluded",
+    "proof_manifest_sha256": "747fdb374581fc5ad7b0a8711c1693bc9274cd3b552be1f8495907cc8073cfe8",
+    "progress_csv_sha256": "b4099cfd60d3a08914e83aadb983c94e8a133d9c188c6be38e7da3977de26a96",
+    "progress_metadata_sha256": "a2ed8bfd39ecc7fbe5d3b48c11641a54f062cabed17d3422e49ae251fef3c45f",
+    "progress_witnesses_sha256": "0a81cbf5ed596e2cb8b22eae16c068f0ef30083f4146ad1e0c48e15d3a110bca"
+  },
+  "source_sha256": "1b3bcce30d972b7d9135b1c49bbaae75f5e220312c2c5d7455e9acfdb8a82450",
+  "schema": [
+    "Graph",
+    "Instance",
+    "Family",
+    "h",
+    "k",
+    "Method",
+    "Seed",
+    "V",
+    "E",
+    "Certified_Optimum",
+    "SAT_All3_OPT",
+    "SAT_Observed_OPT_Span",
+    "SAT_minus_GA",
+    "SAT_minus_Random",
+    "SAT_minus_Greedy",
+    "Span",
+    "Certified_Optimality_Gap",
+    "Relative_Optimality_Gap",
+    "Evaluations",
+    "Runtime_Seconds",
+    "Population_Size",
+    "Crossover_Probability",
+    "Mutation_Probability",
+    "Tournament_Size",
+    "Evaluation_Budget"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-10-24T04:35:29.394854+00:00"
+}
