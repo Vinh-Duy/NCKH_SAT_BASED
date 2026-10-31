@@ -163,9 +163,114 @@ def _search(n, edges, distance_two, solver_name, strategy, plan, best, publish):
     return best
 
 
-def _search_worker(connection, args):
+def _search_incremental(n, edges, distance_two, solver_name, plan, best, publish):
+    """Binary-search spans in one CNF/solver using threshold assumptions.
+
+    The model is built once at the incumbent span U.  Since x[v,t] means
+    f(v) <= t, assuming x[v,s] for every non-fixed vertex restricts the same
+    model to labels in 0..s.  Learned clauses from earlier assumption calls
+    remain valid in the solver and are reused by subsequent calls.
+    """
+    kind, vertices, fixed = plan
+    upper = best.span
+    encoding_start = time.perf_counter()
+    cnf, order_vars = build_cnf(
+        n, edges, distance_two, upper,
+        symmetry_kind=kind, symmetry_vertices=vertices,
+        fixed_labels=fixed, h=best.h, k=best.k,
+    )
+    encoding_time = time.perf_counter() - encoding_start
+    if cnf is None:
+        raise RuntimeError("validated incumbent is inconsistent with the span-U CNF")
+
+    low, high = best.proven_lower_bound, best.span
+    with SOLVERS[solver_name](bootstrap_with=cnf) as solver:
+        previous_stats = {key: 0 for key in best.solver_stats}
+        while low < high:
+            candidate = (low + high) // 2
+            assumptions = [
+                order_vars.x[vertex][candidate]
+                for vertex in order_vars.x
+            ]
+            solve_start = time.perf_counter()
+            satisfiable = solver.solve(assumptions=assumptions)
+            solve_time = time.perf_counter() - solve_start
+            attempt_encoding_time = encoding_time
+            current_stats = solver.accum_stats()
+            delta_stats = {
+                key: max(0, current_stats.get(key, 0) - previous_stats.get(key, 0))
+                for key in best.solver_stats
+            }
+            previous_stats = current_stats
+            for metric, value in delta_stats.items():
+                best.solver_stats[metric] += value
+            best.encoding_time += encoding_time
+            encoding_time = 0.0
+            best.sat_solve_time += solve_time
+            best.completed_attempts += 1
+
+            if satisfiable is None:
+                outcome = "UNKNOWN"
+                statistics = dict(encoding_time=attempt_encoding_time, sat_solve_time=solve_time,
+                                  solver_stats=delta_stats, solver_called=True,
+                                  variables=order_vars.variable_count,
+                                  raw_clauses=order_vars.raw_clause_count,
+                                  clauses=len(cnf))
+                best.attempt_statistics.append(dict(span=candidate, outcome=outcome, **statistics))
+                best.history.append(f"{candidate}:{outcome}")
+                best.status = "FEASIBLE"
+                publish(best)
+                break
+
+            if satisfiable:
+                model = solver.get_model()
+                labels = _labels_from_model(n, upper, model or [], order_vars)
+                valid, errors = validate_labeling(
+                    edges, distance_two, labels, candidate, best.h, best.k,
+                    vertices=range(n),
+                )
+                if not valid:
+                    raise RuntimeError(f"invalid incremental SAT model: {errors}")
+                minimum = min(labels.values(), default=0)
+                labels = {v: value - minimum for v, value in labels.items()}
+                feasible_span = max(labels.values(), default=0)
+                if feasible_span < low:
+                    raise RuntimeError("SAT witness contradicts the established lower bound")
+                high = feasible_span
+                best.span, best.labels = high, labels
+                best.variable_count = order_vars.variable_count
+                best.clause_count = len(cnf)
+                best.model_span, best.source = upper, "incremental_sat"
+                outcome = "SAT"
+            else:
+                low = candidate + 1
+                outcome = "UNSAT"
+
+            statistics = dict(encoding_time=attempt_encoding_time, sat_solve_time=solve_time,
+                              solver_stats=delta_stats, solver_called=True,
+                              variables=order_vars.variable_count,
+                              raw_clauses=order_vars.raw_clause_count,
+                              clauses=len(cnf))
+            best.attempt_statistics.append(dict(span=candidate, outcome=outcome, **statistics))
+            best.history.append(f"{candidate}:{outcome}")
+            if low > high:
+                raise RuntimeError("inconsistent lower bound and feasible labeling")
+            best.proven_lower_bound = low
+            best.status = "OPT" if low == high else "FEASIBLE"
+            publish(best)
+
+    if best.proven_lower_bound == best.span:
+        best.status = "OPT"
+    return best
+
+
+def _search_worker(connection, args, strategy):
     try:
-        result = _search(*args, publish=lambda result: connection.send(("progress", result)))
+        publish = lambda result: connection.send(("progress", result))
+        if strategy == "incremental":
+            result = _search_incremental(*args, publish=publish)
+        else:
+            result = _search(*args, publish=publish)
         connection.send(("done", result))
     except Exception as error:
         connection.send(("error", f"{type(error).__name__}: {error}"))
@@ -175,7 +280,7 @@ def _search_worker(connection, args):
 
 def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_sec=60,
                 symmetry_kind=None, enable_symmetry_breaking=True, h=2, k=1,
-                progress_callback=None) -> SatResult:
+                progress_callback=None, initial_labels=None) -> SatResult:
     """Solve with a validated incumbent and an explicit optimality lower bound.
 
     Timing includes preprocessing, worker startup, CNF construction, search,
@@ -189,7 +294,7 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
     """
     start = time.perf_counter()
     solver_name, strategy = solver_name.lower(), strategy.lower()
-    if solver_name not in SOLVERS or strategy not in {"linear", "hybrid"}:
+    if solver_name not in SOLVERS or strategy not in {"linear", "hybrid", "incremental"}:
         raise ValueError("unsupported solver or search strategy")
     if timeout_sec is not None and (not math.isfinite(timeout_sec) or timeout_sec < 0):
         raise ValueError("timeout_sec must be finite and non-negative, or None")
@@ -207,18 +312,41 @@ def solve_graph(graph: Any, solver_name="glucose", strategy="hybrid", timeout_se
     valid, errors = validate_labeling(edges, distance_two, labels, upper, h, k, vertices=range(len(graph)))
     if not valid:
         raise RuntimeError(f"invalid greedy labeling: {errors}")
+    source = "greedy"
+    if initial_labels is not None:
+        if not isinstance(initial_labels, dict) or set(initial_labels) != set(original_nodes):
+            raise ValueError("initial_labels must cover exactly the graph's original vertices")
+        if any(not isinstance(label, int) or isinstance(label, bool)
+               for label in initial_labels.values()):
+            raise ValueError("initial_labels must contain integer labels")
+        minimum = min(initial_labels.values(), default=0)
+        candidate = {index: initial_labels[vertex] - minimum
+                     for index, vertex in enumerate(original_nodes)}
+        candidate_span = max(candidate.values(), default=0)
+        valid, errors = validate_labeling(
+            edges, distance_two, candidate, candidate_span, h, k,
+            vertices=range(len(graph)),
+        )
+        if not valid:
+            raise ValueError(f"initial_labels is not a valid L(h,k) labeling: {errors}")
+        if candidate_span < upper:
+            upper, labels, source = candidate_span, candidate, "provided"
     low = lower_bound(normalized, h, k)
     best = SatResult("OPT" if low == upper else "FEASIBLE", upper, upper,
-                     labels=labels, proven_lower_bound=low, h=h, k=k)
+                     labels=labels, proven_lower_bound=low, source=source, h=h, k=k)
     plan = _symmetry_plan(normalized, symmetry_kind,
                           enable_symmetry_breaking and min(h, k) > 0)
     args = (len(graph), edges, distance_two, solver_name, strategy, plan, best)
     if low < upper and timeout_sec is None:
-        best = _search(*args, publish=publish)
+        if strategy == "incremental":
+            best = _search_incremental(len(graph), edges, distance_two, solver_name,
+                                       plan, best, publish=publish)
+        else:
+            best = _search(*args, publish=publish)
     elif low < upper and time.perf_counter() - start < timeout_sec:
         context = mp.get_context("spawn")
         receiver, sender = context.Pipe(duplex=False)
-        process = context.Process(target=_search_worker, args=(sender, args))
+        process = context.Process(target=_search_worker, args=(sender, args, strategy))
         try:
             process.start()
             sender.close()
