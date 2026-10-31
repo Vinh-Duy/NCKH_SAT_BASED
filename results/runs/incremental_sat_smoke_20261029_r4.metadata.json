@@ -1,0 +1,89 @@
+{
+  "config": {
+    "study": "incremental-sat-min-ub-v1",
+    "manifest": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+    "manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+    "cohort_graph_count": 1,
+    "graph_parameter_instances": 3,
+    "methods": [
+      "sat_original",
+      "sat_incremental",
+      "sat_ga_bound",
+      "ga",
+      "random_order"
+    ],
+    "pairs": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "per_method_wall_limit_seconds": 10.0,
+    "wall_limit_scope": "one hard process wall cap per graph/parameter/method; shared greedy incumbent setup is excluded and identical across methods",
+    "sat_backend": "CaDiCaL195",
+    "sat_original_strategy": "hybrid",
+    "sat_incremental_strategy": "incremental",
+    "ilp": "Gurobi assignment; Threads=1, zero MIP gap",
+    "ga": {
+      "population_size": 40,
+      "evaluation_budget": 1000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05,
+      "tournament_size": 3,
+      "seed_base": 0,
+      "repeats": 10
+    },
+    "heuristic_witnesses_independently_validated": true,
+    "seed_policy": "fixed seeds 0..9; 1000 evaluations per completed seed",
+    "cohort_note": "repository certificate-validation cohort; not established as Appendix C and separate from historical 117-instance cohort",
+    "limitation": "time-limited outputs are not proof traces; OPT claims rely on solver status and validated witnesses"
+  },
+  "source_sha256": "3be125a26907d03f93d3c86e0246a58e2de6d04b1c1a398e45e79a07ff4b9aef",
+  "schema": [
+    "Graph",
+    "Instance",
+    "Manifest_SHA256",
+    "Family",
+    "h",
+    "k",
+    "Method",
+    "Status",
+    "Termination",
+    "Span",
+    "Lower_Bound",
+    "Optimality_Proven",
+    "Valid_Witness",
+    "Runtime_Seconds",
+    "SAT_Runtime_Seconds",
+    "GA_Runtime_Seconds",
+    "Validation_Runtime_Seconds",
+    "Evaluations",
+    "Seeds_Completed",
+    "Variables",
+    "Clauses_or_Constraints",
+    "SAT_Calls",
+    "SAT_Conflicts",
+    "SAT_Decisions",
+    "SAT_Propagations",
+    "Timeout_Seconds",
+    "Witness_JSON"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "created_utc": "2026-10-29T16:22:06.987191+00:00"
+}

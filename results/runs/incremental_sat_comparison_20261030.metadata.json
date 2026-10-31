@@ -1,0 +1,99 @@
+{
+  "config": {
+    "study": "incremental-sat-min-ub-v1",
+    "manifest": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+    "manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+    "cohort_graph_count": 69,
+    "graph_parameter_instances": 207,
+    "methods": [
+      "sat_original",
+      "sat_incremental",
+      "sat_ga_bound",
+      "ilp",
+      "ga",
+      "random_order"
+    ],
+    "pairs": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "per_method_wall_limit_seconds": 30.0,
+    "wall_limit_scope": "one hard end-to-end wall cap per graph/parameter/method, including shared greedy incumbent generation, witness validation, solver/model construction, and search",
+    "sat_backend": "CaDiCaL195",
+    "sat_original_strategy": "hybrid",
+    "sat_incremental_strategy": "incremental",
+    "ilp": "Gurobi assignment; Threads=1, zero MIP gap",
+    "ga": {
+      "population_size": 40,
+      "evaluation_budget": 1000,
+      "crossover_probability": 0.9,
+      "mutation_probability": 0.05,
+      "tournament_size": 3,
+      "seed_base": 0,
+      "repeats": 10
+    },
+    "heuristic_witnesses_independently_validated": true,
+    "seed_policy": "fixed seeds 0..9; 1000 evaluations per completed seed",
+    "cohort_note": "repository certificate-validation cohort; not established as Appendix C and separate from historical 117-instance cohort",
+    "limitation": "time-limited outputs are not proof traces; OPT claims rely on solver status and validated witnesses",
+    "result_schema": "incremental-sat-observation-v2"
+  },
+  "source_sha256": "c4bf6dfd87656ebfb5da8028d3bc4e94179421c11ae8f0e0ca44f4bff1524d31",
+  "schema": [
+    "Graph",
+    "Instance",
+    "Manifest_SHA256",
+    "Family",
+    "h",
+    "k",
+    "Method",
+    "Status",
+    "Solver_Outcome",
+    "Termination",
+    "Timeout_Or_Interruption",
+    "Span",
+    "Best_Span",
+    "Lower_Bound",
+    "Optimality_Proven",
+    "Optimality_Source",
+    "Feasible_Witness",
+    "Valid_Witness",
+    "Error_Info",
+    "Log_Reference",
+    "Runtime_Seconds",
+    "SAT_Runtime_Seconds",
+    "GA_Runtime_Seconds",
+    "Validation_Runtime_Seconds",
+    "Evaluations",
+    "Seeds_Completed",
+    "Variables",
+    "Clauses_or_Constraints",
+    "SAT_Calls",
+    "SAT_Conflicts",
+    "SAT_Decisions",
+    "SAT_Propagations",
+    "Timeout_Seconds",
+    "Witness_JSON"
+  ],
+  "packages": {
+    "networkx": "3.6.1",
+    "python-sat": "1.9.dev15",
+    "gurobipy": "13.0.3",
+    "docplex": "2.32.264",
+    "cplex": null
+  },
+  "python": "3.13.7",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "artifact_policy": "incremental-sat-witness-v2",
+  "created_utc": "2026-10-30T03:26:51.901860+00:00"
+}
