@@ -1,0 +1,22 @@
+{
+  "phase": "3C",
+  "run_id": "phase3c_distance2_forensics_20261031",
+  "canonical_path": "sat_incremental_external_u",
+  "cohort_source": "results/analysis/phase3a_instrumentation_audit_20261031/diagnostic_cohort.csv",
+  "fixed_span_source": "results/runs/phase3b_controlled_cnf_profile_20261031/fixed_span_manifest.csv",
+  "graph_manifest_source": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+  "models_built": 20,
+  "tasks": 10,
+  "spans_per_task": 2,
+  "sat_search_performed": false,
+  "backend_initialized": false,
+  "ga_executed": false,
+  "ilp_executed": false,
+  "optional_production_instrumentation": true,
+  "instrumentation_default": "disabled",
+  "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "networkx": "3.6.1",
+  "command": "python scripts/profile_phase3c_distance2.py",
+  "source_note": "working tree; see git status at invocation"
+}
