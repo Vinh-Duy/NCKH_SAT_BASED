@@ -5,6 +5,22 @@ from collections import defaultdict, deque
 from src.core.parameters import validate_gaps
 
 
+CATEGORY_NAMES = (
+    "label_domain",
+    "distance_1",
+    "distance_2",
+    "symmetry_breaking",
+    "auxiliary",
+    "other",
+)
+
+
+def _record_category(category_counts: dict[str, int] | None,
+                     category: str, clauses: list[list[int]]) -> None:
+    if category_counts is not None:
+        category_counts[category] = category_counts.get(category, 0) + len(clauses)
+
+
 def simplify_cnf(clauses: list[list[int]]) -> list[list[int]]:
     """Deduplicate and propagate units, retaining units for model reconstruction.
 
@@ -100,13 +116,18 @@ class OrderVars:
         return self.next_var - 1
 
 
-def monotone_clauses(order_vars: OrderVars) -> list[list[int]]:
+def monotone_clauses(
+    order_vars: OrderVars,
+    category_counts: dict[str, int] | None = None,
+) -> list[list[int]]:
     """Enforce x(v,i) implies x(v,i+1)."""
-    return [
+    clauses = [
         [-order_vars.x[vertex][threshold], order_vars.x[vertex][threshold + 1]]
         for vertex in order_vars.x
         for threshold in range(order_vars.span - 1)
     ]
+    _record_category(category_counts, "label_domain", clauses)
+    return clauses
 
 
 def not_equal_literals(order_vars: OrderVars, vertex: int, label: int) -> list[int]:
@@ -122,7 +143,9 @@ def not_equal_literals(order_vars: OrderVars, vertex: int, label: int) -> list[i
 
 
 def forbid_close_labels(
-    order_vars: OrderVars, first: int, second: int, minimum_difference: int
+    order_vars: OrderVars, first: int, second: int, minimum_difference: int,
+    category_counts: dict[str, int] | None = None,
+    category: str = "other",
 ) -> list[list[int]]:
     """Forbid every label pair closer than minimum_difference."""
     if minimum_difference <= 0:
@@ -131,9 +154,10 @@ def forbid_close_labels(
         order_vars, first, second, minimum_difference
     )
     if fixed_clauses is not None:
+        _record_category(category_counts, category, fixed_clauses)
         return fixed_clauses
 
-    return [
+    clauses = [
         not_equal_literals(order_vars, first, first_label)
         + not_equal_literals(order_vars, second, second_label)
         for first_label in range(order_vars.span + 1)
@@ -142,6 +166,8 @@ def forbid_close_labels(
             min(order_vars.span, first_label + minimum_difference - 1) + 1,
         )
     ]
+    _record_category(category_counts, category, clauses)
+    return clauses
 
 
 def _fixed_close_label_clauses(
@@ -166,20 +192,25 @@ def _fixed_close_label_clauses(
 
 
 def strict_less_clauses(
-    order_vars: OrderVars, smaller: int, larger: int
+    order_vars: OrderVars, smaller: int, larger: int,
+    category_counts: dict[str, int] | None = None,
 ) -> list[list[int]]:
     """Encode f(smaller) < f(larger) in order encoding."""
     fixed_clauses = _fixed_strict_less_clauses(order_vars, smaller, larger)
     if fixed_clauses is not None:
+        _record_category(category_counts, "symmetry_breaking", fixed_clauses)
         return fixed_clauses
     if order_vars.span == 0:
-        return [[]]
+        clauses = [[]]
+        _record_category(category_counts, "symmetry_breaking", clauses)
+        return clauses
     clauses = [[order_vars.x[smaller][order_vars.span - 1]]]
     clauses.extend(
         [-order_vars.x[larger][threshold], order_vars.x[smaller][threshold - 1]]
         for threshold in range(1, order_vars.span)
     )
     clauses.append([-order_vars.x[larger][0]])
+    _record_category(category_counts, "symmetry_breaking", clauses)
     return clauses
 
 
@@ -202,6 +233,7 @@ def symmetry_breaking_clauses(
     order_vars: OrderVars,
     symmetry_kind: str | None,
     symmetry_vertices: tuple[int, int, int] | None = None,
+    category_counts: dict[str, int] | None = None,
 ) -> list[list[int]]:
     """Add sound symmetry constraints for supported graph families."""
     if not symmetry_kind or order_vars.n_vertices == 0:
@@ -213,7 +245,7 @@ def symmetry_breaking_clauses(
         if max(symmetry_vertices) >= order_vars.n_vertices:
             return []
         return strict_less_clauses(
-            order_vars, first_neighbor, second_neighbor
+            order_vars, first_neighbor, second_neighbor, category_counts
         )
     builders = {
         "P": _path_symmetry,
@@ -222,7 +254,9 @@ def symmetry_breaking_clauses(
         "Q": _hypercube_symmetry,
     }
     builder = builders.get(symmetry_kind)
-    return builder(order_vars) if builder else []
+    clauses = builder(order_vars) if builder else []
+    _record_category(category_counts, "symmetry_breaking", clauses)
+    return clauses
 
 
 def _path_symmetry(order_vars: OrderVars) -> list[list[int]]:
@@ -268,6 +302,7 @@ def build_cnf(
     symmetry_vertices: tuple[int, int, int] | None = None,
     fixed_labels: dict[int, int] | None = None,
     simplify: bool = True,
+    category_counts: dict[str, int] | None = None,
 ) -> tuple[list[list[int]] | None, OrderVars]:
     """Build CNF; callers supplying symmetries must justify their soundness."""
     validate_gaps(h, k)
@@ -277,14 +312,21 @@ def build_cnf(
     if symmetry_kind == "C" and n_vertices > 0:
         fixed.setdefault(0, 0)
     order_vars = OrderVars(n_vertices, span, fixed)
-    clauses = monotone_clauses(order_vars)
+    clauses = monotone_clauses(order_vars, category_counts)
     clauses += symmetry_breaking_clauses(
-        order_vars, symmetry_kind, symmetry_vertices
+        order_vars, symmetry_kind, symmetry_vertices, category_counts
     )
     for first, second in edges:
-        clauses += forbid_close_labels(order_vars, first, second, h)
+        clauses += forbid_close_labels(
+            order_vars, first, second, h, category_counts, "distance_1"
+        )
     for first, second in distance_two_pairs:
-        clauses += forbid_close_labels(order_vars, first, second, k)
+        clauses += forbid_close_labels(
+            order_vars, first, second, k, category_counts, "distance_2"
+        )
+    if category_counts is not None:
+        for category in CATEGORY_NAMES:
+            category_counts.setdefault(category, 0)
     order_vars.raw_clause_count = len(clauses)
     if simplify:
         clauses = simplify_cnf(clauses)
