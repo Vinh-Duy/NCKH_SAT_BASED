@@ -1,0 +1,13 @@
+{
+  "cohort_sha256": "23bd68b5c7077884077248fab43b02af1cb8f6c1f8ecf4a85a5057f0dccf02c0",
+  "graph_manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "methods": [
+    "sat_original",
+    "sat_incremental",
+    "sat_ga_bound"
+  ],
+  "run_id": "94aeed02a03d4cd59e72c8f782d0d352",
+  "schema_version": "sat-attempt-v1",
+  "task_count": 10,
+  "timeout_seconds": 30.0
+}

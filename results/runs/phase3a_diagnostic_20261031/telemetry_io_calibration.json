@@ -1,0 +1,24 @@
+{
+  "measured_append_fsync_seconds": 0.2038887060007255,
+  "method_replay": {
+    "sat_ga_bound": {
+      "bytes": 181036,
+      "elapsed_seconds": 0.12130055300076492,
+      "events": 272
+    },
+    "sat_incremental": {
+      "bytes": 66872,
+      "elapsed_seconds": 0.04025132199967629,
+      "events": 83
+    },
+    "sat_original": {
+      "bytes": 66497,
+      "elapsed_seconds": 0.04233683100028429,
+      "events": 83
+    }
+  },
+  "scope": "Replay estimate of serialization, open/append and fsync for payloads shaped like the pilot events; not an exact per-run instrumentation timer.",
+  "seconds_per_event": 0.0004654993287687797,
+  "total_bytes_written": 314405,
+  "total_events_replayed": 438
+}

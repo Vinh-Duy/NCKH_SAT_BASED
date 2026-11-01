@@ -1,0 +1,178 @@
+{
+  "arm_count": 30,
+  "backend": "CaDiCaL195",
+  "cohort_file": "results/analysis/phase3a_instrumentation_audit_20261031/diagnostic_cohort.csv",
+  "cohort_graph_manifest": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+  "cohort_graph_manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "cohort_sha256": "23bd68b5c7077884077248fab43b02af1cb8f6c1f8ecf4a85a5057f0dccf02c0",
+  "cohort_tasks": [
+    {
+      "Family": "Tree",
+      "Instance": "tree_20_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "19",
+      "n": "20"
+    },
+    {
+      "Family": "Tree",
+      "Instance": "tree_40_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "39",
+      "n": "40"
+    },
+    {
+      "Family": "Tree",
+      "Instance": "tree_60_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "59",
+      "n": "60"
+    },
+    {
+      "Family": "ER p=0.30",
+      "Instance": "ER_20_p0.30_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "61",
+      "n": "20"
+    },
+    {
+      "Family": "ER p=0.30",
+      "Instance": "ER_40_p0.30_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "225",
+      "n": "40"
+    },
+    {
+      "Family": "ER p=0.30",
+      "Instance": "ER_60_p0.30_seed100",
+      "h": "2",
+      "k": "1",
+      "m": "512",
+      "n": "60"
+    },
+    {
+      "Family": "ER p=0.30",
+      "Instance": "ER_60_p0.30_seed100",
+      "h": "3",
+      "k": "2",
+      "m": "512",
+      "n": "60"
+    },
+    {
+      "Family": "Bipartite stress",
+      "Instance": "K_10_10",
+      "h": "2",
+      "k": "1",
+      "m": "100",
+      "n": "20"
+    },
+    {
+      "Family": "Bipartite stress",
+      "Instance": "K_20_20",
+      "h": "2",
+      "k": "1",
+      "m": "400",
+      "n": "40"
+    },
+    {
+      "Family": "Bipartite stress",
+      "Instance": "K_30_30",
+      "h": "2",
+      "k": "1",
+      "m": "900",
+      "n": "60"
+    }
+  ],
+  "completed_arms": 30,
+  "created_utc": "2026-10-31T06:59:26.819309+00:00",
+  "data_policy": "new diagnostic output only; source manifest and historical results are read-only",
+  "environment": {
+    "cadical_binding": "src.solvers.sat_solver",
+    "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+    "pysat_version": "1.9.dev15",
+    "python_executable": "/Users/vinhduy/Desktop/NCKH_SAT_BASED/.venv-1/bin/python",
+    "python_version": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]"
+  },
+  "execution": "sequential; existing _run_arm worker and parent timeout path",
+  "expected_arms": 30,
+  "ga_config": {
+    "crossover_probability": 0.9,
+    "evaluation_budget": 1000,
+    "mutation_probability": 0.05,
+    "population_size": 40,
+    "repeats": 10,
+    "seed_base": 0,
+    "tournament_size": 3
+  },
+  "ga_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "method_count": 3,
+  "methods": [
+    "sat_original",
+    "sat_incremental",
+    "sat_ga_bound"
+  ],
+  "outputs": {
+    "arm_results": "results/runs/phase3a_diagnostic_20261031/pilot_results.csv",
+    "attempt_events": "results/runs/phase3a_diagnostic_20261031/attempts.jsonl",
+    "raw_telemetry": "results/runs/phase3a_diagnostic_20261031/diagnostic.csv.telemetry",
+    "summary": "results/runs/phase3a_diagnostic_20261031/pilot_summary.csv"
+  },
+  "run_id": "94aeed02a03d4cd59e72c8f782d0d352",
+  "schema_version": "phase3a-diagnostic-pilot-v1",
+  "smoke_detail": "all three SAT methods have valid, method-consistent telemetry",
+  "smoke_task": {
+    "Instance": "ER_20_p0.30_seed100",
+    "h": 2,
+    "k": 1
+  },
+  "smoke_test_passed": true,
+  "smoke_tests": [
+    {
+      "checked_utc": "2026-10-31T07:17:09.224127+00:00",
+      "detail": "existing smoke trace revalidated after cohort run; all methods passed structural telemetry checks",
+      "execution_utc_from_trace": "2026-10-31T06:59:26.863032+00:00",
+      "passed": true,
+      "task": {
+        "Instance": "tree_20_seed100",
+        "h": 2,
+        "k": 1
+      }
+    },
+    {
+      "checked_utc": "2026-10-31T07:02:06.534516+00:00",
+      "detail": "all three SAT methods have valid, method-consistent telemetry",
+      "passed": true,
+      "task": {
+        "Instance": "ER_20_p0.30_seed100",
+        "h": 2,
+        "k": 1
+      }
+    }
+  ],
+  "status": "COHORT_COMPLETE",
+  "strategies": {
+    "sat_ga_bound": "incremental",
+    "sat_incremental": "incremental",
+    "sat_original": "hybrid"
+  },
+  "task_count": 10,
+  "telemetry_schema_version": "sat-attempt-v1",
+  "timeout_scope": "end-to-end per method-task, including shared greedy setup, worker startup, encoding, solving, validation, and cleanup",
+  "timeout_seconds_per_method_task": 30.0,
+  "updated_utc": "2026-10-31T07:12:02.220972+00:00"
+}
