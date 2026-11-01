@@ -1,0 +1,31 @@
+{
+  "schema_version": "sat-attempt-v1",
+  "resource_limit_type": "conflicts",
+  "task_fields": {
+    "task_conflict_budget": "positive integer or null",
+    "task_conflicts_used": "integer or null",
+    "task_conflicts_remaining": "integer or null",
+    "task_budget_exhausted": "boolean or null"
+  },
+  "attempt_fields": {
+    "configured_call_conflict_budget": "positive integer or 0 when no call starts",
+    "conflicts_before": "nullable cumulative integer",
+    "conflicts_after": "nullable cumulative integer",
+    "counter_delta": "nullable per-counter deltas",
+    "task_conflicts_used_before": "nullable integer",
+    "task_conflicts_used_after": "nullable integer",
+    "task_conflicts_remaining": "nullable integer",
+    "unknown_reason": [
+      "CONFLICT_BUDGET",
+      "SOLVER_UNKNOWN_UNCLASSIFIED",
+      "CONFLICT_COUNTER_UNAVAILABLE_OR_NON_MONOTONIC",
+      "BACKEND_CONFLICT_BUDGET_UNAVAILABLE",
+      "CONFLICT_BUDGET_CONFIGURATION_ERROR"
+    ]
+  },
+  "parent_termination": {
+    "event_type": "attempt_terminated_by_parent",
+    "solver_outcome": "INTERRUPTED",
+    "final_counters": null
+  }
+}

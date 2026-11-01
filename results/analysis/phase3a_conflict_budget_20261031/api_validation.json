@@ -1,0 +1,16 @@
+{
+  "environment": ".venv-1",
+  "backend": "CaDiCaL195",
+  "pysat_solve_limited_signature": "(self, assumptions=[], expect_interrupt=False)",
+  "pysat_conf_budget_signature": "(self, budget)",
+  "pysat_accum_stats_signature": "(self)",
+  "regular_sat_result": true,
+  "regular_unsat_result": false,
+  "hard_formula_limited_result": null,
+  "hard_formula_conflict_delta": 1,
+  "assumptions_respected": true,
+  "repeated_limited_calls_verified": true,
+  "counters_available_after_unknown": true,
+  "interrupt_api_used": false,
+  "propagation_budget_used": false
+}

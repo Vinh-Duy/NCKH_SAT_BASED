@@ -1,0 +1,10 @@
+budget_directory,run_id,task_id,method,task_conflict_budget,backend_conflict_budget,task_conflicts_used,max_observed_per_call_conflicts,sat_calls,unsat_calls,unknown_calls,parent_terminated_calls,overall_task_status,solver_final_outcome,termination_reason,runtime_seconds,ub_span,lb,soft_budget_policy_compliance,raw_attempt_state,budget_overrun
+budget_10000,3390c9c60c5d42d7a9efc85d72e16556,ER_60_p0.30_seed100__h3_k2__sat_ga_bound,sat_ga_bound,10000,9999,9999,9999,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,28.840730,112,51,YES,completed,0
+budget_10000,3390c9c60c5d42d7a9efc85d72e16556,ER_60_p0.30_seed100__h3_k2__sat_incremental,sat_incremental,10000,9999,9999,9999,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,16.153318,127,51,YES,completed,0
+budget_10000,3390c9c60c5d42d7a9efc85d72e16556,ER_60_p0.30_seed100__h3_k2__sat_original,sat_original,10000,9999,10001,10001,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,15.215675,127,51,NO,completed,1
+budget_20000,46d3e4754b0e492db92914e42124f5b9,ER_60_p0.30_seed100__h3_k2__sat_ga_bound,sat_ga_bound,20000,,,,0,0,0,1,TIMEOUT,INTERRUPTED,WALL_TIMEOUT,30.073210,112,51,UNDETERMINED_PARENT_TERMINATION,parent_terminated,
+budget_20000,46d3e4754b0e492db92914e42124f5b9,ER_60_p0.30_seed100__h3_k2__sat_incremental,sat_incremental,20000,19999,19999,19999,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,20.062011,127,51,YES,completed,0
+budget_20000,46d3e4754b0e492db92914e42124f5b9,ER_60_p0.30_seed100__h3_k2__sat_original,sat_original,20000,19999,20000,20000,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,14.666050,127,51,YES,completed,0
+budget_40000,643f75f3a8c84e97a6c1e74480e211a5,ER_60_p0.30_seed100__h3_k2__sat_ga_bound,sat_ga_bound,40000,,,,0,0,0,1,TIMEOUT,INTERRUPTED,WALL_TIMEOUT,30.063228,112,51,UNDETERMINED_PARENT_TERMINATION,parent_terminated,
+budget_40000,643f75f3a8c84e97a6c1e74480e211a5,ER_60_p0.30_seed100__h3_k2__sat_incremental,sat_incremental,40000,39999,40000,40000,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,27.694369,127,51,YES,completed,0
+budget_40000,643f75f3a8c84e97a6c1e74480e211a5,ER_60_p0.30_seed100__h3_k2__sat_original,sat_original,40000,39999,39999,39999,0,0,1,0,UNKNOWN,UNKNOWN,SOLVER_UNKNOWN,20.843771,127,51,YES,completed,0

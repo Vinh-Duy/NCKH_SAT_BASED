@@ -1,0 +1,17 @@
+scenario,solver_lifecycle,assumptions,configured_budget,conflicts_before,conflicts_after,conflict_delta,result,strict_cap
+hard_pigeonhole,fresh,no,1,0,1,1,UNKNOWN,yes
+hard_pigeonhole,fresh,no,2,0,3,3,UNKNOWN,no
+hard_pigeonhole,fresh,no,10,0,11,11,UNKNOWN,no
+hard_pigeonhole,fresh,no,20,0,21,21,UNKNOWN,no
+hard_pigeonhole,fresh,no,50,0,53,53,UNKNOWN,no
+hard_pigeonhole,reused,no,10,0,9,9,UNKNOWN,yes
+hard_pigeonhole,reused,no,20,0,19,19,UNKNOWN,yes
+hard_pigeonhole,reused,yes,20,0,20,20,UNKNOWN,yes
+hard_pigeonhole,reused,yes,50,0,32,32,UNSAT,yes
+unit_sat,fresh,no,10,0,0,0,SAT,yes
+contradiction_unsat,fresh,no,10,0,0,0,UNSAT,yes
+guarded_hard_pigeonhole,fresh,no,2,0,1,1,UNKNOWN,yes
+guarded_hard_pigeonhole,fresh,no,5,0,5,5,UNKNOWN,yes
+guarded_hard_pigeonhole,fresh,no,10,0,9,9,UNKNOWN,yes
+guarded_hard_pigeonhole,fresh,no,20,0,19,19,UNKNOWN,yes
+guarded_hard_pigeonhole,fresh,no,50,0,49,49,UNKNOWN,yes

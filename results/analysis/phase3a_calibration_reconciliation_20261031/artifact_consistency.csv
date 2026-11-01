@@ -1,0 +1,30 @@
+check,status,detail
+budget_10000_directory_label,PASS,budget_10000.telemetry
+budget_10000_metadata_budget,PASS,10000
+budget_10000_telemetry_metadata_budget,PASS,10000
+budget_10000_witness_config_budget,PASS,[10000]
+budget_10000_expected_files,PASS,3 raw telemetry files
+10000_sat_incremental_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+10000_sat_original_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+10000_sat_ga_bound_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+budget_20000_directory_label,PASS,budget_20000.telemetry
+budget_20000_metadata_budget,PASS,20000
+budget_20000_telemetry_metadata_budget,PASS,20000
+budget_20000_witness_config_budget,PASS,[20000]
+budget_20000_expected_files,PASS,3 raw telemetry files
+20000_sat_incremental_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+20000_sat_original_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+20000_sat_ga_bound_attempt_matching,PASS,1 started; 0 completed; 1 parent-terminated
+budget_40000_directory_label,PASS,budget_40000.telemetry
+budget_40000_metadata_budget,PASS,40000
+budget_40000_telemetry_metadata_budget,PASS,40000
+budget_40000_witness_config_budget,PASS,[40000]
+budget_40000_expected_files,PASS,3 raw telemetry files
+40000_sat_incremental_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+40000_sat_original_attempt_matching,PASS,1 started; 1 completed; 0 parent-terminated
+40000_sat_ga_bound_attempt_matching,PASS,1 started; 0 completed; 1 parent-terminated
+all_jsonl_lines_valid,PASS,139 JSONL lines; invalid=0
+expected_arm_count,PASS,9 arm rows; unique=9
+run_id_consistency,PASS,"3 run IDs, one per budget directory: ['3390c9c60c5d42d7a9efc85d72e16556', '46d3e4754b0e492db92914e42124f5b9', '643f75f3a8c84e97a6c1e74480e211a5']"
+task_id_consistency,PASS,3 stable method task IDs repeated across 3 budget runs
+no_100k_or_1m_in_recalibration,PASS,"No such values in recalibration metadata, telemetry, witnesses, or directory labels"
