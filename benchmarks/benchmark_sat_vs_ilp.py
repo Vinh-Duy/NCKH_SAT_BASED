@@ -185,8 +185,11 @@ def _validate_progress(graph, h, k, previous, payload):
     span, low = payload.get("span"), payload.get("proven_lower_bound")
     if any(type(value) is not int for value in (span, low)) or not 0 <= low <= span:
         raise RuntimeError("invalid progress interval")
-    if payload["status"] not in {"FEASIBLE", "OPT"} or (payload["status"] == "OPT" and low != span):
+    if (payload["status"] not in {"FEASIBLE", "OPT", "UNKNOWN"} or
+            (payload["status"] == "OPT" and low != span)):
         raise RuntimeError("unsupported optimality claim")
+    if payload["status"] == "UNKNOWN" and low == span:
+        raise RuntimeError("UNKNOWN result cannot carry a closed optimality interval")
     valid, errors = validate_labeling(*graph_constraints(graph), payload["labels"],
                                      span, h, k, vertices=graph)
     if not valid:

@@ -1,7 +1,9 @@
 """Recovery and status integrity checks for the incremental SAT benchmark."""
 
+import csv
 import json
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -157,6 +159,29 @@ class IncrementalBenchmarkIntegrityTests(unittest.TestCase):
         self.assertEqual(_last_sat_outcome(SimpleNamespace(
             attempt_statistics=[{"outcome": "UNKNOWN"}], history=[])), "UNKNOWN")
 
+    def test_csv_keeps_unknown_and_interrupted_distinct_from_unsat(self):
+        cases = (
+            ("unknown", self.row(Status="UNKNOWN", Solver_Outcome="UNKNOWN",
+                Termination="SOLVER_UNKNOWN", Optimality_Proven=False,
+                Optimality_Source="none"), "UNKNOWN"),
+            ("unsat", self.row(Status="FEASIBLE", Solver_Outcome="UNSAT",
+                Optimality_Proven=False, Optimality_Source="none"), "UNSAT"),
+            ("interrupted", self.row(Status="TIMEOUT", Solver_Outcome="INTERRUPTED",
+                Termination="WALL_TIMEOUT", Timeout_Or_Interruption=True,
+                Optimality_Proven=False, Optimality_Source="none"), "INTERRUPTED"),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            for name, row, expected_outcome in cases:
+                with self.subTest(outcome=expected_outcome):
+                    output = Path(directory) / f"{name}.csv"
+                    writer = self.writer(output)
+                    self.publish(writer, row)
+                    with output.open(newline="", encoding="utf-8") as stream:
+                        stored = next(csv.DictReader(stream))
+                    self.assertEqual(stored["Solver_Outcome"], expected_outcome)
+                    self.assertNotEqual(stored["Solver_Outcome"], "UNSAT"
+                                        if expected_outcome != "UNSAT" else "UNKNOWN")
+
     def test_worker_exception_is_published_as_infrastructure_error(self):
         class Connection:
             def __init__(self):
@@ -178,6 +203,28 @@ class IncrementalBenchmarkIntegrityTests(unittest.TestCase):
         self.assertEqual((state["status"], state["solver_outcome"], state["termination"]),
                          ("ERROR", "ERROR", "WORKER_ERROR"))
         self.assertIn("synthetic worker failure", state["error_info"])
+
+    def test_ga_preprocessing_honors_shared_expired_deadline(self):
+        class Connection:
+            def __init__(self):
+                self.events = []
+
+            def send(self, event):
+                self.events.append(event)
+
+            def close(self):
+                pass
+
+        connection = Connection()
+        with patch("benchmarks.benchmark_incremental_sat.genetic_search") as search:
+            _worker(connection, self.instance, "Path", self.graph, 1, 1,
+                    "sat_ga_bound", {0: 0, 1: 1}, 2.0,
+                    deadline=time.perf_counter() - 1)
+        search.assert_not_called()
+        state = connection.events[-1]["state"]
+        self.assertEqual((state["status"], state["solver_outcome"],
+                          state["termination"], state["seeds_completed"]),
+                         ("UNKNOWN", "UNKNOWN", "SOLVER_UNKNOWN", 0))
 
     def test_timeout_and_worker_error_are_recorded_but_retried_on_resume(self):
         cases = [
