@@ -1,0 +1,37 @@
+{
+  "phase": "Post-Phase-3E audit closure and interpretation",
+  "source_worktree_state": "pre-existing dirty worktree preserved; closure artifacts are new only",
+  "input_artifacts": [
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/REPORT.md",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/sat_run_results.csv",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/paired_comparison.csv",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/summary_by_encoding_and_span.csv",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/formula_reconciliation.csv",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/witness_validation.csv",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/solver_configuration.json",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/run_manifest.json"
+  ],
+  "input_sha256": {
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/REPORT.md": "3055405d07241b040f1111d4475d219c531961b3c2565dc1d3a9e5ec356e9117",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/sat_run_results.csv": "c545aa16926ba76cfb39fc4a7801cce40746ac5909ca72a959561f6175c3687f",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/paired_comparison.csv": "544320485cb4892f513a9cce5ae1b2c26679c32b6cee820a28d8c3bffad1349a",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/summary_by_encoding_and_span.csv": "32fafeaf1e04b184309941e89f00238ae163521cf9cfe8ed11bc5a2f6cb5b759",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/formula_reconciliation.csv": "4762ee8ca1d10f5d66ef653554a10be4b078d50a2090d7009e9bcd2c09700bee",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/witness_validation.csv": "6c86e945ddf9f087a3790e85a3a110f8d00a7fa22350eeb43af91f4048dbbd50",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/solver_configuration.json": "f87da3ac352d978baca0c81d15963064b1e1b38be003c8c0848f025bc96166d8",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/run_manifest.json": "d75f88021542880826d3bd155dc7f827fc62c17b4b5f76b23796c7afd5115bdc"
+  },
+  "commands_used": [
+    "read-only CSV/JSON parsing via standard-library script",
+    "python3 -m py_compile on generated analysis script was not needed; no persistent script generated",
+    "git diff --check",
+    "hash verification"
+  ],
+  "prior_artifact_modified": false,
+  "solver_backend_initialized": false,
+  "sat_execution": false,
+  "ga_execution": false,
+  "ilp_execution": false,
+  "benchmark_execution": false,
+  "canonical_phase3e_directory": "results/runs/phase3e_threshold_sat_performance_20261031_02"
+}

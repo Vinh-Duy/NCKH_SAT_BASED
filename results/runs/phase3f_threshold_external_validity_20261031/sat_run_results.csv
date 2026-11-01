@@ -1,0 +1,427 @@
+status,variables,clauses,literals,fingerprint,construction_seconds,initialization_seconds,loading_seconds,solve_seconds,pipeline_seconds,end_to_end_seconds,peak_rss_mib,conflicts,decisions,propagations,restarts,witness_valid,decoded_labels,monotonic_valid,selector_valid,domain_valid,graph_constraints_valid,run_id,block,graph_id,family,encoding,U,parent_seconds,worker_reaped,pid,error,traceback
+SAT,200,1793,6408,9911f2775e8bf9899d91545218d703548d7e3a2021b44a1b05b6b5ea9b2e308b,0.003037618000234943,0.0022018789968569763,0.003814479998254683,7.902200013631955e-05,0.006095380995247979,0.009132998995482922,34396.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 3, ""4"": 3, ""5"": 0, ""6"": 3, ""7"": 0, ""8"": 5, ""9"": 7, ""10"": 6, ""11"": 2, ""12"": 5, ""13"": 7, ""14"": 10, ""15"": 3, ""16"": 10, ""17"": 6, ""18"": 0, ""19"": 3}",True,True,True,True,phase3f-001,1,tree_20_seed100,Tree,reference,10,0.39839172500069253,True,42880,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-002,1,tree_20_seed100,Tree,candidate,10,0.3508510230021784,True,42881,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-003,2,tree_20_seed100,Tree,candidate,10,0.3635655969992513,True,42882,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,200,1793,6408,9911f2775e8bf9899d91545218d703548d7e3a2021b44a1b05b6b5ea9b2e308b,0.005579097000008915,0.0001851109991548583,0.0014003739997860976,9.022500307764858e-05,0.0016757100020186044,0.007254807002027519,34316.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 3, ""4"": 3, ""5"": 0, ""6"": 3, ""7"": 0, ""8"": 5, ""9"": 7, ""10"": 6, ""11"": 2, ""12"": 5, ""13"": 7, ""14"": 10, ""15"": 3, ""16"": 10, ""17"": 6, ""18"": 0, ""19"": 3}",True,True,True,True,phase3f-004,2,tree_20_seed100,Tree,reference,10,0.35058271199523006,True,42883,,
+SAT,200,1793,6408,9911f2775e8bf9899d91545218d703548d7e3a2021b44a1b05b6b5ea9b2e308b,0.002813540995703079,0.00012138699821662158,0.0036136540002189577,0.00011372100561857224,0.0038487620040541515,0.00666230299975723,34380.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 3, ""4"": 3, ""5"": 0, ""6"": 3, ""7"": 0, ""8"": 5, ""9"": 7, ""10"": 6, ""11"": 2, ""12"": 5, ""13"": 7, ""14"": 10, ""15"": 3, ""16"": 10, ""17"": 6, ""18"": 0, ""19"": 3}",True,True,True,True,phase3f-005,3,tree_20_seed100,Tree,reference,10,0.36296232199674705,True,42884,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-006,3,tree_20_seed100,Tree,candidate,10,0.3659042969957227,True,42885,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,600,6114,22404,e905c948b37f6cbb47d48c0f4e700cbbceec79a7d792963f48d535f5b6ccae75,0.012367815004836302,0.00011189199722139165,0.004833876999327913,0.0001687559997662902,0.005114524996315595,0.017482340001151897,35992.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 4, ""6"": 2, ""7"": 4, ""8"": 0, ""9"": 3, ""10"": 0, ""11"": 7, ""12"": 6, ""13"": 3, ""14"": 0, ""15"": 0, ""16"": 5, ""17"": 2, ""18"": 0, ""19"": 6, ""20"": 0, ""21"": 3, ""22"": 9, ""23"": 12, ""24"": 6, ""25"": 8, ""26"": 15, ""27"": 9, ""28"": 0, ""29"": 7, ""30"": 11, ""31"": 0, ""32"": 8, ""33"": 6, ""34"": 10, ""35"": 10, ""36"": 8, ""37"": 12, ""38"": 5, ""39"": 11}",True,True,True,True,phase3f-007,1,tree_40_seed100,Tree,reference,15,0.3561589989985805,True,42886,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-008,1,tree_40_seed100,Tree,candidate,15,0.35505796899815323,True,42887,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-009,2,tree_40_seed100,Tree,candidate,15,0.3614490710024256,True,42888,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,600,6114,22404,e905c948b37f6cbb47d48c0f4e700cbbceec79a7d792963f48d535f5b6ccae75,0.01144570199539885,0.00020272399706300348,0.005160335000255145,0.00018111400277120993,0.0055441730000893585,0.016989874995488208,35828.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 4, ""6"": 2, ""7"": 4, ""8"": 0, ""9"": 3, ""10"": 0, ""11"": 7, ""12"": 6, ""13"": 3, ""14"": 0, ""15"": 0, ""16"": 5, ""17"": 2, ""18"": 0, ""19"": 6, ""20"": 0, ""21"": 3, ""22"": 9, ""23"": 12, ""24"": 6, ""25"": 8, ""26"": 15, ""27"": 9, ""28"": 0, ""29"": 7, ""30"": 11, ""31"": 0, ""32"": 8, ""33"": 6, ""34"": 10, ""35"": 10, ""36"": 8, ""37"": 12, ""38"": 5, ""39"": 11}",True,True,True,True,phase3f-010,2,tree_40_seed100,Tree,reference,15,0.3572256529951119,True,42889,,
+SAT,600,6114,22404,e905c948b37f6cbb47d48c0f4e700cbbceec79a7d792963f48d535f5b6ccae75,0.013201959001889918,0.00010222000128123909,0.006751836001058109,0.00016935700114117935,0.0070234130034805275,0.020225372005370446,35848.0,0,0,0,0,True,"{""0"": 0, ""1"": 0, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 4, ""6"": 2, ""7"": 4, ""8"": 0, ""9"": 3, ""10"": 0, ""11"": 7, ""12"": 6, ""13"": 3, ""14"": 0, ""15"": 0, ""16"": 5, ""17"": 2, ""18"": 0, ""19"": 6, ""20"": 0, ""21"": 3, ""22"": 9, ""23"": 12, ""24"": 6, ""25"": 8, ""26"": 15, ""27"": 9, ""28"": 0, ""29"": 7, ""30"": 11, ""31"": 0, ""32"": 8, ""33"": 6, ""34"": 10, ""35"": 10, ""36"": 8, ""37"": 12, ""38"": 5, ""39"": 11}",True,True,True,True,phase3f-011,3,tree_40_seed100,Tree,reference,15,0.36046919499494834,True,42890,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-012,3,tree_40_seed100,Tree,candidate,15,0.35186580599838635,True,42891,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,560,13959,53532,ad4a3e1f2de9428ae7eaf39a611c3e357d74769164936eff4d59a69192251c1e,0.029191451998485718,0.00010580300295259804,0.011983835000137333,0.0003644779935711995,0.01245411599666113,0.04164556799514685,38248.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22}",True,True,True,True,phase3f-013,1,BA_20_m2_seed100,BA,reference,28,0.3791176730010193,True,42892,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-014,1,BA_20_m2_seed100,BA,candidate,28,0.3639391569959116,True,42893,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-015,2,BA_20_m2_seed100,BA,candidate,28,0.3677667570009362,True,42894,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,560,13959,53532,ad4a3e1f2de9428ae7eaf39a611c3e357d74769164936eff4d59a69192251c1e,0.027250801998889074,0.00010458600445417687,0.012802642995666247,0.0002489079997758381,0.013156136999896262,0.040406938998785336,38264.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22}",True,True,True,True,phase3f-016,2,BA_20_m2_seed100,BA,reference,28,0.3878851810004562,True,42895,,
+SAT,560,13959,53532,ad4a3e1f2de9428ae7eaf39a611c3e357d74769164936eff4d59a69192251c1e,0.02972504200442927,0.00015472199447685853,0.01103042799513787,0.0002245030045742169,0.011409652994188946,0.041134694998618215,38352.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22}",True,True,True,True,phase3f-017,3,BA_20_m2_seed100,BA,reference,28,0.385378988001321,True,42896,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-018,3,BA_20_m2_seed100,BA,candidate,28,0.3664066190031008,True,42897,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,1200,36781,141756,df0ca239d3aea6f6990d13e7922254ce00d180561611a24c12c9367395d2e578,0.07109606800077017,0.00010472400026628748,0.030947693005145993,0.0006031309967511334,0.031655548002163414,0.10275161600293359,44688.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22, ""20"": 21, ""21"": 10, ""22"": 2, ""23"": 13, ""24"": 30, ""25"": 10, ""26"": 9, ""27"": 24, ""28"": 13, ""29"": 19, ""30"": 5, ""31"": 7, ""32"": 0, ""33"": 9, ""34"": 0, ""35"": 7, ""36"": 3, ""37"": 30, ""38"": 12, ""39"": 13}",True,True,True,True,phase3f-019,1,BA_40_m2_seed100,BA,reference,30,0.44833718099835096,True,42898,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-020,1,BA_40_m2_seed100,BA,candidate,30,0.40881773400178645,True,42899,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-021,2,BA_40_m2_seed100,BA,candidate,30,0.4107977139938157,True,42900,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,1200,36781,141756,df0ca239d3aea6f6990d13e7922254ce00d180561611a24c12c9367395d2e578,0.07373984399600886,0.00011209199874429032,0.02990845600288594,0.0008421179954893887,0.03086266599711962,0.10460250999312848,44536.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22, ""20"": 21, ""21"": 10, ""22"": 2, ""23"": 13, ""24"": 30, ""25"": 10, ""26"": 9, ""27"": 24, ""28"": 13, ""29"": 19, ""30"": 5, ""31"": 7, ""32"": 0, ""33"": 9, ""34"": 0, ""35"": 7, ""36"": 3, ""37"": 30, ""38"": 12, ""39"": 13}",True,True,True,True,phase3f-022,2,BA_40_m2_seed100,BA,reference,30,0.4671857170033036,True,42901,,
+SAT,1200,36781,141756,df0ca239d3aea6f6990d13e7922254ce00d180561611a24c12c9367395d2e578,0.07412450700212503,0.0001231400019605644,0.02794192199507961,0.0006059430015739053,0.02867100499861408,0.10279551200073911,44560.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 5, ""3"": 8, ""4"": 11, ""5"": 14, ""6"": 16, ""7"": 18, ""8"": 7, ""9"": 17, ""10"": 20, ""11"": 0, ""12"": 22, ""13"": 24, ""14"": 2, ""15"": 26, ""16"": 0, ""17"": 28, ""18"": 3, ""19"": 22, ""20"": 21, ""21"": 10, ""22"": 2, ""23"": 13, ""24"": 30, ""25"": 10, ""26"": 9, ""27"": 24, ""28"": 13, ""29"": 19, ""30"": 5, ""31"": 7, ""32"": 0, ""33"": 9, ""34"": 0, ""35"": 7, ""36"": 3, ""37"": 30, ""38"": 12, ""39"": 13}",True,True,True,True,phase3f-023,3,BA_40_m2_seed100,BA,reference,30,0.4584001570037799,True,42902,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-024,3,BA_40_m2_seed100,BA,candidate,30,0.41134514499572106,True,42903,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,360,5341,19984,42a8c83e578c1afab0a54b345c70ecc5b16c8d94831c51064fdca28ed2ffe690,0.011733886000001803,0.00010742300219135359,0.0039022619966999628,9.633599984226748e-05,0.004106020998733584,0.015839906998735387,35560.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 0, ""6"": 5, ""7"": 3, ""8"": 5, ""9"": 8, ""10"": 0, ""11"": 10, ""12"": 13, ""13"": 11, ""14"": 6, ""15"": 0, ""16"": 15, ""17"": 4, ""18"": 18, ""19"": 13}",True,True,True,True,phase3f-025,1,ER_20_p0.15_seed100,ER p=0.15,reference,18,0.36343196999951033,True,42904,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-026,1,ER_20_p0.15_seed100,ER p=0.15,candidate,18,0.3531634040045901,True,42905,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-027,2,ER_20_p0.15_seed100,ER p=0.15,candidate,18,0.35688834699976724,True,42906,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,360,5341,19984,42a8c83e578c1afab0a54b345c70ecc5b16c8d94831c51064fdca28ed2ffe690,0.011294125994027127,0.00010969200229737908,0.0043919300005654804,0.00016441500338260084,0.00466603700624546,0.015960163000272587,35444.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 0, ""6"": 5, ""7"": 3, ""8"": 5, ""9"": 8, ""10"": 0, ""11"": 10, ""12"": 13, ""13"": 11, ""14"": 6, ""15"": 0, ""16"": 15, ""17"": 4, ""18"": 18, ""19"": 13}",True,True,True,True,phase3f-028,2,ER_20_p0.15_seed100,ER p=0.15,reference,18,0.37480926900025224,True,42907,,
+SAT,360,5341,19984,42a8c83e578c1afab0a54b345c70ecc5b16c8d94831c51064fdca28ed2ffe690,0.011802784996689297,0.00013833300181431696,0.004248466000717599,0.00010548600403126329,0.004492285006563179,0.016295070003252476,35472.0,0,0,0,0,True,"{""0"": 0, ""1"": 3, ""2"": 0, ""3"": 0, ""4"": 2, ""5"": 0, ""6"": 5, ""7"": 3, ""8"": 5, ""9"": 8, ""10"": 0, ""11"": 10, ""12"": 13, ""13"": 11, ""14"": 6, ""15"": 0, ""16"": 15, ""17"": 4, ""18"": 18, ""19"": 13}",True,True,True,True,phase3f-029,3,ER_20_p0.15_seed100,ER p=0.15,reference,18,0.36350035699433647,True,42908,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-030,3,ER_20_p0.15_seed100,ER p=0.15,candidate,18,0.35075145999871893,True,42909,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,1520,66036,256824,e85ee341538737fccd1907a42d71a8768803fa9cd12c9f2231dd79c0d689fc27,0.12890695300302468,0.00010247700265608728,0.053543852001894265,0.012999288002902176,0.06664561700745253,0.1955525700104772,55152.0,61,1420,5866,4,True,"{""0"": 19, ""1"": 8, ""2"": 21, ""3"": 6, ""4"": 24, ""5"": 36, ""6"": 31, ""7"": 23, ""8"": 15, ""9"": 33, ""10"": 9, ""11"": 28, ""12"": 6, ""13"": 10, ""14"": 13, ""15"": 0, ""16"": 4, ""17"": 26, ""18"": 27, ""19"": 38, ""20"": 38, ""21"": 20, ""22"": 19, ""23"": 17, ""24"": 13, ""25"": 17, ""26"": 15, ""27"": 13, ""28"": 11, ""29"": 4, ""30"": 11, ""31"": 0, ""32"": 9, ""33"": 7, ""34"": 2, ""35"": 0, ""36"": 0, ""37"": 5, ""38"": 2, ""39"": 0}",True,True,True,True,phase3f-031,1,ER_40_p0.15_seed100,ER p=0.15,reference,38,0.5547934630012605,True,42910,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-032,1,ER_40_p0.15_seed100,ER p=0.15,candidate,38,0.46531997899728594,True,42911,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-033,2,ER_40_p0.15_seed100,ER p=0.15,candidate,38,0.4667568169970764,True,42912,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,1520,66036,256824,e85ee341538737fccd1907a42d71a8768803fa9cd12c9f2231dd79c0d689fc27,0.1317872459985665,0.00010850899707293138,0.05300450900540454,0.013677843002369627,0.0667908610048471,0.1985781070034136,56600.0,61,1420,5866,4,True,"{""0"": 19, ""1"": 8, ""2"": 21, ""3"": 6, ""4"": 24, ""5"": 36, ""6"": 31, ""7"": 23, ""8"": 15, ""9"": 33, ""10"": 9, ""11"": 28, ""12"": 6, ""13"": 10, ""14"": 13, ""15"": 0, ""16"": 4, ""17"": 26, ""18"": 27, ""19"": 38, ""20"": 38, ""21"": 20, ""22"": 19, ""23"": 17, ""24"": 13, ""25"": 17, ""26"": 15, ""27"": 13, ""28"": 11, ""29"": 4, ""30"": 11, ""31"": 0, ""32"": 9, ""33"": 7, ""34"": 2, ""35"": 0, ""36"": 0, ""37"": 5, ""38"": 2, ""39"": 0}",True,True,True,True,phase3f-034,2,ER_40_p0.15_seed100,ER p=0.15,reference,38,0.5526666169971577,True,42913,,
+SAT,1520,66036,256824,e85ee341538737fccd1907a42d71a8768803fa9cd12c9f2231dd79c0d689fc27,0.13310658800037345,0.00010583300172584131,0.05282144300144864,0.011231836004299112,0.0641591120074736,0.19726570000784704,56812.0,61,1420,5866,4,True,"{""0"": 19, ""1"": 8, ""2"": 21, ""3"": 6, ""4"": 24, ""5"": 36, ""6"": 31, ""7"": 23, ""8"": 15, ""9"": 33, ""10"": 9, ""11"": 28, ""12"": 6, ""13"": 10, ""14"": 13, ""15"": 0, ""16"": 4, ""17"": 26, ""18"": 27, ""19"": 38, ""20"": 38, ""21"": 20, ""22"": 19, ""23"": 17, ""24"": 13, ""25"": 17, ""26"": 15, ""27"": 13, ""28"": 11, ""29"": 4, ""30"": 11, ""31"": 0, ""32"": 9, ""33"": 7, ""34"": 2, ""35"": 0, ""36"": 0, ""37"": 5, ""38"": 2, ""39"": 0}",True,True,True,True,phase3f-035,3,ER_40_p0.15_seed100,ER p=0.15,reference,38,0.5486563100057538,True,42914,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-036,3,ER_40_p0.15_seed100,ER p=0.15,candidate,38,0.4584012739942409,True,42915,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,560,18454,71116,e8879a999eebba7746bd9931689c8881d5192a1c3f83f7ceb55d780f331c3eb7,0.03704848399502225,0.00010808099614223465,0.01884793399949558,2.0621375199989416,2.0810935349945794,2.1181420189896016,63712.0,59778,101258,3333531,1925,True,"{""0"": 26, ""1"": 16, ""2"": 6, ""3"": 20, ""4"": 2, ""5"": 24, ""6"": 0, ""7"": 24, ""8"": 26, ""9"": 8, ""10"": 12, ""11"": 18, ""12"": 22, ""13"": 4, ""14"": 28, ""15"": 14, ""16"": 20, ""17"": 0, ""18"": 10, ""19"": 6}",True,True,True,True,phase3f-037,1,ER_20_p0.30_seed100,ER p=0.30,reference,28,2.462599938000494,True,42916,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-038,1,ER_20_p0.30_seed100,ER p=0.30,candidate,28,2.1016835659975186,True,42921,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-039,2,ER_20_p0.30_seed100,ER p=0.30,candidate,28,2.1985322749969782,True,42922,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+SAT,560,18454,71116,e8879a999eebba7746bd9931689c8881d5192a1c3f83f7ceb55d780f331c3eb7,0.0367048039988731,0.0001063009985955432,0.01628092899773037,1.9638838559985743,1.9802710859949002,2.0169758899937733,64060.0,59778,101258,3333531,1925,True,"{""0"": 26, ""1"": 16, ""2"": 6, ""3"": 20, ""4"": 2, ""5"": 24, ""6"": 0, ""7"": 24, ""8"": 26, ""9"": 8, ""10"": 12, ""11"": 18, ""12"": 22, ""13"": 4, ""14"": 28, ""15"": 14, ""16"": 20, ""17"": 0, ""18"": 10, ""19"": 6}",True,True,True,True,phase3f-040,2,ER_20_p0.30_seed100,ER p=0.30,reference,28,2.3608109900014824,True,42927,,
+SAT,560,18454,71116,e8879a999eebba7746bd9931689c8881d5192a1c3f83f7ceb55d780f331c3eb7,0.0372188770052162,0.00010963800013996661,0.016686711998772807,2.0526282400023774,2.06942459000129,2.1066434670065064,63016.0,59778,101258,3333531,1925,True,"{""0"": 26, ""1"": 16, ""2"": 6, ""3"": 20, ""4"": 2, ""5"": 24, ""6"": 0, ""7"": 24, ""8"": 26, ""9"": 8, ""10"": 12, ""11"": 18, ""12"": 22, ""13"": 4, ""14"": 28, ""15"": 14, ""16"": 20, ""17"": 0, ""18"": 10, ""19"": 6}",True,True,True,True,phase3f-041,3,ER_20_p0.30_seed100,ER p=0.30,reference,28,2.517521811001643,True,42938,,
+ERROR,,,,,,,,,,,,,,,,,,,,,,phase3f-042,3,ER_20_p0.30_seed100,ER p=0.30,candidate,28,2.236232006995124,True,42943,KeyError: 0,"Traceback (most recent call last):
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 223, in worker
+    result.update(validate_witness(
+                  ~~~~~~~~~~~~~~~~^
+        encoding, model, maps, graph, solver.get_model()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ))
+    ^
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 166, in validate_witness
+    monotonic = all(
+        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+        for values in maps[""thresholds""].values()
+        for t in range(len(values) - 1)
+    )
+  File ""/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py"", line 167, in <genexpr>
+    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)
+                                                               ~~~~~~^^^
+KeyError: 0
+"
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-043,1,ER_40_p0.30_seed100,ER p=0.30,reference,60,60.027952274998825,True,42944,worker exceeded 60.0s,
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-044,1,ER_40_p0.30_seed100,ER p=0.30,candidate,60,60.02028957299626,True,42984,worker exceeded 60.0s,
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-045,2,ER_40_p0.30_seed100,ER p=0.30,candidate,60,60.02036438500363,True,43009,worker exceeded 60.0s,
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-046,2,ER_40_p0.30_seed100,ER p=0.30,reference,60,60.024554166004236,True,43036,worker exceeded 60.0s,
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-047,3,ER_40_p0.30_seed100,ER p=0.30,reference,60,60.023571210003865,True,43061,worker exceeded 60.0s,
+PARENT_TIMEOUT,,,,,,,,,,,,,,,,,,,,,,phase3f-048,3,ER_40_p0.30_seed100,ER p=0.30,candidate,60,60.04453774799913,True,43129,worker exceeded 60.0s,

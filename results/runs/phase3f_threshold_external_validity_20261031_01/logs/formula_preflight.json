@@ -1,0 +1,11 @@
+{
+  "stage": "formula preflight",
+  "graph_count": 8,
+  "encoding_count": 2,
+  "formula_rows": 16,
+  "repeated_builds": true,
+  "repeat_fingerprints_match": true,
+  "semantic_scope": "same graph edges and distance-two pairs; h=3, k=2; fixed U per graph",
+  "ipasir_up_used": false,
+  "status": "passed"
+}

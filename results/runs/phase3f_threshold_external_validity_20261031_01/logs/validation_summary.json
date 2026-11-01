@@ -1,0 +1,15 @@
+{
+  "stage": "post-solver validation",
+  "scheduled_runs": 48,
+  "sat_runs": 42,
+  "sat_witnesses_valid": 42,
+  "unsat_runs": 0,
+  "parent_timeouts": 6,
+  "errors": 0,
+  "timeout_graph": "ER_40_p0.30_seed100",
+  "timeout_encodings": [
+    "reference",
+    "candidate"
+  ],
+  "status": "passed_with_recorded_timeouts"
+}

@@ -1,0 +1,26 @@
+{
+  "stage": "pre-solver cohort selection",
+  "source": "results/analysis/certificate_validation/v1_20261017",
+  "selected_graphs": [
+    "tree_20_seed100",
+    "tree_40_seed100",
+    "BA_20_m2_seed100",
+    "BA_40_m2_seed100",
+    "ER_20_p0.15_seed100",
+    "ER_40_p0.15_seed100",
+    "ER_20_p0.30_seed100",
+    "ER_40_p0.30_seed100"
+  ],
+  "families": {
+    "Tree": 2,
+    "BA": 2,
+    "ER p=0.15": 2,
+    "ER p=0.30": 2
+  },
+  "parameters": {
+    "h": 3,
+    "k": 2,
+    "symmetry_status": "none in isolated Phase 3D builders"
+  },
+  "witness_validation": "passed before solver execution"
+}

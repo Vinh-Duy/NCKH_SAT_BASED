@@ -1,0 +1,285 @@
+{
+  "cohort_size": 8,
+  "concurrent_workers": false,
+  "ga_executed": false,
+  "graph_fingerprints": {
+    "BA_20_m2_seed100": "9eb033c7816fba59e0f3d26168f32c3556eb29ceb51f217c9c762ba8304bb47c",
+    "BA_40_m2_seed100": "facc2b7b3c14483fb0199b1874cf7cfd2d48ceed26794464783a96c99c2691ec",
+    "ER_20_p0.15_seed100": "f75f13a2240613c5446572349c3771d5f71ed817a9156fd41cddc240c54d20db",
+    "ER_20_p0.30_seed100": "67ed12f494027a29c5ad6d98debbdb282a5c73a4ea2aed2f2b95d930f9996210",
+    "ER_40_p0.15_seed100": "d19ae778a1f880dc6c0b33f28d3fe2c467d92d3c2d230bb347b9ebfbe081670b",
+    "ER_40_p0.30_seed100": "28af1163090cc0054756a5235bafe097d876117bacc5e9e5fbfd4a9880d8ebbb",
+    "tree_20_seed100": "8dfb6b4258417beddaef90c06c7137bfb1f9560b0726c0c12a06f620d12b955d",
+    "tree_40_seed100": "30f5314a4274628ff30808a004ff7b52b172d5b5f4acaacc06f745f98511d8ab"
+  },
+  "graph_ids": [
+    "tree_20_seed100",
+    "tree_40_seed100",
+    "BA_20_m2_seed100",
+    "BA_40_m2_seed100",
+    "ER_20_p0.15_seed100",
+    "ER_40_p0.15_seed100",
+    "ER_20_p0.30_seed100",
+    "ER_40_p0.30_seed100"
+  ],
+  "h": 3,
+  "historical_artifacts_modified": false,
+  "ilp_executed": false,
+  "k": 2,
+  "ordering": [
+    [
+      1,
+      "tree_20_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "tree_20_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "tree_20_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "tree_20_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "tree_20_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "tree_20_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "tree_40_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "tree_40_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "tree_40_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "tree_40_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "tree_40_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "tree_40_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "BA_20_m2_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "BA_20_m2_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "BA_20_m2_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "BA_20_m2_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "BA_20_m2_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "BA_20_m2_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "BA_40_m2_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "BA_40_m2_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "BA_40_m2_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "BA_40_m2_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "BA_40_m2_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "BA_40_m2_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "ER_20_p0.15_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "ER_20_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_20_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_20_p0.15_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_20_p0.15_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_20_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "ER_40_p0.15_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "ER_40_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_40_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_40_p0.15_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_40_p0.15_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_40_p0.15_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "ER_20_p0.30_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "ER_20_p0.30_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_20_p0.30_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_20_p0.30_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_20_p0.30_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_20_p0.30_seed100",
+      "candidate"
+    ],
+    [
+      1,
+      "ER_40_p0.30_seed100",
+      "reference"
+    ],
+    [
+      1,
+      "ER_40_p0.30_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_40_p0.30_seed100",
+      "candidate"
+    ],
+    [
+      2,
+      "ER_40_p0.30_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_40_p0.30_seed100",
+      "reference"
+    ],
+    [
+      3,
+      "ER_40_p0.30_seed100",
+      "candidate"
+    ]
+  ],
+  "packages_installed": false,
+  "phase": "3F cross-graph external validity",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "primary_runs": 48,
+  "production_code_modified": false,
+  "pysat_version": "1.9.dev15",
+  "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "repetitions": 3,
+  "sat_executed": true,
+  "solver": "cadical195",
+  "solver_options": "PySAT Cadical195 defaults; no conflict budget; no IPASIR-UP",
+  "source_graph_artifact": "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+  "source_witness_artifact": "/Users/vinhduy/Desktop/NCKH_SAT_BASED/results/analysis/certificate_validation/v1_20261017/witnesses.jsonl",
+  "timeout_seconds": 60.0
+}

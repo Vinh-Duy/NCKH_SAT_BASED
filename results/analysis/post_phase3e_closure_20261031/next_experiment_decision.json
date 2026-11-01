@@ -1,0 +1,38 @@
+{
+  "decision": "B",
+  "justification": "The threshold encoding has a consistent formula-size and recorded-memory advantage, but no consistent solve-time advantage. U=112 matched blocks are mixed and U=127 separates faster pipeline from slower solve.",
+  "phase3f_recommended": true,
+  "primary_recommendation": "Investigate propagation and solver behavior on the existing ER-60 instance before expanding.",
+  "proposed_scope": {
+    "graph": "ER_60_p0.30_seed100",
+    "h": 3,
+    "k": 2,
+    "spans": [
+      112,
+      127
+    ],
+    "encodings": [
+      "reference",
+      "threshold"
+    ],
+    "measurements": [
+      "CNF construction",
+      "loading",
+      "solve",
+      "pipeline",
+      "end-to-end",
+      "RSS",
+      "conflicts",
+      "decisions",
+      "propagations",
+      "restarts"
+    ],
+    "repetitions": "more controlled repetitions, pre-registered",
+    "no_optimality_extension": true
+  },
+  "alternatives": {
+    "A": "defer until existing-instance behavior is understood",
+    "C": "not selected because memory/formula evidence warrants targeted investigation",
+    "D": "not primary; three repetitions are limited but the immediate issue is metric separation and propagation behavior"
+  }
+}

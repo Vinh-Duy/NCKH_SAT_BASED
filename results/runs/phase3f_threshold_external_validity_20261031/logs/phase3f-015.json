@@ -1,0 +1,14 @@
+{
+  "U": 28,
+  "block": 2,
+  "encoding": "candidate",
+  "error": "KeyError: 0",
+  "family": "BA",
+  "graph_id": "BA_20_m2_seed100",
+  "parent_seconds": 0.3677667570009362,
+  "pid": 42894,
+  "run_id": "phase3f-015",
+  "status": "ERROR",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py\", line 223, in worker\n    result.update(validate_witness(\n                  ~~~~~~~~~~~~~~~~^\n        encoding, model, maps, graph, solver.get_model()\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ))\n    ^\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py\", line 166, in validate_witness\n    monotonic = all(\n        not assignment.get(values[t + 1], False) or assignment.get(values[t], False)\n        for values in maps[\"thresholds\"].values()\n        for t in range(len(values) - 1)\n    )\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3f_threshold_external_validity/runner.py\", line 167, in <genexpr>\n    not assignment.get(values[t + 1], False) or assignment.get(values[t], False)\n                                                               ~~~~~~^^^\nKeyError: 0\n",
+  "worker_reaped": true
+}

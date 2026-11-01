@@ -1,0 +1,9 @@
+family,encoding,graphs,runs,sat,timeouts,errors,clauses_median_across_graphs,solve_seconds_median_across_graphs,end_to_end_seconds_median_across_graphs
+BA,reference,2,6,6,0,0,36781,0.0006059430015739053,0.10279551200073911
+BA,candidate,2,6,0,0,6,22426,,
+ER p=0.15,reference,2,6,6,0,0,66036,0.012999288002902176,0.19726570000784704
+ER p=0.15,candidate,2,6,0,0,6,39544,,
+ER p=0.30,reference,2,6,3,3,0,167013,2.0526282400023774,2.1066434670065064
+ER p=0.30,candidate,2,6,0,3,3,95446,,
+Tree,reference,2,6,6,0,0,6114,0.00016935700114117935,0.017482340001151897
+Tree,candidate,2,6,0,0,6,3664,,

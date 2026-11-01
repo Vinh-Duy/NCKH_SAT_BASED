@@ -1,0 +1,13 @@
+{
+  "U": 60,
+  "block": 1,
+  "encoding": "reference",
+  "error": "worker exceeded 60.0s",
+  "family": "ER p=0.30",
+  "graph_id": "ER_40_p0.30_seed100",
+  "parent_seconds": 60.03342610000254,
+  "pid": 43355,
+  "run_id": "phase3f-043",
+  "status": "PARENT_TIMEOUT",
+  "worker_reaped": true
+}

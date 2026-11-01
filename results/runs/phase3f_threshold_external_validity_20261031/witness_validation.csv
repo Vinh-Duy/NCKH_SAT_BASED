@@ -1,0 +1,49 @@
+run_id,graph_id,family,encoding,U,status,witness_valid,monotonic_valid,selector_valid,domain_valid,graph_constraints_valid,error
+phase3f-001,tree_20_seed100,Tree,reference,10,SAT,True,True,True,True,True,
+phase3f-002,tree_20_seed100,Tree,candidate,10,ERROR,,,,,,KeyError: 0
+phase3f-003,tree_20_seed100,Tree,candidate,10,ERROR,,,,,,KeyError: 0
+phase3f-004,tree_20_seed100,Tree,reference,10,SAT,True,True,True,True,True,
+phase3f-005,tree_20_seed100,Tree,reference,10,SAT,True,True,True,True,True,
+phase3f-006,tree_20_seed100,Tree,candidate,10,ERROR,,,,,,KeyError: 0
+phase3f-007,tree_40_seed100,Tree,reference,15,SAT,True,True,True,True,True,
+phase3f-008,tree_40_seed100,Tree,candidate,15,ERROR,,,,,,KeyError: 0
+phase3f-009,tree_40_seed100,Tree,candidate,15,ERROR,,,,,,KeyError: 0
+phase3f-010,tree_40_seed100,Tree,reference,15,SAT,True,True,True,True,True,
+phase3f-011,tree_40_seed100,Tree,reference,15,SAT,True,True,True,True,True,
+phase3f-012,tree_40_seed100,Tree,candidate,15,ERROR,,,,,,KeyError: 0
+phase3f-013,BA_20_m2_seed100,BA,reference,28,SAT,True,True,True,True,True,
+phase3f-014,BA_20_m2_seed100,BA,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-015,BA_20_m2_seed100,BA,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-016,BA_20_m2_seed100,BA,reference,28,SAT,True,True,True,True,True,
+phase3f-017,BA_20_m2_seed100,BA,reference,28,SAT,True,True,True,True,True,
+phase3f-018,BA_20_m2_seed100,BA,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-019,BA_40_m2_seed100,BA,reference,30,SAT,True,True,True,True,True,
+phase3f-020,BA_40_m2_seed100,BA,candidate,30,ERROR,,,,,,KeyError: 0
+phase3f-021,BA_40_m2_seed100,BA,candidate,30,ERROR,,,,,,KeyError: 0
+phase3f-022,BA_40_m2_seed100,BA,reference,30,SAT,True,True,True,True,True,
+phase3f-023,BA_40_m2_seed100,BA,reference,30,SAT,True,True,True,True,True,
+phase3f-024,BA_40_m2_seed100,BA,candidate,30,ERROR,,,,,,KeyError: 0
+phase3f-025,ER_20_p0.15_seed100,ER p=0.15,reference,18,SAT,True,True,True,True,True,
+phase3f-026,ER_20_p0.15_seed100,ER p=0.15,candidate,18,ERROR,,,,,,KeyError: 0
+phase3f-027,ER_20_p0.15_seed100,ER p=0.15,candidate,18,ERROR,,,,,,KeyError: 0
+phase3f-028,ER_20_p0.15_seed100,ER p=0.15,reference,18,SAT,True,True,True,True,True,
+phase3f-029,ER_20_p0.15_seed100,ER p=0.15,reference,18,SAT,True,True,True,True,True,
+phase3f-030,ER_20_p0.15_seed100,ER p=0.15,candidate,18,ERROR,,,,,,KeyError: 0
+phase3f-031,ER_40_p0.15_seed100,ER p=0.15,reference,38,SAT,True,True,True,True,True,
+phase3f-032,ER_40_p0.15_seed100,ER p=0.15,candidate,38,ERROR,,,,,,KeyError: 0
+phase3f-033,ER_40_p0.15_seed100,ER p=0.15,candidate,38,ERROR,,,,,,KeyError: 0
+phase3f-034,ER_40_p0.15_seed100,ER p=0.15,reference,38,SAT,True,True,True,True,True,
+phase3f-035,ER_40_p0.15_seed100,ER p=0.15,reference,38,SAT,True,True,True,True,True,
+phase3f-036,ER_40_p0.15_seed100,ER p=0.15,candidate,38,ERROR,,,,,,KeyError: 0
+phase3f-037,ER_20_p0.30_seed100,ER p=0.30,reference,28,SAT,True,True,True,True,True,
+phase3f-038,ER_20_p0.30_seed100,ER p=0.30,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-039,ER_20_p0.30_seed100,ER p=0.30,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-040,ER_20_p0.30_seed100,ER p=0.30,reference,28,SAT,True,True,True,True,True,
+phase3f-041,ER_20_p0.30_seed100,ER p=0.30,reference,28,SAT,True,True,True,True,True,
+phase3f-042,ER_20_p0.30_seed100,ER p=0.30,candidate,28,ERROR,,,,,,KeyError: 0
+phase3f-043,ER_40_p0.30_seed100,ER p=0.30,reference,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
+phase3f-044,ER_40_p0.30_seed100,ER p=0.30,candidate,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
+phase3f-045,ER_40_p0.30_seed100,ER p=0.30,candidate,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
+phase3f-046,ER_40_p0.30_seed100,ER p=0.30,reference,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
+phase3f-047,ER_40_p0.30_seed100,ER p=0.30,reference,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
+phase3f-048,ER_40_p0.30_seed100,ER p=0.30,candidate,60,PARENT_TIMEOUT,,,,,,worker exceeded 60.0s
