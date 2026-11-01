@@ -1,0 +1,12 @@
+mechanism,source_location,activation_condition,affected_instances_or_families,variables_or_labels,reference_clauses,active_in_controlled_cohort,threshold_translation,status
+symmetry_gate,src/solvers/sat_solver.py:_symmetry_plan,enable_symmetry_breaking and min(h,k)>0,all callers,none,none,no,none,exact gate behavior traced
+canonical_family_plan,src/solvers/sat_solver.py:_symmetry_plan,explicit kind in C/K/Q/P and exact canonical edge set,Cycle complete hypercube path,none,none,no,validate same canonical graph then use family builder,exact
+cycle_root_fix,src/solvers/sat_solver.py:_symmetry_plan; src/models/sat_encoding.py:build_cnf,kind C and n>=3,canonical cycles, f(0)=0,unit/root omission,no,not T[0,1] and omit fixed-root variables,exact
+strict_less,src/models/sat_encoding.py:strict_less_clauses,cycle/complete/hypercube/structural neighbor order,canonical C/K/Q and constructor-marked structural graphs,f(u)<f(v),U+1 clauses for two free vertices,no,not T[u,U]; T[v,1]; and (not T[u,t] or T[v,t+1]) for t=1..U-1,exact
+complete_family_chain,src/models/sat_encoding.py:_complete_symmetry,n>=2 and kind K,complete graphs, f(0)<f(1)<...<f(n-1),sum strict_less clauses,no,apply exact strict_less translation per adjacent pair,exact
+cycle_family_order,src/models/sat_encoding.py:_cycle_symmetry,n>=3 and kind C,cycles,f(1)<f(n-1),strict_less clauses,no,apply exact strict_less translation,exact
+hypercube_family_orders,src/models/sat_encoding.py:_hypercube_symmetry,power-of-two n and dimension>=1,hypercubes,f(2^(b-1))<f(2^b),strict_less clauses per bit,no,apply exact strict_less translation,exact
+structural_neighbor_order,src/solvers/sat_solver.py:_symmetry_plan; src/core/graph_utils.py:_mark_symmetry,unchanged constructor metadata and matching signature,marked corona/cartesian/Petersen-style constructors,neighbor pair strict order,one strict_less relation,no,apply exact strict_less translation; preserve metadata gate,exact
+path_family,src/models/sat_encoding.py:_path_symmetry,kind P,paths,none,zero,no,no clauses,not applicable
+graph_automorphism_engine,source audit,no implementation found in traced path,none,none,none,no,none,not present
+lexicographic_vector_constraints,source audit,no implementation found in traced path,none,none,none,no,none,not present

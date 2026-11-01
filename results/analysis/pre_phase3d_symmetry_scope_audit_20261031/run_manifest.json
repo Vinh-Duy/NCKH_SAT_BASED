@@ -1,0 +1,35 @@
+{
+  "phase": "pre-phase3d.1-symmetry-scope-audit",
+  "run_id": "pre_phase3d_symmetry_scope_audit_20261031",
+  "mode": "read-only mathematical and source audit",
+  "files_inspected": [
+    "src/solvers/sat_solver.py",
+    "src/models/sat_encoding.py",
+    "src/core/graph_utils.py",
+    "benchmarks/benchmark_lhk_general.py",
+    "tests/test_incremental_sat.py",
+    "results/analysis/phase3c_distance2_forensics_20261031/REPORT.md",
+    "results/analysis/phase3c_next_step_review_20261031/current_encoding_derivation.md",
+    "results/analysis/pre_phase3d_mathematical_design_20261031/REPORT.md",
+    "results/analysis/pre_phase3d_mathematical_design_20261031/candidate_encoding_derivation.md",
+    "results/runs/phase3b_controlled_cnf_profile_20261031/clause_category_breakdown.csv",
+    "results/runs/phase3b_controlled_cnf_profile_20261031/fixed_span_manifest.csv"
+  ],
+  "commands_executed": [
+    "sed/view/rg source and artifact inspection",
+    "nl source line inspection",
+    "python3 read-only aggregation of clause-category CSV",
+    "python3 exact symbolic scope-cost derivation from artifact counts",
+    "mkdir -p results/analysis/pre_phase3d_symmetry_scope_audit_20261031"
+  ],
+  "source_revision": "working tree on main with pre-existing modifications preserved",
+  "source_modified_by_this_audit": false,
+  "historical_artifacts_modified": false,
+  "solver_backend_initialized": false,
+  "sat_execution": false,
+  "ga_execution": false,
+  "ilp_execution": false,
+  "benchmark_execution": false,
+  "scope_table_rows": 20,
+  "scope_table_deduplication": "three path labels per task/span were identical and represented once"
+}

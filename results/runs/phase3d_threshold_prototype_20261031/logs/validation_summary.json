@@ -1,0 +1,9 @@
+{
+  "complete_failures": 0,
+  "complete_rows": 8,
+  "pair_failures": 0,
+  "pair_rows": 24,
+  "target_distance_two_pairs": 1253,
+  "target_edges": 512,
+  "target_vertices": 60
+}

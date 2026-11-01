@@ -1,0 +1,32 @@
+{
+  "commands": [
+    ".venv-1/bin/python experiments/phase3d_threshold_encoding/run_experiment.py",
+    ".venv-1/bin/python -m unittest discover -s experiments/phase3d_threshold_encoding/tests"
+  ],
+  "experiment_modules": [
+    "experiments/phase3d_threshold_encoding/cnf_model.py",
+    "experiments/phase3d_threshold_encoding/reference_encoding.py",
+    "experiments/phase3d_threshold_encoding/candidate_encoding.py"
+  ],
+  "ga_executed": false,
+  "graph_id": "ER_60_p0.30_seed100",
+  "graph_source": "networkx.gnp_random_graph(60, 0.30, seed=100)",
+  "historical_benchmarks_run": false,
+  "ilp_executed": false,
+  "parameters": {
+    "h": 3,
+    "k": 2,
+    "spans": [
+      112,
+      127
+    ]
+  },
+  "phase": "3D isolated threshold prototype",
+  "platform": "macOS-13.7.8-x86_64-i386-64bit-Mach-O",
+  "production_source_modified": false,
+  "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "sat_executed": false,
+  "solver_backend_initialized": false,
+  "target_distance_two_pairs": 1253,
+  "target_edges": 512
+}

@@ -1,0 +1,21 @@
+instance,u_role,h,k,U,vertices,edges,distance_two_pairs,active_symmetry_clauses,reference_variables,candidate_variables,selector_variables,reference_clauses,candidate_clauses,reference_literals,candidate_literals,clause_delta,literal_delta,variable_delta,reference_symmetry,candidate_symmetry
+ER_20_p0.30_seed100,u_tight,2,1,14,20,61,111,0,280,452,172,4548,5420,16740,15190,872,-1550,172,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_20_p0.30_seed100,u_loose,2,1,17,20,61,111,0,340,512,172,5490,6512,20388,18406,1022,-1982,172,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_40_p0.30_seed100,u_tight,2,1,30,40,225,538,0,1200,1963,763,38313,48466,146980,140736,10153,-6244,763,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_40_p0.30_seed100,u_loose,2,1,34,40,225,538,0,1360,2123,763,43325,54730,166708,159368,11405,-7340,763,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_60_p0.30_seed100,u_tight,2,1,56,60,512,1253,0,3360,5125,1765,161249,204510,629288,602146,43261,-27142,1765,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_60_p0.30_seed100,u_loose,2,1,57,60,512,1253,0,3420,5185,1765,164098,208100,640564,612856,44002,-27708,1765,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_60_p0.30_seed100,u_tight,3,2,112,60,512,1253,0,6720,8485,1765,715129,405550,2831028,1198376,-309579,-1632652,1765,inactive in fixed-span cohort,0; no active symmetry translation cost
+ER_60_p0.30_seed100,u_loose,3,2,127,60,512,1253,0,7620,9385,1765,810814,459400,3211968,1359026,-351414,-1852942,1765,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_10_10,u_tight,2,1,20,20,100,90,0,400,590,190,8370,8360,31560,23740,-10,-7820,190,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_10_10,u_loose,2,1,20,20,100,90,0,400,590,190,8370,8360,31560,23740,-10,-7820,190,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_20_20,u_tight,2,1,40,40,400,380,0,1600,2380,780,65540,65520,254320,191080,-20,-63240,780,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_20_20,u_loose,2,1,40,40,400,380,0,1600,2380,780,65540,65520,254320,191080,-20,-63240,780,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_30_30,u_tight,2,1,60,60,900,870,0,3600,5370,1770,219510,219480,860280,646020,-30,-214260,1770,inactive in fixed-span cohort,0; no active symmetry translation cost
+K_30_30,u_loose,2,1,60,60,900,870,0,3600,5370,1770,219510,219480,860280,646020,-30,-214260,1770,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_20_seed100,u_tight,2,1,5,20,19,22,0,100,141,41,516,572,1664,1434,56,-230,41,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_20_seed100,u_loose,2,1,5,20,19,22,0,100,141,41,516,572,1664,1434,56,-230,41,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_40_seed100,u_tight,2,1,6,40,39,58,0,240,337,97,1347,1558,4444,4008,211,-436,97,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_40_seed100,u_loose,2,1,6,40,39,58,0,240,337,97,1347,1558,4444,4008,211,-436,97,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_60_seed100,u_tight,2,1,6,60,59,85,0,360,504,144,2016,2316,6652,5954,300,-698,144,inactive in fixed-span cohort,0; no active symmetry translation cost
+tree_60_seed100,u_loose,2,1,6,60,59,85,0,360,504,144,2016,2316,6652,5954,300,-698,144,inactive in fixed-span cohort,0; no active symmetry translation cost

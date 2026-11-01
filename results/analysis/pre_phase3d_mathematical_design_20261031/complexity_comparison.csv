@@ -1,0 +1,12 @@
+scope,U,g,n,m,q,reference_label_vars,reference_aux_vars,reference_monotonicity_clauses,reference_pair_clauses,candidate_threshold_vars,candidate_selector_vars,candidate_monotonicity_clauses,candidate_pair_clauses,reference_total_clauses,candidate_total_clauses,reference_vars_plus_clauses,candidate_vars_plus_clauses,candidate_minus_reference_combined
+pair,1,1,2,0,1,2,0,0,2,2,1,0,4,2,4,4,7,3
+pair,2,1,2,0,1,4,0,2,3,4,1,2,6,5,8,9,13,4
+pair,3,1,2,0,1,6,0,4,4,6,1,4,8,8,12,14,19,5
+pair,4,1,2,0,1,8,0,6,5,8,1,6,10,11,16,19,25,6
+pair,5,1,2,0,1,10,0,8,6,10,1,8,12,14,20,24,31,7
+pair,1,2,2,0,1,2,0,0,4,2,1,0,4,4,4,6,7,1
+pair,2,2,2,0,1,4,0,2,7,4,1,2,6,9,8,13,13,0
+pair,3,2,2,0,1,6,0,4,10,6,1,4,8,14,12,20,19,-1
+pair,4,2,2,0,1,8,0,6,13,8,1,6,10,19,16,27,25,-2
+pair,5,2,2,0,1,10,0,8,16,10,1,8,12,24,20,34,31,-3
+ER_60_3_2,127,3,60,512,1253,7620,0,7560,803254,7620,1765,7560,451840,810814,459400,818434,468785,-349649

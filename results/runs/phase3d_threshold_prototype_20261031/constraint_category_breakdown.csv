@@ -1,0 +1,13 @@
+model,encoding,category,clauses
+ER_60_p0.30_seed100_U112,reference,label_domain,6660
+ER_60_p0.30_seed100_U112,reference,distance_1,286208
+ER_60_p0.30_seed100_U112,reference,distance_2,422261
+ER_60_p0.30_seed100_U112,candidate,monotonicity,6660
+ER_60_p0.30_seed100_U112,candidate,distance_1,115712
+ER_60_p0.30_seed100_U112,candidate,distance_2,283178
+ER_60_p0.30_seed100_U127,reference,label_domain,7560
+ER_60_p0.30_seed100_U127,reference,distance_1,324608
+ER_60_p0.30_seed100_U127,reference,distance_2,478646
+ER_60_p0.30_seed100_U127,candidate,monotonicity,7560
+ER_60_p0.30_seed100_U127,candidate,distance_1,131072
+ER_60_p0.30_seed100_U127,candidate,distance_2,320768

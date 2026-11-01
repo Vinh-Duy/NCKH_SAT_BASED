@@ -1,0 +1,16 @@
+constraint_category,reference_formulation,candidate_formulation,active_in_cohort,proof_status,remaining_obligations
+label_domain,x(v,t) order variables over labels 0..U,T(v,t) over t=1..U,threshold variables with monotonicity,yes,proven exact,none
+threshold_monotonicity,not x(t) or x(t+1),not T(t+1) or T(t),yes,proven exact,none
+distance_1,forbid_close_labels gap h,directional selector gap h,yes,proven by prior pair proof,validate implementation separately
+distance_2,forbid_close_labels gap k,directional selector gap k,yes,proven by prior pair proof,validate implementation separately
+fixed_span_assumptions,x(v,c) assumptions for f(v)<=c,not T(v,c+1) for c<U; no literal for c=U,incremental active,proven exact,check assumption polarity in isolated implementation
+fixed_label,variables omitted and literals for free endpoint,f(v)=c as T(v,t) units for t<=c and not T(v,t) for t>c,not active in fixed-span cohort,proven exact,none
+cycle_root,f(0)=0 via fixed label,not T(0,1),not active in controlled cohort,proven exact,none
+strict_order,f(u)<f(v) via strict_less_clauses,not T(u,U); T(v,1); and not T(u,t) or T(v,t+1),not active in fixed-span cohort,proven exact,none
+structural_neighbor_order,one strict order selected by constructor metadata,same exact strict-order relation,not active in controlled cohort,proven exact,retain metadata validation
+complete_family_symmetry,adjacent strict orders from _complete_symmetry,same strict orders for every adjacent pair,no,proven exact,none
+cycle_family_symmetry,one strict order from _cycle_symmetry,same strict order,no,proven exact,none
+hypercube_family_symmetry,bit-index strict orders from _hypercube_symmetry,same strict orders,no,proven exact,none
+path_family_symmetry,empty clause set,empty clause set,no,proven exact,none
+graph_automorphism_constraints,none in production path,none,no,not applicable,none
+lexicographic_constraints,none in production path,none,no,not applicable,none

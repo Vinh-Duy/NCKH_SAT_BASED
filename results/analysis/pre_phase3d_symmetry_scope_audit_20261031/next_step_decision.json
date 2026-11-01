@@ -1,0 +1,29 @@
+{
+  "decision": "A",
+  "complete_model_equivalence_proven": true,
+  "symmetry_translation_status": "exact for every label-level mechanism found in the production path",
+  "candidate_scope_recommendation": "restricted isolated experiment for (h,k)=(3,2), not a global replacement",
+  "phase3d_implementation_authorized": false,
+  "reasons": [
+    "The source has strict-order symmetry constraints, cycle root fixing, and constructor-validated family/structural plans only.",
+    "Strict order has an exact threshold translation with U+1 clauses and no auxiliary variables.",
+    "The controlled cohort has zero active symmetry clauses, so its exact cost table has no hidden symmetry estimate.",
+    "The observed ER-60 (3,2) formulas show a large exact clause-count reduction, while k=1 is generally worse."
+  ],
+  "remaining_work": [
+    "Implement the candidate only in a separate non-default experiment path after explicit authorization.",
+    "Run independent exhaustive small-graph equivalence and representative-set validation.",
+    "Measure encoding and SAT behavior; do not infer runtime benefit from clause counts."
+  ],
+  "graph_pair_enumeration": {
+    "implemented": false,
+    "consider_as_separate_experiment": true,
+    "reason": "It addresses graph preprocessing, not threshold CNF size."
+  },
+  "production_source_modified": false,
+  "historical_artifacts_modified": false,
+  "solver_backend_initialized": false,
+  "sat_executed": false,
+  "ga_executed": false,
+  "ilp_executed": false
+}

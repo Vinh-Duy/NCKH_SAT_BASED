@@ -1,0 +1,9 @@
+graph,U,labelings_enumerated,reference_valid_assignments,candidate_valid_assignments,mismatches,status
+path3,1,8,0,0,0,PASS
+path3,2,27,6,6,0,PASS
+cycle4,1,16,0,0,0,PASS
+cycle4,2,81,0,0,0,PASS
+tree4,1,16,0,0,0,PASS
+tree4,2,81,0,0,0,PASS
+cycle_with_distance2,1,32,0,0,0,PASS
+cycle_with_distance2,2,243,0,0,0,PASS
