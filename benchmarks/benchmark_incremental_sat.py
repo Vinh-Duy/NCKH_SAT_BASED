@@ -12,11 +12,13 @@ from copy import deepcopy
 import hashlib
 import json
 import multiprocessing as mp
+import os
 from pathlib import Path
 import re
 import sys
 import time
 from types import SimpleNamespace
+import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -24,6 +26,7 @@ if str(ROOT) not in sys.path:
 
 from src.core.graph_utils import greedy_labeling, lower_bound
 from src.core.io import BenchmarkWriter, default_output
+from src.core.sat_telemetry import SatTelemetryWriter, mark_parent_terminated_attempts
 from src.core.validator import validate_labeling
 from src.heuristics.genetic_labeling import genetic_search, random_order_search
 from src.solvers.ilp_solver import solve_graph as solve_ilp
@@ -223,14 +226,18 @@ def _publish(connection, event):
         pass
 
 
-def _worker(connection, instance, family, graph, h, k, method, initial_labels, limit):
+def _worker(connection, instance, family, graph, h, k, method, initial_labels, limit,
+            deadline=None, telemetry=None, task_conflict_budget=None):
     """Run one method; parent enforces a hard end-to-end process deadline."""
     started = time.perf_counter()
+    if deadline is None:
+        deadline = started + limit
     best = {"status": "FEASIBLE", "solver_outcome": "NOT_RUN", "termination": "COMPLETED",
             "optimality_source": "none", "error_info": "",
             "span": max(initial_labels.values(), default=0),
             "lower_bound": lower_bound(graph, h, k), "labels": dict(initial_labels), "source": "shared_greedy",
-            "sat_runtime": 0.0, "ga_runtime": 0.0, "validation_runtime": 0.0,
+            "sat_runtime": 0.0, "sat_solve_time": 0.0, "encoding_time": 0.0,
+            "ga_runtime": 0.0, "validation_runtime": 0.0,
             "evaluations": 0, "seeds_completed": 0, "variables": None,
             "clauses": None, "sat_calls": 0, "solver_stats": {}}
 
@@ -259,12 +266,30 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
                               "elapsed": time.perf_counter() - started})
 
     try:
+        if telemetry is not None:
+            telemetry.emit("solver_task_started", graph=instance, family=family,
+                           vertex_count=graph.number_of_nodes(), edge_count=graph.number_of_edges(),
+                           h=h, k=k, method=method,
+                           strategy="hybrid" if method == "sat_original" else "incremental",
+                           backend="CaDiCaL195",
+                           resource_limit_type=("conflicts" if task_conflict_budget else None),
+                           task_conflict_budget=task_conflict_budget,
+                           task_conflicts_used=0 if task_conflict_budget else None,
+                           task_conflicts_remaining=task_conflict_budget,
+                           task_budget_exhausted=False if task_conflict_budget else None)
         if method in {"sat_original", "sat_incremental", "sat_ga_bound"}:
             initial = initial_labels
             if method == "sat_ga_bound":
                 for seed in range(GA_CONFIG["seed_base"],
                                   GA_CONFIG["seed_base"] + GA_CONFIG["repeats"]):
+                    if time.perf_counter() >= deadline:
+                        best.update(status="UNKNOWN", solver_outcome="UNKNOWN",
+                                    termination="SOLVER_UNKNOWN",
+                                    unknown_reason="INTERNAL_DEADLINE")
+                        break
                     ga_start = time.perf_counter()
+                    if telemetry is not None:
+                        telemetry.emit("ga_preprocessing_started", seed=seed)
                     candidate = genetic_search(graph, h, k, seed=seed,
                         population_size=GA_CONFIG["population_size"],
                         evaluation_budget=GA_CONFIG["evaluation_budget"],
@@ -272,6 +297,10 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
                         mutation_probability=GA_CONFIG["mutation_probability"],
                         tournament_size=GA_CONFIG["tournament_size"])
                     best["ga_runtime"] += time.perf_counter() - ga_start
+                    if telemetry is not None:
+                        telemetry.emit("ga_preprocessing_completed", seed=seed,
+                                       elapsed_seconds=best["ga_runtime"],
+                                       evaluations=candidate.evaluations)
                     best["evaluations"] += candidate.evaluations
                     best["seeds_completed"] += 1
                     checked, span = validate_candidate(candidate.labels, candidate.span)
@@ -283,11 +312,20 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
                     else:
                         _publish(connection, {"kind": "progress", "state": deepcopy(best),
                                               "elapsed": time.perf_counter() - started})
+                if best.get("unknown_reason") == "INTERNAL_DEADLINE":
+                    _publish(connection, {"kind": "done", "state": best,
+                                          "elapsed": time.perf_counter() - started})
+                    return
                 # The outer parent still enforces the shared wall cap. A solver
                 # starts only if GA and independent witness checks leave budget.
             sat_started = time.perf_counter()
             def sat_progress(result):
                 outcome = _last_sat_outcome(result)
+                unknown_reason = (
+                    result.attempt_statistics[-1].get("unknown_reason")
+                    if result.attempt_statistics else None
+                )
+                task_stats = result.attempt_statistics[-1] if result.attempt_statistics else {}
                 result_status = "UNKNOWN" if outcome == "UNKNOWN" and result.status != "OPT" else result.status
                 proof_source = (
                     "sat_search" if result.completed_attempts else "elementary_bound"
@@ -296,16 +334,32 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
                         lower_bound=result.proven_lower_bound, source=result.source,
                         solver_outcome=outcome,
                         termination="SOLVER_UNKNOWN" if outcome == "UNKNOWN" else "COMPLETED",
+                        unknown_reason=unknown_reason,
+                        task_conflicts_used=task_stats.get("task_conflicts_used_after"),
+                        task_conflicts_remaining=task_stats.get("task_conflicts_remaining"),
+                        task_budget_exhausted=task_stats.get("task_budget_exhausted"),
+                        backend_conflict_budget=task_stats.get("backend_conflict_budget"),
+                        conflict_guard_band=task_stats.get("conflict_guard_band"),
+                        budget_overrun=task_stats.get("budget_overrun"),
+                        budget_accounting_valid=task_stats.get("budget_accounting_valid"),
                         optimality_source=proof_source,
-                        sat_runtime=result.sat_solve_time, variables=result.variable_count,
+                        sat_runtime=result.sat_solve_time, sat_solve_time=result.sat_solve_time,
+                        encoding_time=result.encoding_time, variables=result.variable_count,
                         clauses=result.clause_count, sat_calls=result.completed_attempts,
                         solver_stats=dict(result.solver_stats))
             result = solve_sat(graph, solver_name="cadical",
                 strategy="incremental" if method != "sat_original" else "hybrid",
                 timeout_sec=None, h=h, k=k, progress_callback=sat_progress,
-                initial_labels=initial if method == "sat_ga_bound" else None)
+                initial_labels=initial if method == "sat_ga_bound" else None,
+                telemetry=telemetry, deadline=deadline,
+                task_conflict_budget=task_conflict_budget)
             best["sat_runtime"] = time.perf_counter() - sat_started
             outcome = _last_sat_outcome(result)
+            unknown_reason = (
+                result.attempt_statistics[-1].get("unknown_reason")
+                if result.attempt_statistics else None
+            )
+            task_stats = result.attempt_statistics[-1] if result.attempt_statistics else {}
             result_status = "UNKNOWN" if outcome == "UNKNOWN" and result.status != "OPT" else result.status
             proof_source = (
                 "sat_search" if result.completed_attempts else "elementary_bound"
@@ -313,9 +367,19 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
             improve(result.labels, result.span, status=result_status,
                     lower_bound=result.proven_lower_bound,
                     source=result.source, sat_runtime=best["sat_runtime"],
+                    encoding_time=result.encoding_time,
                     solver_outcome=outcome,
                     termination="SOLVER_UNKNOWN" if outcome == "UNKNOWN" else "COMPLETED",
+                    unknown_reason=unknown_reason,
+                    task_conflicts_used=task_stats.get("task_conflicts_used_after"),
+                    task_conflicts_remaining=task_stats.get("task_conflicts_remaining"),
+                    task_budget_exhausted=task_stats.get("task_budget_exhausted"),
+                    backend_conflict_budget=task_stats.get("backend_conflict_budget"),
+                    conflict_guard_band=task_stats.get("conflict_guard_band"),
+                    budget_overrun=task_stats.get("budget_overrun"),
+                    budget_accounting_valid=task_stats.get("budget_accounting_valid"),
                     optimality_source=proof_source,
+                    sat_solve_time=result.sat_solve_time,
                     variables=result.variable_count, clauses=result.clause_count,
                     sat_calls=result.completed_attempts,
                     solver_stats=dict(result.solver_stats))
@@ -390,6 +454,22 @@ def _worker(connection, instance, family, graph, h, k, method, initial_labels, l
         _publish(connection, {"kind": "error", "error": message,
                               "state": best, "elapsed": time.perf_counter() - started})
     finally:
+        if telemetry is not None:
+            telemetry.emit("solver_task_finished", status=best.get("status"),
+                           solver_outcome=best.get("solver_outcome"),
+                           termination=best.get("termination"),
+                           best_span=best.get("span") if best.get("labels") else None,
+                           optimality_proven=best.get("status") == "OPT",
+                           ga_preprocessing_seconds=best.get("ga_runtime"),
+                           witness_validation_seconds=best.get("validation_runtime"),
+                           task_worker_elapsed_seconds=time.perf_counter() - started,
+                           resource_limit_type=("conflicts" if task_conflict_budget else None),
+                           task_conflict_budget=task_conflict_budget,
+                           task_conflicts_used=best.get("task_conflicts_used"),
+                           task_conflicts_remaining=best.get("task_conflicts_remaining"),
+                           task_budget_exhausted=best.get("task_budget_exhausted"),
+                           overall_termination_reason=best.get("termination"),
+                           error_info=best.get("error_info"))
         connection.close()
 
 
@@ -399,19 +479,33 @@ def _distance_two(graph):
             for v, distance in distances.items() if distance == 2 and u < v]
 
 
-def _run_arm(instance, family, graph, h, k, method, timeout, context):
+def _run_arm(instance, family, graph, h, k, method, timeout, context, telemetry=None,
+             shutdown_reserve=1.0, task_conflict_budget=None):
     # Common, validated incumbent is prepared once for each arm and every arm
     # pays for this setup inside the same end-to-end wall budget.
     started = time.perf_counter()
+    if telemetry is not None:
+        telemetry.emit("task_started", graph=instance, family=family,
+                       vertex_count=graph.number_of_nodes(), edge_count=graph.number_of_edges(),
+                       h=h, k=k, method=method,
+                       strategy="hybrid" if method == "sat_original" else "incremental",
+                       backend="CaDiCaL195", seed_policy=GA_CONFIG["seed_base"] if method == "sat_ga_bound" else None,
+                       ga_seeds=list(range(GA_CONFIG["seed_base"], GA_CONFIG["seed_base"] + GA_CONFIG["repeats"]))
+                       if method == "sat_ga_bound" else [])
+    setup_started = time.perf_counter()
     _, initial = greedy_labeling(graph, h, k)
+    preprocessing_wall = time.perf_counter() - setup_started
     pconn, cconn = context.Pipe(duplex=False)
+    internal_deadline = started + timeout - shutdown_reserve
     process = context.Process(target=_worker,
-        args=(cconn, instance, family, graph, h, k, method, initial, timeout))
+        args=(cconn, instance, family, graph, h, k, method, initial, timeout,
+              internal_deadline, telemetry, task_conflict_budget))
     state = {"status": "FEASIBLE", "solver_outcome": "NOT_RUN", "termination": "COMPLETED",
              "optimality_source": "none", "error_info": "",
              "span": max(initial.values(), default=0),
              "lower_bound": lower_bound(graph, h, k), "labels": initial, "source": "shared_greedy",
-             "sat_runtime": 0.0, "ga_runtime": 0.0, "validation_runtime": 0.0,
+             "sat_runtime": 0.0, "sat_solve_time": 0.0, "encoding_time": 0.0,
+             "ga_runtime": 0.0, "validation_runtime": 0.0,
              "evaluations": 0, "seeds_completed": 0, "variables": None,
              "clauses": None, "sat_calls": 0, "solver_stats": {}}
     termination, error = "COMPLETED", ""
@@ -447,10 +541,18 @@ def _run_arm(instance, family, graph, h, k, method, timeout, context):
     elif not received_done and termination == "COMPLETED":
         termination = "WORKER_EXIT"
         error = f"worker exited without a final result (exit code {process.exitcode})"
+    elif received_done:
+        termination = state.get("termination", termination)
     pconn.close()
     elapsed = time.perf_counter() - started
+    if telemetry is not None and process.pid is not None and not process.is_alive():
+        # Parent writes recovery events only after the worker has actually stopped.
+        mark_parent_terminated_attempts(telemetry)
     state["termination"] = termination
-    if termination == "WALL_TIMEOUT" and state.get("status") != "OPT":
+    if state.get("unknown_reason") == "INTERNAL_DEADLINE":
+        termination = state["termination"] = "SOLVER_UNKNOWN"
+        state.update(status="UNKNOWN", solver_outcome="UNKNOWN", optimality_source="none")
+    elif termination == "WALL_TIMEOUT" and state.get("status") != "OPT":
         state.update(status="TIMEOUT", solver_outcome="INTERRUPTED", optimality_source="none")
     elif termination == "WORKER_ERROR":
         state.update(status="ERROR", solver_outcome="ERROR", optimality_source="none")
@@ -480,6 +582,19 @@ def _run_arm(instance, family, graph, h, k, method, timeout, context):
     has_witness = bool(valid)
     best_span = state["span"] if has_witness else None
     optimality_proven = state["status"] == "OPT" and has_witness
+    if telemetry is not None:
+        telemetry.emit("task_completed", status=state["status"],
+                       solver_outcome=state.get("solver_outcome"), termination=termination,
+                       task_end_to_end_seconds=elapsed,
+                       shared_incumbent_preprocessing_seconds=preprocessing_wall,
+                       encoding_elapsed_seconds=state.get("encoding_time"),
+                       solver_call_elapsed_seconds=state.get("sat_solve_time"),
+                       witness_validation_seconds=state["validation_runtime"] + validation_wall,
+                       ga_preprocessing_seconds=state["ga_runtime"],
+                       best_verified_span=best_span,
+                       feasible_witness=has_witness, witness_independently_validated=has_witness,
+                       optimality_proven=optimality_proven,
+                       error_info=state["error_info"])
     return {
         "Graph": f"{instance}__h{h}_k{k}__{method}", "Instance": instance,
         "Manifest_SHA256": "", "Family": family, "h": h, "k": k, "Method": method,
@@ -508,17 +623,31 @@ def _run_arm(instance, family, graph, h, k, method, timeout, context):
     }
 
 
-def run(output, *, timeout, methods, max_instances, resume=False):
+def run(output, *, timeout, methods, max_instances, resume=False, shutdown_reserve=1.0,
+        task_conflict_budget=None, instance_names=None, pairs=PAIRS):
     graphs, manifest_hash = _read_manifest(MANIFEST)
     if max_instances is not None:
         graphs = graphs[:max_instances]
-    tasks = len(graphs) * len(PAIRS)
+    if instance_names is not None:
+        selected = set(instance_names)
+        graphs = [item for item in graphs if item[0] in selected]
+        if len(graphs) != len(selected):
+            missing = sorted(selected - {item[0] for item in graphs})
+            raise ValueError(f"requested instances not found: {missing}")
+    pairs = tuple(pairs)
+    if task_conflict_budget is not None and (
+            isinstance(task_conflict_budget, bool) or
+            not isinstance(task_conflict_budget, int) or task_conflict_budget <= 0):
+        raise ValueError("task_conflict_budget must be a positive integer")
+    tasks = len(graphs) * len(pairs)
     observations = tasks * len(methods)
     config = {
         "study": "incremental-sat-min-ub-v1", "manifest": str(MANIFEST.relative_to(ROOT)),
         "manifest_sha256": manifest_hash, "cohort_graph_count": len(graphs),
         "graph_parameter_instances": tasks, "methods": list(methods),
-        "pairs": [list(pair) for pair in PAIRS], "per_method_wall_limit_seconds": timeout,
+        "pairs": [list(pair) for pair in pairs], "per_method_wall_limit_seconds": timeout,
+        "task_conflict_budget": task_conflict_budget,
+        "shutdown_reserve_seconds": shutdown_reserve,
         "wall_limit_scope": "one hard end-to-end wall cap per graph/parameter/method, including shared greedy incumbent generation, witness validation, solver/model construction, and search",
         "sat_backend": "CaDiCaL195", "sat_original_strategy": "hybrid",
         "sat_incremental_strategy": "incremental", "ilp": "Gurobi assignment; Threads=1, zero MIP gap",
@@ -529,6 +658,30 @@ def run(output, *, timeout, methods, max_instances, resume=False):
         "result_schema": "incremental-sat-observation-v2",
     }
     graphs_by_name = {name: (family, graph) for name, family, graph in graphs}
+    output = Path(output)
+    telemetry_root = output.with_name(output.name + ".telemetry")
+    telemetry_enabled = any(method.startswith("sat_") for method in methods)
+    telemetry_configuration = {
+        "schema_version": "sat-attempt-v1",
+        "manifest_sha256": manifest_hash,
+        "methods": [method for method in methods if method.startswith("sat_")],
+        "pairs": [list(pair) for pair in pairs],
+        "timeout_seconds": timeout,
+        "task_conflict_budget": task_conflict_budget,
+        "backend": "CaDiCaL195",
+    }
+    telemetry_metadata_path = telemetry_root / "telemetry_metadata.json"
+    if telemetry_enabled and telemetry_root.exists():
+        if not resume:
+            raise FileExistsError(
+                f"SAT telemetry already exists: {telemetry_root}; use --resume or choose a fresh output path"
+            )
+        if not telemetry_metadata_path.is_file():
+            raise ValueError(f"telemetry metadata missing; refusing ambiguous resume: {telemetry_root}")
+        existing_telemetry_configuration = json.loads(telemetry_metadata_path.read_text(encoding="utf-8"))
+        if existing_telemetry_configuration != telemetry_configuration:
+            raise ValueError(f"telemetry configuration mismatch; refusing resume: {telemetry_root}")
+    run_id = uuid.uuid4().hex
 
     def record_validator(row, witness):
         if not _incremental_record_valid(row, witness, graphs_by_name):
@@ -537,23 +690,52 @@ def run(output, *, timeout, methods, max_instances, resume=False):
         if (row["Graph"] != expected or row["Manifest_SHA256"] != manifest_hash or
                 row["Instance"] not in graphs_by_name or
                 row["Family"] != graphs_by_name[row["Instance"]][0] or
-                (int(row["h"]), int(row["k"])) not in PAIRS or row["Method"] not in methods):
+                (int(row["h"]), int(row["k"])) not in pairs or row["Method"] not in methods):
             return False
         return True
 
     writer = BenchmarkWriter(output, fields=FIELDS, resume=resume, config=config,
         record_validator=record_validator, completion_validator=_incremental_row_complete,
         artifact_policy="incremental-sat-witness-v2")
+    if telemetry_enabled and not telemetry_root.exists():
+        telemetry_root.mkdir(parents=True)
+        temporary_metadata = telemetry_metadata_path.with_name(
+            f".{telemetry_metadata_path.name}.{uuid.uuid4().hex}.tmp")
+        with temporary_metadata.open("w", encoding="utf-8") as stream:
+            json.dump(telemetry_configuration, stream, sort_keys=True, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary_metadata, telemetry_metadata_path)
     writer.log(f"Manifest: {manifest_hash}; {len(graphs)} graphs, {tasks} graph/(h,k) tasks, {observations} observations")
     writer.log(f"Maximum end-to-end method wall budget: {observations * timeout / 3600:.2f} hours; sequential execution")
     context = mp.get_context("spawn")
     for graph_index, (instance, family, graph) in enumerate(graphs, 1):
-        for h, k in PAIRS:
+        for h, k in pairs:
             for method in methods:
                 key = f"{instance}__h{h}_k{k}__{method}"
                 if key in writer.completed:
                     continue
-                row = _run_arm(instance, family, graph, h, k, method, timeout, context)
+                telemetry = None
+                if method.startswith("sat_"):
+                    trace_key = hashlib.sha256(key.encode("utf-8")).hexdigest()
+                    trace_path = telemetry_root / f"{trace_key}.jsonl"
+                    telemetry = SatTelemetryWriter(trace_path, metadata={
+                        "run_id": run_id, "task_id": key, "graph": instance,
+                        "family": family, "vertex_count": graph.number_of_nodes(),
+                        "edge_count": graph.number_of_edges(), "h": h, "k": k,
+                        "method": method,
+                        "strategy": "hybrid" if method == "sat_original" else "incremental",
+                        "backend": "CaDiCaL195",
+                        "resource_limit_type": "conflicts" if task_conflict_budget else None,
+                        "task_conflict_budget": task_conflict_budget,
+                        "seed_policy": (list(range(GA_CONFIG["seed_base"],
+                            GA_CONFIG["seed_base"] + GA_CONFIG["repeats"]))
+                            if method == "sat_ga_bound" else []),
+                    })
+                row = _run_arm(instance, family, graph, h, k, method, timeout, context,
+                               telemetry=telemetry, shutdown_reserve=shutdown_reserve,
+                               task_conflict_budget=task_conflict_budget)
                 row["Manifest_SHA256"] = manifest_hash
                 labels = row.pop("_labels")
                 row.pop("_error", None)
@@ -574,22 +756,32 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=default_output("incremental_sat_comparison"))
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument("--shutdown-reserve", type=float, default=1.0)
+    parser.add_argument("--task-conflict-budget", type=int,
+                        help="optional shared CaDiCaL conflict budget per method-task")
     parser.add_argument("--methods", nargs="+", choices=METHODS, default=list(METHODS))
     parser.add_argument("--max-instances", type=int, help="development smoke subset; not the full cohort")
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
-    if args.timeout <= 0 or (args.max_instances is not None and args.max_instances < 1):
+    if (args.timeout <= 0 or args.shutdown_reserve < 0 or
+            args.shutdown_reserve >= args.timeout or
+            (args.task_conflict_budget is not None and args.task_conflict_budget <= 0) or
+            (args.max_instances is not None and args.max_instances < 1)):
         parser.error("timeout and max-instances must be positive")
     graphs, _ = _read_manifest(MANIFEST)
     count = min(args.max_instances, len(graphs)) if args.max_instances else len(graphs)
     observations = count * len(PAIRS) * len(args.methods)
     print(f"Plan: {count} graphs, {count * len(PAIRS)} graph/(h,k) instances, {observations} observations")
     print(f"Maximum sequential end-to-end budget: {observations * args.timeout / 3600:.2f} hours")
+    if args.task_conflict_budget is not None:
+        print(f"Shared SAT conflict budget per method-task: {args.task_conflict_budget}")
     print(f"Output: {args.output}")
     if not args.plan_only:
         run(args.output, timeout=args.timeout, methods=args.methods,
-            max_instances=args.max_instances, resume=args.resume)
+            max_instances=args.max_instances, resume=args.resume,
+            shutdown_reserve=args.shutdown_reserve,
+            task_conflict_budget=args.task_conflict_budget)
 
 
 if __name__ == "__main__":
