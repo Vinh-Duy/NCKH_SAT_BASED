@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/nckh-sat-based/phase3a-attempt-trace-v1.schema.json",
+  "title": "NCKH_SAT_BASED SAT attempt telemetry v1",
+  "description": "Proposed schema only; Phase 3A does not implement or emit these records. One JSON object per JSONL line. Missing backend values are null, not zero.",
+  "type": "object",
+  "required": [
+    "schema_version", "record_type", "run_id", "telemetry"
+  ],
+  "allOf": [
+    {
+      "if": {"properties": {"record_type": {"enum": ["attempt_started", "attempt_finished", "attempt_interrupted"]}}, "required": ["record_type"]},
+      "then": {
+        "required": [
+          "arm_id", "attempt_id", "manifest_sha256", "graph_id", "family", "n", "m",
+          "h", "k", "method", "strategy", "backend", "backend_version", "attempt_index",
+          "solver_call_started", "solver_call_returned", "outcome", "termination_reason",
+          "wall_elapsed_seconds"
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "schema_version": {"const": "sat-attempt-v1"},
+    "record_type": {"enum": ["run_header", "attempt_started", "attempt_finished", "attempt_interrupted", "run_summary"]},
+    "run_id": {"type": "string", "description": "Unique ID for a newly created telemetry run; never reuse a historical run ID."},
+    "arm_id": {"type": "string", "description": "Stable identity for manifest graph × h × k × SAT method within run."},
+    "attempt_id": {"type": "string", "description": "Unique ID for one candidate-span solver invocation; pairs its start and finish records."},
+    "encoding_id": {"type": ["string", "null"], "description": "Formula build identity. Reused across incremental assumption calls; distinct per hybrid span build."},
+    "manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_sha256": {"type": ["string", "null"], "description": "Digest of source/configuration used by this future run."},
+    "graph_id": {"type": "string"},
+    "family": {"type": "string"},
+    "n": {"type": "integer", "minimum": 0},
+    "m": {"type": "integer", "minimum": 0},
+    "h": {"type": "integer", "minimum": 1},
+    "k": {"type": "integer", "minimum": 1},
+    "method": {"enum": ["sat_original", "sat_incremental", "sat_ga_bound"]},
+    "strategy": {"type": "string", "description": "Actual SAT strategy, e.g. hybrid or incremental."},
+    "backend": {"type": "string", "description": "Actual PySAT backend class/name."},
+    "backend_version": {"type": ["string", "null"]},
+    "attempt_index": {"type": "integer", "minimum": 1},
+    "candidate_span": {"type": ["integer", "null"], "minimum": 0},
+    "initial_greedy_ub": {"type": ["integer", "null"], "minimum": 0},
+    "ub_at_sat_start": {"type": ["integer", "null"], "minimum": 0},
+    "ub_before": {"type": ["integer", "null"], "minimum": 0},
+    "ub_after": {"type": ["integer", "null"], "minimum": 0},
+    "lb_before": {"type": ["integer", "null"], "minimum": 0},
+    "lb_after": {"type": ["integer", "null"], "minimum": 0},
+    "gap_before": {"type": ["integer", "null"], "minimum": 0},
+    "gap_after": {"type": ["integer", "null"], "minimum": 0},
+    "variable_count": {"type": ["integer", "null"], "minimum": 0},
+    "raw_clause_count": {"type": ["integer", "null"], "minimum": 0},
+    "simplified_clause_count": {"type": ["integer", "null"], "minimum": 0},
+    "clause_counts_raw": {
+      "type": ["object", "null"],
+      "description": "Pre-simplification counts, if captured at encoder generation boundaries.",
+      "properties": {
+        "label_domain_or_monotonicity": {"type": ["integer", "null"], "minimum": 0},
+        "distance_1": {"type": ["integer", "null"], "minimum": 0},
+        "distance_2": {"type": ["integer", "null"], "minimum": 0},
+        "symmetry_breaking": {"type": ["integer", "null"], "minimum": 0},
+        "other": {"type": ["integer", "null"], "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "symmetry_plan": {"type": ["string", "null"], "description": "Actual selected plan (none, cycle, etc.), not merely a boolean feature flag."},
+    "symmetry_fixed_label_count": {"type": ["integer", "null"], "minimum": 0},
+    "assumptions_count": {"type": ["integer", "null"], "minimum": 0},
+    "cnf_build_seconds": {"type": ["number", "null"], "minimum": 0},
+    "backend_initialization_seconds": {"type": ["number", "null"], "minimum": 0},
+    "encoding_reused": {"type": ["boolean", "null"]},
+    "solver_call_started": {"type": "boolean"},
+    "solver_call_returned": {"type": "boolean"},
+    "outcome": {"enum": ["NOT_RUN", "SAT", "UNSAT", "UNKNOWN", "INTERRUPTED", "ERROR"]},
+    "termination_reason": {"enum": ["NOT_APPLICABLE", "RETURNED", "BACKEND_UNKNOWN", "WALL_TIMEOUT", "PARENT_TERMINATED", "WORKER_ERROR", "WORKER_EXIT", "ENCODER_CONTRADICTION", "UNAVAILABLE"]},
+    "backend_reason": {"type": ["string", "null"], "description": "Only populate when an API provides an actual reason; do not infer from UNKNOWN."},
+    "call_wall_seconds": {"type": ["number", "null"], "minimum": 0},
+    "cumulative_call_wall_seconds": {"type": ["number", "null"], "minimum": 0},
+    "wall_elapsed_seconds": {"type": "number", "minimum": 0, "description": "Monotonic elapsed time from arm start, including work before this query."},
+    "remaining_wall_budget_seconds": {"type": ["number", "null"]},
+    "solver_stats_scope": {"enum": ["fresh_solver_total_for_attempt", "incremental_call_delta", "incremental_solver_cumulative", "partial_after_interrupt", "unavailable"]},
+    "solver_stats": {
+      "type": "object",
+      "required": ["conflicts", "decisions", "propagations", "restarts"],
+      "properties": {
+        "conflicts": {"type": ["integer", "null"], "minimum": 0},
+        "decisions": {"type": ["integer", "null"], "minimum": 0},
+        "propagations": {"type": ["integer", "null"], "minimum": 0},
+        "restarts": {"type": ["integer", "null"], "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "stats_snapshot_available": {"type": "boolean"},
+    "witness_present": {"type": ["boolean", "null"]},
+    "witness_span": {"type": ["integer", "null"], "minimum": 0},
+    "witness_independently_validated": {"type": ["boolean", "null"]},
+    "witness_validation_seconds": {"type": ["number", "null"], "minimum": 0},
+    "optimality_proven": {"type": ["boolean", "null"]},
+    "optimality_source": {"type": ["string", "null"], "enum": ["none", "elementary_bound", "sat_search", null]},
+    "end_to_end_seconds": {"type": ["number", "null"], "minimum": 0},
+    "encoding_preprocessing_seconds": {"type": ["number", "null"], "minimum": 0},
+    "sat_backend_seconds": {"type": ["number", "null"], "minimum": 0},
+    "ga_preprocessing_seconds": {"type": ["number", "null"], "minimum": 0},
+    "telemetry": {
+      "type": "object",
+      "required": ["prepare_seconds", "previous_write_seconds"],
+      "properties": {
+        "prepare_seconds": {"type": ["number", "null"], "minimum": 0},
+        "previous_write_seconds": {"type": ["number", "null"], "minimum": 0},
+        "note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "error": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}
