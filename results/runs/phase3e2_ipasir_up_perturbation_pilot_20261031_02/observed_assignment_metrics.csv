@@ -1,0 +1,4 @@
+run_id,encoding,mode,block,category,event_type,count
+phase3e2-05,reference,C,1,one_hot_label,assignment,306477
+phase3e2-05,reference,C,1,one_hot_label,decision,5807
+phase3e2-05,reference,C,1,one_hot_label,propagation,300670

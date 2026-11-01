@@ -1,0 +1,39 @@
+{
+  "phase": "Phase 3E.2",
+  "title": "Targeted telemetry feasibility audit",
+  "mode": "read-only",
+  "environment": {
+    "python": "3.13.7",
+    "environment": ".venv-1",
+    "python_sat": "1.9.dev15",
+    "backend_wrapper": "pysat.solvers.Cadical195",
+    "documented_backend": "CaDiCaL 1.9.5",
+    "networkx": "3.6.1",
+    "platform": "macOS Intel/x86_64"
+  },
+  "inputs_inspected": [
+    ".venv-1/lib/python3.13/site-packages/pysat/solvers.py",
+    ".venv-1/lib/python3.13/site-packages/pysat/engines.py",
+    ".venv-1/lib/python3.13/site-packages/pysolvers.cpython-313-darwin.so",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/",
+    "results/analysis/phase3e_solver_behavior_forensics_20261031/",
+    "src/solvers/sat_solver.py",
+    "experiments/phase3e_threshold_sat_benchmark/runner.py"
+  ],
+  "commands_used": [
+    "find .venv-1/lib/python3.13/site-packages -maxdepth 2 -type f",
+    "rg -n on the installed PySAT source and repository",
+    "sed/view of installed PySAT source ranges",
+    "strings on pysolvers.cpython-313-darwin.so",
+    "nm -gU on pysolvers.cpython-313-darwin.so"
+  ],
+  "solver_backend_initialized": false,
+  "sat_executed": false,
+  "ga_executed": false,
+  "ilp_executed": false,
+  "benchmark_executed": false,
+  "packages_installed": false,
+  "prior_artifacts_modified": false,
+  "canonical_phase3e02_modified": false,
+  "conclusion": "Outcome B: a targeted IPASIR-UP perturbation pilot is justified, but no production telemetry integration is authorized by this audit."
+}

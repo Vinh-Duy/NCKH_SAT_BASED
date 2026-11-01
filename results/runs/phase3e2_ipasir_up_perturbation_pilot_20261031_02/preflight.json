@@ -1,0 +1,18 @@
+[
+  {
+    "encoding": "reference",
+    "variables": 6720,
+    "clauses": 715129,
+    "literals": 2831028,
+    "fingerprint": "9b80dd0e1b3a2a5e25fcd1491fe8d1845d07ed25181a614434a8593a782ed166",
+    "passed": true
+  },
+  {
+    "encoding": "candidate",
+    "variables": 8485,
+    "clauses": 405550,
+    "literals": 1198376,
+    "fingerprint": "74703098b7e6d48ab4ec2cc913fc8bfe3c24763318a602aa6ff4648eddef9d26",
+    "passed": true
+  }
+]

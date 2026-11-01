@@ -1,0 +1,24 @@
+{
+  "outcome": "B",
+  "title": "Telemetry is useful but materially intrusive",
+  "telemetry_usefulness": {
+    "decision_classification_verified": true,
+    "propagation_classification_verified": true,
+    "variable_category_mapping_verified": true,
+    "useful_completed_sample": "Reference U=112 Mode C",
+    "coverage_limit": "Only observed variables are classified; no full branching trace"
+  },
+  "perturbation_assessment": {
+    "connected_control_supported": true,
+    "connected_control_effect": "Material",
+    "reference_mode_a_solve_seconds": 37.005801621999126,
+    "reference_mode_b_solve_seconds": 52.163518397996086,
+    "candidate_mode_a_solve_seconds": 40.372687148003024,
+    "candidate_mode_b_solve_seconds": 56.92862925599911,
+    "candidate_mode_c_status": "PARENT_TIMEOUT",
+    "higher_sampling_executed": false
+  },
+  "further_instrumentation_justified": false,
+  "recommendation": "Retain passive Phase 3E statistics and treat IPASIR-UP data as exploratory only. Do not automatically authorize more telemetry runs.",
+  "production_integration_authorized": false
+}

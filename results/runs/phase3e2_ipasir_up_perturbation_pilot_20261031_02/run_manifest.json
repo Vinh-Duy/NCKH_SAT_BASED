@@ -1,0 +1,174 @@
+{
+  "U": 112,
+  "concurrent_workers": false,
+  "distance_two_pairs": 1253,
+  "edges": 512,
+  "encodings": [
+    "reference",
+    "candidate"
+  ],
+  "formula_preflight": [
+    {
+      "clauses": 715129,
+      "encoding": "reference",
+      "fingerprint": "9b80dd0e1b3a2a5e25fcd1491fe8d1845d07ed25181a614434a8593a782ed166",
+      "literals": 2831028,
+      "passed": true,
+      "variables": 6720
+    },
+    {
+      "clauses": 405550,
+      "encoding": "candidate",
+      "fingerprint": "74703098b7e6d48ab4ec2cc913fc8bfe3c24763318a602aa6ff4648eddef9d26",
+      "literals": 1198376,
+      "passed": true,
+      "variables": 8485
+    }
+  ],
+  "ga_executed": false,
+  "graph_fingerprint": "874baef4edb348567f4083e3d455778a2c87298972c4941b4da331de07baf99c",
+  "graph_id": "ER_60_p0.30_seed100",
+  "h": 3,
+  "ilp_executed": false,
+  "k": 2,
+  "modes": {
+    "A": "baseline",
+    "B": "connected zero-observation",
+    "C": "connected 1% deterministic sample",
+    "D": "connected 5% deterministic sample"
+  },
+  "ordering": [
+    [
+      1,
+      "reference",
+      "A"
+    ],
+    [
+      1,
+      "candidate",
+      "A"
+    ],
+    [
+      1,
+      "reference",
+      "B"
+    ],
+    [
+      1,
+      "candidate",
+      "B"
+    ],
+    [
+      1,
+      "reference",
+      "C"
+    ],
+    [
+      1,
+      "candidate",
+      "C"
+    ],
+    [
+      1,
+      "reference",
+      "D"
+    ],
+    [
+      1,
+      "candidate",
+      "D"
+    ],
+    [
+      2,
+      "candidate",
+      "D"
+    ],
+    [
+      2,
+      "reference",
+      "D"
+    ],
+    [
+      2,
+      "candidate",
+      "C"
+    ],
+    [
+      2,
+      "reference",
+      "C"
+    ],
+    [
+      2,
+      "candidate",
+      "B"
+    ],
+    [
+      2,
+      "reference",
+      "B"
+    ],
+    [
+      2,
+      "candidate",
+      "A"
+    ],
+    [
+      2,
+      "reference",
+      "A"
+    ],
+    [
+      3,
+      "reference",
+      "A"
+    ],
+    [
+      3,
+      "candidate",
+      "A"
+    ],
+    [
+      3,
+      "reference",
+      "B"
+    ],
+    [
+      3,
+      "candidate",
+      "B"
+    ],
+    [
+      3,
+      "reference",
+      "C"
+    ],
+    [
+      3,
+      "candidate",
+      "C"
+    ],
+    [
+      3,
+      "reference",
+      "D"
+    ],
+    [
+      3,
+      "candidate",
+      "D"
+    ]
+  ],
+  "packages_installed": false,
+  "phase": "3E.2 IPASIR-UP instrumentation perturbation pilot",
+  "previous_artifacts_modified": false,
+  "production_files_modified": false,
+  "repetitions": 3,
+  "run_count": 6,
+  "sampling_method": "SHA-256 rank over semantic identifiers",
+  "sampling_seed": "phase3e2-ipasir-up-20261031",
+  "sat_executed": true,
+  "stop_reason": "Stopped after phase3e2-06: instrumented candidate mode C returned PARENT_TIMEOUT; no higher sampling or remaining arms were run.",
+  "timeout_seconds": 60.0,
+  "vertices": 60
+}

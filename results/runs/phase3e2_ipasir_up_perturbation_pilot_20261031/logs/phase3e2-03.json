@@ -1,0 +1,15 @@
+{
+  "U": 112,
+  "block": 1,
+  "callback_json": "null",
+  "encoding": "reference",
+  "error": "RuntimeError: Could not convert python iterable to vector.",
+  "mode": "B",
+  "parent_wall": 50.01860823899915,
+  "pid": 40988,
+  "run_id": "phase3e2-03",
+  "sampling_rows_json": "[]",
+  "status": "ERROR",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3e2_ipasir_up_pilot/runner.py\", line 205, in worker\n    satisfiable = solver.solve()\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/.venv-1/lib/python3.13/site-packages/pysat/solvers.py\", line 2506, in solve\n    self.status = pysolvers.cadical195_solve(self.cadical, assumptions,\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n            int(MainThread.check()))\n            ^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Could not convert python iterable to vector.\n",
+  "worker_reaped": true
+}

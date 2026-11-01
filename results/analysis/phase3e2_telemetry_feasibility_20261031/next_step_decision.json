@@ -1,0 +1,18 @@
+{
+  "decision": "B",
+  "title": "Only intrusive or sampled telemetry is available",
+  "pilot_recommended": true,
+  "justification": [
+    "Passive accum_stats(), timing, result, model, and formula metrics are already available and reliable for aggregate behavior.",
+    "Cadical195 exposes IPASIR-UP callbacks and is_decision() for observed literals.",
+    "Observation and propagator callbacks can perturb inprocessing and solver execution, so the data cannot be treated as transparent production telemetry."
+  ],
+  "scope": "A small paired pilot on the existing ER-60 graph at U=112 and U=127, using uninstrumented, connected-no-op, and <=1% stratified observed-variable conditions in fresh processes.",
+  "stop_if": [
+    "formula identity or SAT result changes",
+    "connected-no-op control materially differs from baseline",
+    "callback lifecycle changes a following independent solver call",
+    "callback overhead or perturbation cannot be separated"
+  ],
+  "production_integration_authorized": false
+}

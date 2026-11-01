@@ -1,0 +1,14 @@
+{
+  "U": 112,
+  "block": 1,
+  "callback_json": null,
+  "encoding": "candidate",
+  "error": "worker exceeded 60.0s",
+  "mode": "C",
+  "parent_wall": 60.033709244999045,
+  "pid": 41625,
+  "run_id": "phase3e2-06",
+  "sampling_rows_json": "[]",
+  "status": "PARENT_TIMEOUT",
+  "worker_reaped": true
+}
