@@ -1,0 +1,52 @@
+{
+  "arm_count": 30,
+  "backend": "CaDiCaL195",
+  "conflict_policy": "R-1 guard band; exploratory soft threshold, not a strict cap",
+  "current_source_fingerprints": {
+    "benchmarks/benchmark_incremental_sat.py": "0e1b2622d2016796858fbedcf6ba9349bde26302d61443b186176cf5cbf441a9",
+    "src/core/sat_telemetry.py": "7da817b7e978217bfc2ca520baac9e165fe6d828e83b42fb9ca8cbe378d02126",
+    "src/solvers/sat_solver.py": "cf12134384974bbcee7ac52ccda6c00df60e4614893aa6c81aecd9cbcebe69f3"
+  },
+  "distinct_graph_count": 9,
+  "end_timestamp_utc": "2026-10-31T11:02:28.306426+00:00",
+  "execution_order": [
+    "cohort_2_1: nine (2,1) tasks in frozen cohort order",
+    "cohort_3_2: ER_60_p0.30_seed100 (3,2)"
+  ],
+  "experiment": "Phase 3A.4 diagnostic soft-budget SAT telemetry cohort",
+  "ga_configuration": {
+    "crossover_probability": 0.9,
+    "evaluation_budget": 1000,
+    "mutation_probability": 0.05,
+    "population_size": 40,
+    "repeats": 10,
+    "seed_base": 0,
+    "tournament_size": 3
+  },
+  "methods": [
+    "sat_original",
+    "sat_incremental",
+    "sat_ga_bound"
+  ],
+  "nominal_task_conflict_budget": 10000,
+  "notes": "Two runner invocations were required because run() accepts one common (h,k) pair set; both were sequential and isolated under this fresh root. Raw subrun logs are preserved unchanged.",
+  "parent_timeout_seconds": 30.0,
+  "pysat_version": "1.9.dev15",
+  "python_version": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "raw_telemetry_locations": [
+    "cohort_2_1.telemetry",
+    "cohort_3_2.telemetry"
+  ],
+  "run_id": [
+    "6194b0ee1ee84b2a8b1cda6d11e242cc",
+    "6f17c17f12a44a34875f164028845d4f"
+  ],
+  "shutdown_reserve_seconds": 1.0,
+  "source_cohort": "results/analysis/phase3a_instrumentation_audit_20261031/diagnostic_cohort.csv",
+  "source_cohort_sha256": "23bd68b5c7077884077248fab43b02af1cb8f6c1f8ecf4a85a5057f0dccf02c0",
+  "source_manifest": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+  "source_manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "start_timestamp_utc": "2026-10-31T11:00:01.314254+00:00",
+  "status": "COMPLETE",
+  "task_count": 10
+}

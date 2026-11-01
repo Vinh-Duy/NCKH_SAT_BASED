@@ -1,0 +1,24 @@
+{
+  "schema_version": "sat-attempt-v1",
+  "storage": "one append-only JSONL file per graph-parameter-method task",
+  "durability": "each event is appended and fsynced before emit returns",
+  "identity_fields": [
+    "run_id", "task_id", "graph", "family", "vertex_count", "edge_count",
+    "h", "k", "method", "strategy", "backend", "seed_policy"
+  ],
+  "event_types": [
+    "task_started", "solver_task_started", "model_build_started", "model_built",
+    "backend_initialized", "attempt_started", "attempt_completed", "attempt_failed",
+    "attempt_terminated_by_parent", "model_terminated_by_parent",
+    "ga_preprocessing_started", "ga_preprocessing_completed",
+    "solver_task_finished", "task_completed"
+  ],
+  "attempt_outcomes": ["SAT", "UNSAT", "UNKNOWN", "INTERRUPTED", "ERROR"],
+  "counter_fields": ["conflicts", "decisions", "propagations", "restarts"],
+  "counter_semantics": "Cumulative before/after snapshots; unavailable values and invalid deltas are JSON null, never zero.",
+  "clause_category_counts": null,
+  "clause_category_note": "The current encoder does not expose safe category counts; no formula instrumentation was added.",
+  "learned_clause_count": null,
+  "learned_clause_note": "The selected PySAT backend does not provide a supported learned-clause count through the current API.",
+  "recovery": "On resume, an incomplete final JSONL fragment is archived and only its complete newline-terminated prefix is retained. Unmatched starts are marked INTERRUPTED only after the prior worker is known to have stopped."
+}

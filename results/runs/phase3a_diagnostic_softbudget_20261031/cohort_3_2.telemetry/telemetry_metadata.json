@@ -1,0 +1,18 @@
+{
+  "backend": "CaDiCaL195",
+  "manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "methods": [
+    "sat_original",
+    "sat_incremental",
+    "sat_ga_bound"
+  ],
+  "pairs": [
+    [
+      3,
+      2
+    ]
+  ],
+  "schema_version": "sat-attempt-v1",
+  "task_conflict_budget": 10000,
+  "timeout_seconds": 30.0
+}

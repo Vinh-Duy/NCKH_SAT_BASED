@@ -1,0 +1,11 @@
+Instance,Family,n,m,h,k,Phase2_sat_incremental_status,Phase2_UB,Phase2_LB,Selection_rationale
+tree_20_seed100,Tree,20,19,2,1,OPT,5,5,"Tree reference; representative size 20; Phase 2 SAT/ILP both proved OPT."
+tree_40_seed100,Tree,40,39,2,1,OPT,6,6,"Tree reference; representative size 40; Phase 2 SAT/ILP both proved OPT."
+tree_60_seed100,Tree,60,59,2,1,OPT,6,6,"Tree reference; representative size 60; Phase 2 SAT/ILP both proved OPT."
+ER_20_p0.30_seed100,ER p=0.30,20,61,2,1,TIMEOUT,17,10,"ER dense progression at n=20; Phase 2 incremental SAT timed out with a positive remaining bound gap."
+ER_40_p0.30_seed100,ER p=0.30,40,225,2,1,TIMEOUT,34,19,"ER dense progression at n=40; Phase 2 incremental SAT timed out with a positive remaining bound gap."
+ER_60_p0.30_seed100,ER p=0.30,60,512,2,1,TIMEOUT,57,26,"ER dense progression at n=60; Phase 2 incremental SAT timed out with a positive remaining bound gap."
+ER_60_p0.30_seed100,ER p=0.30,60,512,3,2,TIMEOUT,127,51,"Second (h,k) on the same difficult graph; Phase 2 timeout; repeated graph is not an independent sample."
+K_10_10,Bipartite stress,20,100,2,1,TIMEOUT,20,11,"Smallest complete-bipartite stress graph; Phase 2 SAT timed out while ILP proved OPT."
+K_20_20,Bipartite stress,40,400,2,1,TIMEOUT,40,21,"Middle complete-bipartite stress graph; Phase 2 SAT timed out while ILP proved OPT."
+K_30_30,Bipartite stress,60,900,2,1,TIMEOUT,60,31,"Largest complete-bipartite stress graph; Phase 2 SAT timed out while ILP proved OPT."
