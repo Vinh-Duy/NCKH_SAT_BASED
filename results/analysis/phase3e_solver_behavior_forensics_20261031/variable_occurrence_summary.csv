@@ -1,0 +1,7 @@
+encoding,span,variable_type,variable_count,total_occurrences,mean_occurrences,median_occurrences,min_occurrences,max_occurrences,p25_occurrences,p75_occurrences,p95_occurrences,zero_occurrence_variables,positive_occurrences,negative_occurrences
+reference,112,label,6720,2831028,421.2839285714286,424.0,306,456,412.0,432.0,444.0,0,1415514,1415514
+reference,127,label,7620,3211968,421.5181102362205,426.0,306,456,412.0,432.0,444.0,0,1605984,1605984
+threshold,112,threshold,6720,799486,118.97113095238095,120.0,58,120,120.0,120.0,120.0,0,397466,402020
+threshold,112,selector,1765,398890,226,226,226,226,226.0,226.0,226.0,0,199445,199445
+threshold,127,threshold,7620,907186,119.05328083989501,120.0,58,120,120.0,120.0,120.0,0,451316,455870
+threshold,127,selector,1765,451840,256,256,256,256,256.0,256.0,256.0,0,225920,225920

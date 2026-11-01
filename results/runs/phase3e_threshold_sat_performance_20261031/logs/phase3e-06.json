@@ -1,0 +1,12 @@
+{
+  "block": 3,
+  "encoding": "candidate",
+  "error": "RuntimeError: independent witness validation failed",
+  "parent_wall": 45.16017143299905,
+  "pid": 35305,
+  "run_id": "phase3e-06",
+  "span": 112,
+  "status": "ERROR",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3e_threshold_sat_benchmark/runner.py\", line 105, in worker\n    raise RuntimeError(\"independent witness validation failed\")\nRuntimeError: independent witness validation failed\n",
+  "worker_reaped": true
+}

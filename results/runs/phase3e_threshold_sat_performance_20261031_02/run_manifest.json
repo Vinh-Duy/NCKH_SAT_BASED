@@ -1,0 +1,84 @@
+{
+  "concurrent_workers": false,
+  "distance_two_pairs": 1253,
+  "edges": 512,
+  "ga_executed": false,
+  "graph_fingerprint": "874baef4edb348567f4083e3d455778a2c87298972c4941b4da331de07baf99c",
+  "graph_id": "ER_60_p0.30_seed100",
+  "h": 3,
+  "historical_artifacts_modified": false,
+  "ilp_executed": false,
+  "k": 2,
+  "ordering": [
+    [
+      1,
+      "reference",
+      112
+    ],
+    [
+      1,
+      "candidate",
+      112
+    ],
+    [
+      2,
+      "candidate",
+      112
+    ],
+    [
+      2,
+      "reference",
+      112
+    ],
+    [
+      3,
+      "reference",
+      112
+    ],
+    [
+      3,
+      "candidate",
+      112
+    ],
+    [
+      1,
+      "candidate",
+      127
+    ],
+    [
+      1,
+      "reference",
+      127
+    ],
+    [
+      2,
+      "reference",
+      127
+    ],
+    [
+      2,
+      "candidate",
+      127
+    ],
+    [
+      3,
+      "candidate",
+      127
+    ],
+    [
+      3,
+      "reference",
+      127
+    ]
+  ],
+  "phase": "3E controlled SAT performance",
+  "primary_runs": 12,
+  "production_files_modified": false,
+  "repetitions": 3,
+  "spans": [
+    112,
+    127
+  ],
+  "timeout_seconds": 60.0,
+  "vertices": 60
+}

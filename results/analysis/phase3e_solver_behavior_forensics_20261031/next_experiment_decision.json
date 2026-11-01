@@ -1,0 +1,14 @@
+{
+  "decision": "B",
+  "primary_hypothesis": "Threshold selector/shared-variable structure may increase search work, while its smaller formula reduces setup/loading cost.",
+  "justification": "Static clause and occurrence facts plus U=112 counters support targeted telemetry, but no causal explanation or consistent solve-time advantage is established.",
+  "another_solver_experiment_justified": true,
+  "scope": "Existing ER_60_p0.30_seed100 only; U=112 and U=127; reference versus threshold; no additional graphs.",
+  "required_telemetry": [
+    "decision-variable category counts or traces",
+    "propagation/conflict/restart counters at matched checkpoints",
+    "separate solver append/loading and solve intervals",
+    "formula category and variable-activity attribution where supported"
+  ],
+  "no_new_solver_run_occurred": true
+}

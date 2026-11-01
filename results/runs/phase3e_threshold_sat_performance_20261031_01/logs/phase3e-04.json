@@ -1,0 +1,11 @@
+{
+  "block": 2,
+  "encoding": "reference",
+  "error": "worker exceeded 60.0s",
+  "parent_wall": 60.068221600999095,
+  "pid": 35762,
+  "run_id": "phase3e-04",
+  "span": 112,
+  "status": "PARENT_TIMEOUT",
+  "worker_reaped": true
+}

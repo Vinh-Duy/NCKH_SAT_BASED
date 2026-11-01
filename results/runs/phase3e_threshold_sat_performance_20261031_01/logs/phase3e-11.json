@@ -1,0 +1,12 @@
+{
+  "block": 3,
+  "encoding": "candidate",
+  "error": "RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}",
+  "parent_wall": 3.2559792270003527,
+  "pid": 35895,
+  "run_id": "phase3e-11",
+  "span": 127,
+  "status": "ERROR",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/vinhduy/Desktop/NCKH_SAT_BASED/experiments/phase3e_threshold_sat_benchmark/runner.py\", line 109, in worker\n    raise RuntimeError(\n        f\"independent witness validation failed: {validation_details}\"\n    )\nRuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}\n",
+  "worker_reaped": true
+}

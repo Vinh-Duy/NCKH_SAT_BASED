@@ -1,0 +1,13 @@
+run_id,encoding,span,status,witness_valid,decoded_labels,error
+phase3e-01,reference,112,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-02,candidate,112,PARENT_TIMEOUT,,,worker exceeded 60.0s
+phase3e-03,candidate,112,PARENT_TIMEOUT,,,worker exceeded 60.0s
+phase3e-04,reference,112,PARENT_TIMEOUT,,,worker exceeded 60.0s
+phase3e-05,reference,112,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-06,candidate,112,PARENT_TIMEOUT,,,worker exceeded 60.0s
+phase3e-07,candidate,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-08,reference,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-09,reference,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-10,candidate,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-11,candidate,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"
+phase3e-12,reference,127,ERROR,,,"RuntimeError: independent witness validation failed: {'graph_valid': False, 'threshold_valid': True, 'selector_valid': True}"

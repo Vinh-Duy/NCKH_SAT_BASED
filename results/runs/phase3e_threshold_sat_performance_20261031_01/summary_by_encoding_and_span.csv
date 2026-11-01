@@ -1,0 +1,5 @@
+encoding,span,runs,solve_wall_median,solve_wall_min,solve_wall_max,solve_wall_range,pipeline_wall_median,pipeline_wall_min,pipeline_wall_max,pipeline_wall_range,end_to_end_wall_median,end_to_end_wall_min,end_to_end_wall_max,end_to_end_wall_range,peak_rss_mib_median,peak_rss_mib_min,peak_rss_mib_max,peak_rss_mib_range,sat,unsat,parent_timeouts,errors
+reference,112,3,,,,,,,,,,,,,,,,,0,0,1,2
+reference,127,3,,,,,,,,,,,,,,,,,0,0,0,3
+candidate,112,3,,,,,,,,,,,,,,,,,0,0,3,0
+candidate,127,3,,,,,,,,,,,,,,,,,0,0,0,3

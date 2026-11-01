@@ -1,0 +1,7 @@
+encoding,span,variable_type,variable_count,total_occurrences,mean_occurrences,median_occurrences,min_occurrences,max_occurrences,p25_occurrences,p75_occurrences,p95_occurrences,zero_occurrence_variables,positive_occurrences,negative_occurrences,distribution_bin
+reference,112,label,6720,,,,,,,,,,,,50+
+reference,127,label,7620,,,,,,,,,,,,50+
+threshold,112,threshold,6720,,,,,,,,,,,,50+
+threshold,112,selector,1765,,,,,,,,,,,,50+
+threshold,127,threshold,7620,,,,,,,,,,,,50+
+threshold,127,selector,1765,,,,,,,,,,,,50+

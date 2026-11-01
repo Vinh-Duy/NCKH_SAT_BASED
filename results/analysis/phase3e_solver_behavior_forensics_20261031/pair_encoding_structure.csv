@@ -1,0 +1,9 @@
+encoding,span,category,constrained_pairs,clauses_per_pair,total_clauses,literals_per_pair,total_literals,auxiliary_variables_per_pair,shared_variables_per_vertex,formula_variable_count,formula_clause_count
+reference,112,distance_1,512,559,286208,2224.0,1138688,0,112,6720,715129
+reference,112,distance_2,1253,337,422261,1340.0,1679020,0,112,6720,715129
+reference,127,distance_1,512,634,324608,2524.0,1292288,0,127,7620,810814
+reference,127,distance_2,1253,382,478646,1520.0,1904560,0,127,7620,810814
+threshold,112,distance_1,512,226,115712,670.0,343040,1,112,8485,405550
+threshold,112,distance_2,1253,226,283178,672.0,842016,1,112,8485,405550
+threshold,127,distance_1,512,256,131072,760.0,389120,1,127,9385,459400
+threshold,127,distance_2,1253,256,320768,762.0,954786,1,127,9385,459400
