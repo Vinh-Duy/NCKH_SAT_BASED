@@ -1,0 +1,31 @@
+graph_id,h,k,method,initial_ub,model_build_span,candidate_span,variable_count,raw_clause_count,simplified_clause_count,encoding_seconds,sat_call_seconds,end_to_end_seconds,ga_preprocessing_seconds,difference_driver
+ER_20_p0.30_seed100,2,1,sat_ga_bound,15,15,12,300,4862,4862,0.04375504400013597,0.3189452379992872,2.422401,1.4868181229976472,single model at incumbent upper bound plus assumptions
+ER_20_p0.30_seed100,2,1,sat_incremental,17,17,13,340,5490,5490,0.047965892998036,0.30891769700247096,0.923605,0.0,single model at incumbent upper bound plus assumptions
+ER_20_p0.30_seed100,2,1,sat_original,17,13,13,260,4234,4234,0.035372597001696704,0.2917418530014402,0.963751,0.0,rebuild at candidate span
+ER_40_p0.30_seed100,2,1,sat_ga_bound,30,30,24,1200,38313,38313,0.3358361430000514,0.7314894130031462,7.089832,5.354557818009198,single model at incumbent upper bound plus assumptions
+ER_40_p0.30_seed100,2,1,sat_incremental,34,34,26,1360,43325,43325,0.4557271720004792,0.7124500639984035,1.785056,0.0,single model at incumbent upper bound plus assumptions
+ER_40_p0.30_seed100,2,1,sat_original,34,26,26,1040,33301,33301,0.3114478399984364,0.8246046929998556,1.755066,0.0,rebuild at candidate span
+ER_60_p0.30_seed100,2,1,sat_ga_bound,56,56,41,3360,161249,161249,1.8567973259996506,1.0796226380007283,16.372041,12.40053648000685,single model at incumbent upper bound plus assumptions
+ER_60_p0.30_seed100,2,1,sat_incremental,57,57,41,3420,164098,164098,1.925029985999572,1.1090878729992255,3.840544,0.0,single model at incumbent upper bound plus assumptions
+ER_60_p0.30_seed100,2,1,sat_original,57,41,41,2460,118514,118514,1.426837004000845,0.7098721349975676,2.925643,0.0,rebuild at candidate span
+ER_60_p0.30_seed100,3,2,sat_ga_bound,112,112,81,6720,715129,715129,9.270716402999824,2.701816234999569,28.883047,14.932354094999027,single model at incumbent upper bound plus assumptions
+ER_60_p0.30_seed100,3,2,sat_incremental,127,127,89,7620,810814,810814,10.748473473999184,2.7188784169993596,15.318324,0.0,single model at incumbent upper bound plus assumptions
+ER_60_p0.30_seed100,3,2,sat_original,127,89,89,5340,568412,568412,7.969434007001837,2.502011267999478,12.061671,0.0,rebuild at candidate span
+K_10_10,2,1,sat_ga_bound,20,20,15,400,8370,8370,0.07191538600091008,0.33337676399969496,2.715603,1.7427032369996596,single model at incumbent upper bound plus assumptions
+K_10_10,2,1,sat_incremental,20,20,15,400,8370,8370,0.06996120199983125,0.33249309999882826,0.966057,0.0,single model at incumbent upper bound plus assumptions
+K_10_10,2,1,sat_original,20,15,15,300,6320,6320,0.050046397002006415,0.2721373560016218,1.423292,0.0,rebuild at candidate span
+K_20_20,2,1,sat_ga_bound,40,40,30,1600,65540,65540,0.6363560360005067,0.5660780940015684,7.718289,5.805990679993556,single model at incumbent upper bound plus assumptions
+K_20_20,2,1,sat_incremental,40,40,30,1600,65540,65540,0.664123271999415,0.5712399429976358,1.87336,0.0,single model at incumbent upper bound plus assumptions
+K_20_20,2,1,sat_original,40,30,30,1200,49340,49340,0.5040612329976284,0.48911716699876706,1.601995,0.0,rebuild at candidate span
+K_30_30,2,1,sat_ga_bound,60,60,45,3600,219510,219510,2.586762025999633,1.1969726489987806,16.803377,11.79275912400044,single model at incumbent upper bound plus assumptions
+K_30_30,2,1,sat_incremental,60,60,45,3600,219510,219510,2.798926195999229,1.1774927529986599,4.953264,0.0,single model at incumbent upper bound plus assumptions
+K_30_30,2,1,sat_original,60,45,45,2700,165060,165060,1.9172548249989632,1.1106886000015948,3.80443,0.0,rebuild at candidate span
+tree_20_seed100,2,1,sat_ga_bound,5,,,,,,0.0,0.0,1.954921,1.182025442005397,no SAT model; elementary-bound closure
+tree_20_seed100,2,1,sat_incremental,6,6,5,120,615,615,0.008946417998231482,0.0016494810006406624,0.893865,0.0,single model at incumbent upper bound plus assumptions
+tree_20_seed100,2,1,sat_original,6,5,5,100,516,516,0.006788416001654696,0.0024528309986635577,0.669055,0.0,rebuild at candidate span
+tree_40_seed100,2,1,sat_ga_bound,6,,,,,,0.0,0.0,1.896754,1.3060016890012776,no SAT model; elementary-bound closure
+tree_40_seed100,2,1,sat_incremental,7,7,6,280,1562,1562,0.01086082799884025,0.00048209799933829345,0.568266,0.0,single model at incumbent upper bound plus assumptions
+tree_40_seed100,2,1,sat_original,7,6,6,240,1347,1347,0.011842991003504721,0.000654461000522133,0.541525,0.0,rebuild at candidate span
+tree_60_seed100,2,1,sat_ga_bound,6,,,,,,0.0,0.0,2.520586,1.9647763190005207,no SAT model; elementary-bound closure
+tree_60_seed100,2,1,sat_incremental,7,7,6,420,2338,2338,0.02266866799982381,0.0017017840000335127,0.57356,0.0,single model at incumbent upper bound plus assumptions
+tree_60_seed100,2,1,sat_original,7,6,6,360,2016,2016,0.019683695998537587,0.005074022999906447,0.582988,0.0,rebuild at candidate span

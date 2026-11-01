@@ -1,0 +1,61 @@
+path,fixed_u,label_domain,distance_1,distance_2,symmetry_breaking,auxiliary,other,raw_clause_count,simplified_clause_count,instance,family,h,k,u_role
+sat_original_external_u,14,260,2623,1665,0,0,0,4548,4548,ER_20_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_incremental_external_u,14,260,2623,1665,0,0,0,4548,4548,ER_20_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_ga_bound_external_u,14,260,2623,1665,0,0,0,4548,4548,ER_20_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_original_external_u,17,320,3172,1998,0,0,0,5490,5490,ER_20_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_incremental_external_u,17,320,3172,1998,0,0,0,5490,5490,ER_20_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_ga_bound_external_u,17,320,3172,1998,0,0,0,5490,5490,ER_20_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_original_external_u,30,1160,20475,16678,0,0,0,38313,38313,ER_40_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_incremental_external_u,30,1160,20475,16678,0,0,0,38313,38313,ER_40_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_ga_bound_external_u,30,1160,20475,16678,0,0,0,38313,38313,ER_40_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_original_external_u,34,1320,23175,18830,0,0,0,43325,43325,ER_40_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_incremental_external_u,34,1320,23175,18830,0,0,0,43325,43325,ER_40_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_ga_bound_external_u,34,1320,23175,18830,0,0,0,43325,43325,ER_40_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_original_external_u,56,3300,86528,71421,0,0,0,161249,161249,ER_60_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_incremental_external_u,56,3300,86528,71421,0,0,0,161249,161249,ER_60_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_ga_bound_external_u,56,3300,86528,71421,0,0,0,161249,161249,ER_60_p0.30_seed100,ER p=0.30,2,1,u_tight
+sat_original_external_u,57,3360,88064,72674,0,0,0,164098,164098,ER_60_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_incremental_external_u,57,3360,88064,72674,0,0,0,164098,164098,ER_60_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_ga_bound_external_u,57,3360,88064,72674,0,0,0,164098,164098,ER_60_p0.30_seed100,ER p=0.30,2,1,u_loose
+sat_original_external_u,112,6660,286208,422261,0,0,0,715129,715129,ER_60_p0.30_seed100,ER p=0.30,3,2,u_tight
+sat_incremental_external_u,112,6660,286208,422261,0,0,0,715129,715129,ER_60_p0.30_seed100,ER p=0.30,3,2,u_tight
+sat_ga_bound_external_u,112,6660,286208,422261,0,0,0,715129,715129,ER_60_p0.30_seed100,ER p=0.30,3,2,u_tight
+sat_original_external_u,127,7560,324608,478646,0,0,0,810814,810814,ER_60_p0.30_seed100,ER p=0.30,3,2,u_loose
+sat_incremental_external_u,127,7560,324608,478646,0,0,0,810814,810814,ER_60_p0.30_seed100,ER p=0.30,3,2,u_loose
+sat_ga_bound_external_u,127,7560,324608,478646,0,0,0,810814,810814,ER_60_p0.30_seed100,ER p=0.30,3,2,u_loose
+sat_original_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_tight
+sat_incremental_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_tight
+sat_ga_bound_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_tight
+sat_original_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_loose
+sat_incremental_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_loose
+sat_ga_bound_external_u,20,380,6100,1890,0,0,0,8370,8370,K_10_10,Bipartite stress,2,1,u_loose
+sat_original_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_tight
+sat_incremental_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_tight
+sat_ga_bound_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_tight
+sat_original_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_loose
+sat_incremental_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_loose
+sat_ga_bound_external_u,40,1560,48400,15580,0,0,0,65540,65540,K_20_20,Bipartite stress,2,1,u_loose
+sat_original_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_tight
+sat_incremental_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_tight
+sat_ga_bound_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_tight
+sat_original_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_loose
+sat_incremental_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_loose
+sat_ga_bound_external_u,60,3540,162900,53070,0,0,0,219510,219510,K_30_30,Bipartite stress,2,1,u_loose
+sat_original_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_tight
+sat_incremental_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_tight
+sat_ga_bound_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_tight
+sat_original_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_loose
+sat_incremental_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_loose
+sat_ga_bound_external_u,5,80,304,132,0,0,0,516,516,tree_20_seed100,Tree,2,1,u_loose
+sat_original_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_tight
+sat_incremental_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_tight
+sat_ga_bound_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_tight
+sat_original_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_loose
+sat_incremental_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_loose
+sat_ga_bound_external_u,6,200,741,406,0,0,0,1347,1347,tree_40_seed100,Tree,2,1,u_loose
+sat_original_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_tight
+sat_incremental_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_tight
+sat_ga_bound_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_tight
+sat_original_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_loose
+sat_incremental_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_loose
+sat_ga_bound_external_u,6,300,1121,595,0,0,0,2016,2016,tree_60_seed100,Tree,2,1,u_loose

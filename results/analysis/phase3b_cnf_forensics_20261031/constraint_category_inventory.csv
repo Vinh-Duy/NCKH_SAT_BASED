@@ -1,0 +1,9 @@
+category,function,source_location,input,countability,contributes,notes
+order variables,OrderVars.__init__,src/models/sat_encoding.py:59-84,free vertices × thresholds 0..span-1,exact,variables,fixed labels remove variables; no auxiliary variables
+label-domain/order monotonicity,monotone_clauses,src/models/sat_encoding.py:103-109,each free vertex and adjacent thresholds,exact,clauses,"n_free × max(span-1,0)"
+distance-1 separation,forbid_close_labels,src/models/sat_encoding.py:124-145; build_cnf:284-285,each graph edge and h,exact,clauses,"edge count × close-pair count(span,h), subject to fixed-label branches"
+distance-2 separation,forbid_close_labels,src/models/sat_encoding.py:124-145; build_cnf:286-287,each distance-two pair and k,exact,clauses,"distance-two count × close-pair count(span,k), subject to fixed-label branches"
+symmetry constraints,symmetry_breaking_clauses/strict_less_clauses,src/models/sat_encoding.py:201-225; 168-199,recognized symmetry kind and vertices,exact when plan is known,clauses and fixed-domain variables,diagnostic cohort receives no generic automorphism constraints; cycle plan is outside cohort
+fixed-label reduction,OrderVars/build_cnf,src/models/sat_encoding.py:76-84; 278-280,fixed_labels and cycle root rule,exact,variables and clause branches,not a learned or auxiliary encoding
+CNF simplification,simplify_cnf,src/models/sat_encoding.py:8-56; build_cnf:289-290,raw clauses,exact for this preprocessing output,simplified clauses,"deduplication, tautology removal, unit propagation; preserves original variable IDs"
+auxiliary clauses,none identified,src/models/sat_encoding.py:59-294,no separate auxiliary-variable layer,exactly zero in current encoder,none,backend preprocessing is not included in telemetry

@@ -1,0 +1,39 @@
+{
+  "phase": "3B.1",
+  "run_id": "phase3b_controlled_cnf_profile_20261031",
+  "cohort_source": "results/analysis/phase3a_instrumentation_audit_20261031/diagnostic_cohort.csv",
+  "graph_manifest_source": "results/analysis/certificate_validation/v1_20261017/graphs.jsonl",
+  "witness_sources": [
+    "results/runs/incremental_sat_comparison_20261030.witnesses.jsonl",
+    "results/runs/phase3a_diagnostic_softbudget_20261031/*.telemetry"
+  ],
+  "model_count": 60,
+  "tasks": 10,
+  "u_values_per_task": 2,
+  "paths_per_u": 3,
+  "sat_search_performed": false,
+  "ga_executed": false,
+  "ilp_executed": false,
+  "backend_initialized": false,
+  "smoke_test": {
+    "instance": "tree_20_seed100",
+    "u_role": "u_tight",
+    "passed": true,
+    "sat_solve_calls": 0,
+    "formula_identity_check": true
+  },
+  "paths": [
+    {
+      "name": "sat_original_external_u",
+      "description": "build_cnf; fixed U; no rebuild/search"
+    },
+    {
+      "name": "sat_incremental_external_u",
+      "description": "build_cnf; fixed U; no solver assumptions/search"
+    },
+    {
+      "name": "sat_ga_bound_external_u",
+      "description": "build_cnf; fixed U; GA not executed"
+    }
+  ]
+}
