@@ -1,0 +1,118 @@
+Certificate_ID,Instance,h,k,Parameter_Pair,Certificate_Type,Independently_Closed,Final_LB,Final_UB,Historical_207_Task_Match,Verification_Basis
+BA_20_m2_seed0__h1_k1,BA_20_m2_seed0,1,1,"(1,1)",theory/clique,True,12,12,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed0__h2_k1,BA_20_m2_seed0,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed0__h3_k2,BA_20_m2_seed0,3,2,"(3,2)",theory/clique,True,25,25,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed1__h1_k1,BA_20_m2_seed1,1,1,"(1,1)",theory/clique,True,12,12,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed1__h2_k1,BA_20_m2_seed1,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed1__h3_k2,BA_20_m2_seed1,3,2,"(3,2)",theory/clique,True,25,25,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed2__h1_k1,BA_20_m2_seed2,1,1,"(1,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed2__h2_k1,BA_20_m2_seed2,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_20_m2_seed2__h3_k2,BA_20_m2_seed2,3,2,"(3,2)",theory/clique,True,26,26,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed0__h1_k1,BA_40_m2_seed0,1,1,"(1,1)",theory/clique,True,15,15,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed0__h2_k1,BA_40_m2_seed0,2,1,"(2,1)",theory/clique,True,16,16,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed0__h3_k2,BA_40_m2_seed0,3,2,"(3,2)",theory/clique,True,31,31,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed1__h1_k1,BA_40_m2_seed1,1,1,"(1,1)",theory/clique,True,16,16,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed1__h2_k1,BA_40_m2_seed1,2,1,"(2,1)",theory/clique,True,17,17,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed1__h3_k2,BA_40_m2_seed1,3,2,"(3,2)",theory/clique,True,33,33,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed2__h1_k1,BA_40_m2_seed2,1,1,"(1,1)",theory/clique,True,16,16,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed2__h2_k1,BA_40_m2_seed2,2,1,"(2,1)",theory/clique,True,17,17,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_40_m2_seed2__h3_k2,BA_40_m2_seed2,3,2,"(3,2)",theory/clique,True,33,33,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed0__h1_k1,BA_60_m2_seed0,1,1,"(1,1)",theory/clique,True,19,19,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed0__h2_k1,BA_60_m2_seed0,2,1,"(2,1)",theory/clique,True,20,20,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed0__h3_k2,BA_60_m2_seed0,3,2,"(3,2)",theory/clique,True,39,39,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed1__h1_k1,BA_60_m2_seed1,1,1,"(1,1)",theory/clique,True,18,18,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed1__h2_k1,BA_60_m2_seed1,2,1,"(2,1)",theory/clique,True,19,19,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed1__h3_k2,BA_60_m2_seed1,3,2,"(3,2)",theory/clique,True,37,37,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed2__h1_k1,BA_60_m2_seed2,1,1,"(1,1)",theory/clique,True,20,20,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed2__h2_k1,BA_60_m2_seed2,2,1,"(2,1)",theory/clique,True,21,21,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+BA_60_m2_seed2__h3_k2,BA_60_m2_seed2,3,2,"(3,2)",theory/clique,True,41,41,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed0__h1_k1,ER_20_p0.15_seed0,1,1,"(1,1)",theory/clique,True,7,7,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed0__h2_k1,ER_20_p0.15_seed0,2,1,"(2,1)",theory/clique,True,8,8,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed0__h3_k2,ER_20_p0.15_seed0,3,2,"(3,2)",theory/clique,True,15,15,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed1__h1_k1,ER_20_p0.15_seed1,1,1,"(1,1)",theory/clique,True,7,7,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed1__h2_k1,ER_20_p0.15_seed1,2,1,"(2,1)",theory/clique,True,8,8,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed1__h3_k2,ER_20_p0.15_seed1,3,2,"(3,2)",theory/clique,True,15,15,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed2__h1_k1,ER_20_p0.15_seed2,1,1,"(1,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed2__h2_k1,ER_20_p0.15_seed2,2,1,"(2,1)",theory/clique,True,7,7,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.15_seed2__h3_k2,ER_20_p0.15_seed2,3,2,"(3,2)",UNSAT proof,True,14,14,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+ER_20_p0.30_seed0__h1_k1,ER_20_p0.30_seed0,1,1,"(1,1)",theory/clique,True,11,11,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed0__h2_k1,ER_20_p0.30_seed0,2,1,"(2,1)",theory/clique,True,11,11,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed0__h3_k2,ER_20_p0.30_seed0,3,2,"(3,2)",theory/clique,True,22,22,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed1__h1_k1,ER_20_p0.30_seed1,1,1,"(1,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed1__h2_k1,ER_20_p0.30_seed1,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed1__h3_k2,ER_20_p0.30_seed1,3,2,"(3,2)",theory/clique,True,26,26,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed2__h1_k1,ER_20_p0.30_seed2,1,1,"(1,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed2__h2_k1,ER_20_p0.30_seed2,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_20_p0.30_seed2__h3_k2,ER_20_p0.30_seed2,3,2,"(3,2)",theory/clique,True,26,26,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.15_seed0__h1_k1,ER_40_p0.15_seed0,1,1,"(1,1)",capacity,True,13,13,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.15_seed0__h2_k1,ER_40_p0.15_seed0,2,1,"(2,1)",UNSAT proof,True,14,14,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+ER_40_p0.15_seed0__h3_k2,ER_40_p0.15_seed0,3,2,"(3,2)",UNSAT proof,True,28,28,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+ER_40_p0.15_seed1__h1_k1,ER_40_p0.15_seed1,1,1,"(1,1)",capacity,True,13,13,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.15_seed1__h2_k1,ER_40_p0.15_seed1,2,1,"(2,1)",capacity,True,13,13,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.15_seed1__h3_k2,ER_40_p0.15_seed1,3,2,"(3,2)",capacity,True,26,26,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.15_seed2__h1_k1,ER_40_p0.15_seed2,1,1,"(1,1)",capacity,True,13,13,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.15_seed2__h2_k1,ER_40_p0.15_seed2,2,1,"(2,1)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.15_seed2__h3_k2,ER_40_p0.15_seed2,3,2,"(3,2)",capacity,True,26,26,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_40_p0.30_seed0__h1_k1,ER_40_p0.30_seed0,1,1,"(1,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed0__h2_k1,ER_40_p0.30_seed0,2,1,"(2,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed0__h3_k2,ER_40_p0.30_seed0,3,2,"(3,2)",theory/clique,True,64,64,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed1__h1_k1,ER_40_p0.30_seed1,1,1,"(1,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed1__h2_k1,ER_40_p0.30_seed1,2,1,"(2,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed1__h3_k2,ER_40_p0.30_seed1,3,2,"(3,2)",theory/clique,True,64,64,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed2__h1_k1,ER_40_p0.30_seed2,1,1,"(1,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed2__h2_k1,ER_40_p0.30_seed2,2,1,"(2,1)",theory/clique,True,32,32,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_40_p0.30_seed2__h3_k2,ER_40_p0.30_seed2,3,2,"(3,2)",theory/clique,True,64,64,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.15_seed0__h1_k1,ER_60_p0.15_seed0,1,1,"(1,1)",capacity,True,22,22,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed0__h2_k1,ER_60_p0.15_seed0,2,1,"(2,1)",capacity,True,22,22,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed0__h3_k2,ER_60_p0.15_seed0,3,2,"(3,2)",capacity,True,44,44,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed1__h1_k1,ER_60_p0.15_seed1,1,1,"(1,1)",capacity,True,22,22,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed1__h2_k1,ER_60_p0.15_seed1,2,1,"(2,1)",capacity,True,22,22,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed1__h3_k2,ER_60_p0.15_seed1,3,2,"(3,2)",capacity,True,44,44,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed2__h1_k1,ER_60_p0.15_seed2,1,1,"(1,1)",capacity,True,20,20,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed2__h2_k1,ER_60_p0.15_seed2,2,1,"(2,1)",capacity,True,20,20,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.15_seed2__h3_k2,ER_60_p0.15_seed2,3,2,"(3,2)",capacity,True,40,40,No,Archived labeling witness independently validated; exact weighted-capacity certificate recomputed.
+ER_60_p0.30_seed0__h1_k1,ER_60_p0.30_seed0,1,1,"(1,1)",theory/clique,True,55,55,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed0__h2_k1,ER_60_p0.30_seed0,2,1,"(2,1)",theory/clique,True,55,55,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed0__h3_k2,ER_60_p0.30_seed0,3,2,"(3,2)",theory/clique,True,110,110,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed1__h1_k1,ER_60_p0.30_seed1,1,1,"(1,1)",theory/clique,True,55,55,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed1__h2_k1,ER_60_p0.30_seed1,2,1,"(2,1)",theory/clique,True,55,55,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed1__h3_k2,ER_60_p0.30_seed1,3,2,"(3,2)",theory/clique,True,110,110,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed2__h1_k1,ER_60_p0.30_seed2,1,1,"(1,1)",theory/clique,True,56,56,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed2__h2_k1,ER_60_p0.30_seed2,2,1,"(2,1)",theory/clique,True,56,56,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+ER_60_p0.30_seed2__h3_k2,ER_60_p0.30_seed2,3,2,"(3,2)",theory/clique,True,112,112,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_4xP_5__h1_k1,P_4xP_5,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_4xP_5__h2_k1,P_4xP_5,2,1,"(2,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_4xP_5__h3_k2,P_4xP_5,3,2,"(3,2)",UNSAT proof,True,11,11,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+P_5xP_8__h1_k1,P_5xP_8,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_5xP_8__h2_k1,P_5xP_8,2,1,"(2,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_5xP_8__h3_k2,P_5xP_8,3,2,"(3,2)",UNSAT proof,True,11,11,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+P_6xP_10__h1_k1,P_6xP_10,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_6xP_10__h2_k1,P_6xP_10,2,1,"(2,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+P_6xP_10__h3_k2,P_6xP_10,3,2,"(3,2)",UNSAT proof,True,11,11,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+tree_20_seed0__h1_k1,tree_20_seed0,1,1,"(1,1)",theory/clique,True,3,3,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed0__h2_k1,tree_20_seed0,2,1,"(2,1)",UNSAT proof,True,5,5,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+tree_20_seed0__h3_k2,tree_20_seed0,3,2,"(3,2)",UNSAT proof,True,8,8,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+tree_20_seed1__h1_k1,tree_20_seed1,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed1__h2_k1,tree_20_seed1,2,1,"(2,1)",theory/clique,True,5,5,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed1__h3_k2,tree_20_seed1,3,2,"(3,2)",theory/clique,True,9,9,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed2__h1_k1,tree_20_seed2,1,1,"(1,1)",theory/clique,True,3,3,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed2__h2_k1,tree_20_seed2,2,1,"(2,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_20_seed2__h3_k2,tree_20_seed2,3,2,"(3,2)",UNSAT proof,True,8,8,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+tree_40_seed0__h1_k1,tree_40_seed0,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed0__h2_k1,tree_40_seed0,2,1,"(2,1)",theory/clique,True,5,5,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed0__h3_k2,tree_40_seed0,3,2,"(3,2)",theory/clique,True,9,9,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed1__h1_k1,tree_40_seed1,1,1,"(1,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed1__h2_k1,tree_40_seed1,2,1,"(2,1)",theory/clique,True,7,7,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed1__h3_k2,tree_40_seed1,3,2,"(3,2)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed2__h1_k1,tree_40_seed2,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed2__h2_k1,tree_40_seed2,2,1,"(2,1)",theory/clique,True,5,5,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_40_seed2__h3_k2,tree_40_seed2,3,2,"(3,2)",UNSAT proof,True,10,10,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).
+tree_60_seed0__h1_k1,tree_60_seed0,1,1,"(1,1)",theory/clique,True,5,5,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed0__h2_k1,tree_60_seed0,2,1,"(2,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed0__h3_k2,tree_60_seed0,3,2,"(3,2)",theory/clique,True,11,11,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed1__h1_k1,tree_60_seed1,1,1,"(1,1)",theory/clique,True,6,6,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed1__h2_k1,tree_60_seed1,2,1,"(2,1)",theory/clique,True,7,7,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed1__h3_k2,tree_60_seed1,3,2,"(3,2)",theory/clique,True,13,13,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed2__h1_k1,tree_60_seed2,1,1,"(1,1)",theory/clique,True,4,4,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed2__h2_k1,tree_60_seed2,2,1,"(2,1)",theory/clique,True,5,5,No,Archived labeling witness independently validated; mathematical/clique lower bound recomputed.
+tree_60_seed2__h3_k2,tree_60_seed2,3,2,"(3,2)",UNSAT proof,True,10,10,No,Archived labeling witness independently validated; reconstructed CNF UNSAT proof independently replayed (LRAT/RUP).

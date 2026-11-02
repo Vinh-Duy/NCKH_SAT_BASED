@@ -1,0 +1,80 @@
+{
+  "created_utc": "2026-10-31T23:04:12+07:00",
+  "phase": "Final Research Synthesis and Closure",
+  "working_tree_state": "pre-existing dirty worktree preserved; synthesis directory newly created",
+  "source_artifacts_inspected": [
+    "README.md",
+    "docs/project_overview.md",
+    "docs/research_summary.md",
+    "docs/literature_review.md",
+    "results/runs/incremental_sat_comparison_20261030.csv",
+    "results/analysis/structural_difficulty_20261031",
+    "results/analysis/proof_closure",
+    "results/analysis/research_artifact_audit_20261031",
+    "results/runs/phase3a_diagnostic_softbudget_20261031",
+    "results/runs/phase3b_controlled_cnf_profile_20261031",
+    "results/analysis/phase3c_distance2_forensics_20261031",
+    "results/runs/phase3d_threshold_prototype_20261031",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02",
+    "results/runs/phase3f_threshold_external_validity_20261031_01",
+    "results/analysis/phase3e2_telemetry_feasibility_20261031",
+    "results/runs/phase3e2_ipasir_up_perturbation_pilot_20261031_02",
+    "results/runs/incremental_sat_comparison_20261030.metadata.json",
+    "results/analysis/proof_closure/v1_20261018/instances.csv",
+    "results/analysis/proof_closure/v1_20261018/summary.json",
+    "results/analysis/proof_closure/v1_20261018/proof_checks.json",
+    "results/analysis/proof_closure/v1_20261018/sources.json",
+    "scripts/verify_proof_closure.py",
+    "docs/methods/proof_closure.md"
+  ],
+  "artifact_counts_reviewed": {
+    "audit_reported_files": 327,
+    "audit_reported_csv": 46,
+    "audit_reported_json": 74,
+    "historical_rows": 1242,
+    "phase3a_attempts": 27,
+    "phase3b_builds": 60,
+    "phase3e_rows": 12,
+    "phase3f_rows": 48
+  },
+  "commands_used": [
+    "find/read-only artifact inventory",
+    "Python CSV/JSON parsing and SHA-256 verification",
+    "Python exact composite-key join for historical and proof-closure task IDs",
+    "Python validation of proof-closure task/pair/certificate distributions",
+    "git status --short",
+    "git diff --check",
+    "Python CSV/JSON syntax and synthesis whitespace validation"
+  ],
+  "production_source_modified": false,
+  "previous_artifacts_modified": false,
+  "solver_backend_initialized": false,
+  "sat_executed": false,
+  "ga_executed": false,
+  "ilp_executed": false,
+  "benchmark_executed": false,
+  "historical_benchmark_sha256": "c90d856747464b92fce879b8d4893088fb0fddf7388276983d4862ceb16ea876",
+  "graph_manifest_sha256": "011c0750f1bc8617f3af583a4625ec3a74cf7605c177bf5b5570d9c31cb2f973",
+  "phase3f_canonical": "results/runs/phase3f_threshold_external_validity_20261031_01",
+  "phase3e_canonical": "results/runs/phase3e_threshold_sat_performance_20261031_02",
+  "preexisting_git_status_lines": 87,
+  "factual_wording_audit": {
+    "completed": true,
+    "historical_benchmark_sha256_rechecked": "c90d856747464b92fce879b8d4893088fb0fddf7388276983d4862ceb16ea876",
+    "proof_closure_tasks": 117,
+    "proof_closure_task_key_overlap_with_historical_207": 0,
+    "proof_closure_parameter_pair_counts": {
+      "(1,1)": 39,
+      "(2,1)": 39,
+      "(3,2)": 39
+    },
+    "proof_closure_certificate_counts": {
+      "theory/clique": 91,
+      "capacity": 15,
+      "UNSAT proof": 11
+    },
+    "solver_backend_initialized": false,
+    "experiments_run": false,
+    "historical_or_prior_phase_artifacts_modified": false
+  }
+}

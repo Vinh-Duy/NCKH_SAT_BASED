@@ -1,0 +1,4 @@
+Graph identity,Graph fingerprint,h,k,U,Encoding,Source artifact,Downstream artifact,Consistency status
+ER-60 cohort graphs,per-task manifests,3/2/varies by task,2/1/varies by task,task-specific fixed spans,production reference,Phase 3A-3C manifests,Phase 3A-3C CSV/JSONL,consistent
+ER_60_p0.30_seed100,874baef4edb348567f4083e3d455778a2c87298972c4941b4da331de07baf99c,3,2,"112,127",reference/threshold,Phase 3D manifest and graph_model.py,Phase 3E _02 manifest/results,consistent
+historical 69-graph benchmark,not recorded in legacy CSV,task-specific,task-specific,legacy method bounds,six historical methods,incremental_sat_comparison_20261030.csv,later phase reports,immutable; not merged

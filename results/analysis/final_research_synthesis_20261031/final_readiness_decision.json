@@ -1,0 +1,31 @@
+{
+  "mentor_review": {
+    "decision": "READY",
+    "qualification": "Evidence package is coherent; mentor must review claims, scope and presentation."
+  },
+  "final_report_writing": {
+    "decision": "READY",
+    "qualification": "Canonical data and claim boundaries are identified."
+  },
+  "internal_presentation": {
+    "decision": "READY_WITH_LIMITATIONS",
+    "qualification": "Present proof closure separately from timed solver coverage and label Threshold as exploratory."
+  },
+  "formal_research_submission": {
+    "decision": "NOT_YET_READY",
+    "qualification": "Writing, figures, citations, authorship/venue metadata and mentor sign-off remain."
+  },
+  "original_objectives_addressed": true,
+  "phase3a_to_3f_can_close": true,
+  "phase3g_recommended": false,
+  "threshold_encoding_role": "secondary exploratory contribution",
+  "exact_remaining_obligations": [
+    "Complete integrated manuscript prose",
+    "Generate and audit final figures/tables",
+    "Finalize literature citations and bibliography",
+    "Confirm authorship, affiliation, venue and declarations",
+    "Obtain mentor review and incorporate corrections",
+    "Clarify RSS units and older reproducibility gaps"
+  ],
+  "basis": "results/analysis/final_research_synthesis_20261031/research_objective_evidence_matrix.csv"
+}

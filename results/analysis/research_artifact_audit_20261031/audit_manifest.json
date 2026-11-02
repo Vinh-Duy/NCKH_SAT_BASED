@@ -1,0 +1,20 @@
+{
+  "audit_start_utc": "2026-10-31T14:18:46.074518+00:00",
+  "audit_end_utc": "2026-10-31T14:18:47.037895+00:00",
+  "files_inspected": 327,
+  "csv_files_inspected": 46,
+  "json_files_inspected": 74,
+  "jsonl_or_telemetry_files_inspected": 124,
+  "markdown_files_inspected": 35,
+  "log_files_inspected": 8,
+  "commands_or_scripts_executed": [
+    "audit_script.py",
+    "py_compile audit_script.py",
+    "git diff --check"
+  ],
+  "source_or_prior_artifact_modified": false,
+  "solver_backend_initialized": false,
+  "sat_ga_ilp_or_benchmark_execution": false,
+  "historical_benchmark_hash": "c90d856747464b92fce879b8d4893088fb0fddf7388276983d4862ceb16ea876",
+  "notes": "Only standard-library parsing, hashing, and arithmetic checks were performed."
+}

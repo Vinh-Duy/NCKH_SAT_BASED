@@ -1,0 +1,7 @@
+Phase,Experiment,Expected units,Recorded units,Reconciled units,Missing units,Duplicate units,Unmatched logs,Unmatched results,Status
+3A.4,diagnostic soft-budget cohort,30,30,30,0,0,0,0,reconciled
+3B.1,controlled fixed-span CNF profile,60,60,60,0,0,0,0,reconciled
+3C,distance-2 forensic profile,20,20,20,0,0,0,0,reconciled
+3D,threshold prototype validation,56,56,56,0,0,0,0,reconciled
+3E,corrected fixed-span SAT matrix _02,12,12,12,0,0,0,0,reconciled
+3E,prior failed attempts,not primary,retained,provenance retained,,,,,excluded_from_final_results

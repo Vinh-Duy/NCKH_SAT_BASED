@@ -1,0 +1,12 @@
+item,status,concrete_action
+Research objectives,ready_with_qualification,Use objective matrix; state Threshold extension is secondary.
+Mathematical correctness,ready,"Include exact-distance-two definition, SAT semantics and corrected 3U+1 expression."
+Dataset integrity,ready,Preserve historical hash and separate all phase populations.
+Benchmark completeness,ready_with_censoring,"Report 1,242 rows and right-censored timeout semantics."
+Phase 3F limitations,ready,State 48/42/6 and timeout concentration exactly.
+Evidence quality,ready_with_qualification,Use claim matrix and do not infer causality.
+Figures and tables,outstanding,Generate final manuscript figures from canonical CSVs and audit captions.
+Literature references,outstanding,"Finalize bibliography, citation style and venue-independent metadata."
+Reproducibility,partially_ready,Retain manifests/hashes; document older source/dependency gaps.
+Mentor review,outstanding,Submit synthesis and draft to mentor for scope and claims review.
+Submission requirements,outstanding,"Confirm authorship, affiliation, venue/template and declarations."

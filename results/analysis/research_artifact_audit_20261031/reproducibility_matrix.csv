@@ -1,0 +1,7 @@
+Phase,Experiment,Input availability,Script availability,Environment availability,Command availability,Configuration availability,Logs availability,Reproducibility classification,Missing requirements
+3A,instrumented SAT and diagnostic cohort,partial manifests/logs,available,partial,partial,available in manifests,available for final cohort,partially_reproducible,some historical pilot/source revision details
+3B/3B.1,CNF forensics and fixed-span profile,available,available,partial,available,available,available,reproducible_with_existing_environment,exact dependency lock not consistently recorded
+3C,distance-2 forensics,available,available,partial,available,available,available,reproducible_with_existing_environment,environment lock and source revision
+pre-3D,mathematical and symmetry audits,available,not_applicable,not_applicable,documented,not_applicable,not_applicable,reproducible_from_saved_artifacts,none material
+3D,isolated threshold prototype,available,available,available,available,available,manifest/output,reproducible_with_existing_environment,no dependency lock
+3E,corrected SAT performance _02,available,available,available,available,available,12 worker logs,reproducible_with_existing_environment,source revision is working-tree based; RSS unit label should be clarified
