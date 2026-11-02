@@ -1,0 +1,315 @@
+{
+  "generator": "scripts/export_submission_phase3_tables.py",
+  "inputs_sha256": {
+    "results/runs/incremental_sat_comparison_20261030.csv": "c90d856747464b92fce879b8d4893088fb0fddf7388276983d4862ceb16ea876",
+    "results/runs/incremental_sat_comparison_20261030.metadata.json": "a935162d53505c0fed7df73bdf77bb3fc8e706c1ffb78be642aa272c61c10f0e",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/sat_run_results.csv": "c545aa16926ba76cfb39fc4a7801cce40746ac5909ca72a959561f6175c3687f",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/solver_configuration.json": "f87da3ac352d978baca0c81d15963064b1e1b38be003c8c0848f025bc96166d8",
+    "results/runs/phase3e_threshold_sat_performance_20261031_02/run_manifest.json": "d75f88021542880826d3bd155dc7f827fc62c17b4b5f76b23796c7afd5115bdc",
+    "results/runs/phase3f_threshold_external_validity_20261031_01/sat_run_results.csv": "f281fc5f9d86c095d6dbefa81e2dc1c4b3b902ef989bda67ed76cb495c098f74",
+    "results/runs/phase3f_threshold_external_validity_20261031_01/run_manifest.json": "8471079886b08d1604892cc27359d36d0ce87647d194f7a3fb866aec35f8e8b9"
+  },
+  "outputs_sha256": {
+    "benchmark_methods.tex": "f6b9f172758438158b9ba8a39a6f029750838c0b5244819fc1777e8aae8ac858",
+    "phase3e_timing.tex": "5db1afb1e9bef260f335d2bbbf3937ab0f2b6b6a69ba9bab9e3f27c925a15274",
+    "phase3e_counters.tex": "e742c9430cf76132ca467c61e63f9545db1ee7985a738c38b3d6868ecfc22c89",
+    "phase3f_outcomes.tex": "53b43f834227d9bc4407903815b3bc225f37ad4c23221bd7e4e329193005b310"
+  },
+  "benchmark_rows": 1242,
+  "graph_instances": 69,
+  "graph_parameter_tasks": 207,
+  "method_rows": 6,
+  "benchmark_status_counts": {
+    "sat_original": {
+      "OPT": 131,
+      "FEASIBLE": 0,
+      "TIMEOUT": 76
+    },
+    "sat_incremental": {
+      "OPT": 129,
+      "FEASIBLE": 0,
+      "TIMEOUT": 78
+    },
+    "sat_ga_bound": {
+      "OPT": 129,
+      "FEASIBLE": 0,
+      "TIMEOUT": 78
+    },
+    "ilp": {
+      "OPT": 170,
+      "FEASIBLE": 0,
+      "TIMEOUT": 37
+    },
+    "ga": {
+      "OPT": 90,
+      "FEASIBLE": 117,
+      "TIMEOUT": 0
+    },
+    "random_order": {
+      "OPT": 88,
+      "FEASIBLE": 119,
+      "TIMEOUT": 0
+    }
+  },
+  "phase3e_runs": 12,
+  "phase3e_groups": {
+    "112:Reference": {
+      "variables": 6720,
+      "clauses": 715129,
+      "literals": 2831028,
+      "encoding_wall": {
+        "median": 1.649861420999514,
+        "minimum": 1.5265713000007963,
+        "maximum": 3.529581639002572
+      },
+      "initialization_wall": {
+        "median": 0.00016648399832774885,
+        "minimum": 0.0001617519992578309,
+        "maximum": 0.002276891998917563
+      },
+      "loading_wall": {
+        "median": 0.7418773069985036,
+        "minimum": 0.5974830699997256,
+        "maximum": 1.3370721100000083
+      },
+      "solve_wall": {
+        "median": 33.87528552499862,
+        "minimum": 33.391845674999786,
+        "maximum": 44.31482506700195
+      },
+      "pipeline_wall": {
+        "median": 34.61732931599545,
+        "minimum": 33.98949049699877,
+        "maximum": 45.654174069000874
+      },
+      "end_to_end_wall": {
+        "median": 36.26719073699496,
+        "minimum": 35.516061796999566,
+        "maximum": 49.183755708003446
+      },
+      "peak_rss_mib": {
+        "median": 462484.0,
+        "minimum": 455672.0,
+        "maximum": 495376.0
+      },
+      "conflicts": {
+        "median": 153033.0,
+        "minimum": 153033.0,
+        "maximum": 153033.0
+      },
+      "decisions": {
+        "median": 602897.0,
+        "minimum": 602897.0,
+        "maximum": 602897.0
+      },
+      "propagations": {
+        "median": 39904336.0,
+        "minimum": 39904336.0,
+        "maximum": 39904336.0
+      },
+      "restarts": {
+        "median": 5056.0,
+        "minimum": 5056.0,
+        "maximum": 5056.0
+      }
+    },
+    "112:Threshold": {
+      "variables": 8485,
+      "clauses": 405550,
+      "literals": 1198376,
+      "encoding_wall": {
+        "median": 0.7794522299991513,
+        "minimum": 0.7573644929980219,
+        "maximum": 0.8285099989989249
+      },
+      "initialization_wall": {
+        "median": 0.00013654599752044305,
+        "minimum": 0.00012221299766679294,
+        "maximum": 0.0001704280002741143
+      },
+      "loading_wall": {
+        "median": 0.3410528959975636,
+        "minimum": 0.3214181820003432,
+        "maximum": 0.369283110001561
+      },
+      "solve_wall": {
+        "median": 37.53807973799849,
+        "minimum": 37.34259372000088,
+        "maximum": 38.65351977699902
+      },
+      "pipeline_wall": {
+        "median": 37.90749939399757,
+        "minimum": 37.664182330001495,
+        "maximum": 38.99469488599425
+      },
+      "end_to_end_wall": {
+        "median": 38.73600939299649,
+        "minimum": 38.42154682299952,
+        "maximum": 39.7741471159934
+      },
+      "peak_rss_mib": {
+        "median": 271728.0,
+        "minimum": 267532.0,
+        "maximum": 277020.0
+      },
+      "conflicts": {
+        "median": 189756.0,
+        "minimum": 189756.0,
+        "maximum": 189756.0
+      },
+      "decisions": {
+        "median": 649116.0,
+        "minimum": 649116.0,
+        "maximum": 649116.0
+      },
+      "propagations": {
+        "median": 62276675.0,
+        "minimum": 62276675.0,
+        "maximum": 62276675.0
+      },
+      "restarts": {
+        "median": 4941.0,
+        "minimum": 4941.0,
+        "maximum": 4941.0
+      }
+    },
+    "127:Threshold": {
+      "variables": 9385,
+      "clauses": 459400,
+      "literals": 1359026,
+      "encoding_wall": {
+        "median": 0.8496811700024409,
+        "minimum": 0.8461431659998198,
+        "maximum": 0.8647697009982949
+      },
+      "initialization_wall": {
+        "median": 0.00011823200111393817,
+        "minimum": 0.00011637599891400896,
+        "maximum": 0.00011904900020454079
+      },
+      "loading_wall": {
+        "median": 0.3589243610003905,
+        "minimum": 0.3578574849998404,
+        "maximum": 0.3612899389991071
+      },
+      "solve_wall": {
+        "median": 0.019615856999735115,
+        "minimum": 0.019183873002475593,
+        "maximum": 0.02135165200161282
+      },
+      "pipeline_wall": {
+        "median": 0.38039424500311725,
+        "minimum": 0.3771604070025205,
+        "maximum": 0.38102217199775623
+      },
+      "end_to_end_wall": {
+        "median": 1.2307033420001972,
+        "minimum": 1.226537411002937,
+        "maximum": 1.2419301080008154
+      },
+      "peak_rss_mib": {
+        "median": 153296.0,
+        "minimum": 152884.0,
+        "maximum": 153436.0
+      },
+      "conflicts": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "decisions": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "propagations": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "restarts": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      }
+    },
+    "127:Reference": {
+      "variables": 7620,
+      "clauses": 810814,
+      "literals": 3211968,
+      "encoding_wall": {
+        "median": 1.7936376859979646,
+        "minimum": 1.7882524550004746,
+        "maximum": 2.130590122000285
+      },
+      "initialization_wall": {
+        "median": 0.00011869300215039402,
+        "minimum": 0.0001184210013889242,
+        "maximum": 0.00013403300181380473
+      },
+      "loading_wall": {
+        "median": 0.6750096530013252,
+        "minimum": 0.6436339009997027,
+        "maximum": 0.7148146479994466
+      },
+      "solve_wall": {
+        "median": 0.011144165000587236,
+        "minimum": 0.00868462600192288,
+        "maximum": 0.011990954000793863
+      },
+      "pipeline_wall": {
+        "median": 0.683812700004637,
+        "minimum": 0.6557588880023104,
+        "maximum": 0.7260775060021842
+      },
+      "end_to_end_wall": {
+        "median": 2.4720651550051116,
+        "minimum": 2.449396574000275,
+        "maximum": 2.8566676280024694
+      },
+      "peak_rss_mib": {
+        "median": 285272.0,
+        "minimum": 284380.0,
+        "maximum": 286032.0
+      },
+      "conflicts": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "decisions": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "propagations": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "restarts": {
+        "median": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      }
+    }
+  },
+  "phase3f_runs": 48,
+  "phase3f_outcomes": {
+    "Reference": {
+      "Scheduled": 24,
+      "SAT": 21,
+      "Parent timeout": 3,
+      "UNSAT": 0,
+      "Worker error": 0
+    },
+    "Threshold": {
+      "Scheduled": 24,
+      "SAT": 21,
+      "Parent timeout": 3,
+      "UNSAT": 0,
+      "Worker error": 0
+    }
+  },
+  "no_solver_execution": true
+}
