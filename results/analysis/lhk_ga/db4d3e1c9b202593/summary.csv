@@ -1,0 +1,13 @@
+Family,h,k,Instances,GA_Best_Optimal_Instances,Random_Best_Optimal_Instances,Median_GA_Best_Gap,Median_Random_Best_Gap,GA_Win_Instances,Paired_Tie_Instances,GA_Loss_Instances,Median_Instance_Paired_Difference,SAT_All3_OPT_Instances,Median_SAT_minus_GA
+BA,1,1,9,9,9,0,0,0,9,0,0.0,9,0.0
+BA,2,1,9,9,9,0,0,0,9,0,0.0,9,0.0
+BA,3,2,9,9,9,0,0,2,7,0,0.0,8,0.0
+ER,1,1,18,15,14,0.0,0.0,1,17,0,0.0,5,0.0
+ER,2,1,18,11,12,0.0,0.0,2,16,0,0.0,6,0.0
+ER,3,2,18,12,3,0.0,5.0,15,3,0,-1.25,4,-0.5
+PxP,1,1,3,1,1,1,1,0,3,0,0.0,3,-1.0
+PxP,2,1,3,1,1,2,2,1,2,0,0.0,3,-2.0
+PxP,3,2,3,1,1,2,3,0,3,0,0.0,3,-3.0
+tree,1,1,9,9,9,0,0,0,9,0,0.0,9,0.0
+tree,2,1,9,9,8,0,0,0,9,0,0.0,9,0.0
+tree,3,2,9,9,9,0,0,0,9,0,0.0,9,0.0
