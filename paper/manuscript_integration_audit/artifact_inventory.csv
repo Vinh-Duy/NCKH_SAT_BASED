@@ -1,0 +1,28 @@
+artifact,role,scope,disposition
+paper/submission.tex,Canonical standalone manuscript entry point,Primary,Update abstract and include the new appendix
+paper/sections/introduction.tex,Shared introduction and research questions,Primary/shared,Update study populations and contribution scope
+paper/sections/submission_preliminaries.tex,Problem definition and labeling illustration,Primary,Retain
+paper/sections/submission_related_work.tex,Related-work synthesis and citations,Primary,Retain
+paper/sections/submission_method.tex,SAT/ILP methods and proofs,Primary,Add bounded description of the isolated Threshold candidate
+paper/sections/color_order_method.tex,Certificate-construction proposition and procedure,Appendix dependency,Retain
+paper/sections/submission_results.tex,Primary results and linked evidence tables,Primary,Clarify populations and add six-method and Phase 3 summaries
+paper/sections/submission_conclusion.tex,Interpretation limitations and conclusion,Primary,Integrate final Phase 3 decision and claim boundaries
+paper/sections/theoretical_baselines.tex,Proven reference bounds,Appendix,Retain
+paper/sections/runtime_summary.tex,Conditional runtime by graph size,Appendix,Retain
+paper/sections/certificate_validation.tex,Separate five-construction cohort,Appendix,Clarify relationship to shared 69-graph manifest if necessary
+paper/sections/matching_bound.tex,Matching-based lower-bound certificate,Appendix,Retain
+paper/sections/proof_closure.tex,Post-hoc certification of 117 original timed tasks,Appendix,Clarify cohort identity and timing
+paper/references.bib,Existing bibliography,Bibliography,No missing citations found; retain
+paper/generated/submission_summary.tex,Selector for versioned summary tables,Generated,Retain existing pinned version
+paper/generated/submission_summary/af1f510739b1e214/sources.json,Input/output hash lineage for compact summary,Generated provenance,Retain and do not regenerate
+paper/generated/progress_confirmation/4927a34577a0c9d4/sources.json,Input/output hash lineage for original v2 comparison,Generated provenance,Retain and do not regenerate
+results/runs/general_progress_v2_20261007T062406751526Z.csv,39-graph SAT/ILP operational repetition data,Canonical source,Read only
+results/runs/general_progress_v2_20261007T062406751526Z.metadata.json,Protocol and repeated-run configuration,Canonical source,Read only
+results/runs/incremental_sat_comparison_20261030.csv,69-graph six-method benchmark,Canonical source,Read only
+results/runs/incremental_sat_comparison_20261030.metadata.json,69-graph benchmark schema and seed policy,Canonical source,Read only
+results/analysis/proof_closure/v1_20261018,Independent post-hoc proofs for the original 117-task cohort,Canonical source,Read only
+results/runs/phase3e_threshold_sat_performance_20261031_02,Canonical fixed-span Phase 3E data,Canonical source,Read only
+results/runs/phase3f_threshold_external_validity_20261031_01,Corrected Phase 3F eight-graph data,Canonical source,Read only
+main.tex,Separate root technical report,Protected artifact,Do not modify
+main.pdf,Existing root technical-report PDF,Protected artifact,Do not overwrite
+paper/submission.pdf,Existing manuscript PDF,Protected artifact,Do not overwrite

@@ -26,7 +26,7 @@
 \input{paper/generated/submission_summary}
 \title{SAT-Based Approach for\\$L(h,k)$-Labeling of General Graphs}
 \author{}
-\date{October 18, 2026}
+\date{October 31, 2026}
 
 \begin{document}
 \maketitle
@@ -34,26 +34,29 @@
 We study an exact SAT approach to minimum-span $L(h,k)$-labeling of
 simple undirected graphs with $h\geq k\geq1$. An order encoding and
 bounded span search are proved correct and compared with assignment
-integer linear programming (ILP). On 117 tree, grid and random-graph
-instances, with three repetitions and a 30-second limit, SAT and ILP
-prove optimality in every repetition on \ProgressSATStable{} and
-\ProgressILPStable{} instances, respectively. ILP has greater optimality
-coverage, while feasible upper bounds favor different backends on some
-instances unresolved within the time limit.
-Supplementary clique and weighted-capacity bounds, explicit labelings,
-and proof-producing SAT search independently certify all 117 optima.
-The final evidence comprises 91 theory/clique certificates, 15
-weighted-capacity certificates and 11 replayed UNSAT proofs; it does not
-change the original timed coverage.
-A separate $L(2,1)$ symmetry study reports 494 jointly optimal pairs
-out of 496. Cycles show a median clause reduction of 12.58\%, with
-little change in the median time ratio; effects vary across product
-families. A supplementary fixed-budget genetic-algorithm (GA) baseline
-attains a certified optimum in at least one of ten runs on 95 of 117
-instances, compared with 85 for paired random-order multi-start; the
-descriptive advantage is concentrated in ER $L(3,2)$ cases. These results
-distinguish model size, feasible-solution quality and proof coverage while
-documenting the limits of the evaluated methods.
+integer linear programming (ILP). The original timed comparison covers
+39 graphs crossed with three parameter pairs, giving 117
+graph--parameter tasks and three operational repetitions per backend.
+ILP has greater all-repetition optimality coverage, while feasible upper
+bounds favor different backends on some tasks unresolved within the
+30-second limit. A later, post-hoc proof package independently certifies
+those same 117 tasks; its certificates do not change the timed outcomes.
+A separate 69-graph cohort contains 207 graph--parameter tasks and 1,242
+method-level rows for six methods. The parameter pairs are configurations,
+not repeated measurements, and this finite graph cohort is not a random
+sample of the entire graph space.
+A fixed-budget genetic-algorithm baseline on the original cohort attains
+a certified optimum in at least one of ten runs on 95 tasks, compared
+with 85 for paired random-order multi-start. A separate $L(2,1)$ symmetry
+study reports 494 jointly optimal pairs out of 496, with family-dependent
+model-size and runtime effects.
+Finally, an isolated Threshold encoding reduces clauses and literals in
+the tested fixed-span cohort, but Phase 3E/3F show mixed solve-time
+behavior and do not establish a practical speed advantage. Phase 3F
+returns 42 valid SAT results and six parent timeouts across 48 scheduled
+runs; no timeout is classified as UNSAT. The primary contribution is an
+auditable exact/heuristic comparison, with Threshold retained as a
+secondary exploratory result.
 \end{abstract}
 \noindent\textbf{Keywords:} $L(h,k)$-labeling, SAT, order encoding,
 exact optimization, ILP, optimality certificates.
@@ -84,4 +87,5 @@ archived experiments, not new measurements.
 \input{paper/sections/certificate_validation}
 \input{paper/sections/matching_bound}
 \input{paper/sections/proof_closure}
+\input{paper/sections/phase3_encoding_study}
 \end{document}

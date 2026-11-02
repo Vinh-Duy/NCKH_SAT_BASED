@@ -1,0 +1,91 @@
+HEAD 4ecef6f61a372a47e56bba5c6972cc28c946685e
+Branch main
+
+Pre-edit git status --short:
+ M README.md
+ M archive/README.md
+ M benchmarks/benchmark_incremental_sat.py
+ M benchmarks/benchmark_sat_vs_ilp.py
+ M docs/README.md
+ M docs/data_dictionary.md
+ M docs/data_provenance.md
+ M docs/experiments/solver_evaluation.md
+ M docs/guides/REPORT.md
+ M docs/literature_review.md
+ M docs/project_overview.md
+ M docs/results_catalog.md
+ M paper/generated/README.md
+ M paper/generated/cycles_main_r1_summary/README.md
+ M paper/generated/products_main_r1_summary/README.md
+ M results/README.md
+ M results/analysis/general_confirm_r1/README.md
+ M results/archive/audits/README.md
+ M results/archive/paper_outputs/audit_cycles_summary/README.md
+ M results/archive/paper_outputs/audit_products_summary/README.md
+ M results/runs/general_confirm_r1.README.md
+ M results/runs/general_pilot_v1.README.md
+ M src/models/sat_encoding.py
+ M src/solvers/sat_solver.py
+ M tests/test_incremental_benchmark_integrity.py
+ M tests/test_incremental_sat.py
+?? backups/
+?? docs/archive/
+?? docs/guides/documentation_review.md
+?? docs/guides/english_translation.md
+?? docs/guides/optimality_gap_review.md
+?? docs/guides/research_completion.md
+?? docs/guides/research_next_steps.md
+?? docs/guides/research_update_20261017.md
+?? docs/guides/supervisor_alignment.md
+?? docs/guides/supervisor_outline_review_20261014.md
+?? docs/guides/tree_results_and_next_run.md
+?? docs/layout_migration.json
+?? docs/outline_review.md
+?? docs/reference_files.json
+?? experiments/phase3d_threshold_encoding/
+?? experiments/phase3e2_ipasir_up_pilot/
+?? experiments/phase3e_threshold_sat_benchmark/
+?? experiments/phase3f_threshold_external_validity/
+?? results/analysis/final_research_synthesis_20261031/
+?? results/analysis/lhk_ga/db4d3e1c9b202593/
+?? results/analysis/phase3a_calibration_reconciliation_20261031/
+?? results/analysis/phase3a_conflict_budget_20261031/
+?? results/analysis/phase3a_conflict_budget_validation_20261031/
+?? results/analysis/phase3a_graceful_interrupt_20261031/
+?? results/analysis/phase3a_instrumentation_audit_20261031/
+?? results/analysis/phase3a_instrumentation_implementation_20261031/
+?? results/analysis/phase3b_cnf_forensics_20261031/
+?? results/analysis/phase3c_distance2_forensics_20261031/
+?? results/analysis/phase3c_next_step_review_20261031/
+?? results/analysis/phase3e2_telemetry_feasibility_20261031/
+?? results/analysis/phase3e_solver_behavior_forensics_20261031/
+?? results/analysis/post_phase3e_closure_20261031/
+?? results/analysis/pre_phase3d_mathematical_design_20261031/
+?? results/analysis/pre_phase3d_symmetry_scope_audit_20261031/
+?? results/analysis/research_artifact_audit_20261031/
+?? results/analysis/structural_difficulty_20261031/
+?? results/analysis/structural_difficulty_phase2_20261031/
+?? results/runs/lhk_ga_general_v1.csv
+?? results/runs/lhk_ga_general_v1.metadata.json
+?? results/runs/lhk_ga_general_v1.witnesses.jsonl
+?? results/runs/phase3a_conflict_calibration_20261031/
+?? results/runs/phase3a_conflict_recalibration_20261031/
+?? results/runs/phase3a_diagnostic_20261031/
+?? results/runs/phase3a_diagnostic_softbudget_20261031/
+?? results/runs/phase3b_controlled_cnf_profile_20261031/
+?? results/runs/phase3d_threshold_prototype_20261031/
+?? results/runs/phase3e2_ipasir_up_perturbation_pilot_20261031/
+?? results/runs/phase3e2_ipasir_up_perturbation_pilot_20261031_01/
+?? results/runs/phase3e2_ipasir_up_perturbation_pilot_20261031_02/
+?? results/runs/phase3e_threshold_sat_performance_20261031/
+?? results/runs/phase3e_threshold_sat_performance_20261031_01/
+?? results/runs/phase3e_threshold_sat_performance_20261031_02/
+?? results/runs/phase3f_threshold_external_validity_20261031/
+?? results/runs/phase3f_threshold_external_validity_20261031_01/
+?? scripts/analyze_sat_ilp_structural_difficulty.py
+?? scripts/analyze_structural_difficulty.py
+?? scripts/profile_phase3c_distance2.py
+?? scripts/run_phase3b_controlled_cnf_profile.py
+?? src/core/sat_telemetry.py
+?? tests/test_sat_encoding_profile.py
+?? tests/test_sat_telemetry.py

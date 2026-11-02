@@ -49,6 +49,32 @@ validation; the proposition establishes general equivalence.
 
 
 
+\subsection{Isolated Threshold encoding}
+\label{sec:threshold-method}
+The exploratory candidate represents labels with shared threshold
+variables $T_{v,t}\Leftrightarrow[f(v)\geq t]$ for $1\leq t\leq U$.
+For each constrained pair and required gap $g$, one selector chooses
+which endpoint has the larger label; the corresponding implication
+clauses enforce that every threshold reached by the lower endpoint is
+also reached at least $g$ levels later by the higher endpoint. Boundary
+sentinels handle labels at 0 and $U$. The pair-level construction is
+equivalent to $|f(u)-f(v)|\geq g$; the Phase 3D prototype also passed its
+small complete-model checks.
+
+For free endpoints and $1\leq g\leq U+1$, the Reference formulation
+enumerates
+\[
+ P(U,g)=(2g-1)(U+1)-g(g-1)
+\]
+ordered label pairs with difference below $g$. In particular,
+$P(U,2)=3U+1$. The Threshold candidate uses $2(U+1)$ pair clauses and
+one selector per constrained pair when $1\leq g\leq U$. Thus it may
+reduce clauses for $g\geq2$ but is not uniformly smaller: for $g=1$ it
+uses more pair clauses. The measured prototype is fixed-span, omits the
+production symmetry mechanism, and is not integrated into the production
+solver. Formula size alone does not predict search performance.
+
+
 \subsection{Bounds and span search}
 For a graph with an edge, use $L=h+(\Delta-1)\min(h,k)$,
 which is $h+(\Delta-1)k$ in the present domain. In the closed
@@ -154,13 +180,22 @@ assignment. Translation invariance therefore makes minimizing the maximum
 label equivalent to minimizing span; no arbitrary vertex is fixed to zero.
 
 To compare representation sizes, use a common domain $[0,s]$, set
-$n=|V|$, and define
+$n=|V|$. For integers $s,d\geq0$, let $t_d=\min(s,d-1)$ and define
 \[
- t_d=\min(s,d-1),\quad
- F(s,d)=(s+1)(2t_d+1)-t_d(t_d+1),\quad
+ F(s,d)=
+ \begin{cases}
+ 0, & d=0,\\
+ (s+1)(2t_d+1)-t_d(t_d+1), & d\geq1.
+ \end{cases}
+\]
+Equivalently,
+\[
+ F(s,d)=\left|\{(a,b)\in\{0,\ldots,s\}^2:|a-b|<d\}\right|,
+ \qquad
  B=|E|F(s,h)+|D_2|F(s,k).
 \]
-Here $F(s,d)$ counts ordered label pairs with difference less than $d$.
+Thus $F(s,d)$ counts \emph{ordered} label pairs whose absolute
+difference is less than $d$.
 Table~\ref{tab:submission-symbolic} gives the model sizes before
 symmetry breaking or simplification.
 \begin{table}[htbp]

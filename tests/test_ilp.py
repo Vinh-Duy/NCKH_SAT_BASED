@@ -40,6 +40,18 @@ class AssignmentTests(unittest.TestCase):
                          2 * len(graph) + len(spec.edges) * (3 * spec.upper_bound + 1)
                          + len(spec.distance_two_pairs) * (spec.upper_bound + 1))
 
+    def test_forbidden_pair_count_matches_exhaustive_ordered_pairs(self):
+        for upper in range(9):
+            spec = make_spec((), (), (), upper)
+            for gap in range(13):
+                with self.subTest(upper=upper, gap=gap):
+                    expected = sum(
+                        abs(a - b) < gap
+                        for a, b in itertools.product(range(upper + 1), repeat=2)
+                    )
+                    self.assertEqual(spec.forbidden_pair_count(gap), expected)
+                    self.assertEqual(len(tuple(spec.forbidden_pairs(gap))), expected)
+
     def test_assignment_constraints_accept_optimal_path_labeling(self):
         from src.solvers.ilp_solver import (
             _add_assignment_constraints_gurobi, _add_assignment_constraints_cplex,

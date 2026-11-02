@@ -16,9 +16,22 @@ the principal exact baseline. Both methods can prove optimality, but may
 retain an open interval when their time budget expires. We therefore
 compare feasible-solution quality and proof coverage alongside runtime.
 ``General graphs'' describes the formulation's input domain, not a claim
-of efficient solution on every graph.
+of efficient solution on every graph. The experiments use finite,
+purpose-built cohorts and do not establish universal performance or
+external validity over all simple undirected graphs.
 
-Four research questions organize the study:
+The evidence contains distinct populations. The original timed SAT--ILP
+comparison uses 39 graphs crossed with $(1,1)$, $(2,1)$ and $(3,2)$,
+yielding 117 graph--parameter tasks with three operational repetitions per
+backend. A separate expanded benchmark uses 69 graphs and the same three
+parameter pairs, yielding 207 tasks and six method-level rows per task.
+The parameter pairs are different problem configurations, not repeated
+measurements. The graph cohorts are not independent random samples from
+the full graph space. A later proof-closure package covers the original
+117-task timed cohort, while Phases 3A--3F examine a restricted fixed-span
+encoding study.
+
+Five research questions organize the study:
 \begin{enumerate}
 \item\label{rq:correctness} Does the SAT encoding preserve feasibility,
 and does the span search report optimality only when it is established?
@@ -30,24 +43,33 @@ coverage compare between SAT and assignment ILP across the evaluated
 graph sizes and families?
 \item\label{rq:symmetry} For families with justified symmetries, how do
 symmetry-breaking constraints affect CNF size and solution time?
+\item\label{rq:threshold} Does an isolated Threshold encoding reduce
+formula size, and does that reduction produce a consistent solver-speed
+advantage on the tested fixed-span cohort?
 \end{enumerate}
 
-The study makes four contributions:
+The study makes five contributions:
 \begin{enumerate}
 \item A general-graph SAT pipeline with encoding equivalence, a
 span-search invariant and justified symmetry conditions.
 \item Independent labeling checks and reference-bound comparisons,
 with retained graphs, configurations and witnesses for reproducibility.
-\item A comparison with assignment ILP on 117 fixed graph/parameter
-instances that reports unresolved cases, bound quality and proof
-coverage alongside runtime. A separate paired $L(2,1)$ study evaluates
-symmetry effects by family under its original backend and budget.
+\item A timed SAT--ILP comparison on 117 graph--parameter tasks from 39
+graphs, alongside a distinct six-method comparison on 207 tasks from 69
+graphs. The reports retain separate protocols, status semantics and
+coverage rather than pooling the cohorts.
 \item A supplementary certificate pipeline combining mathematical
 bounds, explicit labelings and independently replayed UNSAT proofs.
 Clique and color-order certificates first close five of the 21 intervals
 left open by pooled solver evidence. Weighted capacity bounds and a
 color-rank-residual SAT formulation then close the remaining 16, yielding
-independently checked optimal spans for all 117 instances.
+independently checked optimal spans in the original 117-task timed cohort
+without changing its timed outcomes.
+\item A phasewise, isolated Threshold encoding case study. It establishes
+pair-level equivalence and tested fixed-span formula-size reductions,
+while documenting mixed solve-time behavior and the limits of its
+eight-graph Phase 3F cohort. Threshold remains secondary to the
+auditable exact/heuristic comparison.
 \end{enumerate}
 
 SAT and ILP formulations for distance-constrained labeling already exist

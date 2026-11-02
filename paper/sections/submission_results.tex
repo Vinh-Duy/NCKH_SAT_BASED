@@ -2,7 +2,8 @@
 \label{sec:submission-results}
 \subsection{Cohort, protocol and validation}
 The primary experiment fixes 39 graphs and evaluates each with
-$(h,k)\in\{(1,1),(2,1),(3,2)\}$, giving 117 instances. It includes nine
+$(h,k)\in\{(1,1),(2,1),(3,2)\}$, giving 117 graph--parameter tasks. It
+includes nine
 random labeled trees, 18 Erd\H{o}s--R\'enyi (ER) graphs and nine
 Barab\'asi--Albert (BA) graphs: each randomized configuration uses
 20, 40 and 60 vertices and seeds 0, 1 and 2. ER edge probabilities are
@@ -13,8 +14,9 @@ not selected by solver outcome.
 
 CaDiCaL uses order encoding and Gurobi 13.0.3 uses assignment ILP with one
 thread and a greedy MIP start. Symmetry breaking is disabled in this
-comparison. Three repetitions per backend give \ProgressObservations{}
-observations. Backends run sequentially in separate processes, with
+comparison. Three operational repetitions per backend give
+\ProgressObservations{} observations. The three parameter pairs define
+different configurations, not repetitions. Backends run sequentially in separate processes, with
 execution order rotated. Each run has a 30-second external limit;
 wall time includes startup, model construction, solving and cleanup.
 Final parent-side witness validation is outside this interval.
@@ -62,14 +64,14 @@ and the subsequent certificates for all 117 instances.
 
 \begin{table}[htbp]
 \centering\small
-\caption{Consolidated optimality evidence on 117 instances.}
+\caption{Consolidated optimality evidence on the 117 graph--parameter tasks.}
 \label{tab:submission-evidence}
 \input{results/analysis/proof_closure/v1_20261018/summary.tex}
 \tablenote{Before counts the 101 closed intervals after the earlier clique
 and color-order stages; Added counts the 16 newly closed intervals.
 Certified requires a checked labeling and an independently verified lower
-bound. All 117 are now certified, with zero open intervals. These are
-distinct instances, not timed solver successes. See
+bound. All 117 graph--parameter tasks are now certified, with zero open
+intervals. These are post-hoc proofs, not timed solver successes. See
 Appendix~\ref{sec:proof-closure} for the new proof stage.}
 \end{table}
 
@@ -101,13 +103,97 @@ five cases are included in Table~\ref{tab:submission-evidence}.}
 
 \input{paper/sections/certificate_support}
 
-\paragraph{New-sample validation.}
+\paragraph{Construction validation on the separate cohort.}
 A separate fixed-protocol study evaluates five label constructions on
-69 new graphs (207 parameter instances). Insertion order certifies
+69 graphs not used in the original 39-graph timed comparison (207
+graph--parameter tasks). Insertion order certifies
 53 instances and DSATUR with spacing $h$ certifies 58; their strengths
 differ by family. The union of all five methods certifies 96 instances.
 Appendix~\ref{sec:certificate-validation} retains failures and controls;
-it does not add observations to the timed SAT--ILP comparison.
+it does not add observations to the original timed SAT--ILP comparison.
+The same frozen 69-graph manifest is used in the expanded six-method
+benchmark below, so these two analyses are not independent graph cohorts.
+
+\subsection{Expanded six-method benchmark}
+The expanded benchmark crosses those 69 graphs with the same three
+parameter pairs, yielding 207 graph--parameter tasks and 1,242
+method-level rows. It compares three SAT variants, assignment ILP, GA and
+random-order search under the recorded 30-second per-method-task limit.
+Table~\ref{tab:six-method-outcomes} gives the recorded status counts.
+\begin{table}[htbp]
+\centering\small
+\caption{Recorded outcomes in the six-method benchmark.}
+\label{tab:six-method-outcomes}
+\input{paper/generated/submission_phase3_20261031_v2/benchmark_methods.tex}
+\tablenote{There is one row per method-task. The three parameter pairs
+are configurations, not repeated measurements. The \texttt{ga},
+\texttt{random\_order} and \texttt{sat\_ga\_bound} rows summarize ten
+fixed-seed searches; they are not ten additional method-task rows.
+\texttt{OPT} denotes the benchmark's certified outcome,
+\texttt{FEASIBLE} a validated witness without an optimality claim, and
+\texttt{TIMEOUT} a censored run, not UNSAT.}
+\end{table}
+The cohort is finite and was not sampled as an independent random draw
+from the graph space. Its status profiles are descriptive and are not
+pooled with the original 39-graph repeated SAT--ILP experiment.
+
+\subsection{Exploratory fixed-span encoding study (RQ5)}
+Phases 3A--3D audited interruption semantics, fixed-span CNF construction,
+distance-two pair generation and the isolated Threshold prototype.
+Canonical Phase 3E \texttt{\_02} then compared fixed-span feasibility on
+ER-60 at $U=112$ and $U=127$; these feasible spans do not establish
+optimality. Table~\ref{tab:phase3e-timing} reports per-group medians over
+three operational launches. At $U=112$, Threshold won one of three
+matched solve-time blocks and lost two; its median solve and end-to-end
+times were higher. At $U=127$, Threshold's solve time was higher in all
+three matched blocks, but its end-to-end time was lower in all three
+because model construction and loading dominated this easy case.
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Phase 3E fixed-span sizes and timing medians.}
+\label{tab:phase3e-timing}
+\input{paper/generated/submission_phase3_20261031_v2/phase3e_timing.tex}
+\tablenote{Each row summarizes three fresh-process operational runs.
+All 12 runs returned SAT with valid witnesses. $U$ is the fixed maximum
+label, not a proven optimum.}
+\end{table}
+\begin{table}[htbp]
+\centering\scriptsize
+\caption{Phase 3E recorded RSS field and median solver counters.}
+\label{tab:phase3e-counters}
+\input{paper/generated/submission_phase3_20261031_v2/phase3e_counters.tex}
+\tablenote{Values are medians over three runs. The RSS column preserves
+the recorded field and is not reinterpreted as a cross-platform unit.
+Search counters do not imply solver quality or explain runtime.}
+\end{table}
+Threshold uses more variables but fewer clauses and literals in the
+tested formulas. At $U=112$ the median solve-time ratio is mixed across
+blocks; at $U=127$ both encodings report zero search counters. The
+unclassified boundary $U=111$ is not inferred to be UNSAT or optimal.
+
+The corrected Phase 3F \texttt{\_01} cohort extends the comparison to eight graphs,
+two per family, at $(h,k)=(3,2)$ and one feasible fixed $U$ per graph.
+Across 48 scheduled runs, 42 returned SAT with independently valid
+witnesses and six were parent timeouts. All six occurred for both
+encodings on the same dense ER graph and all three repetitions; timeout
+counters remain unavailable. There were no UNSAT outcomes or worker
+errors.
+\begin{table}[htbp]
+\centering\small
+\caption{Phase 3F outcomes by encoding.}
+\label{tab:phase3f-outcomes}
+\input{paper/generated/submission_phase3_20261031_v2/phase3f_outcomes.tex}
+\tablenote{Three operational repetitions were scheduled per
+graph--encoding pair. Parent timeouts are censored outcomes, not UNSAT.}
+\end{table}
+Across the eight selected graphs, Threshold reduced clauses by
+39.0--43.0\% and literals by 54.9--58.0\%, while increasing variables.
+Solve-time direction varied across completed graphs. The final Phase 3F
+decision is D: these data support a restricted formula-size observation,
+not a broad external-validity or practical-speed claim. The Threshold
+prototype remains isolated, and no Phase 3G is recommended. Detailed
+methods, interruption caveats and per-phase limitations appear in
+Appendix~\ref{sec:phase3-study}.
 
 \subsection{Separate tree screen}
 As a separate structured-graph check, the $L(3,2)$ screen of

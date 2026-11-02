@@ -1,0 +1,47 @@
+{
+  "primary_entry_point": "paper/submission.tex",
+  "branch": "main",
+  "head_before_integration": "4ecef6f61a372a47e56bba5c6972cc28c946685e",
+  "preexisting_worktree_changes": true,
+  "pre_edit_status": "paper/manuscript_integration_audit/pre_edit_worktree_status.txt",
+  "modified_existing_tex_files": [
+    "paper/submission.tex",
+    "paper/sections/introduction.tex",
+    "paper/sections/submission_method.tex",
+    "paper/sections/submission_results.tex",
+    "paper/sections/submission_conclusion.tex",
+    "paper/sections/proof_closure.tex"
+  ],
+  "backup_directory": "backups/manuscript_submission_before_phase3_integration_20261031",
+  "added_manuscript_section": "paper/sections/phase3_encoding_study.tex",
+  "generated_table_directory": "paper/generated/submission_phase3_20261031_v2",
+  "table_exporter": "scripts/export_submission_phase3_tables.py",
+  "build_command": "/Library/TeX/texbin/latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build/submission_primary_20261031 -jobname=submission_primary_20261031 paper/submission.tex",
+  "build_succeeded": true,
+  "final_log_has_unresolved_references": false,
+  "root_main_tex_modified": false,
+  "root_main_pdf_overwritten": false,
+  "existing_submission_pdf_overwritten": false,
+  "canonical_benchmark_inputs_modified": false,
+  "historical_reports_modified": false,
+  "sat_executed": false,
+  "ga_executed": false,
+  "ilp_executed": false,
+  "solver_backend_initialized": false,
+  "benchmark_rerun": false,
+  "validation": {
+    "exporter_py_compile": "passed",
+    "generated_csv_json_and_hashes": "passed",
+    "git_diff_check": "passed",
+    "latex_references_citations_figures_and_tables": "passed"
+  },
+  "mentor_review_ready": true,
+  "formal_submission_ready": false,
+  "remaining_metadata": [
+    "authors",
+    "affiliations",
+    "venue",
+    "funding",
+    "corresponding_author"
+  ]
+}

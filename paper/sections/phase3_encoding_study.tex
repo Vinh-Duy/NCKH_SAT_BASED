@@ -1,0 +1,94 @@
+\section{Phase 3: Controlled encoding study and cross-graph check}
+\label{sec:phase3-study}
+This appendix reports the separate Phase 3A--3F encoding investigation.
+It is not pooled with the original 39-graph SAT--ILP repetitions, the
+69-graph six-method benchmark, or the later proof-closure counts. Phase 3E
+uses the canonical \texttt{\_02} run, and Phase 3F uses the corrected
+\texttt{\_01} run;
+failed sibling attempts remain excluded.
+
+\subsection{Interruption semantics and construction audits}
+The Phase 3A diagnostic pilot contains 30 method-task arms, with recorded
+outcomes of 9 \texttt{OPT}, 21 \texttt{UNKNOWN}, and zero \texttt{UNSAT};
+27 SAT attempts completed, and five nominal soft-threshold overruns were
+recorded. The implementation audit distinguishes internal-deadline
+\texttt{UNKNOWN} from parent termination. A safe internal unknown with
+final counters was demonstrated for a controlled backend implementing a
+tested interrupt contract. For the installed PySAT CaDiCaL195 wrapper,
+however, \texttt{interrupt()} and \texttt{clear\_interrupt()} are
+unsupported stubs. A real CaDiCaL195 \texttt{solve\_limited()} call did
+return \texttt{None} under a conflict budget and exposed accumulated
+statistics, but this does not demonstrate active wall-clock interruption.
+The benchmark's 30-second parent timeout therefore remains a fallback;
+parent-killed attempts retain null final counters and are not represented
+as completed internal unknowns.
+
+Phase 3B.1 recorded 60 fixed-span CNF builds. The different ER-60
+$(3,2)$ formula sizes across methods were explained by the label-domain
+span used to construct each model, rather than by a change in the
+Reference encoder. Phase 3C examined 20 fixed-span models across ten
+tasks: all 4,660 distance-two pair events were unique, with no duplicate
+or tautological distance-two clauses observed. For free endpoints, the
+number of forbidden ordered label pairs for a gap $g$ is
+\[
+ P(U,g)=(2g-1)(U+1)-g(g-1),
+\]
+when $1\leq g\leq U+1$. Thus $P(U,2)=3U+1$, giving 382 clauses per
+distance-two pair at $U=127$. These counts describe the audited
+construction and do not imply that fewer clauses improve solver speed.
+
+\subsection{Threshold prototype and fixed-span results}
+The Phase 3D isolated prototype passed all 24 pair-equivalence cases
+and all eight small complete-model cases under independent arithmetic
+validation. It was not integrated into the production solver; its
+complete-model tests did not include production symmetry clauses. The
+fixed-span comparison is therefore a restricted implementation study,
+not evidence of a universal encoding replacement.
+
+The canonical Phase 3E \texttt{\_02} dataset uses the ER-60 graph
+\texttt{ER\_60\_p0.30\_seed100}, $(h,k)=(3,2)$, and fixed feasible spans
+$U=112$ and $U=127$, with three fresh-process operational runs per
+encoding/span. All 12 runs returned SAT with valid witnesses. At
+$U=112$, Threshold won one and lost two matched solve-time blocks; at
+$U=127$, it was slower in the solve slice in all three blocks, but faster
+end-to-end in all three because construction and loading dominated the
+short solve. The pairwise formula sizes in the main results table show
+fewer clauses and literals but more variables for Threshold. These
+fixed-span SAT outcomes do not prove the spans optimal. In particular,
+$U=111$ remains unclassified.
+
+The Phase 3E.2 IPASIR-UP pilot found only intrusive, incomplete
+instrumentation. Propagator callbacks and observed variables can affect
+backend preprocessing and execution; the pilot does not provide
+observation-free internal branching traces. Its counters are not treated
+as canonical performance evidence or used to infer a causal mechanism.
+The final Phase 3E \texttt{\_02} measurements use passive solver statistics.
+
+\subsection{Phase 3F cohort and interpretation}
+Phase 3F tests eight selected graphs: two each from the Tree, BA, ER
+$p=0.15$, and ER $p=0.30$ families, including one 20- and one
+40-vertex graph per family. It uses $(h,k)=(3,2)$, one independently
+validated feasible span per graph, two encodings, and three operational
+repetitions. The 48 scheduled runs produced 42 SAT results with valid
+witnesses, six parent timeouts, zero UNSAT classifications, and zero
+worker errors. All six parent timeouts occurred on
+\texttt{ER\_40\_p0.30\_seed100} at $U=60$, for both encodings and all
+three repetitions. Their final counters are unavailable; they are
+right-censored outcomes, not UNSAT.
+
+Across this selected cohort, Threshold reduced clauses by 39.0--43.0\%
+and literals by 54.9--58.0\%, while increasing variables. On the seven
+graphs with completed runs, its median end-to-end time was lower on six,
+but solve-time direction varied by graph; no completed comparison exists
+for the dense graph that timed out. The three launches per configuration
+are operational repetitions, not independent samples of graph instances.
+The cohort contains only eight graphs and one parameter pair, and its
+fixed spans are feasible witnesses rather than optimality proofs.
+
+\paragraph{Closure decision.}
+Phase 3F concluded with Decision D: the data are inconclusive for a broad
+external-validity or practical-speed claim. Retain the Reference encoder
+as the production/default path and Threshold as a secondary exploratory
+prototype. Phase 3A--3F are closed for the stated research objectives;
+no Phase 3G is recommended. These results do not alter the historical
+benchmark, its proof certificates, or the original SAT--ILP conclusions.

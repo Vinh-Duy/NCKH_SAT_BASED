@@ -1,6 +1,6 @@
 \section{Discussion and conclusion}
 \subsection{Interpretation of the results}
-The four research questions have different types of answers.
+The five research questions have different types of answers.
 For RQ1, the encoding equivalence and span-search invariant establish
 correctness: a feasible labeling supplies an upper bound, and the search
 reports optimality only when justified bounds meet. The implementation
@@ -29,6 +29,18 @@ families with added constraints, but the runtime effect varies. Cycles
 have a median clause reduction of 12.58\% with a median time ratio near
 one. The evidence supports descriptive, family-specific effects rather
 than a universal speedup.
+
+The expanded six-method benchmark contributes a separate finite
+69-graph, 207-task comparison. ILP records more optimal outcomes than
+the SAT variants, while GA and random-order methods provide validated
+feasible solutions on many tasks without an optimality claim. These
+status profiles do not establish a universal speed ordering, and the
+69-graph cohort is not an independent random sample of all graphs.
+
+For RQ5, the Threshold prototype reduces formula size in the tested
+fixed-span models, but the measured solve-time direction is mixed and
+does not establish practical solver superiority. The eight-graph Phase 3F
+result is Decision D, not a basis for broad external-validity claims.
 
 The supplementary GA obtains a certified optimum in at least one of ten
 fixed-budget runs on 95/117 tasks, compared with 85/117 for equal-evaluation
@@ -64,14 +76,30 @@ validation, so it is not compared directly with SAT/ILP wall times. These
 limits qualify performance conclusions without weakening checked labeling
 and clique certificates.
 
+The separate Phase 3A--3F investigation supports a narrower encoding
+conclusion. Threshold reduces formula size in the tested fixed-span
+cohorts, but solve-time direction varies, Phase 3F has only eight graphs,
+and six runs are parent timeouts rather than UNSAT results. Fixed-span
+SAT witnesses do not establish optimality, and $U=111$ remains
+unclassified. IPASIR-UP telemetry was intrusive and incomplete; its
+measurements are not treated as canonical evidence. These results do not
+establish general solver superiority or external validity.
+
 \subsection{Conclusion}
-The study provides an exact general-graph formulation and a reproducible
-account of where the evaluated methods prove optimality, retain useful
-bounds or remain unresolved. A controlled ablation of the new encoding and bounds on unseen instances,
-and solver reuse across spans, would test the scope of these improvements. The new-sample construction
-study identifies where coloring-based certificates help and where they
-remain insufficient. A matching-bound checker provides an additional
-proof format but closes no further interval in the evaluated cohorts.
-The fixed-budget GA comparison adds a feasible-solution baseline and shows
-where the permutation search improves on equal-budget random orders; broader
-graph cohorts and parameter sensitivity remain open empirical questions.
+The primary contribution is an auditable exact/heuristic comparison:
+feasible witnesses, optimality proofs, post-hoc certificates and censored
+outcomes remain distinguishable across the separate benchmark
+populations. The proof-closure package certifies the original 117 timed
+graph--parameter tasks after the timed experiment; it does not certify
+the separate 207-task six-method benchmark. The fixed-budget GA comparison
+adds a feasible-solution baseline, and the construction study identifies
+where its coloring-based certificates help and where they remain
+insufficient. A matching-bound checker adds a proof format but closes no
+further interval in the evaluated cohorts.
+
+Threshold is a secondary exploratory contribution: its fixed-span
+formula-size reductions are established only for the tested models, while
+practical solver advantage remains unproven. Retain the Reference
+encoding as the production/default path. Phase 3A--3F are closed for the
+stated objectives; no Phase 3G is recommended. None of the finite graph
+cohorts establishes universal algorithmic performance.
