@@ -9,6 +9,7 @@ import unittest
 import networkx as nx
 
 from scripts.matching_bound_certificate import generate, verify
+from scripts.verify_clique_certificate import graph_digest
 
 
 def chromatic_bruteforce(graph):
@@ -21,6 +22,74 @@ def chromatic_bruteforce(graph):
 
 
 class MatchingCertificateTests(unittest.TestCase):
+    def _certificate(self, graph, matching, barrier, chromatic, h=1, k=1):
+        return {
+            'schema': 'lhk-matching-bound-v1',
+            'graph': graph,
+            'graph_sha256': graph_digest(graph),
+            'h': h,
+            'k': k,
+            'matching': matching,
+            'barrier': barrier,
+            'square_chromatic': chromatic,
+            'lower_bound': k * max(0, chromatic - 1),
+        }
+
+    def test_complete_graph_uses_triangle_free_complement_of_square(self):
+        graph = nx.complete_graph(4)
+        certificate = generate(graph, 1, 1)
+        self.assertIsNotNone(certificate)
+        checked = verify(certificate)
+        square = nx.power(graph, 2)
+        self.assertEqual(nx.complement(square).number_of_edges(), 0)
+        self.assertEqual(checked['square_chromatic'], chromatic_bruteforce(square))
+        self.assertEqual(checked['square_chromatic'],
+                         len(graph) - checked['matching_size'])
+
+    def test_three_disjoint_edges_rejected_by_complement_square_condition(self):
+        graph = nx.Graph()
+        graph.add_nodes_from(range(6))
+        graph.add_edges_from(((0, 1), (2, 3), (4, 5)))
+        square = nx.power(graph, 2)
+        self.assertFalse(any(
+            square.has_edge(u, v) and square.has_edge(u, w) and square.has_edge(v, w)
+            for u, v, w in itertools.combinations(graph, 3)
+        ))
+        self.assertTrue(any(
+            not square.has_edge(u, v) and not square.has_edge(u, w)
+            and not square.has_edge(v, w)
+            for u, v, w in itertools.combinations(graph, 3)
+        ))
+        self.assertIsNone(generate(graph, 1, 1))
+
+        data = {'n': 6, 'edges': [[0, 1], [2, 3], [4, 5]]}
+        certificate = self._certificate(data, [], [], chromatic=6)
+        with self.assertRaisesRegex(ValueError, 'square complement is not triangle-free'):
+            verify(certificate)
+
+    def test_independent_checker_validates_matching_and_tutte_berge_barrier(self):
+        data = {'n': 4, 'edges': [[0, 1], [0, 2], [1, 2]]}
+        certificate = self._certificate(data, [[0, 3]], [3], chromatic=3)
+        checked = verify(certificate)
+        graph = nx.Graph()
+        graph.add_nodes_from(range(data['n']))
+        graph.add_edges_from(data['edges'])
+        square = nx.power(graph, 2)
+        chi = chromatic_bruteforce(square)
+        self.assertEqual(chi, 3)
+        self.assertEqual(chi, data['n'] - checked['matching_size'])
+        self.assertEqual(checked['lower_bound'], chi - 1)
+
+        invalid_matching = copy.deepcopy(certificate)
+        invalid_matching['matching'] = [[0, 1]]
+        with self.assertRaisesRegex(ValueError, 'invalid or overlapping matching'):
+            verify(invalid_matching)
+
+        invalid_barrier = copy.deepcopy(certificate)
+        invalid_barrier['barrier'] = []
+        with self.assertRaisesRegex(ValueError, 'matching does not meet the checked barrier bound'):
+            verify(invalid_barrier)
+
     def test_all_small_graphs_against_exhaustive_coloring(self):
         applicable = 0
         for graph in nx.graph_atlas_g():

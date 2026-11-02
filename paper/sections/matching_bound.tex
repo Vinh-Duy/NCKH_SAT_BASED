@@ -9,7 +9,7 @@ is new.
 \begin{proposition}
 \label{prop:matching-bound}
 Let $G$ be a nonempty simple undirected graph with $n$ vertices and
-$h\geq k\geq1$. Write $H=\overline{G^2}$. If $H$ is triangle-free, then
+$h\geq k\geq1$. Write $H=\overline{\left(G^2\right)}$. If $H$ is triangle-free, then
 \[
  \chi(G^2)=n-\nu(H),\qquad
  \lambda_{h,k}(G)\geq k\bigl(n-\nu(H)-1\bigr),
@@ -20,11 +20,11 @@ $S\subseteq V(H)$ satisfying
  2|M|=n+|S|-o(H-S)
  \label{eq:matching-certificate}
 \end{equation}
-certify that $\nu(H)=|M|$, where $o(H-S)$ counts odd-order components.
-If $h=k$, matched pairs and unmatched singletons yield an optimal
-labeling with spacing $k$. If $k<h\leq2k$, the same conclusion holds
-whenever these classes admit a compatible order as in
-Proposition~\ref{prop:color-order}.
+certify that $M$ is maximum, so $\nu(H)=|M|$, where $o(H-S)$ counts
+odd-order components. If $h=k$, the classes formed by a maximum matching
+and unmatched singletons yield an optimal labeling with spacing $k$.
+If $k<h\leq2k$, the same conclusion holds when these classes admit a
+compatible order as in Proposition~\ref{prop:color-order}.
 \end{proposition}
 \begin{proof}
 Normalize any feasible labeling so its smallest label is zero, and
@@ -34,19 +34,30 @@ which is forbidden at distance one or two. Hence
 $\chi(G^2)\leq\lfloor s/k\rfloor+1$, giving
 $s\geq k(\chi(G^2)-1)$.
 
-Since $H$ is triangle-free, every independent set of $G^2$ has at most
-two vertices. In any coloring, its two-vertex classes form a matching
-in $H$. Conversely, every matching in $H$, completed by unmatched
-singletons, defines a coloring of $G^2$. A coloring with $t$ pairs uses
-$n-t$ colors, proving the identity for $\chi(G^2)$.
+By definition, two distinct vertices are adjacent in $H$ exactly when
+they are nonadjacent in $G^2$. Thus an independent set of $G^2$ is a
+clique of $H$. Triangle-freeness of $H$ therefore limits every color
+class of $G^2$ to at most two vertices. Each two-vertex color class is
+an edge of $H$, and disjoint two-vertex classes form a matching, so
+every coloring uses at least $n-\nu(H)$ colors. Conversely, a maximum
+matching in $H$, completed by unmatched singleton classes, is a proper
+coloring of $G^2$ with $n-\nu(H)$ colors. This proves
+$\chi(G^2)=n-\nu(H)$.
 
-For any matching $N$ in $H$, at most $|S|$ of its edges touch $S$.
-In each component of $H-S$, the remaining edges cover at most the
-largest even number of vertices in that component. Therefore
-$2|N|\leq n+|S|-o(H-S)$. Equality for a valid $M$ proves it maximum.
-Finally, spacing the classes by $k$ is valid for $h=k$; for $h>k$,
-the compatible-order condition proves validity. In either case the
-span attains the established lower bound.
+For any matching $N$ in $H$, at most $|S|$ edges are incident to $S$.
+For each component $C$ of $H-S$, at most
+$\lfloor |V(C)|/2\rfloor$ matching edges lie wholly within $C$.
+Summing over components gives
+\[
+ |N|\leq |S|+\frac{n-|S|-o(H-S)}{2}
+       =\frac{n+|S|-o(H-S)}{2}.
+\]
+Hence equality for a valid matching $M$ proves it maximum. Finally,
+assigning consecutive classes labels $0,k,2k,\ldots$ is valid when
+$h=k$. If $k<h\leq2k$, a compatible order ensures that endpoints of
+every original edge lie in nonconsecutive classes and so differ by at
+least $2k\geq h$. In both cases the classes attain the established
+lower bound.
 \end{proof}
 
 The existence of a set $S$ satisfying~\eqref{eq:matching-certificate}
