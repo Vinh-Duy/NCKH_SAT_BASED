@@ -115,4 +115,4 @@ For complete archiving/revalidation, keep together:
 
 Metadata records Python 3.13.7, NetworkX 3.6.1, python-sat 1.9.dev15, Gurobi 13.0.3, and macOS 13.7.8 x86_64. CPU/RAM were not recorded; do not infer hardware from runtimes.
 
-References: `benchmarks/general_suite.py`, `benchmarks/benchmark_sat_vs_ilp.py`, `scripts/plot_sat_vs_ilp.py`, and the companion metadata. This file documents the dataset and its interpretation.
+References: `benchmarks/general_suite.py`, `benchmarks/benchmark_sat_vs_ilp.py`, `scripts/plot_sat_vs_ilp.py`, and the companion metadata. Operational instructions are in `docs/guides/research_next_steps.md`; this file explains the data.

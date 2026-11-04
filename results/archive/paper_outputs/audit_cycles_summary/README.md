@@ -4,4 +4,4 @@ Each summary.csv row is a graph family, not a solver call. Rows counts input row
 
 [Definitions of all 12 columns](../../../../docs/data_dictionary.md) · [Source catalog](../../../../docs/results_catalog.md)
 
-source.json records inputs and hashes at export time. Historical absolute paths may have changed during reorganization. Do not edit source.json or treat summaries as data independent of the source CSV.
+source.json records inputs and hashes at export time. Historical absolute paths may have changed during reorganization; consult docs/layout_migration.json. Do not edit source.json or treat summaries as data independent of the source CSV.

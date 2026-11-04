@@ -1,5 +1,14 @@
 # Research data and outputs
 
+[Complete optimality certificate package](analysis/proof_closure/README.md): 117/117 independently certified, including all 16 formerly open cases.
+
+
+October 17: [new-sample construction validation](analysis/certificate_validation/README.md)
+checks five methods on 69 graphs (207 parameter instances), with 96 independently
+certified cases in their union. This separate cohort does not change the original
+101/16 split below. The [matching-bound audit](analysis/matching_bounds/README.md)
+adds a proof format but improves no historical bound.
+
 October 12: [color-order constructions and consolidated evidence](analysis/color_order/README.md)
 close three additional instances, bringing the total to **101/117 closed,
 16 open**, including 53 overlapping direct clique-plus-labeling certificates.
@@ -30,7 +39,7 @@ Current run paths:
 - `runs/general_pilot_v1.csv`: multi-family pilot; [configuration and columns](runs/general_pilot_v1.README.md).
 - `runs/general_confirm_r1.csv`: complete 702-observation repeated confirmation; [guide](runs/general_confirm_r1.README.md).
 
-Directory migration did not modify CSVs or sidecars. Historical manifests may retain run-time paths to preserve provenance. New textual outputs of `scripts/analyze_conjectures.py` go to `results/analysis/`. Figures included in the manuscript are under `paper/generated/`, separate from exploratory figures here.
+Directory migration did not modify CSVs or sidecars. Historical manifests may retain run-time paths to preserve provenance; consult the [path map](../docs/layout_migration.json). New textual outputs of `scripts/analyze_conjectures.py` go to `results/analysis/`. Figures included in the manuscript are under `paper/generated/`, separate from exploratory figures here.
 
 The multi-family pilot contains 234 audited rows/witnesses; theoretical comparisons are in [analysis/general_pilot_v1](analysis/general_pilot_v1/README.md). The audit verifies labels without reclassifying FEASIBLE as optimal. Do not overwrite completed experiments. Older versioned report snapshots may preserve their original language; the current manuscript uses English presentation outputs.
 

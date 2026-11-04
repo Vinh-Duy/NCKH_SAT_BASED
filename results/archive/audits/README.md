@@ -12,7 +12,7 @@
 | symmetry_sizes_v3 | Two CNFs rebuilt at bounds from 108 v2 rows, including CxC root fixing; no new runtime/witnesses |
 | symmetry_sizes_cycle_root_only | Same 108 bounds under C_n-only root policy; all inputs are products, so none fixes a root |
 
-Size files compare formulas without reproving bounds. `cycle_root_only` does not mean the file contains standalone cycles. Small clause reductions are not evidence of an error; ordering can increase raw counts. Do not pool preprocessing/symmetry-policy versions into homogeneous timing samples. Old metadata paths remain for provenance.
+Size files compare formulas without reproving bounds. `cycle_root_only` does not mean the file contains standalone cycles. Small clause reductions are not evidence of an error; ordering can increase raw counts. Do not pool preprocessing/symmetry-policy versions into homogeneous timing samples. Old metadata paths remain for provenance; consult docs/layout_migration.json.
 
 Read the [shared dictionary](../../../docs/data_dictionary.md) and [CSV catalog](../../../docs/results_catalog.md).
 
