@@ -7,6 +7,6 @@
 
 Historical executable code, logs, and report binaries are retained as provenance records, including paths embedded in them. They are not the tools for reproducing current experiments. The current PDF is [build/main.pdf](../build/main.pdf).
 
-Historical research data are in [results/archive/](../results/archive/). Repository documentation is presented in English; immutable historical artifacts may retain their original language.
+Historical research data are in [results/archive/](../results/archive/); superseded guidance is in [docs/archive/](../docs/archive/). Repository documentation is presented in English; immutable historical artifacts may retain their original language.
 
 [English historical-code reading copies](translations/README.md) are available separately from the preserved executables.

@@ -13,7 +13,7 @@ is the proved implementation, fixed-cohort evaluation and auditable
 certificates; it is not first use of SAT, invention of order encoding or
 an unmeasured improvement over these earlier implementations.
 
-**September 27 evening addition:** `outline_L(hk).pdf` and `genetic.pdf` were read. The outline is a working document, not evidence of novelty. Murugan (2015) on coronas and Sarhan et al. (2026) on radio-labeling GA were added to the bibliography; GA has not been implemented or evaluated.
+**September 27 evening addition:** `outline_L(hk).pdf` and `genetic.pdf` were read. The [outline review](outline_review.md) assesses each proposed contribution, identifies unsupported claims, and describes a possible L(h,k) GA adaptation. The outline is a working document, not evidence of novelty. Murugan (2015) on coronas and Sarhan et al. (2026) on radio-labeling GA were added to the bibliography; GA has not been implemented or evaluated.
 
 ## Identifying the references
 
@@ -25,7 +25,7 @@ an unmeasured improvement over these earlier implementations.
 | `L(pq) edge.pdf` | Berthe, Martin, Paulusma, Smith; supplied arXiv v4 (2022), published in Algorithmica 85, 3406–3429 (2023) | Edge/line-graph labeling; distinguish distance conventions |
 | `The_L_h_1_1_labelling_problem_for_trees_2009.pdf` | King, Ras, Zhou, European Journal of Combinatorics 31(5), 1295–1306 (**2010**) | Distance-3 extension; online publication in 2009 does not replace the volume year |
 
-The duplicate PDFs share SHA-256 `196b22890c6f61009029c762bafd2ad6f60acd5dbf9502a9270015800c3b059a`. Full reference texts are not copied into the repository.
+The duplicate PDFs share SHA-256 `196b22890c6f61009029c762bafd2ad6f60acd5dbf9502a9270015800c3b059a`. [reference_files.json](reference_files.json) records hashes of reviewed files. Full reference texts are not copied into the repository.
 
 The FPT paper has a journal version titled **Parameterized complexity of distance labeling and uniform channel assignment problems**, Discrete Applied Mathematics 248, 46–55 (2018). The author's [publication list](https://kam.mff.cuni.cz/~fiala/papers/publications.pdf) identifies its relation to COCOON 2016. `10.4230/LIPIcs.xxx.yyy.p` in the supplied PDF is a placeholder, **not a valid DOI**. The manuscript uses checked publication metadata and DOIs, not filenames as titles.
 

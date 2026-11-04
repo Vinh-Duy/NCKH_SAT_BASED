@@ -41,4 +41,4 @@ These CSVs are no longer current-report inputs. They remain available for compar
 
 v2/v3, cycle_root_only, and audit files moved to `results/archive/audits/` with contents and version manifests preserved. Do not pool source versions into homogeneous timing samples or resume with a source differing from the manifest.
 
-The historical CSVs listed above now reside in `results/archive/legacy/`. CSVs, manifests, witnesses, and logs moved together without changing embedded hashes or historical paths. Later English documentation edits do not alter the original experimental records.
+The historical CSVs listed above now reside in `results/archive/legacy/`. CSVs, manifests, witnesses, and logs moved together without changing embedded hashes or historical paths. `docs/layout_migration.json` maps old to new paths and records SHA-256 values at migration time. Later English documentation edits do not alter the original experimental records.

@@ -1,6 +1,6 @@
 # SAT-Based Approach for L(h,k)-Labeling of General Graphs
 
-**October 12 package:** `make research-package` verifies the selected evidence and builds the full technical report and focused manuscript. Current combined evidence closes **101/117** intervals, with **16 open** and **53 overlapping direct certificates**. [Research summary](research_summary.md).
+**October 12 package:** `make research-package` verifies the selected evidence and builds the full technical report and focused manuscript. Current combined evidence closes **101/117** intervals, with **16 open** and **53 overlapping direct certificates**. [Research summary](research_summary.md) · [completion criteria](guides/research_completion.md).
 
 September 28, 2026: [audit of five current runs and common-span model counts](../results/analysis/exact_review_20260928/README.md). It validated 1,344 witnesses; the 117 model-count comparisons are new analyses, not new timing measurements. Complete SAT–ILP evaluation first; GA is a later step with no results yet.
 
@@ -78,4 +78,5 @@ The manuscript has a research-paper structure, separate Related Work, method ill
 - [main.tex](../main.tex): entry point; [current PDF](../build/main.pdf).
 - `paper/sections/`: methods, results, discussion, and appendices.
 - `paper/generated/`: data-derived tables/figures and audit-source hashes.
+- [Next steps](guides/research_next_steps.md): decisions and commands.
 - [Data provenance](data_provenance.md), [proved bounds](methods/theorems_and_proofs.md).

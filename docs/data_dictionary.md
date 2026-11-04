@@ -170,7 +170,7 @@ The median of ratios, ratio of totals, and mean percentage reduction differ. A s
 
 Share each CSV **with its companion README**, optionally with this dictionary and the PDF. Preserve metadata, witnesses, logs, code versions, and environment information for reproduction. Metadata/witness availability does not automatically mean a run has been audited. Valid labels establish feasibility; optimality additionally requires matching bounds, UNSAT evidence, or an applicable proof.
 
-Do not modify historical CSVs or hashes to match new source.
+Do not modify historical CSVs or hashes to match new source. Current commands are in [research_next_steps.md](guides/research_next_steps.md); Word/Markdown files under `docs/archive/` describe their original dates.
 
 ## Common-domain analysis — September 28, 2026
 

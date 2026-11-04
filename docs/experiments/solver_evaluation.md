@@ -10,6 +10,8 @@ New comparisons require common instances, hardware, configurations, and timing d
 
 Historical `time` and current `Wall_Time` are not identical measurements. `seed` selects a graph sample; `Repeat` selects a measurement on the same sample; `Position` is execution order, not performance rank. The [data dictionary](../data_dictionary.md) and [CSV catalog](../results_catalog.md) document each run's configuration.
 
+The repeated v2 runtime tables use the intersection of instances reported OPT within budget in all three repetitions by both backends. They first take each instance's three-run median, then the median over this common subset. Both timing columns use exactly the same instances. Report this subset's size alongside the full-cohort coverage; cases satisfying the criterion for only one backend are excluded from both timing columns. This is a conditional description, not a full-cohort speed ranking. Family/parameter breakdowns and empty subsets must remain visible, because pooling can hide reversals and the exclusion of difficult cases. Model sizes and total runtimes alone do not identify the cause of a performance difference.
+
 Symmetry timing summaries use jointly OPT rows and, in the new schema, equal spans. Timeout observations are described separately. The median of t_Base/t_Sym, the ratio of total runtimes, and the mean percentage improvement are distinct statistics.
 
 Old CSVs lack complete manifests and do not establish that SAT always outperforms ILP or that symmetry always helps. Updated descriptive tables are generated in LaTeX rather than maintained as duplicate hand-written values here.

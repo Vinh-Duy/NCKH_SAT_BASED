@@ -77,4 +77,4 @@ source fingerprints. These are derived evidence, not additional solver runs.
 
 The inventory after adding the pilot audit contained **41 CSVs**. This is a documentation snapshot; new runs require a companion README and a catalog update.
 
-Figures, LaTeX tables, metadata, and witnesses are not counted as additional CSVs. Historical code and reports are described in [archive](../archive/README.md).
+Figures, LaTeX tables, metadata, and witnesses are not counted as additional CSVs. Historical Word/PDF documents and source code are explained under [docs/archive](archive/README.md) and [archive](../archive/README.md). Historical commands do not replace current instructions.
